@@ -23,10 +23,17 @@ The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 ## Additional Setup
-[prettier](#formatting-code-automatically) is configured to run automatically before each commit.
+
+### React Devtools
+Install the [react devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) to unlock hidden superpowers. Learn more about it [here](https://github.com/facebook/react-devtools).
+
+### Prettier
+[Prettier](#formatting-code-automatically) is configured to run automatically before each commit.
 This makes sure all of our code follows the same code styles, enforcing good practices and minimizing conflicts.
 
-It is recommended to install the prettier plugin for your editor. See instructions [here](https://github.com/prettier/prettier#editor-integration)
+It is recommended to install the prettier plugin for your editor. See instructions [here](https://github.com/prettier/prettier#editor-integration).
+
+Prettier automatically handles code styling for us, but it's good to know the basis of good code styles/practices. [Airbnb's javascript style guide](https://github.com/airbnb/javascript) does a great job going over some rules. They also have guides for [react](https://github.com/airbnb/javascript/tree/master/react) and [css](https://github.com/airbnb/css).
 
 ```
 H A C K 4 I M P A C T
