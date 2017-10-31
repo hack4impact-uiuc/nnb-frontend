@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Grid, Navbar, Jumbotron } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Grid, Navbar, Jumbotron } from 'react-bootstrap'
 
 class App extends Component {
   render() {
@@ -21,8 +21,8 @@ class App extends Component {
           </Grid>
         </Jumbotron>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
