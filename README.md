@@ -51,7 +51,7 @@ Push your code and submit a PR to leave it up for review:
 ```
 git push
 ```
-^ This might walk you through some remote branch push settings, just follow what it says. It should only happen the first time you push to a new branch
+This might walk you through some remote branch push settings, just follow what it says. It should only happen the first time you push to a new branch
 
 Then go to this repo on Github, refresh the page, and you should see an option to create a pull request from your branch.
 
@@ -87,6 +87,24 @@ This makes sure all of our code follows the same code styles, enforcing good pra
 It is recommended to install the prettier plugin for your editor. See instructions [here](https://github.com/prettier/prettier#editor-integration).
 
 Prettier automatically handles code styling for us, but it's good to know the basis of good code styles/practices. [Airbnb's javascript style guide](https://github.com/airbnb/javascript) does a great job going over some rules. They also have guides for [react](https://github.com/airbnb/javascript/tree/master/react) and [css](https://github.com/airbnb/css).
+
+### Sublime Text 3 Plugins
+There might be similar plugins for other editors, but since most of us use Sublime, here are some plugins that are useful:
+
+#### Package Control
+First things first, make sure you have [package control installed](https://packagecontrol.io/installation). From then on you can use Package Control to install other packages by typing `Cmd/Ctrl + Shift + P` -> `Package Control: Install Package`
+
+#### Babel
+The standard javascript formatting will be off with our code that uses JSX and newer js features. Install `Babel` and set all `.js` files to use Babel as the syntax highlighting.
+
+#### SCSS
+Syntax highlighting for `.scss` files.
+
+#### JsPrettier
+Plugin for Prettier - use to format your code while developing. Prettier will still run before each commit, but you can use this to pretty your code beforehand.
+
+#### GitGutter
+Lets you see new, modified, and deleted lines compared to the previous commit next to the line numbers. If you want to see all changes, you can use `git diff` in your terminal or view changes in the [Github desktop app](https://desktop.github.com/). This is good to see all the changes you've made and make sure they're right, but it's still recommended you use your terminal/CLI for git commands.
 
 
 ```
