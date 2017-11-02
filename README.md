@@ -75,6 +75,21 @@ Reviewers, set this to indicate the PR is ready to be merged, but let the pull r
 
 PRs can't be merged without at least one reviewer approving your changes. If waiting on your reviewer becomes a blocker, bug them about it!
 
+## Conventions
+#### Codebase
+- Make all new components in the `/components` folder. Only `index.js` and `App.js` should be outside this folder
+- Name each component file with the format `<component name>.component.js`
+- Only modify the `.scss` files. **DO NOT MODIFY THE CSS FILES!** The `.css` files get recompiled every time its corresponding `.scss` file changes. 
+
+#### Code
+- Use [React Bootstrap components](https://react-bootstrap.github.io/components.html) whenever possible.
+- Remember that React Components need to start with a captial letter. Otherwise they will be treated as a React element, and might not do what you want it to.
+- There are a bunch of things that could go here, but they will come up in the development/code review process. We will use this section for listing common themes as they develop over time.
+
+#### Dependencies
+- Before you install any new dependency, we should discuss whether we really need it or not. Every external dependency comes with a cost, and it should add enough value to outweigh that cost.
+- When installing new dependencies, make sure you `npm install` with the `--save` flag for app dependencies or `--save-dev` flag for dev dependencies.
+
 ## Additional Setup
 
 ### React Devtools
