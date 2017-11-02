@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
 import { InfoPanel, NNBMap, POIForm } from './components'
+import { pois } from './utils/dummyData'
 
 class App extends Component {
+  // using dummy data until BE api is done
+  state = {
+    activeEvents: pois,
+    selectedEvent: pois[0]
+  }
+
   render() {
     return (
       <div>
@@ -18,9 +25,9 @@ class App extends Component {
         </Navbar>
         <Grid>
           {/* Comment out the components to leave only the one you need to work on */}
-          <InfoPanel />
-          <NNBMap />
-          <POIForm />
+          <InfoPanel {...this.state} />
+          <NNBMap {...this.state} />
+          <POIForm {...this.state} />
         </Grid>
       </div>
     )
