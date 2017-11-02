@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Grid, Navbar, Jumbotron } from 'react-bootstrap'
+import { Grid, Navbar } from 'react-bootstrap'
+import { InfoPanel, NNBMap, POIForm } from './components'
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar inverse fixedTop>
+        <Navbar inverse>
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
@@ -15,11 +16,12 @@ class App extends Component {
             </Navbar.Header>
           </Grid>
         </Navbar>
-        <Jumbotron>
-          <Grid>
-            <h1>Hola</h1>
-          </Grid>
-        </Jumbotron>
+        <Grid>
+          {/* Comment out the components to leave only the one you need to work on */}
+          <InfoPanel />
+          <NNBMap />
+          <POIForm />
+        </Grid>
       </div>
     )
   }
