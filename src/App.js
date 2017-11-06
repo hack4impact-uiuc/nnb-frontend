@@ -10,6 +10,20 @@ class App extends Component {
     selectedEvent: pois[0]
   }
 
+  constructor(props) {
+    super(props)
+    this.onPOIMarkerClick = this.onPOIMarkerClick.bind(this)
+  }
+
+  onPOIMarkerClick(POIMarkerId) {
+    const clickedPOI = this.state.activeEvents.find(
+      POI => POI.id === POIMarkerId
+    )
+    this.setState({
+      selectedEvent: clickedPOI
+    })
+  }
+
   render() {
     return (
       <div>
@@ -26,7 +40,7 @@ class App extends Component {
         <Grid>
           {/* Comment out the components to leave only the one you need to work on */}
           <InfoPanel {...this.state} />
-          <NNBMap {...this.state} />
+          <NNBMap {...this.state} onPOIMarkerClick={this.onPOIMarkerClick} />
           <POIForm {...this.state} />
         </Grid>
       </div>

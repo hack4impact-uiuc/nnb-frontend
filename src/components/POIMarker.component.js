@@ -7,7 +7,8 @@ class POIMarker extends Component {
   }
 
   onPOIClick(event) {
-    alert(this.props.description)
+    // Modify the App's state: set selectedEvent to be this POI
+    this.props.onPOIMarkerClick(this.props.id)
   }
 
   render() {

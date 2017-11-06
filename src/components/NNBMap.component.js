@@ -59,9 +59,14 @@ class NNBMap extends Component {
   }
 }
 
-function POIMarkers({ activeEvents, selectedEvent }) {
+function POIMarkers({ activeEvents, selectedEvent, onPOIMarkerClick }) {
   return activeEvents.map(POI => (
-    <POIMarker {...POI} isSelected={POI.id === selectedEvent.id} key={POI.id} />
+    <POIMarker
+      {...POI}
+      isSelected={POI.id === selectedEvent.id}
+      key={POI.id}
+      onPOIMarkerClick={onPOIMarkerClick}
+    />
   ))
 }
 
