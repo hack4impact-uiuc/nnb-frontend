@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-//import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 
-//import Header from '.InfoPanel/Header'
-//import Footer from '.InfoPanel/Footer'
+// import Header from '.InfoPanel/Header'
+// import Footer from '.InfoPanel/Footer'
 
 // import styles from './styles/react.js'
 
@@ -13,14 +13,17 @@ import React, { Component } from 'react'
 //	}
 //}
 class InfoPanel extends React.Component {
-  renderPanel(i) {
-    return (
-      <Panel
-        value={this.props.panel[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    )
+  constructor(props) {
+    super(props)
   }
+  // renderPanel(i) {
+  //   return (
+  //     <Panel
+  //       value={this.props.panel[i]}
+  //       onClick={() => this.props.onClick(i)}
+  //     />
+  //   )
+  // }
 
   onClick() {
     // 	const title = {selectedEvent.title}
@@ -44,12 +47,11 @@ class InfoPanel extends React.Component {
         <h1> {selectedEvent.title} </h1>
         <div className="Top-section">
           <h3 className="Mid-intro"> {selectedEvent.description}</h3>
-          {selectedEvent.date}
-          {selectedEvent.coordinateX}
-          {selectedEvent.coordinateY}
+          <p>{selectedEvent.date}</p>
+          <p>{selectedEvent.coordinateX}</p>
+          <p>{selectedEvent.coordinateY}</p>
           <img src="{selectedEvent.image}" alt="H4I image" />
-          {selectedEvent.links}
-          onClick={this.onClick}
+          <p>{selectedEvent.links}</p>
         </div>
       </div>
     )
