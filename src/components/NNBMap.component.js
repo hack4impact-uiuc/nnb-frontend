@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import './../styles/map.css'
+import { POIMarker } from '../components'
 
 const IMAGE_URL = 'http://www.vectorstash.com/vectors/vectorstash-grid.svg'
 // const IMAGE_URL = 'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X'
@@ -24,7 +25,7 @@ class NNBMap extends Component {
       event.clientX - domRect.left,
       event.clientY - domRect.top
     ]
-    
+
     // clicked coords scaled to 0 - 100
     const scaledCoords = mouseClickCoords.map(
       (e, i) => 100 * e / imageDisplayedResolution[i]
@@ -46,6 +47,7 @@ class NNBMap extends Component {
             ref={el => (this.image = el)}
             onClick={this.onImageClick}
           />
+          <POIMarkers {...this.props} />
         </div>
         <div>
           x: {x}
@@ -55,6 +57,12 @@ class NNBMap extends Component {
       </div>
     )
   }
+}
+
+function POIMarkers({ activeEvents, selectedEvent }) {
+  return activeEvents.map(POI => (
+    <POIMarker {...POI} isSelected={POI.id === selectedEvent.id} key={POI.id} />
+  ))
 }
 
 export default NNBMap
