@@ -4,17 +4,20 @@ import { Image } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
 
-const IMAGE_URL = 'http://www.vectorstash.com/vectors/vectorstash-grid.svg'
-// const IMAGE_URL = 'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X'
+//const IMAGE_URL = 'http://www.vectorstash.com/vectors/vectorstash-grid.svg'
+const IMAGE_URL =
+  'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X'
 
 class NNBMap extends Component {
   state = {
-    scaledCoords: [0, 0]
+    scaledCoords: [0, 0],
+    mapImageLoaded: false
   }
 
   constructor(props) {
     super(props)
     this.onImageClick = this.onImageClick.bind(this)
+    this.mapImageLoaded = this.mapImageLoaded.bind(this)
   }
 
   onImageClick(event) {
@@ -35,6 +38,15 @@ class NNBMap extends Component {
     })
   }
 
+  mapImageLoaded() {
+    const mapImageElement = ReactDOM.findDOMNode(this.image)
+    this.setState({
+      mapImageLoaded: true,
+      mapImageWidth: mapImageElement.width,
+      mapImageHeight: mapImageElement.height
+    })
+  }
+
   render() {
     const [x, y] = this.state.scaledCoords
 
@@ -46,8 +58,15 @@ class NNBMap extends Component {
             responsive
             ref={el => (this.image = el)}
             onClick={this.onImageClick}
+            onLoad={this.mapImageLoaded}
           />
-          <POIMarkers {...this.props} />
+          {this.state.mapImageLoaded && (
+            <POIMarkers
+              {...this.props}
+              mapImageWidth={this.state.mapImageWidth}
+              mapImageHeight={this.state.mapImageHeight}
+            />
+          )}
         </div>
         <div>
           x: {x}
@@ -59,13 +78,21 @@ class NNBMap extends Component {
   }
 }
 
-function POIMarkers({ activeEvents, selectedEvent, onPOIMarkerClick }) {
+function POIMarkers({
+  activeEvents,
+  selectedEvent,
+  onPOIMarkerClick,
+  mapImageWidth,
+  mapImageHeight
+}) {
   return activeEvents.map(POI => (
     <POIMarker
       {...POI}
       isSelected={POI.id === selectedEvent.id}
       key={POI.id}
       onPOIMarkerClick={onPOIMarkerClick}
+      mapImageWidth={mapImageWidth}
+      mapImageHeight={mapImageHeight}
     />
   ))
 }
