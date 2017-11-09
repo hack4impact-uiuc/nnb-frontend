@@ -4,22 +4,20 @@ export const pois = [
     title: 'POI 1',
     date: 1509596783675,
     description: 'this is POI 1',
-    image:
-      'https://i.pinimg.com/736x/2e/33/b0/2e33b000750dd4ce998fc156e68231ad--draw-pokemon-pokemon-craft.jpg',
+    image: 'https://avatars1.githubusercontent.com/u/9021093?s=200&v=4',
     coordinateX: 0,
     coordinateY: 0,
-    links: ['http://google.com', 'http://facebook.com']
+    links: ['http://hack4impact.com', 'http://phillyfoodfinder.com']
   },
   {
     id: 2,
     title: 'POI 2',
     date: 1509596783675,
     description: 'this is POI 2',
-    image:
-      'https://i.pinimg.com/736x/2e/33/b0/2e33b000750dd4ce998fc156e68231ad--draw-pokemon-pokemon-craft.jpg',
+    image: 'http://web.engr.illinois.edu/~tgupta6/img/uiuc_logo.jpg',
     coordinateX: 100,
     coordinateY: 100,
-    links: ['http://google.com', 'http://facebook.com']
+    links: ['http://uiuc.com', 'http://cs@illinois.com']
   },
   {
     id: 3,
@@ -27,10 +25,10 @@ export const pois = [
     date: 1509596783675,
     description: 'this is POI 3',
     image:
-      'https://i.pinimg.com/736x/2e/33/b0/2e33b000750dd4ce998fc156e68231ad--draw-pokemon-pokemon-craft.jpg',
+      'https://nationofbillions.com/wp-content/uploads/2015/09/Rodeo-featured.jpg',
     coordinateX: 50,
     coordinateY: 50,
-    links: ['http://google.com', 'http://facebook.com']
+    links: ['http://travisscott.com', 'http://rodeo.com']
   },
   {
     id: 4,
@@ -38,9 +36,9 @@ export const pois = [
     date: 1509596783675,
     description: 'this is POI 4',
     image:
-      'https://i.pinimg.com/736x/2e/33/b0/2e33b000750dd4ce998fc156e68231ad--draw-pokemon-pokemon-craft.jpg',
+      'https://www.organicfacts.net/wp-content/uploads/2013/05/Corn12-1020x765.jpg',
     coordinateX: 100,
     coordinateY: 50,
-    links: ['http://google.com', 'http://facebook.com']
+    links: ['http://corn.com', 'http://illinoiscrops.com']
   }
 ]
