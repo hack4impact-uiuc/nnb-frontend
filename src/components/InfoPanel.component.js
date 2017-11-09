@@ -26,13 +26,11 @@ class InfoPanel extends Component {
             <hr />
             <h3>Additional Links:</h3>
             <ul>
-              {selectedEvent.links.map(item => {
-                return (
-                  <li>
-                    <a href={item}>{item}</a>
-                  </li>
-                )
-              })}
+              {selectedEvent.links.map(item => (
+                <li>
+                  <a href={item}>{item}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
