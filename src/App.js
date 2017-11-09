@@ -29,12 +29,16 @@ class App extends Component {
         </Navbar>
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
-          <div className="nnb-map-container">
-            <NNBMap {...this.state} />
-          </div>
-          <div className="info-panel-container">
-            <InfoPanel {...this.state} />
-          </div>
+          {!showPOIForm && (
+            <div>
+              <div className="nnb-map-container">
+                <NNBMap {...this.state} />
+              </div>
+              <div className="info-panel-container">
+                <InfoPanel {...this.state} />
+              </div>
+            </div>
+          )}
           {showPOIForm && (
             <div className="poi-form-container">
               <POIForm {...this.state} />
