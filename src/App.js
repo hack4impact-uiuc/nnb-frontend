@@ -45,7 +45,7 @@ class App extends Component {
         <div className="nnb-app">
           {!showPOIForm && (
             <div className="nnb-map-container">
-              <NNBMap {...this.state} />
+              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI}/>
             </div>
           )}
           {!showPOIForm && (
