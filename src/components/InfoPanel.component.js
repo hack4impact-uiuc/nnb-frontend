@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Image } from 'react-bootstrap'
+import './../styles/App.css'
 
 class InfoPanel extends Component {
   constructor(props) {
@@ -11,14 +12,14 @@ class InfoPanel extends Component {
     const img_url = selectedEvent.image
 
     return (
-      <div classname="InfoPanel">
+      <div className="info-panel">
         <h1>
           <u>
             <b>{selectedEvent.title} </b>
           </u>
         </h1>
-        <div className="Top-section">
-          <div className="InfoPanel">
+        <div>
+          <div>
             <Image src={selectedEvent.image} alt="H4I image" responsive />
             <hr />
             <h3>Description:</h3>
