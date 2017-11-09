@@ -12,6 +12,20 @@ class App extends Component {
     showPOIForm: false
   }
 
+  constructor(props) {
+    super(props)
+    this.setSelectedPOI = this.setSelectedPOI.bind(this)
+  }
+
+  setSelectedPOI(POIMarkerId) {
+    const clickedPOI = this.state.activeEvents.find(
+      POI => POI.id === POIMarkerId
+    )
+    this.setState({
+      selectedEvent: clickedPOI
+    })
+  }
+
   render() {
     const { showPOIForm } = this.state
 
