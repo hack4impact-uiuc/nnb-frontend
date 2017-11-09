@@ -1,4 +1,19 @@
+$marker-diameter: 20px;
+
 .image-container {
   border: 1px solid #ddd;
   padding: 1rem;
+  position: relative;
+}
+
+.marker {
+  position: absolute;
+  border-radius: 100%;
+  width: $marker-diameter;
+  height: $marker-diameter;
+  background: blue;
+
+  &--selected {
+    background: red;
+  }
 }
