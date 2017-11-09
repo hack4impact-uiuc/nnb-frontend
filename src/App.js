@@ -46,7 +46,7 @@ class App extends Component {
           {!showPOIForm && (
             <div>
               <div className="nnb-map-container">
-                <NNBMap {...this.state} />
+                <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI} />
               </div>
               <div className="info-panel-container">
                 <InfoPanel {...this.state} />
