@@ -48,7 +48,8 @@ class NNBMap extends Component {
   }
 
   render() {
-    const [x, y] = this.state.scaledCoords
+    const { scaledCoords, mapImageWidth, mapImageHeight } = this.state
+    const [x, y] = scaledCoords
 
     return (
       <div>
@@ -63,8 +64,7 @@ class NNBMap extends Component {
           {this.state.mapImageLoaded && (
             <POIMarkers
               {...this.props}
-              mapImageWidth={this.state.mapImageWidth}
-              mapImageHeight={this.state.mapImageHeight}
+              {...{ mapImageWidth, mapImageHeight }}
             />
           )}
         </div>
@@ -81,7 +81,7 @@ class NNBMap extends Component {
 function POIMarkers({
   activeEvents,
   selectedEvent,
-  onPOIMarkerClick,
+  setSelectedPOI,
   mapImageWidth,
   mapImageHeight
 }) {
@@ -90,9 +90,7 @@ function POIMarkers({
       {...POI}
       isSelected={POI.id === selectedEvent.id}
       key={POI.id}
-      onPOIMarkerClick={onPOIMarkerClick}
-      mapImageWidth={mapImageWidth}
-      mapImageHeight={mapImageHeight}
+      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
     />
   ))
 }

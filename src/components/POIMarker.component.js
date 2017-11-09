@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import classnames from 'classnames'
 
 class POIMarker extends Component {
   constructor(props) {
@@ -8,23 +8,28 @@ class POIMarker extends Component {
   }
 
   onPOIClick(event) {
-    // Modify the App's state: set selectedEvent to be this POI
-    this.props.onPOIMarkerClick(this.props.id)
+    this.props.setSelectedPOI(this.props.id)
   }
 
   render() {
-    const xC = `${this.props.coordinateX / 100 * this.props.mapImageWidth}px`
-    const yC = `${this.props.coordinateY / 100 * this.props.mapImageHeight}px`
+    const {
+      coordinateX,
+      coordinateY,
+      mapImageWidth,
+      mapImageHeight
+    } = this.props
+    const absoluteXCoordinate = `${coordinateX / 100 * mapImageWidth}px`
+    const absoluteYCoordinate = `${coordinateY / 100 * mapImageHeight}px`
     return (
       <div>
         <div
-          className={
-            this.props.isSelected ? 'selected-marker' : 'active-marker'
-          }
+          className={classnames('marker', {
+            'marker--selected': this.props.isSelected
+          })}
           onClick={this.onPOIClick}
           style={{
-            left: xC,
-            top: yC
+            left: absoluteXCoordinate,
+            top: absoluteYCoordinate
           }}
         />
       </div>
