@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Image } from 'react-bootstrap'
+import { Image, Button } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
 
@@ -11,31 +11,38 @@ const IMAGE_URL =
 class NNBMap extends Component {
   state = {
     scaledCoords: [0, 0],
-    mapImageLoaded: false
+    mapImageLoaded: false,
+    isChoosingNewPOICoords: false
   }
 
   constructor(props) {
     super(props)
     this.onImageClick = this.onImageClick.bind(this)
     this.mapImageLoaded = this.mapImageLoaded.bind(this)
+    this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
+    this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
   }
 
   onImageClick(event) {
-    const element = ReactDOM.findDOMNode(this.image)
-    const domRect = element.getBoundingClientRect()
-    const imageDisplayedResolution = [element.width, element.height]
-    const mouseClickCoords = [
-      event.clientX - domRect.left,
-      event.clientY - domRect.top
-    ]
+    if (this.state.isChoosingNewPOICoords) {
+      const element = ReactDOM.findDOMNode(this.image)
+      const domRect = element.getBoundingClientRect()
+      const imageDisplayedResolution = [element.width, element.height]
+      const mouseClickCoords = [
+        event.clientX - domRect.left,
+        event.clientY - domRect.top
+      ]
 
-    // clicked coords scaled to 0 - 100
-    const scaledCoords = mouseClickCoords.map(
-      (e, i) => 100 * e / imageDisplayedResolution[i]
-    )
-    this.setState({
-      scaledCoords
-    })
+      // clicked coords scaled to 0 - 100
+      const scaledCoords = mouseClickCoords.map(
+        (e, i) => 100 * e / imageDisplayedResolution[i]
+      )
+      this.setState({
+        scaledCoords,
+        isChoosingNewPOICoords: false
+      })
+      this.props.setShowPOIForm(true)
+    }
   }
 
   mapImageLoaded() {
@@ -47,9 +54,26 @@ class NNBMap extends Component {
     })
   }
 
+  startAddPOIFlow() {
+    this.setState({
+      isChoosingNewPOICoords: true
+    })
+  }
+
+  cancelAddPOIFlow() {
+    this.setState({
+      isChoosingNewPOICoords: false
+    })
+  }
+
   render() {
-    const { scaledCoords, mapImageWidth, mapImageHeight } = this.state
-    const [x, y] = scaledCoords
+    const {
+      scaledCoords,
+      mapImageLoaded,
+      mapImageWidth,
+      mapImageHeight,
+      isChoosingNewPOICoords
+    } = this.state
 
     return (
       <div>
@@ -61,18 +85,28 @@ class NNBMap extends Component {
             onClick={this.onImageClick}
             onLoad={this.mapImageLoaded}
           />
-          {this.state.mapImageLoaded && (
+          {mapImageLoaded && (
             <POIMarkers
               {...this.props}
               {...{ mapImageWidth, mapImageHeight }}
             />
           )}
         </div>
-        <div>
-          x: {x}
-          <br />
-          y: {y}
-        </div>
+        {this.props.isEditing && (
+          <Button
+            onClick={
+              isChoosingNewPOICoords
+                ? this.cancelAddPOIFlow
+                : this.startAddPOIFlow
+            }
+          >
+            {isChoosingNewPOICoords ? 'Cancel' : 'Add POI'}
+          </Button>
+        )}
+        {this.props.isEditing &&
+          isChoosingNewPOICoords && (
+            <div>Click on the map to set a location for the new POI.</div>
+          )}
       </div>
     )
   }
