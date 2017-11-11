@@ -11,7 +11,8 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     showPOIForm: false,
-    showSidebar: false
+    showSidebar: false,
+    isEditing: false
   }
 
   constructor(props) {
@@ -39,10 +40,7 @@ class App extends Component {
 
     return (
       <div>
-        <StoryList
-          showSidebar={this.state.showSidebar}
-          toggleSidebar={this.toggleSidebar}
-        />
+        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>

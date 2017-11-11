@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
-import { FormGroup, FormControl } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
 
 class StoryList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false
+      // open: false,
+      // editMode: false
       // docked: true
+      addStory: false
     }
     this.onSetOpen = this.onSetOpen.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  /*  componentWillReceiveProps(nextProps) {
     // invoked every time component is recieves new props.
     // does not before initial 'render'
     this.setState({ open: nextProps.showSidebar })
-  }
+  }*/
 
   onSetOpen(open) {
     this.setState({ showSidebar: open })
@@ -37,7 +39,7 @@ class StoryList extends Component {
       divider: {
         margin: '8px 0',
         height: 1,
-        backgroundColor: '#757575'
+        backgroundColor: '#FFF'
       },
       title: {
         display: 'inline',
@@ -64,163 +66,30 @@ class StoryList extends Component {
             X
           </a>
         </div>
-        {/*<div style={styles.content}/>*/}
+        <div style={styles.divider} />
+
         <a href="" style={styles.sidebarLink}>
           Story 1
         </a>
+        <div style={styles.divider} />
+
         <a href="" style={styles.sidebarLink}>
           Story 2
         </a>
+        <div style={styles.divider} />
+
         <a href="" style={styles.sidebarLink}>
           Story 3
         </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 1
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 2
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 1
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 2
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 1
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 2
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 1
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 2
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
+        <div style={styles.divider} />
+
+        {this.props.isEditing && <Button>Add Story</Button>}
       </div>
     )
 
     const sidebarProps = {
       sidebar: sidebarContent,
-      open: this.state.open,
+      open: this.props.showSidebar,
       onSetOpen: this.onSetOpen,
       sidebarClassName: 'custom-sidebar-class'
     }
