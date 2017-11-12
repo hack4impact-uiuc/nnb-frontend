@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
-import { InfoPanel, NNBMap, POIForm } from './components'
+import { InfoPanel, NNBMap, POIForm, Counter } from './components'
 import { pois } from './utils/dummyData'
 
 class App extends Component {
@@ -24,9 +24,15 @@ class App extends Component {
           </Grid>
         </Navbar>
         <Grid>
-          {/* Comment out the components to leave only the one you need to work on */}
-          <InfoPanel {...this.state} />
+          {/* Comment out the components to leave only the one you need to work on 
+
+            <InfoPanel {...this.state} />
           <NNBMap {...this.state} />
+          <POIForm {...this.state} />
+          <Counter startNumber={1234} />
+
+          */}
+
           <POIForm {...this.state} />
         </Grid>
       </div>
