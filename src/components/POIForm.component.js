@@ -22,6 +22,7 @@ class POIForm extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.onChangeName = this.onChangeName.bind(this)
+    this.onChangeDescription = this.onChangeDescription.bind(this)
   }
 
   onDateSelected() {
@@ -34,9 +35,15 @@ class POIForm extends Component {
     })
   }
 
-  onChangeName(e) {
+  onChangeName(inputName) {
     this.setState({
-      name: e.target.value
+      name: inputName.target.value
+    })
+  }
+
+  onChangeDescription(inputDesription) {
+    this.setState({
+      description: inputDesription.target.value
     })
   }
 
@@ -82,6 +89,8 @@ class POIForm extends Component {
             <FormControl
               componentClass="textarea"
               placeholder="Enter you POI description here"
+              description={this.state.description}
+              onChange={this.onChangeDescription}
             />
           </Col>
         </FormGroup>
