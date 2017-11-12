@@ -21,11 +21,13 @@ class POIForm extends Component {
       name: '',
       description: '',
       selectedStories: [],
-      links: []
+      links: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
+    this.onChangeLinks = this.onChangeLinks.bind(this)
+    /*this.onClickPlus = this.onClickPlus.bind(this)*/
   }
 
   onDateSelected() {
@@ -50,26 +52,21 @@ class POIForm extends Component {
     })
   }
 
-  onClickPlus() {}
+  /*onClickPlus() {
+    this.setState({
+      links : this.state.links.concat(
+        ["1"]
+      )
+    });
+  }*/
+
+  onChangeLinks(inputLinks) {
+    this.setState({
+      links: inputLinks.target.value
+    })
+  }
 
   render() {
-    const displayLinks = []
-
-    /*for (let i = 1 ; i < links.length; i++) {
-      displayLink
-    }*/
-
-    displayLinks.push(
-      <FormGroup>
-        <InputGroup>
-          <InputGroup.Button>
-            <Button onClick={this.onClickPlus}>X</Button>
-          </InputGroup.Button>
-          <FormControl type="text" />
-        </InputGroup>
-      </FormGroup>
-    )
-
     return (
       <Form horizontal>
         <PageHeader>
@@ -84,7 +81,7 @@ class POIForm extends Component {
             <FormControl
               type="text"
               placeholder="Enter your POI name here"
-              name={this.state.name}
+              value={this.state.name}
               onChange={this.onChangeName}
             />
           </Col>
@@ -111,7 +108,7 @@ class POIForm extends Component {
             <FormControl
               componentClass="textarea"
               placeholder="Enter you POI description here"
-              description={this.state.description}
+              value={this.state.description}
               onChange={this.onChangeDescription}
             />
           </Col>
@@ -124,15 +121,19 @@ class POIForm extends Component {
           help="Example block-level help text here."
         />*/}
 
-        {/*<FormGroup>
-          <InputGroup>
-            <InputGroup.Button>
-              <Button onClick={this.onClickPlus}>+</Button>
-            </InputGroup.Button>
-            <FormControl type="text" />
-          </InputGroup>
-        </FormGroup>*/}
-        {displayLinks}
+        <FormGroup controlID="links">
+          <Col componentClass={ControlLabel} sm={2}>
+            POI Links
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              componentClass="textarea"
+              placeholder="Enter related links here, separated by commas"
+              value={this.state.links}
+              onChange={this.onChangeLinks}
+            />
+          </Col>
+        </FormGroup>
 
         <FormGroup controlID="stories">
           <Col smOffset={2} sm={10}>
