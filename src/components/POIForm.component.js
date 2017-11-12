@@ -4,7 +4,8 @@ import {
   FormControl,
   ControlLabel,
   Button,
-  ButtonToolbar
+  ButtonToolbar,
+  InputGroup
 } from 'react-bootstrap'
 import { Checkbox, Form, Col, PageHeader } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
@@ -18,7 +19,9 @@ class POIForm extends Component {
     this.state = {
       startDate: moment(),
       name: '',
-      description: ''
+      description: '',
+      selectedStories: [],
+      links: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.onChangeName = this.onChangeName.bind(this)
@@ -47,7 +50,26 @@ class POIForm extends Component {
     })
   }
 
+  onClickPlus() {}
+
   render() {
+    const displayLinks = []
+
+    /*for (let i = 1 ; i < links.length; i++) {
+      displayLink
+    }*/
+
+    displayLinks.push(
+      <FormGroup>
+        <InputGroup>
+          <InputGroup.Button>
+            <Button onClick={this.onClickPlus}>X</Button>
+          </InputGroup.Button>
+          <FormControl type="text" />
+        </InputGroup>
+      </FormGroup>
+    )
+
     return (
       <Form horizontal>
         <PageHeader>
@@ -95,17 +117,22 @@ class POIForm extends Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlID="upload">
-          <Col smOffset={2} sm={10}>
-            <Button type="submit">Upload</Button>
-          </Col>
-        </FormGroup>
+        {/*<FieldGroup
+          id="formControlsFile"
+          type="file"
+          label="File"
+          help="Example block-level help text here."
+        />*/}
 
-        <FormGroup controlID="setState">
-          <Col smOffset={2} sm={10}>
-            <Button type="submit">Set State</Button>
-          </Col>
-        </FormGroup>
+        {/*<FormGroup>
+          <InputGroup>
+            <InputGroup.Button>
+              <Button onClick={this.onClickPlus}>+</Button>
+            </InputGroup.Button>
+            <FormControl type="text" />
+          </InputGroup>
+        </FormGroup>*/}
+        {displayLinks}
 
         <FormGroup controlID="stories">
           <Col smOffset={2} sm={10}>
