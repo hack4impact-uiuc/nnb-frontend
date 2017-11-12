@@ -7,7 +7,7 @@ import {
   ButtonToolbar,
   InputGroup
 } from 'react-bootstrap'
-import { Checkbox, Form, Col, PageHeader } from 'react-bootstrap'
+import { Checkbox, Form, Col, PageHeader, FieldGroup } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -66,6 +66,18 @@ class POIForm extends Component {
     })
   }
 
+  /*
+  function FieldGroup({ id, label, help, ...props }) {
+  return (
+    <FormGroup controlId={id}>
+      <ControlLabel>{label}</ControlLabel>
+      <FormControl {...props} />
+      {help && <HelpBlock>{help}</HelpBlock>}
+    </FormGroup>
+  );
+}
+*/
+
   render() {
     return (
       <Form horizontal>
@@ -73,6 +85,10 @@ class POIForm extends Component {
           POI Input Form
           <small>Complete each component below</small>
         </PageHeader>
+
+        {/*
+          *********THIS IS MY POI NAME***********
+        */}
         <FormGroup controlId="name">
           <Col componentClass={ControlLabel} sm={2}>
             POI Name
@@ -87,7 +103,9 @@ class POIForm extends Component {
           </Col>
         </FormGroup>
 
-        {/*datepicker goes here*/}
+        {/*
+          *********THIS IS MY DATEPICKER***********
+        */}
         <FormGroup>
           <Col componentClass={ControlLabel} sm={2}>
             POI Date
@@ -100,6 +118,9 @@ class POIForm extends Component {
           </Col>
         </FormGroup>
 
+        {/*
+          *********THIS IS MY DESCRIPTION AREA***********
+        */}
         <FormGroup controlID="description">
           <Col componentClass={ControlLabel} sm={2}>
             POI description
@@ -114,13 +135,21 @@ class POIForm extends Component {
           </Col>
         </FormGroup>
 
-        {/*<FieldGroup
-          id="formControlsFile"
-          type="file"
-          label="File"
-          help="Example block-level help text here."
-        />*/}
+        {/*
+          *********THIS IS MY UPLOAD BUTTON***********
+        */}
+        <FormGroup controlID="chooseFile">
+          <Col sm={2}>
+            <ControlLabel>Upload Media</ControlLabel>
+          </Col>
+          <Col sm={10}>
+            <FormControl type="file" placeholder="Upload your files here" />
+          </Col>
+        </FormGroup>
 
+        {/*
+          *********THIS IS MY LINKS TEXT AREA***********
+        */}
         <FormGroup controlID="links">
           <Col componentClass={ControlLabel} sm={2}>
             POI Links
@@ -135,6 +164,9 @@ class POIForm extends Component {
           </Col>
         </FormGroup>
 
+        {/*
+          *********THIS IS MY LIST OF STORY CHECKBOXES***********
+        */}
         <FormGroup controlID="stories">
           <Col smOffset={2} sm={10}>
             <Checkbox>Story 1</Checkbox>
@@ -145,6 +177,9 @@ class POIForm extends Component {
 
         <FormControl.Feedback />
 
+        {/*
+          *********THIS IS MY SUBMIT BUTTON***********
+        */}
         <FormGroup controlID="submit">
           <Col smOffset={2} sm={10}>
             <Button bsStyle="primary" type="submit">
