@@ -12,7 +12,7 @@ class App extends Component {
     selectedEvent: pois[0],
     showPOIForm: false,
     showSidebar: false,
-    isEditing: false
+    isEditing: true
   }
 
   constructor(props) {

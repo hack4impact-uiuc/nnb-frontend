@@ -1,27 +1,49 @@
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap'
+import {
+  Button,
+  FormControl,
+  Form,
+  ControlLabel,
+  FormGroup
+} from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
 
 class StoryList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // open: false,
-      // editMode: false
-      // docked: true
-      addStory: false
+      addStorySelected: false,
+      storyName: ''
     }
-    this.onSetOpen = this.onSetOpen.bind(this)
+    //this.onSetOpen = this.onSetOpen.bind(this)
+    this.addStoryClicked = this.addStoryClicked.bind(this)
+    this.addStoryExit = this.addStoryExit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.submitStoryName = this.submitStoryName.bind(this)
   }
 
-  /*  componentWillReceiveProps(nextProps) {
-    // invoked every time component is recieves new props.
-    // does not before initial 'render'
-    this.setState({ open: nextProps.showSidebar })
-  }*/
-
-  onSetOpen(open) {
+  /*  onSetOpen(open) {
     this.setState({ showSidebar: open })
+  }
+*/
+  addStoryClicked() {
+    this.setState({ addStorySelected: true })
+  }
+
+  addStoryExit() {
+    this.setState({ addStorySelected: false })
+  }
+
+  handleChange(e) {
+    this.setState({ storyName: e.target.value })
+  }
+
+  submitStoryName() {
+    this.setState({
+      addStorySelected: false,
+      storyName: ''
+    })
+    //make api call here maybe?
   }
 
   render() {
@@ -83,14 +105,41 @@ class StoryList extends Component {
         </a>
         <div style={styles.divider} />
 
-        {this.props.isEditing && <Button>Add Story</Button>}
+        {this.props.isEditing &&
+          !this.state.addStorySelected && (
+            <Button onClick={this.addStoryClicked}>Add Story</Button>
+          )}
+
+        {this.props.isEditing &&
+          this.state.addStorySelected && (
+            <div>
+              <h3 style={styles.title}>Enter Story Name:</h3>
+              <a
+                title="Exit2"
+                href="#"
+                style={styles.exitbutton}
+                onClick={this.addStoryExit}
+              >
+                X
+              </a>
+              <form>
+                <FormControl
+                  type="text"
+                  value={this.state.storyName}
+                  placeholder="Enter text"
+                  onChange={this.handleChange}
+                />
+              </form>
+
+              <Button onClick={this.submitStoryName}>Submit</Button>
+            </div>
+          )}
       </div>
     )
 
     const sidebarProps = {
       sidebar: sidebarContent,
       open: this.props.showSidebar,
-      onSetOpen: this.onSetOpen,
       sidebarClassName: 'custom-sidebar-class'
     }
 
