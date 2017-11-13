@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Navbar, Button } from 'react-bootstrap'
+import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { InfoPanel, NNBMap, POIForm } from './components'
 import { pois } from './utils/dummyData'
 import './styles/App.css'
@@ -21,9 +21,8 @@ class App extends Component {
   }
 
   toggleEditMode() {
-    const isEditing = this.state.isEditing
     this.setState({
-      isEditing: !isEditing
+      isEditing: !this.state.isEditing
     })
   }
 
@@ -43,7 +42,7 @@ class App extends Component {
   }
 
   render() {
-    const { showPOIForm } = this.state
+    const { showPOIForm, isEditing } = this.state
 
     return (
       <div>
@@ -55,7 +54,13 @@ class App extends Component {
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
-            <Button onClick={this.toggleEditMode}>Edit</Button>
+            <ToggleButtonGroup
+              type="checkbox"
+              value={isEditing ? [1] : []}
+              onChange={this.toggleEditMode}
+            >
+              <ToggleButton value={1}>Edit</ToggleButton>
+            </ToggleButtonGroup>
           </Grid>
         </Navbar>
         {/* Comment out the components to leave only the one you need to work on */}

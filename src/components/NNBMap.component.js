@@ -23,6 +23,12 @@ class NNBMap extends Component {
     this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isEditing === false) {
+      this.setState({ isChoosingNewPOICoords: false })
+    }
+  }
+
   onImageClick(event) {
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
@@ -68,7 +74,6 @@ class NNBMap extends Component {
 
   render() {
     const {
-      scaledCoords,
       mapImageLoaded,
       mapImageWidth,
       mapImageHeight,
