@@ -3,14 +3,8 @@ import { Image } from 'react-bootstrap'
 import './../styles/App.css'
 
 class InfoPanel extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const selectedEvent = this.props.selectedEvent
-    const img_url = selectedEvent.image
-
     return (
       <div className="info-panel">
         <h1>
@@ -20,16 +14,20 @@ class InfoPanel extends Component {
         </h1>
         <div>
           <div>
-            <Image src={selectedEvent.image} alt="H4I image" responsive />
+            <Image
+              src={selectedEvent.image}
+              alt="Image for this Map Marker"
+              responsive
+            />
             <hr />
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
             <h3>Additional Links:</h3>
             <ul>
-              {selectedEvent.links.map(item => (
-                <li>
-                  <a href={item}>{item}</a>
+              {selectedEvent.links.map(link => (
+                <li key={link}>
+                  <a href={link}>{link}</a>
                 </li>
               ))}
             </ul>
