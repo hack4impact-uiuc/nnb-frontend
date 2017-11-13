@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
 import { InfoPanel, NNBMap, POIForm, StoryList } from './components'
-import { pois } from './utils/dummyData'
+import { pois, stories } from './utils/dummyData'
 import './styles/App.css'
-import Sidebar from 'react-sidebar'
 
 class App extends Component {
   // using dummy data until BE api is done
   state = {
     activeEvents: pois,
     selectedEvent: pois[0],
+    stories: stories,
     showPOIForm: false,
     showSidebar: false,
     isEditing: true
@@ -35,7 +35,6 @@ class App extends Component {
   }
 
   render() {
-    var sidebarContent = <b>Sidebar content</b>
     const { showPOIForm } = this.state
 
     return (
@@ -45,9 +44,9 @@ class App extends Component {
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
-                <a onClick={this.toggleSidebar} href="#">
-                  ={' '}
-                </a>
+                <div className="sidebar-menu" onClick={this.toggleSidebar}>
+                  =
+                </div>
                 <a href="/">NNB</a>
               </Navbar.Brand>
               <Navbar.Toggle />

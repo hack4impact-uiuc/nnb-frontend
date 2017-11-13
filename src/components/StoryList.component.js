@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import {
-  Button,
-  FormControl,
-  Form,
-  ControlLabel,
-  FormGroup
-} from 'react-bootstrap'
+import { Button, FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import './../styles/storylist.css'
 
 class StoryList extends Component {
   constructor(props) {
@@ -15,17 +10,13 @@ class StoryList extends Component {
       addStorySelected: false,
       storyName: ''
     }
-    //this.onSetOpen = this.onSetOpen.bind(this)
+
     this.addStoryClicked = this.addStoryClicked.bind(this)
     this.addStoryExit = this.addStoryExit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.submitStoryName = this.submitStoryName.bind(this)
   }
 
-  /*  onSetOpen(open) {
-    this.setState({ showSidebar: open })
-  }
-*/
   addStoryClicked() {
     this.setState({ addStorySelected: true })
   }
@@ -47,63 +38,40 @@ class StoryList extends Component {
   }
 
   render() {
-    const styles = {
-      sidebar: {
-        width: 256,
-        height: '100%'
-      },
-      sidebarLink: {
-        display: 'block',
-        padding: '16px 0px',
-        color: '#FFF',
-        textDecoration: 'none'
-      },
-      divider: {
-        margin: '8px 0',
-        height: 1,
-        backgroundColor: '#FFF'
-      },
-      title: {
-        display: 'inline',
-        color: '#FFF'
-      },
-      exitbutton: {
-        float: 'right',
-        color: '#FFF',
-        paddingRight: '0.5cm',
-        paddingTop: '0.20cm'
-      }
-    }
+    const stories = this.props.stories
+
+    var sidebarContent2 = (
+      <SidebarContent
+        toggleSidebar={this.props.toggleSidebar}
+        isEditing={this.props.isEditing}
+        addStorySelected={this.state.addStorySelected}
+        storyName={this.state.storyName}
+        stories={stories}
+        addStoryClicked={this.addStoryClicked}
+        addStoryExit={this.addStoryExit}
+        handleChange={this.handleChange}
+        submitStoryName={this.submitStoryName}
+      />
+    )
 
     var sidebarContent = (
-      <div style={styles.sidebar}>
+      <div className="sidebar">
         <div>
-          <h2 style={styles.title}>Story List</h2>
-          <a
-            title="Exit"
-            href="##"
-            style={styles.exitbutton}
-            onClick={this.props.toggleSidebar}
-          >
+          <h2 className="sidebar-title">Story List</h2>
+          <div className="exit" onClick={this.props.toggleSidebar}>
             X
-          </a>
+          </div>
         </div>
-        <div style={styles.divider} />
+        <div className="divider" />
 
-        <a href="" style={styles.sidebarLink}>
-          Story 1
-        </a>
-        <div style={styles.divider} />
-
-        <a href="" style={styles.sidebarLink}>
-          Story 2
-        </a>
-        <div style={styles.divider} />
-
-        <a href="" style={styles.sidebarLink}>
-          Story 3
-        </a>
-        <div style={styles.divider} />
+        {stories.map(story => (
+          <div>
+            <a href="" className="sidebar-link">
+              {story.name}
+            </a>
+            <div className="divider" />
+          </div>
+        ))}
 
         {this.props.isEditing &&
           !this.state.addStorySelected && (
@@ -113,23 +81,17 @@ class StoryList extends Component {
         {this.props.isEditing &&
           this.state.addStorySelected && (
             <div>
-              <h3 style={styles.title}>Enter Story Name:</h3>
-              <a
-                title="Exit2"
-                href="#"
-                style={styles.exitbutton}
-                onClick={this.addStoryExit}
-              >
+              <h3 className="sidebar-title">Enter Story Name:</h3>
+              <div className="exit" onClick={this.addStoryExit}>
                 X
-              </a>
-              <form>
-                <FormControl
-                  type="text"
-                  value={this.state.storyName}
-                  placeholder="Enter text"
-                  onChange={this.handleChange}
-                />
-              </form>
+              </div>
+
+              <FormControl
+                type="text"
+                value={this.state.storyName}
+                placeholder="Enter text"
+                onChange={this.handleChange}
+              />
 
               <Button onClick={this.submitStoryName}>Submit</Button>
             </div>
@@ -140,7 +102,7 @@ class StoryList extends Component {
     const sidebarProps = {
       sidebar: sidebarContent,
       open: this.props.showSidebar,
-      sidebarClassName: 'custom-sidebar-class'
+      sidebarClassName: 'sidebar'
     }
 
     return (
@@ -149,6 +111,60 @@ class StoryList extends Component {
       </div>
     )
   }
+}
+
+function SidebarContent({
+  toggleSidebar,
+  isEditing,
+  addStorySelected,
+  storyName,
+  stories,
+  addStoryClicked,
+  addStoryExit,
+  handleChange,
+  submitStoryName
+}) {
+  return
+  ;<div className="sidebar">
+    <div>
+      <h2 className="sidebar-title">Story List</h2>
+      <div className="exit" onClick={toggleSidebar}>
+        X
+      </div>
+    </div>
+    <div className="divider" />
+
+    {stories.map(story => (
+      <div>
+        <a href="" className="sidebar-link">
+          {story.name}
+        </a>
+        <div className="divider" />
+      </div>
+    ))}
+
+    {isEditing &&
+      !addStorySelected && <Button onClick={addStoryClicked}>Add Story</Button>}
+
+    {isEditing &&
+      addStorySelected && (
+        <div>
+          <h3 className="sidebar-title">Enter Story Name:</h3>
+          <div className="exit" onClick={addStoryExit}>
+            X
+          </div>
+
+          <FormControl
+            type="text"
+            value={storyName}
+            placeholder="Enter text"
+            onChange={handleChange}
+          />
+
+          <Button onClick={submitStoryName}>Submit</Button>
+        </div>
+      )}
+  </div>
 }
 
 export default StoryList
