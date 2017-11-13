@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
 import { InfoPanel, NNBMap, POIForm } from './components'
-import { pois } from './utils/dummyData'
+import { pois, Api } from './utils'
 import './styles/App.css'
 
 class App extends Component {
@@ -15,6 +15,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
+  }
+
+  componentDidMount() {
+    // example of how to use api requests
+    Api.getData().then(data => this.setState({ apiResponse: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -45,7 +50,7 @@ class App extends Component {
         <div className="nnb-app">
           {!showPOIForm && (
             <div className="nnb-map-container">
-              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI}/>
+              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI} />
             </div>
           )}
           {!showPOIForm && (
