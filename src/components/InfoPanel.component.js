@@ -16,7 +16,7 @@ class InfoPanel extends Component {
           <div>
             <Image
               src={selectedEvent.image}
-              alt="Image for this Map Marker"
+              alt={selectedEvent.title}
               responsive
             />
             <hr />
