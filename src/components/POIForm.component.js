@@ -4,10 +4,11 @@ import {
   FormControl,
   ControlLabel,
   Button,
-  ButtonToolbar,
-  InputGroup
+  Checkbox,
+  Form,
+  Col,
+  PageHeader
 } from 'react-bootstrap'
-import { Checkbox, Form, Col, PageHeader, FieldGroup } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -28,6 +29,7 @@ class POIForm extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onChangeLinks = this.onChangeLinks.bind(this)
     /*this.onClickPlus = this.onClickPlus.bind(this)*/
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   onDateSelected() {
@@ -66,17 +68,7 @@ class POIForm extends Component {
     })
   }
 
-  /*
-  function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
-*/
+  onSubmit() {}
 
   render() {
     return (
@@ -139,8 +131,8 @@ class POIForm extends Component {
           *********THIS IS MY UPLOAD BUTTON***********
         */}
         <FormGroup controlID="chooseFile">
-          <Col componenClass={ControlLabel} sm={2}>
-            <ControlLabel>Upload Media</ControlLabel>
+          <Col componentClass={ControlLabel} sm={2}>
+            Upload Media
           </Col>
           <Col sm={10}>
             <FormControl type="file" placeholder="Upload your files here" />
@@ -168,7 +160,10 @@ class POIForm extends Component {
           *********THIS IS MY LIST OF STORY CHECKBOXES***********
         */}
         <FormGroup controlID="stories">
-          <Col smOffset={2} sm={10}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Stories
+          </Col>
+          <Col sm={10}>
             <Checkbox>Story 1</Checkbox>
             <Checkbox>Story 2</Checkbox>
             <Checkbox>Story 3</Checkbox>
@@ -182,7 +177,7 @@ class POIForm extends Component {
         */}
         <FormGroup controlID="submit">
           <Col smOffset={2} sm={10}>
-            <Button bsStyle="primary" type="submit">
+            <Button bsStyle="primary" type="submit" onClick={this.onSubmit}>
               Create
             </Button>
           </Col>
