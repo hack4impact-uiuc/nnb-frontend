@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
-import { InfoPanel, NNBMap, POIForm } from './components'
+import { InfoPanel, NNBMap, POIForm, StoryList } from './components'
 import { pois } from './utils/dummyData'
 import './styles/App.css'
+import Sidebar from 'react-sidebar'
 
 class App extends Component {
   // using dummy data until BE api is done
   state = {
     activeEvents: pois,
     selectedEvent: pois[0],
-    showPOIForm: false
+    showPOIForm: false,
+    showSidebar: false,
+    isEditing: true
   }
 
   constructor(props) {
     super(props)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -26,15 +30,24 @@ class App extends Component {
     })
   }
 
+  toggleSidebar() {
+    this.setState({ showSidebar: !this.state.showSidebar })
+  }
+
   render() {
+    var sidebarContent = <b>Sidebar content</b>
     const { showPOIForm } = this.state
 
     return (
       <div>
+        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
+                <a onClick={this.toggleSidebar} href="#">
+                  ={' '}
+                </a>
                 <a href="/">NNB</a>
               </Navbar.Brand>
               <Navbar.Toggle />
@@ -45,7 +58,7 @@ class App extends Component {
         <div className="nnb-app">
           {!showPOIForm && (
             <div className="nnb-map-container">
-              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI}/>
+              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI} />
             </div>
           )}
           {!showPOIForm && (
