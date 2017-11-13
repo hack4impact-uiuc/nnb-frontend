@@ -139,7 +139,7 @@ class POIForm extends Component {
           *********THIS IS MY UPLOAD BUTTON***********
         */}
         <FormGroup controlID="chooseFile">
-          <Col sm={2}>
+          <Col componenClass={ControlLabel} sm={2}>
             <ControlLabel>Upload Media</ControlLabel>
           </Col>
           <Col sm={10}>
