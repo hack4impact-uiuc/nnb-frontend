@@ -40,10 +40,9 @@ class StoryList extends Component {
   render() {
     const stories = this.props.stories
 
-    var sidebarContent2 = (
+    var sidebarContent = (
       <SidebarContent
-        toggleSidebar={this.props.toggleSidebar}
-        isEditing={this.props.isEditing}
+        {...this.props}
         addStorySelected={this.state.addStorySelected}
         storyName={this.state.storyName}
         stories={stories}
@@ -52,51 +51,6 @@ class StoryList extends Component {
         handleChange={this.handleChange}
         submitStoryName={this.submitStoryName}
       />
-    )
-
-    var sidebarContent = (
-      <div className="sidebar">
-        <div>
-          <h2 className="sidebar-title">Story List</h2>
-          <div className="exit" onClick={this.props.toggleSidebar}>
-            X
-          </div>
-        </div>
-        <div className="divider" />
-
-        {stories.map(story => (
-          <div>
-            <a href="" className="sidebar-link">
-              {story.name}
-            </a>
-            <div className="divider" />
-          </div>
-        ))}
-
-        {this.props.isEditing &&
-          !this.state.addStorySelected && (
-            <Button onClick={this.addStoryClicked}>Add Story</Button>
-          )}
-
-        {this.props.isEditing &&
-          this.state.addStorySelected && (
-            <div>
-              <h3 className="sidebar-title">Enter Story Name:</h3>
-              <div className="exit" onClick={this.addStoryExit}>
-                X
-              </div>
-
-              <FormControl
-                type="text"
-                value={this.state.storyName}
-                placeholder="Enter text"
-                onChange={this.handleChange}
-              />
-
-              <Button onClick={this.submitStoryName}>Submit</Button>
-            </div>
-          )}
-      </div>
     )
 
     const sidebarProps = {
@@ -114,57 +68,59 @@ class StoryList extends Component {
 }
 
 function SidebarContent({
-  toggleSidebar,
-  isEditing,
   addStorySelected,
   storyName,
   stories,
   addStoryClicked,
   addStoryExit,
   handleChange,
-  submitStoryName
+  submitStoryName,
+  ...props
 }) {
-  return
-  ;<div className="sidebar">
-    <div>
-      <h2 className="sidebar-title">Story List</h2>
-      <div className="exit" onClick={toggleSidebar}>
-        X
-      </div>
-    </div>
-    <div className="divider" />
-
-    {stories.map(story => (
+  return (
+    <div className="sidebar">
       <div>
-        <a href="" className="sidebar-link">
-          {story.name}
-        </a>
-        <div className="divider" />
-      </div>
-    ))}
-
-    {isEditing &&
-      !addStorySelected && <Button onClick={addStoryClicked}>Add Story</Button>}
-
-    {isEditing &&
-      addStorySelected && (
-        <div>
-          <h3 className="sidebar-title">Enter Story Name:</h3>
-          <div className="exit" onClick={addStoryExit}>
-            X
-          </div>
-
-          <FormControl
-            type="text"
-            value={storyName}
-            placeholder="Enter text"
-            onChange={handleChange}
-          />
-
-          <Button onClick={submitStoryName}>Submit</Button>
+        <h2 className="sidebar-title">Story List</h2>
+        <div className="exit" onClick={props.toggleSidebar}>
+          X
         </div>
-      )}
-  </div>
+      </div>
+      <div className="divider" />
+
+      {stories.map(story => (
+        <div>
+          <a href="" className="sidebar-link">
+            {story.name}
+          </a>
+          <div className="divider" />
+        </div>
+      ))}
+
+      {props.isEditing &&
+        !addStorySelected && (
+          <Button onClick={addStoryClicked}>Add Story</Button>
+        )}
+
+      {props.isEditing &&
+        addStorySelected && (
+          <div>
+            <h3 className="sidebar-title">Enter Story Name:</h3>
+            <div className="exit" onClick={addStoryExit}>
+              X
+            </div>
+
+            <FormControl
+              type="text"
+              value={storyName}
+              placeholder="Enter text"
+              onChange={handleChange}
+            />
+
+            <Button onClick={submitStoryName}>Submit</Button>
+          </div>
+        )}
+    </div>
+  )
 }
 
 export default StoryList
