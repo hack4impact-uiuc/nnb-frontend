@@ -85,14 +85,19 @@ function POIMarkers({
   mapImageWidth,
   mapImageHeight
 }) {
-  return activeEvents.map(POI => (
-    <POIMarker
-      {...POI}
-      isSelected={POI.id === selectedEvent.id}
-      key={POI.id}
-      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
-    />
-  ))
+  return activeEvents.map(poi => {
+    const absoluteXCoordinate = `${poi.coordinateX / 100 * mapImageWidth}px`
+    const absoluteYCoordinate = `${poi.coordinateY / 100 * mapImageHeight}px`
+
+    return (
+      <POIMarker
+        {...poi}
+        isSelected={poi.id === selectedEvent.id}
+        key={poi.id}
+        {...{ setSelectedPOI, absoluteXCoordinate, absoluteYCoordinate }}
+      />
+    )
+  })
 }
 
 export default NNBMap
