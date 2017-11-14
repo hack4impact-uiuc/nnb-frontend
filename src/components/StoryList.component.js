@@ -40,7 +40,7 @@ class StoryList extends Component {
   render() {
     const stories = this.props.stories
 
-    var sidebarContent = (
+    const sidebarContent = (
       <SidebarContent
         {...this.props}
         addStorySelected={this.state.addStorySelected}
@@ -56,7 +56,8 @@ class StoryList extends Component {
     const sidebarProps = {
       sidebar: sidebarContent,
       open: this.props.showSidebar,
-      sidebarClassName: 'sidebar'
+      sidebarClassName: 'sidebar',
+      children: ''
     }
 
     return (
@@ -88,7 +89,7 @@ function SidebarContent({
       <div className="divider" />
 
       {stories.map(story => (
-        <div>
+        <div key={story.id}>
           <a href="" className="sidebar-link">
             {story.name}
           </a>
