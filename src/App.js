@@ -31,7 +31,9 @@ class App extends Component {
   }
 
   toggleSidebar() {
-    this.setState({ showSidebar: !this.state.showSidebar })
+    this.setState({
+      showSidebar: !this.state.showSidebar
+    })
   }
 
   render() {

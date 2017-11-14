@@ -4,13 +4,13 @@ import Sidebar from 'react-sidebar'
 import './../styles/storylist.css'
 
 class StoryList extends Component {
+  state = {
+    addStorySelected: false,
+    storyName: ''
+  }
+
   constructor(props) {
     super(props)
-    this.state = {
-      addStorySelected: false,
-      storyName: ''
-    }
-
     this.addStoryClicked = this.addStoryClicked.bind(this)
     this.addStoryExit = this.addStoryExit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -53,16 +53,14 @@ class StoryList extends Component {
       />
     )
 
-    const sidebarProps = {
-      sidebar: sidebarContent,
-      open: this.props.showSidebar,
-      sidebarClassName: 'sidebar',
-      children: ''
-    }
-
     return (
       <div>
-        <Sidebar {...sidebarProps} />
+        <Sidebar
+          sidebar={sidebarContent}
+          open={this.props.showSidebar}
+          sidebarClassName="sidebar"
+          children=""
+        />
       </div>
     )
   }
@@ -90,9 +88,7 @@ function SidebarContent({
 
       {stories.map(story => (
         <div key={story.id}>
-          <a href="" className="sidebar-link">
-            {story.name}
-          </a>
+          <div className="sidebar-link">{story.name}</div>
           <div className="divider" />
         </div>
       ))}
