@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Grid, Navbar } from 'react-bootstrap'
-import { InfoPanel, NNBMap, POIForm, Counter } from './components'
-import { pois } from './utils/dummyData'
+import { InfoPanel, NNBMap, POIForm } from './components'
+import { pois, stories } from './utils/dummyData'
 
 class App extends Component {
   // using dummy data until BE api is done
   state = {
     activeEvents: pois,
-    selectedEvent: pois[0]
+    selectedEvent: pois[0],
+    stories: stories
   }
 
   render() {
@@ -29,7 +30,6 @@ class App extends Component {
             <InfoPanel {...this.state} />
           <NNBMap {...this.state} />
           <POIForm {...this.state} />
-          <Counter startNumber={1234} />
 
           */}
 

@@ -71,29 +71,26 @@ class POIForm extends Component {
   onSubmit() {}
 
   render() {
+    const stories = this.props.stories
+
     return (
       <Form horizontal>
         <PageHeader>
           POI Input Form
-          <small>Complete each component below</small>
+          <small> Complete each component below</small>
         </PageHeader>
 
         {/*
           *********THIS IS MY POI NAME***********
         */}
-        <FormGroup controlId="name">
-          <Col componentClass={ControlLabel} sm={2}>
-            POI Name
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              type="text"
-              placeholder="Enter your POI name here"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          controlID="name"
+          label="POI Name"
+          inputType="text"
+          helperText="Enter your POI name here"
+          thisValue={this.state.name}
+          thisChange={this.onChangName}
+        />
 
         {/*
           *********THIS IS MY DATEPICKER***********
@@ -113,69 +110,55 @@ class POIForm extends Component {
         {/*
           *********THIS IS MY DESCRIPTION AREA***********
         */}
-        <FormGroup controlID="description">
-          <Col componentClass={ControlLabel} sm={2}>
-            POI description
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Enter you POI description here"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
-            />
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          controlID="description"
+          label="POI Description"
+          inputType="textarea"
+          helperText="Enter your POI description here"
+          thisValue={this.state.description}
+          thisChange={this.onChangeDescription}
+        />
 
         {/*
           *********THIS IS MY UPLOAD BUTTON***********
         */}
-        <FormGroup controlID="chooseFile">
-          <Col componentClass={ControlLabel} sm={2}>
-            Upload Media
-          </Col>
-          <Col sm={10}>
-            <FormControl type="file" placeholder="Upload your files here" />
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          controlID="chooseFile"
+          label="Upload Media"
+          inputType="file"
+          helperText="Upload your files here"
+        />
 
-        {/*
-          *********THIS IS MY LINKS TEXT AREA***********
-        */}
-        <FormGroup controlID="links">
-          <Col componentClass={ControlLabel} sm={2}>
-            POI Links
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Enter related links here, separated by commas"
-              value={this.state.links}
-              onChange={this.onChangeLinks}
-            />
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          controlId="links"
+          label="POI Links"
+          inputType="textarea"
+          helperText="Enter related links here, separated by commas"
+          thisValue={this.state.links}
+          thisChange={this.onChangeLinks}
+        />
 
         {/*
           *********THIS IS MY LIST OF STORY CHECKBOXES***********
         */}
-        <FormGroup controlID="stories">
+        <FormGroup controlid="stories">
           <Col componentClass={ControlLabel} sm={2}>
             Stories
           </Col>
           <Col sm={10}>
-            <Checkbox>Story 1</Checkbox>
-            <Checkbox>Story 2</Checkbox>
-            <Checkbox>Story 3</Checkbox>
+            {stories.map(story => (
+              <div key={story.id}>
+                <Checkbox>{story.name}</Checkbox>
+              </div>
+            ))}
           </Col>
         </FormGroup>
-
         <FormControl.Feedback />
 
         {/*
           *********THIS IS MY SUBMIT BUTTON***********
         */}
-        <FormGroup controlID="submit">
+        <FormGroup controlid="submit">
           <Col smOffset={2} sm={10}>
             <Button bsStyle="primary" type="submit" onClick={this.onSubmit}>
               Create
@@ -185,6 +168,48 @@ class POIForm extends Component {
       </Form>
     )
   }
+}
+
+function FieldGroup({
+  controlId, //indentifier
+  label,
+  inputType, //text vs. textarea vs. file
+  helperText,
+  thisValue,
+  thisChange
+}) {
+  var fieldGroupModule
+
+  if (inputType === 'text') {
+    fieldGroupModule = (
+      <FormControl
+        type="text"
+        placeholder={helperText}
+        value={thisValue}
+        onChange={thisChange}
+      />
+    )
+  } else if (inputType === 'textarea') {
+    fieldGroupModule = (
+      <FormControl
+        componentClass="textarea"
+        placeholder={helperText}
+        value={thisValue}
+        onChange={thisChange}
+      />
+    )
+  } else if (inputType === 'file') {
+    fieldGroupModule = <FormControl type="file" placeholder={helperText} />
+  }
+
+  return (
+    <FormGroup controlid={controlId}>
+      <Col componentClass={ControlLabel} sm={2}>
+        {label}
+      </Col>
+      <Col sm={10}>{fieldGroupModule}</Col>
+    </FormGroup>
+  )
 }
 
 export default POIForm
