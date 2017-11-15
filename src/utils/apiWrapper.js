@@ -17,14 +17,29 @@ function createRequest(method, endpoint, options) {
       req = req.send(options)
     }
   }
-  return req.then(response => response.body).catch(err => console.err(err))
+  return req
+    .then(response => response.body.data)
+    .catch(err => console.error(err))
 }
 
-function getData() {
-  const endpoint = 'posts/1'
-  return createRequest(REQUEST_METHODS.get, endpoint)
+// TODO: api url should be /pois
+function getPOIs() {
+  return createRequest(REQUEST_METHODS.get, 'poi').then(res =>
+    res.map(r => r.data)
+  )
+}
+
+function getStories() {
+  return createRequest(REQUEST_METHODS.get, 'stories')
+}
+
+// TODO: api should take in story id, not name
+function getStory(name) {
+  return createRequest(REQUEST_METHODS.get, `stories/${name}`)
 }
 
 export default {
-  getData
+  getPOIs,
+  getStories,
+  getStory
 }
