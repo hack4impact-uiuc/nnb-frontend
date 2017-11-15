@@ -60,6 +60,18 @@ class StoryList extends Component {
           open={this.props.showSidebar}
           sidebarClassName="sidebar"
           children=""
+          touchHandleWidth={0}
+          styles={{
+            root: {
+              position: 'static'
+            },
+            content: {
+              position: 'static'
+            },
+            sidebar: {
+              zIndex: 3
+            }
+          }}
         />
       </div>
     )
