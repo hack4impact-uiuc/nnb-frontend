@@ -31,7 +31,8 @@ class App extends Component {
 
   componentDidMount() {
     // example of how to use api requests
-    Api.getPOIs().then(data => this.setState({ apiResponse: data }))
+    Api.getPOIs().then(data => this.setState({ activeEvents: data }))
+    Api.getStories().then(data => this.setState({ stories: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
