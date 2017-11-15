@@ -17,7 +17,7 @@ function createRequest(method, endpoint, options) {
       req = req.send(options)
     }
   }
-  return req.then(response => response.body)
+  return req.then(response => response.body).catch(err => console.err(err))
 }
 
 function getData() {
