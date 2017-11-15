@@ -22,15 +22,41 @@ function createRequest(method, endpoint, options) {
     .catch(err => console.error(err))
 }
 
+function convertApiPOI(poi) {
+  return {
+    id: poi.id,
+    title: poi.name,
+    // TODO: change api to date
+    date: poi.data,
+    description: poi.eventinfo,
+    // TODO: support multiple media items
+    image: poi.content[0],
+    coordinateX: poi.x_coord,
+    coordinateY: poi.y_coord,
+    // TODO: additional_links should just be list of links
+    // (no need for POI id, that's kinda redundant)
+    links: poi.additional_links.map(l => l.url)
+  }
+}
+
+function convertApiStory(story) {
+  return {
+    id: story.id,
+    name: story.story_name
+  }
+}
+
 // TODO: api url should be /pois
 function getPOIs() {
   return createRequest(REQUEST_METHODS.get, 'poi').then(res =>
-    res.map(r => r.data)
+    res.map(r => r.data).map(convertApiPOI)
   )
 }
 
 function getStories() {
-  return createRequest(REQUEST_METHODS.get, 'stories')
+  return createRequest(REQUEST_METHODS.get, 'stories').then(res =>
+    res.map(convertApiStory)
+  )
 }
 
 // TODO: api should take in story id, not name
