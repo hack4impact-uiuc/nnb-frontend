@@ -43,3 +43,22 @@ export const pois = [
     links: ['http://corn.com', 'http://illinoiscrops.com']
   }
 ]
+
+export const stories = [
+  {
+    id: 1,
+    name: 'Story 1'
+  },
+  {
+    id: 2,
+    name: 'Story 2'
+  },
+  {
+    id: 3,
+    name: 'Story 3'
+  },
+  {
+    id: 4,
+    name: 'Story 4'
+  }
+]

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
-import { InfoPanel, NNBMap, POIForm } from './components'
-import { pois } from './utils/dummyData'
+import { InfoPanel, NNBMap, POIForm, StoryList } from './components'
+import { pois, stories } from './utils/dummyData'
 import './styles/App.css'
 
 class App extends Component {
@@ -9,14 +9,17 @@ class App extends Component {
   state = {
     activeEvents: pois,
     selectedEvent: pois[0],
+    stories: stories,
     showPOIForm: false,
-    isEditing: false
+    showSidebar: false,
+    isEditing: true
   }
 
   constructor(props) {
     super(props)
     this.toggleEditMode = this.toggleEditMode.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
   }
 
@@ -35,6 +38,12 @@ class App extends Component {
     })
   }
 
+  toggleSidebar() {
+    this.setState({
+      showSidebar: !this.state.showSidebar
+    })
+  }
+
   setShowPOIForm(shouldShow) {
     this.setState({
       showPOIForm: shouldShow
@@ -46,10 +55,14 @@ class App extends Component {
 
     return (
       <div>
+        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
+                <div className="sidebar-menu" onClick={this.toggleSidebar}>
+                  =
+                </div>
                 <a href="/">NNB</a>
               </Navbar.Brand>
               <Navbar.Toggle />
