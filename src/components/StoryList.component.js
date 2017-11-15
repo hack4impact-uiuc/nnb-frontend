@@ -99,7 +99,7 @@ function SidebarContent({
       <div className="divider" />
 
       {stories.map(story => (
-        <div key={story.id}>
+        <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
           <div className="sidebar-link">{story.name}</div>
           <div className="divider" />
         </div>

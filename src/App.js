@@ -10,9 +10,11 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
+    selectedStory: null,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true
+    isEditing: true,
+    isStorySelected: false
   }
 
   constructor(props) {
@@ -21,6 +23,8 @@ class App extends Component {
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
+    this.setIsStorySelected = this.setIsStorySelected.bind(this)
+    this.setSelectedStory = this.setSelectedStory.bind(this)
   }
 
   toggleEditMode() {
@@ -38,6 +42,13 @@ class App extends Component {
     })
   }
 
+  setSelectedStory(storyId) {
+    const clickedStory = this.state.stories.find(story => story.id === storyId)
+    this.setState({
+      selectedStory: clickedStory
+    })
+  }
+
   toggleSidebar() {
     this.setState({
       showSidebar: !this.state.showSidebar
@@ -50,12 +61,22 @@ class App extends Component {
     })
   }
 
+  setIsStorySelected() {
+    this.setState({
+      isStorySelected: true
+    })
+  }
+
   render() {
     const { showPOIForm, isEditing } = this.state
 
     return (
       <div>
-        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
+        <StoryList
+          {...this.state}
+          toggleSidebar={this.toggleSidebar}
+          setSelectedStory={this.setSelectedStory}
+        />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
