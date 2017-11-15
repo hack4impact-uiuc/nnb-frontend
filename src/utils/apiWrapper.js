@@ -14,7 +14,7 @@ function createRequest(method, endpoint, options) {
     if (method === REQUEST_METHODS.get) {
       req = req.query(options)
     } else if ([REQUEST_METHODS.post, REQUEST_METHODS.put].includes(method)) {
-      req = req.params(options)
+      req = req.send(options)
     }
   }
   return req.then(response => response.body)
