@@ -1,4 +1,4 @@
-import { pois } from './dummyData'
+import { pois, stories } from './dummyData'
 import Api from './apiWrapper'
 
-export { pois, Api }
+export { pois, stories, Api }

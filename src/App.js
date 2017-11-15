@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Grid, Navbar } from 'react-bootstrap'
-import { InfoPanel, NNBMap, POIForm } from './components'
-import { pois, Api } from './utils'
+import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { InfoPanel, NNBMap, POIForm, StoryList } from './components'
+import { pois, stories, Api } from './utils'
 import './styles/App.css'
 
 class App extends Component {
@@ -9,12 +9,24 @@ class App extends Component {
   state = {
     activeEvents: pois,
     selectedEvent: pois[0],
-    showPOIForm: false
+    stories: stories,
+    showPOIForm: false,
+    showSidebar: false,
+    isEditing: true
   }
 
   constructor(props) {
     super(props)
+    this.toggleEditMode = this.toggleEditMode.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
+    this.setShowPOIForm = this.setShowPOIForm.bind(this)
+  }
+
+  toggleEditMode() {
+    this.setState({
+      isEditing: !this.state.isEditing
+    })
   }
 
   componentDidMount() {
@@ -31,26 +43,53 @@ class App extends Component {
     })
   }
 
+  toggleSidebar() {
+    this.setState({
+      showSidebar: !this.state.showSidebar
+    })
+  }
+
+  setShowPOIForm(shouldShow) {
+    this.setState({
+      showPOIForm: shouldShow
+    })
+  }
+
   render() {
-    const { showPOIForm } = this.state
+    const { showPOIForm, isEditing } = this.state
 
     return (
       <div>
+        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
               <Navbar.Brand>
+                <div className="sidebar-menu" onClick={this.toggleSidebar}>
+                  =
+                </div>
                 <a href="/">NNB</a>
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
+            <ToggleButtonGroup
+              type="checkbox"
+              value={isEditing ? [1] : []}
+              onChange={this.toggleEditMode}
+            >
+              <ToggleButton value={1}>Edit</ToggleButton>
+            </ToggleButtonGroup>
           </Grid>
         </Navbar>
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
           {!showPOIForm && (
             <div className="nnb-map-container">
-              <NNBMap {...this.state} setSelectedPOI={this.setSelectedPOI} />
+              <NNBMap
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+              />
             </div>
           )}
           {!showPOIForm && (
