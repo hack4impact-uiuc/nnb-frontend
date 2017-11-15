@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { InfoPanel, NNBMap, POIForm, StoryList } from './components'
-import { pois, stories } from './utils/dummyData'
+import { pois, stories, Api } from './utils'
 import './styles/App.css'
 
 class App extends Component {
@@ -27,6 +27,11 @@ class App extends Component {
     this.setState({
       isEditing: !this.state.isEditing
     })
+  }
+
+  componentDidMount() {
+    // example of how to use api requests
+    Api.getPOIs().then(data => this.setState({ apiResponse: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
