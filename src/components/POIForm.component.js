@@ -124,40 +124,47 @@ function FieldGroup({
 }) {
   let fieldGroupModule
 
-  if (inputType === 'text') {
-    fieldGroupModule = (
-      <FormControl
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-    )
-  } else if (inputType === 'textarea') {
-    fieldGroupModule = (
-      <FormControl
-        componentClass="textarea"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-    )
-  } else if (inputType === 'file') {
-    fieldGroupModule = <FormControl type="file" placeholder={placeholder} />
-  } else if (inputType === 'checklist') {
-    fieldGroupModule = stories.map(story => (
-      <div key={story.id}>
-        <Checkbox>{story.name}</Checkbox>
-      </div>
-    ))
-  } else if (inputType === 'date') {
-    fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
-  } else if (inputType === 'button') {
-    fieldGroupModule = (
-      <Button bsStyle="primary" onClick={onClick}>
-        {buttonText}
-      </Button>
-    )
+  switch (inputType) {
+    case 'text':
+      fieldGroupModule = (
+        <FormControl
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+      )
+      break
+    case 'textarea':
+      fieldGroupModule = (
+        <FormControl
+          componentClass="textarea"
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+      )
+      break
+    case 'file':
+      fieldGroupModule = <FormControl type="file" placeholder={placeholder} />
+      break
+    case 'date':
+      fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
+      break
+    case 'button':
+      fieldGroupModule = (
+        <Button bsStyle="primary" onClick={onClick}>
+          {buttonText}
+        </Button>
+      )
+      break
+    case 'checklist':
+      fieldGroupModule = stories.map(story => (
+        <div key={story.id}>
+          <Checkbox>{story.name}</Checkbox>
+        </div>
+      ))
+      break
   }
 
   return (
