@@ -20,8 +20,7 @@ class POIForm extends Component {
     this.state = {
       startDate: moment(),
       name: '',
-      description: '',
-      links: ''
+      description: ''
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
@@ -90,8 +89,6 @@ class POIForm extends Component {
           label="POI Links"
           inputType="textarea"
           placeholder="Enter related links here, separated by commas"
-          value={this.state.links}
-          onChange={this.onChangeLinks}
         />
 
         <FieldGroup
