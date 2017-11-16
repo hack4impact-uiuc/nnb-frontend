@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
 import './../styles/storylist.css'
+import classnames from 'classnames'
 
 class StoryList extends Component {
   state = {
@@ -50,6 +51,7 @@ class StoryList extends Component {
         addStoryExit={this.addStoryExit}
         handleChange={this.handleChange}
         submitStoryName={this.submitStoryName}
+        exitStory={this.props.exitStory}
       />
     )
 
@@ -86,6 +88,7 @@ function SidebarContent({
   addStoryExit,
   handleChange,
   submitStoryName,
+  exitStory,
   ...props
 }) {
   return (
@@ -100,10 +103,18 @@ function SidebarContent({
 
       {stories.map(story => (
         <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
-          <div className="sidebar-link">{story.name}</div>
+          <div
+            className={classnames('sidebar-link', {
+              'link--selected': story.id === props.selectedStory
+            })}
+          >
+            {story.name}
+          </div>
           <div className="divider" />
         </div>
       ))}
+
+      {props.isStorySelected && <Button onClick={exitStory}>Exit Story</Button>}
 
       {props.isEditing &&
         !addStorySelected && (

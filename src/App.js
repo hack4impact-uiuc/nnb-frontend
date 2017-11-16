@@ -10,6 +10,7 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
+    selectedStory: null,
     isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
@@ -23,6 +24,7 @@ class App extends Component {
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.exitStory = this.exitStory.bind(this)
   }
 
   toggleEditMode() {
@@ -50,7 +52,15 @@ class App extends Component {
     /*const clickedStory = this.state.stories.find(story => story.id === storyId)*/
     //make api request
     this.setState({
+      selectedStory: storyId,
       isStorySelected: true
+    })
+  }
+
+  exitStory() {
+    this.setState({
+      selectedStory: null,
+      isStorySelected: false
     })
   }
 
@@ -75,6 +85,7 @@ class App extends Component {
           {...this.state}
           toggleSidebar={this.toggleSidebar}
           setSelectedStory={this.setSelectedStory}
+          exitStory={this.exitStory}
         />
         <Navbar inverse>
           <Grid>
