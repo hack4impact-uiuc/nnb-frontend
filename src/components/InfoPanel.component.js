@@ -24,7 +24,7 @@ class InfoPanel extends Component {
   render() {
     const { activeEvents, selectedEvent, setSelectedPOI } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
-    const isShownNext = curIndex < activeEvents.length
+    const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
     return (
