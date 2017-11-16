@@ -25,14 +25,9 @@ class App extends Component {
           </Grid>
         </Navbar>
         <Grid>
-          {/* Comment out the components to leave only the one you need to work on 
-
-            <InfoPanel {...this.state} />
+          {/* Comment out the components to leave only the one you need to work on */}
+          <InfoPanel {...this.state} />
           <NNBMap {...this.state} />
-          <POIForm {...this.state} />
-
-          */}
-
           <POIForm {...this.state} />
         </Grid>
       </div>

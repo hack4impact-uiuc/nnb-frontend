@@ -21,22 +21,14 @@ class POIForm extends Component {
       startDate: moment(),
       name: '',
       description: '',
-      selectedStories: [],
       links: ''
     }
-    this.handleChange = this.handleChange.bind(this)
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
-    this.onChangeLinks = this.onChangeLinks.bind(this)
-    /*this.onClickPlus = this.onClickPlus.bind(this)*/
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onDateSelected() {
-    // call this when date input changes
-  }
-
-  handleChange(date) {
+  onDateSelected(date) {
     this.setState({
       startDate: date
     })
@@ -54,20 +46,6 @@ class POIForm extends Component {
     })
   }
 
-  /*onClickPlus() {
-    this.setState({
-      links : this.state.links.concat(
-        ["1"]
-      )
-    });
-  }*/
-
-  onChangeLinks(inputLinks) {
-    this.setState({
-      links: inputLinks.target.value
-    })
-  }
-
   onSubmit() {}
 
   render() {
@@ -75,96 +53,64 @@ class POIForm extends Component {
 
     return (
       <Form horizontal>
-        <PageHeader>
-          POI Input Form
-          <small> Complete each component below</small>
-        </PageHeader>
+        <PageHeader>Create POI</PageHeader>
 
-        {/*
-          *********THIS IS MY POI NAME***********
-        */}
         <FieldGroup
           controlID="name"
           label="POI Name"
           inputType="text"
-          helperText="Enter your POI name here"
-          thisValue={this.state.name}
-          thisChange={this.onChangName}
+          placeholder="Enter your POI name here"
+          value={this.state.name}
+          onChange={this.onChangeName}
         />
 
-        {/*
-          *********THIS IS MY DATEPICKER***********
-        */}
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={2}>
-            POI Date
-          </Col>
-          <Col sm={6}>
-            <DatePicker
-              selected={this.state.startDate}
-              onChange={this.handleChange}
-            />
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          inputType="date"
+          label="POI Date"
+          selected={this.state.startDate}
+          onChange={this.onDateSelected}
+        />
 
-        {/*
-          *********THIS IS MY DESCRIPTION AREA***********
-        */}
         <FieldGroup
           controlID="description"
           label="POI Description"
           inputType="textarea"
-          helperText="Enter your POI description here"
-          thisValue={this.state.description}
-          thisChange={this.onChangeDescription}
+          placeholder="Enter your POI description here"
+          value={this.state.description}
+          onChange={this.onChangeDescription}
         />
 
-        {/*
-          *********THIS IS MY UPLOAD BUTTON***********
-        */}
         <FieldGroup
           controlID="chooseFile"
           label="Upload Media"
           inputType="file"
-          helperText="Upload your files here"
+          placeholder="Upload your files here"
         />
 
         <FieldGroup
           controlId="links"
           label="POI Links"
           inputType="textarea"
-          helperText="Enter related links here, separated by commas"
-          thisValue={this.state.links}
-          thisChange={this.onChangeLinks}
+          placeholder="Enter related links here, separated by commas"
+          value={this.state.links}
+          onChange={this.onChangeLinks}
         />
 
-        {/*
-          *********THIS IS MY LIST OF STORY CHECKBOXES***********
-        */}
-        <FormGroup controlid="stories">
-          <Col componentClass={ControlLabel} sm={2}>
-            Stories
-          </Col>
-          <Col sm={10}>
-            {stories.map(story => (
-              <div key={story.id}>
-                <Checkbox>{story.name}</Checkbox>
-              </div>
-            ))}
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          inputType="checklist"
+          stories={this.props.stories}
+          label="Stories"
+        />
+
         <FormControl.Feedback />
 
-        {/*
-          *********THIS IS MY SUBMIT BUTTON***********
-        */}
-        <FormGroup controlid="submit">
-          <Col smOffset={2} sm={10}>
-            <Button bsStyle="primary" type="submit" onClick={this.onSubmit}>
-              Create
-            </Button>
-          </Col>
-        </FormGroup>
+        <FieldGroup
+          inputType="button"
+          label="Create"
+          smOffset={2}
+          sm={10}
+          onClick={this.onSubmit}
+        />
       </Form>
     )
   }
@@ -174,37 +120,70 @@ function FieldGroup({
   controlId, //indentifier
   label,
   inputType, //text vs. textarea vs. file
-  helperText,
-  thisValue,
-  thisChange
+  placeholder,
+  value,
+  selected,
+  onChange,
+  smOffset,
+  sm,
+  onClick,
+  stories
 }) {
-  var fieldGroupModule
+  let fieldGroupModule
+  if (inputType === 'date') {
+    return (
+      <FormGroup>
+        <Col sm={2} componentClass={ControlLabel}>
+          {label}
+        </Col>
+        <Col sm={6}>
+          <DatePicker selected={selected} onChange={onChange} />
+        </Col>
+      </FormGroup>
+    )
+  } else if (inputType === 'button') {
+    return (
+      <FormGroup controlid="submit">
+        <Col sm={sm} smOffset={smOffset}>
+          <Button bsStyle="primary" type="submit" onClick={onClick}>
+            {label}
+          </Button>
+        </Col>
+      </FormGroup>
+    )
+  }
 
   if (inputType === 'text') {
     fieldGroupModule = (
       <FormControl
         type="text"
-        placeholder={helperText}
-        value={thisValue}
-        onChange={thisChange}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
     )
   } else if (inputType === 'textarea') {
     fieldGroupModule = (
       <FormControl
         componentClass="textarea"
-        placeholder={helperText}
-        value={thisValue}
-        onChange={thisChange}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
     )
   } else if (inputType === 'file') {
-    fieldGroupModule = <FormControl type="file" placeholder={helperText} />
+    fieldGroupModule = <FormControl type="file" placeholder={placeholder} />
+  } else if (inputType === 'checklist') {
+    fieldGroupModule = stories.map(story => (
+      <div key={story.id}>
+        <Checkbox>{story.name}</Checkbox>
+      </div>
+    ))
   }
 
   return (
     <FormGroup controlid={controlId}>
-      <Col componentClass={ControlLabel} sm={2}>
+      <Col sm={2} componentClass={ControlLabel}>
         {label}
       </Col>
       <Col sm={10}>{fieldGroupModule}</Col>
