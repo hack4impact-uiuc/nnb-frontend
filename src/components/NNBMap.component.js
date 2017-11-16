@@ -47,6 +47,7 @@ class NNBMap extends Component {
         scaledCoords,
         isChoosingNewPOICoords: false
       })
+      this.props.setClickedCoords(scaledCoords)
       this.props.setShowPOIForm(true)
     }
   }

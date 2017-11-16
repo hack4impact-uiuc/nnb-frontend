@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 
 class POIForm extends Component {
@@ -45,7 +46,31 @@ class POIForm extends Component {
     })
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const { clickedCoords, loadPOIs, setShowPOIForm } = this.props
+    const { name, description, startDate } = this.state
+    const [coordinateX, coordinateY] = clickedCoords
+
+    if (name === '' || description === '') {
+      console.warn('Warning: empty fields!')
+    }
+    const poi = {
+      title: name,
+      description,
+      date: startDate,
+      coordinateX,
+      coordinateY,
+      links: ['google.com', 'purple.com']
+    }
+
+    // TODO: once the api sends the newly created POI,
+    //       we have to set it as the selectedEvent
+    Api.postPOI(poi)
+      .then(() => loadPOIs())
+      .then(() => {
+        setShowPOIForm(false)
+      })
+  }
 
   render() {
     return (
