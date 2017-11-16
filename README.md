@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-## Git Flow 
+## Git Flow
 Before you start making changes, make sure you have the most recently updated version of `master`:
 ```
 git pull
@@ -45,7 +45,7 @@ If you want to switch to a branch that already exists:
 git checkout <branch_name>
 ```
 
-Make sure you commit your changes to your own branch! 
+Make sure you commit your changes to your own branch!
 
 Push your code and submit a PR to leave it up for review:
 ```
@@ -61,7 +61,7 @@ It is recommended to:
 2) Put up a PR early on (even before it is ready for review), so you can get early feedback
 
 ### Labels:
-#### `In Progress` 
+#### `In Progress`
 Use this while you are working on your changes. Reviewers can take a look to make sure you're on the right track and make some suggestions along the way. Also use this as a way to ask questions about your code (_Is this the right way to do x?, Does this follow conventions properly?, etc._).
 
 #### `Ready For Review`
@@ -79,7 +79,7 @@ PRs can't be merged without at least one reviewer approving your changes. If wai
 #### Codebase
 - Make all new components in the `/components` folder. Only `index.js` and `App.js` should be outside this folder
 - Name each component file with the format `<component name>.component.js`
-- Only modify the `.scss` files. **DO NOT MODIFY THE CSS FILES!** The `.css` files get recompiled every time its corresponding `.scss` file changes. 
+- Only modify the `.scss` files. **DO NOT MODIFY THE CSS FILES!** The `.css` files get recompiled every time its corresponding `.scss` file changes.
 
 #### Code
 - Use [React Bootstrap components](https://react-bootstrap.github.io/components.html) whenever possible.
@@ -121,6 +121,13 @@ Plugin for Prettier - use to format your code while developing. Prettier will st
 #### GitGutter
 Lets you see new, modified, and deleted lines compared to the previous commit next to the line numbers. If you want to see all changes, you can use `git diff` in your terminal or view changes in the [Github desktop app](https://desktop.github.com/). This is good to see all the changes you've made and make sure they're right, but it's still recommended you use your terminal/CLI for git commands.
 
+#### Linting
+Lets you see code errors while editing in Sublime
+
+1) Install `SublimeLinter` via package control
+2) Install `Sublime-contrib-eslint` via package control
+3) Restart Sublime
+4) Make sure `eslint` is enabled by going into package control -> `SublimeLinter: Toggle Linter` -> `eslint` -> `enabled`
 
 ```
 H A C K 4 I M P A C T
@@ -417,7 +424,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -1903,7 +1910,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 

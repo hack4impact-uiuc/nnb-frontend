@@ -1,36 +1,32 @@
 import React, { Component } from 'react'
-import { Image, Button, FormGroup, Col } from 'react-bootstrap'
+import { Image, Button } from 'react-bootstrap'
 import './../styles/App.css'
 
 class InfoPanel extends Component {
   constructor(props) {
     super(props)
+    this.onClickPrevious = this.onClickPrevious.bind(this)
+    this.onClickNext = this.onClickNext.bind(this)
   }
 
-  onClickPrevious(e) {
-    let ae = this.props.activeEvents
-    let curIndex = ae.findIndex(POI => POI.id == this.props.selectedEvent.id)
-    let newIndex = curIndex - 1
-    let len = this.props.activeEvents.length
-    if (newIndex < 0) {
-      newIndex = 0
-    }
-    this.props.setSelectedPOI(ae[newIndex].id)
+  onClickPrevious() {
+    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
+    setSelectedPOI(activeEvents[curIndex - 1].id)
   }
 
-  onClickNext(e) {
-    let ae = this.props.activeEvents
-    let curIndex = ae.findIndex(POI => POI.id == this.props.selectedEvent.id)
-    let newIndex = curIndex + 1
-    let len = this.props.activeEvents.length
-    if (newIndex >= len) {
-      newIndex = len - 1
-    }
-    this.props.setSelectedPOI(ae[newIndex].id)
+  onClickNext() {
+    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
+    setSelectedPOI(activeEvents[curIndex + 1].id)
   }
 
   render() {
-    const selectedEvent = this.props.selectedEvent
+    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
+    const isShownNext = curIndex < activeEvents.length
+    const isShownPrev = curIndex > 0
+
     return (
       <div className="info-panel">
         <h1>
@@ -57,27 +53,20 @@ class InfoPanel extends Component {
                 </li>
               ))}
             </ul>
-
-            <FormGroup controlID="ChangePOIs">
-              <Col smOffset={3} sm={10}>
-                <Button
-                  bsStyle="primary"
-                  type="previous"
-                  onClick={this.onClickPrevious.bind(this)}
-                >
-                  {' '}
-                  Previous{' '}
-                </Button>
-                <Button
-                  bsStyle="primary"
-                  type="next"
-                  onClick={this.onClickNext.bind(this)}
-                >
-                  {' '}
-                  Next{' '}
-                </Button>
-              </Col>
-            </FormGroup>
+            {isShownPrev && (
+              <Button
+                bsStyle="primary"
+                type="previous"
+                onClick={this.onClickPrevious}
+              >
+                Previous
+              </Button>
+            )}
+            {isShownNext && (
+              <Button bsStyle="primary" onClick={this.onClickNext}>
+                Next
+              </Button>
+            )}
           </div>
         </div>
       </div>
