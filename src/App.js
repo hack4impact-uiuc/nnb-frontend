@@ -43,11 +43,11 @@ class App extends Component {
   }
 
   loadPOIs() {
-    Api.getPOIs().then(data => this.setState({ activeEvents: data }))
+    return Api.getPOIs().then(data => this.setState({ activeEvents: data }))
   }
 
   loadStories() {
-    Api.getStories().then(data => this.setState({ stories: data }))
+    return Api.getStories().then(data => this.setState({ stories: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -73,9 +73,11 @@ class App extends Component {
   }
 
   exitStory() {
-    this.setState({
-      selectedStory: null,
-      isStorySelected: false
+    this.loadPOIs().then(() => {
+      this.setState({
+        selectedStory: null,
+        isStorySelected: false
+      })
     })
   }
 
