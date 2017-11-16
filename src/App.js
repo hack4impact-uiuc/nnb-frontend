@@ -43,7 +43,9 @@ class App extends Component {
   }
 
   loadPOIs() {
-    return Api.getPOIs().then(data => this.setState({ activeEvents: data }))
+    return Api.getPOIs().then(data =>
+      this.setState({ activeEvents: data, selectedEvent: data[0] })
+    )
   }
 
   loadStories() {

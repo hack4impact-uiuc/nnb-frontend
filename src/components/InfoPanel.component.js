@@ -32,6 +32,14 @@ class InfoPanel extends Component {
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
+    if (!selectedEvent) {
+      return (
+        <div className="info-panel">
+          <h1>No POI Selected</h1>
+        </div>
+      )
+    }
+
     return (
       <div className="info-panel">
         <h1>
