@@ -99,13 +99,7 @@ class POIForm extends Component {
 
         <FormControl.Feedback />
 
-        <FieldGroup
-          inputType="button"
-          label="Create"
-          smOffset={2}
-          sm={10}
-          onClick={this.onSubmit}
-        />
+        <FieldGroup inputType="button" label="Create" onClick={this.onSubmit} />
       </Form>
     )
   }
@@ -119,34 +113,10 @@ function FieldGroup({
   value,
   selected,
   onChange,
-  smOffset,
-  sm,
   onClick,
   stories
 }) {
   let fieldGroupModule
-  if (inputType === 'date') {
-    return (
-      <FormGroup>
-        <Col sm={2} componentClass={ControlLabel}>
-          {label}
-        </Col>
-        <Col sm={6}>
-          <DatePicker selected={selected} onChange={onChange} />
-        </Col>
-      </FormGroup>
-    )
-  } else if (inputType === 'button') {
-    return (
-      <FormGroup controlid="submit">
-        <Col sm={sm} smOffset={smOffset}>
-          <Button bsStyle="primary" type="submit" onClick={onClick}>
-            {label}
-          </Button>
-        </Col>
-      </FormGroup>
-    )
-  }
 
   if (inputType === 'text') {
     fieldGroupModule = (
@@ -174,6 +144,14 @@ function FieldGroup({
         <Checkbox>{story.name}</Checkbox>
       </div>
     ))
+  } else if (inputType === 'date') {
+    fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
+  } else if (inputType === 'button') {
+    fieldGroupModule = (
+      <Button bsStyle="primary" onClick={onClick}>
+        {label}
+      </Button>
+    )
   }
 
   return (
