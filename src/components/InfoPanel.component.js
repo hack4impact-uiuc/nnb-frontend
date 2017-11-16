@@ -54,11 +54,7 @@ class InfoPanel extends Component {
               ))}
             </ul>
             {isShownPrev && (
-              <Button
-                bsStyle="primary"
-                type="previous"
-                onClick={this.onClickPrevious}
-              >
+              <Button bsStyle="primary" onClick={this.onClickPrevious}>
                 Previous
               </Button>
             )}
