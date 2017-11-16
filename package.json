@@ -11,6 +11,7 @@
     "npm-run-all": "^4.1.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
+    "react-datepicker": "^0.60.2",
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14",
     "superagent": "^3.8.1",

@@ -10,6 +10,8 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
+    selectedStory: null,
+    isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
     isEditing: true
@@ -22,6 +24,8 @@ class App extends Component {
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
+    this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.exitStory = this.exitStory.bind(this)
   }
 
   toggleEditMode() {
@@ -42,6 +46,22 @@ class App extends Component {
     )
     this.setState({
       selectedEvent: clickedPOI
+    })
+  }
+
+  setSelectedStory(storyId) {
+    /*const clickedStory = this.state.stories.find(story => story.id === storyId)*/
+    //make api request
+    this.setState({
+      selectedStory: storyId,
+      isStorySelected: true
+    })
+  }
+
+  exitStory() {
+    this.setState({
+      selectedStory: null,
+      isStorySelected: false
     })
   }
 
@@ -68,7 +88,12 @@ class App extends Component {
 
     return (
       <div>
-        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
+        <StoryList
+          {...this.state}
+          toggleSidebar={this.toggleSidebar}
+          setSelectedStory={this.setSelectedStory}
+          exitStory={this.exitStory}
+        />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
@@ -103,11 +128,11 @@ class App extends Component {
           )}
           {!showPOIForm && (
             <div className="info-panel-container">
-              <InfoPanel {...this.state} />
+              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
             </div>
           )}
           {showPOIForm && (
-            <div className="poi-form-container">
+            <div className="poi-form-container container">
               <POIForm {...this.state} />
             </div>
           )}
