@@ -17,9 +17,7 @@ function createRequest(method, endpoint, options) {
       req = req.send(options)
     }
   }
-  return req
-    .then(response => response.body.data)
-    .catch(err => console.error(err))
+  return req.then(response => response.body).catch(err => console.error(err))
 }
 
 function convertFromApiPOI(poi) {
@@ -30,12 +28,12 @@ function convertFromApiPOI(poi) {
     date: poi.data,
     description: poi.event_info,
     // TODO: support multiple media items
-    image: poi.content[0],
+    image: poi.content && poi.content.length ? poi.content[0] : '',
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
     // TODO: additional_links should just be list of links
     // (no need for POI id, that's kinda redundant)
-    links: poi.additional_links.map(l => l.url)
+    links: (poi.additional_links || []).map(l => l.url)
   }
 }
 
@@ -62,38 +60,64 @@ function convertToApiPOI(poi) {
   }
 }
 
-function convertApiStory(story) {
+function convertFromApiStory(story) {
   return {
     id: story.id,
     name: story.story_name
   }
 }
 
+function convertToApiStory(storyName) {
+  return {
+    story_name: storyName
+  }
+}
+
 // TODO: api url should be /pois
 function getPOIs() {
-  return createRequest(REQUEST_METHODS.get, 'poi').then(res =>
-    res.map(r => r.data).map(convertFromApiPOI)
-  )
+  return createRequest(REQUEST_METHODS.get, 'poi')
+    .then(res => res.data)
+    .then(res => res.map(r => r.data).map(convertFromApiPOI))
 }
 
 function getStories() {
-  return createRequest(REQUEST_METHODS.get, 'stories').then(res =>
-    res.map(convertApiStory)
-  )
+  return createRequest(REQUEST_METHODS.get, 'stories')
+    .then(res => res.data)
+    .then(res => res.map(convertFromApiStory))
 }
 
 // TODO: api should take in story id, not name
 function getStory(name) {
-  return createRequest(REQUEST_METHODS.get, `stories/${name}`)
+  return createRequest(REQUEST_METHODS.get, `stories/${name}`).then(
+    res => res.data
+  )
 }
 
 function postPOI(poi) {
-  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi))
+  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
+    res => res.data
+  )
+}
+
+function postStory(storyName) {
+  return createRequest(
+    REQUEST_METHODS.post,
+    'stories',
+    convertToApiStory(storyName)
+  ).then(res => res.data)
+}
+
+function getPOIsByStory(storyId) {
+  return createRequest(REQUEST_METHODS.get, `stories/${storyId}`).then(res =>
+    res.pois.map(convertFromApiPOI)
+  )
 }
 
 export default {
   getPOIs,
   getStories,
   getStory,
-  postPOI
+  postPOI,
+  postStory,
+  getPOIsByStory
 }

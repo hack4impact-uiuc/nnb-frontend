@@ -43,11 +43,13 @@ class App extends Component {
   }
 
   loadPOIs() {
-    Api.getPOIs().then(data => this.setState({ activeEvents: data }))
+    return Api.getPOIs().then(data =>
+      this.setState({ activeEvents: data, selectedEvent: data[0] })
+    )
   }
 
   loadStories() {
-    Api.getStories().then(data => this.setState({ stories: data }))
+    return Api.getStories().then(data => this.setState({ stories: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -60,18 +62,22 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    /*const clickedStory = this.state.stories.find(story => story.id === storyId)*/
-    //make api request
-    this.setState({
-      selectedStory: storyId,
-      isStorySelected: true
+    Api.getPOIsByStory(storyId).then(storyPOIs => {
+      this.setState({
+        selectedStory: storyId,
+        isStorySelected: true,
+        activeEvents: storyPOIs,
+        selectedEvent: storyPOIs[0]
+      })
     })
   }
 
   exitStory() {
-    this.setState({
-      selectedStory: null,
-      isStorySelected: false
+    this.loadPOIs().then(() => {
+      this.setState({
+        selectedStory: null,
+        isStorySelected: false
+      })
     })
   }
 
@@ -103,6 +109,7 @@ class App extends Component {
           toggleSidebar={this.toggleSidebar}
           setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
+          loadStories={this.loadStories}
         />
         <Navbar inverse>
           <Grid>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import { Api } from './../utils'
 import './../styles/storylist.css'
 import classnames from 'classnames'
 
@@ -31,11 +32,14 @@ class StoryList extends Component {
   }
 
   submitStoryName() {
-    this.setState({
-      addStorySelected: false,
-      storyName: ''
-    })
-    //make api call here maybe?
+    Api.postStory(this.state.storyName)
+      .then(() => this.props.loadStories())
+      .then(() => {
+        this.setState({
+          addStorySelected: false,
+          storyName: ''
+        })
+      })
   }
 
   render() {

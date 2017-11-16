@@ -125,11 +125,11 @@ function POIMarkers({
   mapImageWidth,
   mapImageHeight
 }) {
-  return activeEvents.map(POI => (
+  return activeEvents.map(poi => (
     <POIMarker
-      {...POI}
-      isSelected={POI.id === selectedEvent.id}
-      key={POI.id}
+      {...poi}
+      isSelected={poi.id === selectedEvent.id}
+      key={poi.id}
       {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
     />
   ))

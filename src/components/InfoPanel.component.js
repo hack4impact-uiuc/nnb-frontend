@@ -22,10 +22,23 @@ class InfoPanel extends Component {
   }
 
   render() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const {
+      activeEvents,
+      selectedEvent,
+      setSelectedPOI,
+      isStorySelected
+    } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
+
+    if (!selectedEvent) {
+      return (
+        <div className="info-panel">
+          <h1>No POI Selected</h1>
+        </div>
+      )
+    }
 
     return (
       <div className="info-panel">
@@ -53,16 +66,18 @@ class InfoPanel extends Component {
                 </li>
               ))}
             </ul>
-            {isShownPrev && (
-              <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                Previous
-              </Button>
-            )}
-            {isShownNext && (
-              <Button bsStyle="primary" onClick={this.onClickNext}>
-                Next
-              </Button>
-            )}
+            {isStorySelected &&
+              isShownPrev && (
+                <Button bsStyle="primary" onClick={this.onClickPrevious}>
+                  Previous
+                </Button>
+              )}
+            {isStorySelected &&
+              isShownNext && (
+                <Button bsStyle="primary" onClick={this.onClickNext}>
+                  Next
+                </Button>
+              )}
           </div>
         </div>
       </div>
