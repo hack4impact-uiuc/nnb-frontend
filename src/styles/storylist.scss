@@ -14,6 +14,10 @@
   padding: 16px 0px;
   color: #FFF;
   text-decoration: none;
+  cursor: pointer;
+  &--selected{
+    color: #000;
+  }
 }
 
 .divider {
@@ -28,10 +32,6 @@
   padding-right: 0.5cm;
   padding-top: 0.20cm;
   cursor: pointer;
-}
-
-.link--selected{
-  color: #000;
 }
 
 
