@@ -99,7 +99,12 @@ class POIForm extends Component {
 
         <FormControl.Feedback />
 
-        <FieldGroup inputType="button" label="Create" onClick={this.onSubmit} />
+        <FieldGroup
+          inputType="button"
+          label=""
+          buttonText="Create"
+          onClick={this.onSubmit}
+        />
       </Form>
     )
   }
@@ -114,7 +119,8 @@ function FieldGroup({
   selected,
   onChange,
   onClick,
-  stories
+  stories,
+  buttonText
 }) {
   let fieldGroupModule
 
@@ -149,7 +155,7 @@ function FieldGroup({
   } else if (inputType === 'button') {
     fieldGroupModule = (
       <Button bsStyle="primary" onClick={onClick}>
-        {label}
+        {buttonText}
       </Button>
     )
   }
