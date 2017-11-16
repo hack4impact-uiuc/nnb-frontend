@@ -47,25 +47,28 @@ class POIForm extends Component {
   }
 
   onSubmit() {
+    const { clickedCoords, loadPOIs, setShowPOIForm } = this.props
     const { name, description, startDate } = this.state
+    const [coordinateX, coordinateY] = clickedCoords
+
     if (name === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
     const poi = {
       title: name,
-      description: description,
+      description,
       date: startDate,
-      coordinateX: this.props.clickedCoords[0],
-      coordinateY: this.props.clickedCoords[1],
+      coordinateX,
+      coordinateY,
       links: ['google.com', 'purple.com']
     }
 
     // TODO: once the api sends the newly created POI,
     //       we have to set it as the selectedEvent
     Api.postPOI(poi)
-      .then(() => this.props.loadPOIs())
+      .then(() => loadPOIs())
       .then(() => {
-        this.props.setShowPOIForm(false)
+        setShowPOIForm(false)
       })
   }
 
