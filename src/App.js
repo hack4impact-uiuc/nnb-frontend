@@ -13,8 +13,7 @@ class App extends Component {
     selectedStory: null,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true,
-    isStorySelected: false
+    isEditing: true
   }
 
   constructor(props) {
@@ -23,7 +22,6 @@ class App extends Component {
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
-    this.setIsStorySelected = this.setIsStorySelected.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
   }
 
@@ -64,12 +62,6 @@ class App extends Component {
   setShowPOIForm(shouldShow) {
     this.setState({
       showPOIForm: shouldShow
-    })
-  }
-
-  setIsStorySelected() {
-    this.setState({
-      isStorySelected: true
     })
   }
 
