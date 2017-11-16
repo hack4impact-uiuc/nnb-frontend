@@ -20,11 +20,14 @@ class POIForm extends Component {
     this.state = {
       startDate: moment(),
       name: '',
-      description: ''
+      description: '',
+      storiesToAdd: []
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onCancel = this.onCancel.bind(this)
+    this.onStorySelect = this.onStorySelect.bind(this)
   }
 
   onDateSelected(date) {
@@ -46,6 +49,21 @@ class POIForm extends Component {
   }
 
   onSubmit() {}
+
+  onCancel() {
+    this.setState({
+      startDate: '',
+      name: '',
+      description: ''
+    })
+    this.props.setShowPOIForm(false)
+  }
+
+  onStorySelect(storyId) {
+    this.setState({
+      storiesToAdd: this.state.storiesToAdd.concat([storyId])
+    })
+  }
 
   render() {
     return (
@@ -95,6 +113,7 @@ class POIForm extends Component {
           inputType="checklist"
           stories={this.props.stories}
           label="Stories"
+          onStorySelect={this.onStorySelect}
         />
 
         <FormControl.Feedback />
@@ -104,6 +123,13 @@ class POIForm extends Component {
           label=""
           buttonText="Create"
           onClick={this.onSubmit}
+        />
+
+        <FieldGroup
+          inputType="button"
+          label=""
+          buttonText="Cancel"
+          onClick={this.onCancel}
         />
       </Form>
     )
@@ -120,7 +146,8 @@ function FieldGroup({
   onChange,
   onClick,
   stories,
-  buttonText
+  buttonText,
+  onStorySelect
 }) {
   let fieldGroupModule
 
@@ -161,7 +188,9 @@ function FieldGroup({
     case 'checklist':
       fieldGroupModule = stories.map(story => (
         <div key={story.id}>
-          <Checkbox>{story.name}</Checkbox>
+          <Checkbox onClick={() => onStorySelect(story.id)}>
+            {story.name}
+          </Checkbox>
         </div>
       ))
       break

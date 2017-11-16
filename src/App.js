@@ -100,7 +100,7 @@ class App extends Component {
           )}
           {showPOIForm && (
             <div className="poi-form-container container">
-              <POIForm {...this.state} />
+              <POIForm {...this.state} setShowPOIForm={this.setShowPOIForm} />
             </div>
           )}
         </div>
