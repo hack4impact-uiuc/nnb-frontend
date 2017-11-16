@@ -49,8 +49,6 @@ class POIForm extends Component {
   onSubmit() {}
 
   render() {
-    const stories = this.props.stories
-
     return (
       <Form horizontal>
         <PageHeader>Create POI</PageHeader>

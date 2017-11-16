@@ -10,17 +10,85 @@ This project was bootstrapped using [Create React App](https://github.com/facebo
 - [react bootstrap](#adding-bootstrap)
 - [prettier + precommit hook](#formatting-code-automatically)
 
+# Contributing
+
 ## Setup
 
-### `npm install`
+#### `npm install`
 Installs dependencies. Should only be required during initial setup or when new dependencies are added.
 
-### `npm start`
+#### `npm start`
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+## Git Flow
+Before you start making changes, make sure you have the most recently updated version of `master`:
+```
+git pull
+```
+
+Make a new branch for your changes:
+```
+git checkout -b <branch_name>
+```
+
+If you want to see all of your branches that exist:
+```
+git branch
+```
+
+If you want to switch to a branch that already exists:
+```
+git checkout <branch_name>
+```
+
+Make sure you commit your changes to your own branch!
+
+Push your code and submit a PR to leave it up for review:
+```
+git push
+```
+This might walk you through some remote branch push settings, just follow what it says. It should only happen the first time you push to a new branch
+
+Then go to this repo on Github, refresh the page, and you should see an option to create a pull request from your branch.
+
+## Code Reviews
+It is recommended to:
+1) Keep PRs small and manageable
+2) Put up a PR early on (even before it is ready for review), so you can get early feedback
+
+### Labels:
+#### `In Progress`
+Use this while you are working on your changes. Reviewers can take a look to make sure you're on the right track and make some suggestions along the way. Also use this as a way to ask questions about your code (_Is this the right way to do x?, Does this follow conventions properly?, etc._).
+
+#### `Ready For Review`
+Use this when you feel like your code is ready to be thoroughly reviewed before shipping. Assign your PR to your technical lead and teammates who know more about the areas you worked on (Github might have suggestions based on previous contributions).
+
+#### `In Review`
+Reviewers, set this to indicate the PR is currently being reviewed.
+
+#### `SHIP IT`
+Reviewers, set this to indicate the PR is ready to be merged, but let the pull requester do the merging.
+
+PRs can't be merged without at least one reviewer approving your changes. If waiting on your reviewer becomes a blocker, bug them about it!
+
+## Conventions
+#### Codebase
+- Make all new components in the `/components` folder. Only `index.js` and `App.js` should be outside this folder
+- Name each component file with the format `<component name>.component.js`
+- Only modify the `.scss` files. **DO NOT MODIFY THE CSS FILES!** The `.css` files get recompiled every time its corresponding `.scss` file changes.
+
+#### Code
+- Use [React Bootstrap components](https://react-bootstrap.github.io/components.html) whenever possible.
+- Remember that React Components need to start with a captial letter. Otherwise they will be treated as a React element, and might not do what you want it to.
+- There are a bunch of things that could go here, but they will come up in the development/code review process. We will use this section for listing common themes as they develop over time.
+
+#### Dependencies
+- Before you install any new dependency, we should discuss whether we really need it or not. Every external dependency comes with a cost, and it should add enough value to outweigh that cost.
+- When installing new dependencies, make sure you `npm install` with the `--save` flag for app dependencies or `--save-dev` flag for dev dependencies.
 
 ## Additional Setup
 
@@ -35,6 +103,32 @@ It is recommended to install the prettier plugin for your editor. See instructio
 
 Prettier automatically handles code styling for us, but it's good to know the basis of good code styles/practices. [Airbnb's javascript style guide](https://github.com/airbnb/javascript) does a great job going over some rules. They also have guides for [react](https://github.com/airbnb/javascript/tree/master/react) and [css](https://github.com/airbnb/css).
 
+### Sublime Text 3 Plugins
+There might be similar plugins for other editors, but since most of us use Sublime, here are some plugins that are useful:
+
+#### Package Control
+First things first, make sure you have [package control installed](https://packagecontrol.io/installation). From then on you can use Package Control to install other packages by typing `Cmd/Ctrl + Shift + P` -> `Package Control: Install Package`
+
+#### Babel
+The standard javascript formatting will be off with our code that uses JSX and newer js features. Install `Babel` and set all `.js` files to use Babel as the syntax highlighting.
+
+#### SCSS
+Syntax highlighting for `.scss` files.
+
+#### JsPrettier
+Plugin for Prettier - use to format your code while developing. Prettier will still run before each commit, but you can use this to pretty your code beforehand.
+
+#### GitGutter
+Lets you see new, modified, and deleted lines compared to the previous commit next to the line numbers. If you want to see all changes, you can use `git diff` in your terminal or view changes in the [Github desktop app](https://desktop.github.com/). This is good to see all the changes you've made and make sure they're right, but it's still recommended you use your terminal/CLI for git commands.
+
+#### Linting
+Lets you see code errors while editing in Sublime
+
+1) Install `SublimeLinter` via package control
+2) Install `Sublime-contrib-eslint` via package control
+3) Restart Sublime
+4) Make sure `eslint` is enabled by going into package control -> `SublimeLinter: Toggle Linter` -> `eslint` -> `enabled`
+
 ```
 H A C K 4 I M P A C T
                     H A C K 4 I M P A C T
@@ -43,7 +137,7 @@ H A C K 4 I M P A C T
                                                                                 H A C K 4 I M P A C T
 ```
 
-## *** create-react-app Notes Autogenerated Below ***
+# *** create-react-app Notes Autogenerated Below ***
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -330,7 +424,7 @@ In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and s
 
 Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine.
 
 ## Formatting Code Automatically
 
@@ -1816,7 +1910,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 

@@ -1,28 +1,33 @@
-.App {
-  text-align: center;
+// this is a (highly educated and researched) guess
+$navbar-height: 50px;
+
+// override default bootstrap style
+.navbar {
+  margin-bottom: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.nnb-app {
+  display: flex;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.nnb-map-container {
+  width: 70%;
+  // alternative would be to use flexbox with nav and app inside it
+  height: calc(100vh - #{$navbar-height});
 }
 
-.App-title {
-  font-size: 1.5em;
+.info-panel-container {
+  width: 30%;
+  height: calc(100vh - #{$navbar-height});
+  border: 1px solid #ddd;
+  padding: 1rem;
 }
 
-.App-intro {
-  font-size: large;
+.poi-form-container {
+
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.sidebar-menu{
+  display: inline;
+  cursor: pointer;
 }

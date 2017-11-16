@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "classnames": "^2.2.5",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
     "node-sass-chokidar": "0.0.3",
@@ -12,7 +13,9 @@
     "react-bootstrap": "^0.31.5",
     "react-datepicker": "^0.60.2",
     "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "superagent": "^3.8.1",
+    "react-sidebar": "^2.3.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
