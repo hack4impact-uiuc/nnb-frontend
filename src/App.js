@@ -62,8 +62,6 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    /*const clickedStory = this.state.stories.find(story => story.id === storyId)*/
-    //make api request
     Api.getPOIsByStory(storyId).then(storyPOIs => {
       this.setState({
         selectedStory: storyId,
