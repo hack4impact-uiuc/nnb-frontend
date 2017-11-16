@@ -62,10 +62,16 @@ function convertToApiPOI(poi) {
   }
 }
 
-function convertApiStory(story) {
+function convertFromApiStory(story) {
   return {
     id: story.id,
     name: story.story_name
+  }
+}
+
+function convertToApiStory(storyName) {
+  return {
+    story_name: storyName
   }
 }
 
@@ -78,7 +84,7 @@ function getPOIs() {
 
 function getStories() {
   return createRequest(REQUEST_METHODS.get, 'stories').then(res =>
-    res.map(convertApiStory)
+    res.map(convertFromApiStory)
   )
 }
 
@@ -91,9 +97,18 @@ function postPOI(poi) {
   return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi))
 }
 
+function postStory(storyName) {
+  return createRequest(
+    REQUEST_METHODS.post,
+    'stories',
+    convertToApiStory(storyName)
+  )
+}
+
 export default {
   getPOIs,
   getStories,
   getStory,
-  postPOI
+  postPOI,
+  postStory
 }

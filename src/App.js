@@ -103,6 +103,7 @@ class App extends Component {
           toggleSidebar={this.toggleSidebar}
           setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
+          loadStories={this.loadStories}
         />
         <Navbar inverse>
           <Grid>
