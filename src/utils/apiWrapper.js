@@ -28,7 +28,7 @@ function convertFromApiPOI(poi) {
     title: poi.name,
     // TODO: change api to date
     date: poi.data,
-    description: poi.eventinfo,
+    description: poi.event_info,
     // TODO: support multiple media items
     image: poi.content[0],
     coordinateX: poi.x_coord,
