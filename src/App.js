@@ -21,6 +21,7 @@ class App extends Component {
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
+    this.setClickedCoords = this.setClickedCoords.bind(this)
   }
 
   toggleEditMode() {
@@ -53,6 +54,12 @@ class App extends Component {
   setShowPOIForm(shouldShow) {
     this.setState({
       showPOIForm: shouldShow
+    })
+  }
+
+  setClickedCoords(coords) {
+    this.setState({
+      clickedCoords: coords
     })
   }
 
@@ -90,6 +97,7 @@ class App extends Component {
                 {...this.state}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
+                setClickedCoords={this.setClickedCoords}
               />
             </div>
           )}

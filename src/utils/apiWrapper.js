@@ -22,7 +22,7 @@ function createRequest(method, endpoint, options) {
     .catch(err => console.error(err))
 }
 
-function convertApiPOI(poi) {
+function convertFromApiPOI(poi) {
   return {
     id: poi.id,
     title: poi.name,
@@ -39,6 +39,29 @@ function convertApiPOI(poi) {
   }
 }
 
+function convertToApiPOI(poi) {
+  return {
+    name: poi.title,
+    year: poi.date.format('YYYY'),
+    month: poi.date.format('MM'),
+    day: poi.date.format('DD'),
+    info: poi.description,
+    x_coor: poi.coordinateX,
+    y_coor: poi.coordinateY,
+    additional_links: poi.links.map(link => ({ url: link })),
+    content: [
+      {
+        content_url: 'url',
+        caption: 'caption'
+      },
+      {
+        content_url: 'url2',
+        caption: 'caption2'
+      }
+    ]
+  }
+}
+
 function convertApiStory(story) {
   return {
     id: story.id,
@@ -49,7 +72,7 @@ function convertApiStory(story) {
 // TODO: api url should be /pois
 function getPOIs() {
   return createRequest(REQUEST_METHODS.get, 'poi').then(res =>
-    res.map(r => r.data).map(convertApiPOI)
+    res.map(r => r.data).map(convertFromApiPOI)
   )
 }
 
@@ -64,8 +87,15 @@ function getStory(name) {
   return createRequest(REQUEST_METHODS.get, `stories/${name}`)
 }
 
+function postPOI(poi) {
+  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
+    res => res
+  )
+}
+
 export default {
   getPOIs,
   getStories,
-  getStory
+  getStory,
+  postPOI
 }
