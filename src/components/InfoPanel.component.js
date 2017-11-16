@@ -22,7 +22,12 @@ class InfoPanel extends Component {
   }
 
   render() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const {
+      activeEvents,
+      selectedEvent,
+      setSelectedPOI,
+      isStorySelected
+    } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
@@ -53,16 +58,18 @@ class InfoPanel extends Component {
                 </li>
               ))}
             </ul>
-            {isShownPrev && (
-              <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                Previous
-              </Button>
-            )}
-            {isShownNext && (
-              <Button bsStyle="primary" onClick={this.onClickNext}>
-                Next
-              </Button>
-            )}
+            {isStorySelected &&
+              isShownPrev && (
+                <Button bsStyle="primary" onClick={this.onClickPrevious}>
+                  Previous
+                </Button>
+              )}
+            {isStorySelected &&
+              isShownNext && (
+                <Button bsStyle="primary" onClick={this.onClickNext}>
+                  Next
+                </Button>
+              )}
           </div>
         </div>
       </div>
