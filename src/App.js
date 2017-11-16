@@ -120,7 +120,7 @@ class App extends Component {
           )}
           {!showPOIForm && (
             <div className="info-panel-container">
-              <InfoPanel {...this.state} />
+              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
             </div>
           )}
           {showPOIForm && (
