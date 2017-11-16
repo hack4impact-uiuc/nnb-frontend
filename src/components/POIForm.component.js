@@ -165,6 +165,15 @@ function FieldGroup({
         </div>
       ))
       break
+    default:
+      fieldGroupModule = (
+        <div>
+          <h1>
+            Please choose a valid inputType: text, textarea, file, date, button,
+            or checklist
+          </h1>
+        </div>
+      )
   }
 
   return (
