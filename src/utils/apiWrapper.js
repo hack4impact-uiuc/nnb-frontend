@@ -88,9 +88,7 @@ function getStory(name) {
 }
 
 function postPOI(poi) {
-  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
-    res => res
-  )
+  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi))
 }
 
 export default {

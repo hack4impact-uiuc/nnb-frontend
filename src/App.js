@@ -19,6 +19,8 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+    this.loadPOIs = this.loadPOIs.bind(this)
+    this.loadStories = this.loadStories.bind(this)
     this.toggleEditMode = this.toggleEditMode.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
@@ -36,7 +38,15 @@ class App extends Component {
 
   componentDidMount() {
     // example of how to use api requests
+    this.loadPOIs()
+    this.loadStories()
+  }
+
+  loadPOIs() {
     Api.getPOIs().then(data => this.setState({ activeEvents: data }))
+  }
+
+  loadStories() {
     Api.getStories().then(data => this.setState({ stories: data }))
   }
 
@@ -133,7 +143,11 @@ class App extends Component {
           )}
           {showPOIForm && (
             <div className="poi-form-container container">
-              <POIForm {...this.state} />
+              <POIForm
+                {...this.state}
+                setShowPOIForm={this.setShowPOIForm}
+                loadPOIs={this.loadPOIs}
+              />
             </div>
           )}
         </div>
