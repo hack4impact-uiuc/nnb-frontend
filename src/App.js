@@ -10,7 +10,7 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
-    selectedStory: null,
+    isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
     isEditing: true
@@ -48,8 +48,9 @@ class App extends Component {
 
   setSelectedStory(storyId) {
     const clickedStory = this.state.stories.find(story => story.id === storyId)
+    //make api request
     this.setState({
-      selectedStory: clickedStory
+      isStorySelected: true
     })
   }
 
