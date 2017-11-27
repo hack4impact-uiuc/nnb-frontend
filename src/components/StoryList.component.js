@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import { Api } from './../utils'
 import './../styles/storylist.css'
+import classnames from 'classnames'
 
 class StoryList extends Component {
   state = {
@@ -13,7 +15,7 @@ class StoryList extends Component {
     super(props)
     this.addStoryClicked = this.addStoryClicked.bind(this)
     this.addStoryExit = this.addStoryExit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.storyNameChange = this.storyNameChange.bind(this)
     this.submitStoryName = this.submitStoryName.bind(this)
   }
 
@@ -25,16 +27,19 @@ class StoryList extends Component {
     this.setState({ addStorySelected: false })
   }
 
-  handleChange(e) {
+  storyNameChange(e) {
     this.setState({ storyName: e.target.value })
   }
 
   submitStoryName() {
-    this.setState({
-      addStorySelected: false,
-      storyName: ''
-    })
-    //make api call here maybe?
+    Api.postStory(this.state.storyName)
+      .then(() => this.props.loadStories())
+      .then(() => {
+        this.setState({
+          addStorySelected: false,
+          storyName: ''
+        })
+      })
   }
 
   render() {
@@ -48,8 +53,9 @@ class StoryList extends Component {
         stories={stories}
         addStoryClicked={this.addStoryClicked}
         addStoryExit={this.addStoryExit}
-        handleChange={this.handleChange}
+        storyNameChange={this.storyNameChange}
         submitStoryName={this.submitStoryName}
+        exitStory={this.props.exitStory}
       />
     )
 
@@ -84,8 +90,9 @@ function SidebarContent({
   stories,
   addStoryClicked,
   addStoryExit,
-  handleChange,
+  storyNameChange,
   submitStoryName,
+  exitStory,
   ...props
 }) {
   return (
@@ -99,11 +106,19 @@ function SidebarContent({
       <div className="divider" />
 
       {stories.map(story => (
-        <div key={story.id}>
-          <div className="sidebar-link">{story.name}</div>
+        <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
+          <div
+            className={classnames('sidebar-link', {
+              'sidebar-link--selected': story.id === props.selectedStory
+            })}
+          >
+            {story.name}
+          </div>
           <div className="divider" />
         </div>
       ))}
+
+      {props.isStorySelected && <Button onClick={exitStory}>Exit Story</Button>}
 
       {props.isEditing &&
         !addStorySelected && (
@@ -122,7 +137,7 @@ function SidebarContent({
               type="text"
               value={storyName}
               placeholder="Enter text"
-              onChange={handleChange}
+              onChange={storyNameChange}
             />
 
             <Button onClick={submitStoryName}>Submit</Button>

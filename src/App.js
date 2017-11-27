@@ -10,6 +10,8 @@ class App extends Component {
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
+    selectedStory: null,
+    isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
     isEditing: true
@@ -17,10 +19,15 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+    this.loadPOIs = this.loadPOIs.bind(this)
+    this.loadStories = this.loadStories.bind(this)
     this.toggleEditMode = this.toggleEditMode.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
+    this.setClickedCoords = this.setClickedCoords.bind(this)
+    this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.exitStory = this.exitStory.bind(this)
   }
 
   toggleEditMode() {
@@ -31,8 +38,18 @@ class App extends Component {
 
   componentDidMount() {
     // example of how to use api requests
-    Api.getPOIs().then(data => this.setState({ activeEvents: data }))
-    Api.getStories().then(data => this.setState({ stories: data }))
+    this.loadPOIs()
+    this.loadStories()
+  }
+
+  loadPOIs() {
+    return Api.getPOIs().then(data =>
+      this.setState({ activeEvents: data, selectedEvent: data[0] })
+    )
+  }
+
+  loadStories() {
+    return Api.getStories().then(data => this.setState({ stories: data }))
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -41,6 +58,26 @@ class App extends Component {
     )
     this.setState({
       selectedEvent: clickedPOI
+    })
+  }
+
+  setSelectedStory(storyId) {
+    Api.getPOIsByStory(storyId).then(storyPOIs => {
+      this.setState({
+        selectedStory: storyId,
+        isStorySelected: true,
+        activeEvents: storyPOIs,
+        selectedEvent: storyPOIs[0]
+      })
+    })
+  }
+
+  exitStory() {
+    this.loadPOIs().then(() => {
+      this.setState({
+        selectedStory: null,
+        isStorySelected: false
+      })
     })
   }
 
@@ -56,12 +93,24 @@ class App extends Component {
     })
   }
 
+  setClickedCoords(coords) {
+    this.setState({
+      clickedCoords: coords
+    })
+  }
+
   render() {
     const { showPOIForm, isEditing } = this.state
 
     return (
       <div>
-        <StoryList {...this.state} toggleSidebar={this.toggleSidebar} />
+        <StoryList
+          {...this.state}
+          toggleSidebar={this.toggleSidebar}
+          setSelectedStory={this.setSelectedStory}
+          exitStory={this.exitStory}
+          loadStories={this.loadStories}
+        />
         <Navbar inverse>
           <Grid>
             <Navbar.Header>
@@ -90,17 +139,22 @@ class App extends Component {
                 {...this.state}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
+                setClickedCoords={this.setClickedCoords}
               />
             </div>
           )}
           {!showPOIForm && (
             <div className="info-panel-container">
-              <InfoPanel {...this.state} />
+              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
             </div>
           )}
           {showPOIForm && (
             <div className="poi-form-container container">
-              <POIForm {...this.state} setShowPOIForm={this.setShowPOIForm} />
+              <POIForm
+                {...this.state}
+                setShowPOIForm={this.setShowPOIForm}
+                loadPOIs={this.loadPOIs}
+              />
             </div>
           )}
         </div>
