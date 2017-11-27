@@ -54,14 +54,22 @@ class POIForm extends Component {
     this.setState({
       startDate: '',
       name: '',
-      description: ''
+      description: '',
+      storiesToAdd: []
     })
     this.props.setShowPOIForm(false)
   }
 
   onStorySelect(storyId) {
+    const storiesSet = new Set(this.state.storiesToAdd)
+
+    if (storiesSet.has(storyId)) {
+      storiesSet.delete(storyId)
+    } else {
+      storiesSet.add(storyId)
+    }
     this.setState({
-      storiesToAdd: this.state.storiesToAdd.concat([storyId])
+      storiesToAdd: [...storiesSet]
     })
   }
 
