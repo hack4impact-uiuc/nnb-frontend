@@ -4,10 +4,6 @@ import { Image, Button } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
 
-//const IMAGE_URL = 'http://www.vectorstash.com/vectors/vectorstash-grid.svg'
-const IMAGE_URL =
-  'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X'
-
 class NNBMap extends Component {
   state = {
     scaledCoords: [0, 0],
@@ -85,7 +81,7 @@ class NNBMap extends Component {
       <div>
         <div className="image-container">
           <Image
-            src={IMAGE_URL}
+            src={this.props.selectedMapUrl}
             responsive
             ref={el => (this.image = el)}
             onClick={this.onImageClick}

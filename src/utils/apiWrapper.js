@@ -73,6 +73,20 @@ function convertToApiStory(storyName) {
   }
 }
 
+function convertFromApiMap(map) {
+  return {
+    imageUrl: map.image_url,
+    year: map.year
+  }
+}
+
+function convertToApiMap(map) {
+  return {
+    image_url: map.imageUrl,
+    year: map.year
+  }
+}
+
 // TODO: api url should be /pois
 function getPOIs() {
   return createRequest(REQUEST_METHODS.get, 'poi')
@@ -93,6 +107,12 @@ function getStory(name) {
   )
 }
 
+function getMaps() {
+  return createRequest(REQUEST_METHODS.get, 'maps')
+    .then(res => res.data)
+    .then(res => res.map(convertFromApiMap))
+}
+
 function postPOI(poi) {
   return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
     res => res.data
@@ -107,6 +127,12 @@ function postStory(storyName) {
   ).then(res => res.data)
 }
 
+function postMap(map) {
+  return createRequest(REQUEST_METHODS.post, 'maps', convertToApiMap(map)).then(
+    res => res.data
+  )
+}
+
 function getPOIsByStory(storyId) {
   return createRequest(REQUEST_METHODS.get, `stories/${storyId}`).then(res =>
     res.pois.map(convertFromApiPOI)
@@ -117,7 +143,9 @@ export default {
   getPOIs,
   getStories,
   getStory,
+  getMaps,
   postPOI,
   postStory,
+  postMap,
   getPOIsByStory
 }
