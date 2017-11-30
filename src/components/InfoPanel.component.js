@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, Button } from 'react-bootstrap'
+import { Image, Button, Carousel } from 'react-bootstrap'
 import './../styles/App.css'
 
 class InfoPanel extends Component {
@@ -22,6 +22,11 @@ class InfoPanel extends Component {
   }
 
   render() {
+    const IMAGE_URL_1 =
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Travis_Scott_April_2017.jpg/1200px-Travis_Scott_April_2017.jpg'
+    const IMAGE_URL_2 =
+      'https://media.pitchfork.com/photos/592993405e6ef9596931ee5e/1:1/w_300/ebab43f0.jpg'
+    const IMAGE_URL_3 = 'https://assets.rbl.ms/8276008/980x.jpg'
     const {
       activeEvents,
       selectedEvent,
@@ -31,6 +36,29 @@ class InfoPanel extends Component {
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
+
+    const carouselInstance = (
+      <Carousel>
+        <Carousel.Item>
+          <img width={900} height={500} alt="900x500" src={IMAGE_URL_1} />
+          <Carousel.Caption>
+            <p>Travis Scott 1</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img width={900} height={500} alt="900x500" src={IMAGE_URL_2} />
+          <Carousel.Caption>
+            <p>Travis Scott 2</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img width={900} height={500} alt="900x500" src={IMAGE_URL_3} />
+          <Carousel.Caption>
+            <p>Travis Scott 3</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
+    )
 
     if (!selectedEvent) {
       return (
@@ -54,6 +82,8 @@ class InfoPanel extends Component {
               alt={selectedEvent.title}
               responsive
             />
+            <hr />
+            {carouselInstance}
             <hr />
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
