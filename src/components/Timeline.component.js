@@ -17,7 +17,7 @@ class Timeline extends Component {
   }
 
   render() {
-    const { maps, selectedMapUrl, setSelectedMap } = this.props
+    const { maps, selectedMap, setSelectedMap } = this.props
 
     return (
       <div>
@@ -29,7 +29,7 @@ class Timeline extends Component {
             type="radio"
             onChange={setSelectedMap}
             name="timeline"
-            defaultValue={selectedMapUrl}
+            defaultValue={selectedMap.year}
           >
             {maps.map(map => (
               <ToggleButton value={map.year} key={map.year}>

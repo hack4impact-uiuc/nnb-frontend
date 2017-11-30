@@ -8,21 +8,14 @@ import {
   Timeline,
   MapForm
 } from './components'
-import { pois, stories, Api } from './utils'
+import { pois, stories, maps, Api } from './utils'
 import './styles/App.css'
 
 class App extends Component {
   // using dummy data until BE api is done
   state = {
-    maps: [
-      {
-        imageUrl:
-          'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X',
-        year: 0
-      }
-    ],
-    selectedMapUrl:
-      'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X',
+    maps: maps,
+    selectedMap: maps[0],
     activeEvents: pois,
     selectedEvent: pois[0],
     stories: stories,
@@ -77,12 +70,13 @@ class App extends Component {
     return Api.getMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
+      this.setSelectedMap(data[0].year)
     })
   }
 
   setSelectedMap(mapYear) {
-    const mapUrl = this.state.maps.find(map => map.year === mapYear).imageUrl
-    this.setState({ selectedMapUrl: mapUrl })
+    const map = this.state.maps.find(map => map.year === mapYear)
+    this.setState({ selectedMap: map })
   }
 
   setSelectedPOI(POIMarkerId) {
