@@ -53,6 +53,9 @@ class InfoPanel extends Component {
                 </li>
               ))}
             </ul>
+            <h4>
+              POI: {curIndex + 1}/{activeEvents.length}
+            </h4>
             {isShownPrev && (
               <Button bsStyle="primary" onClick={this.onClickPrevious}>
                 Previous
