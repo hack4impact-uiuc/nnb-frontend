@@ -33,10 +33,13 @@ class StoryList extends Component {
     this.setState({ storyName: e.target.value })
   }
 
-  onClickEdit() {}
+  onClickEdit(id) {
+    alert('Edit Button #' + id)
+  }
 
-  onClickDelete() {
+  onClickDelete(id) {
     //<--TODO: Add delete message
+    alert('Delete Button #' + id)
   }
 
   submitStoryName() {
@@ -64,6 +67,8 @@ class StoryList extends Component {
         storyNameChange={this.storyNameChange}
         submitStoryName={this.submitStoryName}
         exitStory={this.props.exitStory}
+        onClickEdit={this.onClickEdit}
+        onClickDelete={this.onClickDelete}
       />
     )
 
@@ -101,6 +106,8 @@ function SidebarContent({
   storyNameChange,
   submitStoryName,
   exitStory,
+  onClickEdit,
+  onClickDelete,
   ...props
 }) {
   return (
@@ -124,18 +131,8 @@ function SidebarContent({
           </div>
           <div className="divider" />
 
-          <a class="btn btn-primary a-btn-slide-text">
-            <span class="glyphicon glyphicon-edit" />
-            <span>
-              <strong>Edit</strong>
-            </span>
-          </a>
-          <a class="btn btn-primary a-btn-slide-text">
-            <span class="glyphicon glyphicon-remove" />
-            <span>
-              <strong>Delete</strong>
-            </span>
-          </a>
+          <div onClick={() => onClickEdit(story.id)}>Edit</div>
+          <div onClick={() => onClickDelete(story.id)}>Delete</div>
         </div>
       ))}
 
