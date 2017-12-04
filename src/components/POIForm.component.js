@@ -41,7 +41,7 @@ class POIForm extends Component {
   }
 
   onSubmit() {
-    const { clickedCoords, loadPOIs, setShowPOIForm } = this.props
+    const { selectedMap, clickedCoords, loadPOIs, setShowPOIForm } = this.props
     const { name, description, startDate } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
@@ -50,6 +50,7 @@ class POIForm extends Component {
     }
     const poi = {
       title: name,
+      map_by_year: selectedMap.year,
       description,
       date: startDate,
       coordinateX,

@@ -40,6 +40,7 @@ function convertFromApiPOI(poi) {
 function convertToApiPOI(poi) {
   return {
     name: poi.title,
+    map_by_year: poi.map_by_year,
     year: poi.date.format('YYYY'),
     month: poi.date.format('MM'),
     day: poi.date.format('DD'),
@@ -76,7 +77,8 @@ function convertToApiStory(storyName) {
 function convertFromApiMap(map) {
   return {
     imageUrl: map.image_url,
-    year: map.year
+    year: map.year,
+    id: map.id
   }
 }
 
@@ -89,15 +91,16 @@ function convertToApiMap(map) {
 
 // TODO: api url should be /pois
 function getPOIs() {
-  return createRequest(REQUEST_METHODS.get, 'poi')
+  return createRequest(REQUEST_METHODS.get, 'pois')
     .then(res => res.data)
     .then(res => res.map(r => r.data).map(convertFromApiPOI))
 }
 
 function getPOIsByYear(year) {
-  return createRequest(REQUEST_METHODS.get, 'poi', { year: year })
-    .then(res => res.data)
-    .then(res => res.map(r => r.data).map(convertFromApiPOI))
+  // will soon be `maps/year/<year>`
+  return createRequest(REQUEST_METHODS.get, `pois/year/${year}`)
+    .then(res => res.data.pois)
+    .then(res => res.map(convertFromApiPOI))
 }
 
 function getStories() {
@@ -120,7 +123,7 @@ function getMaps() {
 }
 
 function postPOI(poi) {
-  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
+  return createRequest(REQUEST_METHODS.post, 'pois', convertToApiPOI(poi)).then(
     res => res.data
   )
 }

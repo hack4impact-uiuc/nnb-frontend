@@ -79,10 +79,8 @@ class App extends Component {
   }
 
   deleteMap(mapId) {
-    return Api.deleteMap(mapId).then(data => {
-      data.sort((a, b) => a.year - b.year)
-      this.setState({ maps: data })
-      this.setSelectedMap(data[0].year)
+    return Api.deleteMap(mapId).then(() => {
+      this.loadMaps()
     })
   }
 
@@ -186,7 +184,11 @@ class App extends Component {
           {!showPOIForm &&
             isEditing && (
               <div className="map-manager-container">
-                <MapManager {...this.state} loadMaps={this.loadMaps} />
+                <MapManager
+                  {...this.state}
+                  loadMaps={this.loadMaps}
+                  deleteMap={this.deleteMap}
+                />
               </div>
             )}
           {!showPOIForm && (
@@ -203,6 +205,7 @@ class App extends Component {
             <div className="poi-form-container container">
               <POIForm
                 {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
                 loadPOIs={this.loadPOIs}
               />
