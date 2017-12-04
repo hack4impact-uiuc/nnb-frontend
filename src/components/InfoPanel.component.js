@@ -37,22 +37,22 @@ class InfoPanel extends Component {
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
-    const carouselInstance = (
+    const carousel = (
       <Carousel>
         <Carousel.Item>
-          <img width={900} height={500} alt="900x500" src={IMAGE_URL_1} />
+          <Image width={900} height={500} alt="900x500" src={IMAGE_URL_1} />
           <Carousel.Caption>
             <p>Travis Scott 1</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={900} height={500} alt="900x500" src={IMAGE_URL_2} />
+          <Image width={900} height={500} alt="900x500" src={IMAGE_URL_2} />
           <Carousel.Caption>
             <p>Travis Scott 2</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={900} height={500} alt="900x500" src={IMAGE_URL_3} />
+          <Image width={900} height={500} alt="900x500" src={IMAGE_URL_3} />
           <Carousel.Caption>
             <p>Travis Scott 3</p>
           </Carousel.Caption>
@@ -83,7 +83,7 @@ class InfoPanel extends Component {
               responsive
             />
             <hr />
-            {carouselInstance}
+            {carousel}
             <hr />
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
