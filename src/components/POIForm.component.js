@@ -22,7 +22,8 @@ class POIForm extends Component {
       startDate: moment(),
       name: '',
       description: '',
-      storiesToAdd: []
+      storiesToAdd: [],
+      links: []
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
@@ -51,7 +52,7 @@ class POIForm extends Component {
 
   onSubmit() {
     const { clickedCoords, loadPOIs, setShowPOIForm } = this.props
-    const { name, description, startDate } = this.state
+    const { name, description, startDate, storiesToAdd } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
     if (name === '' || description === '') {
@@ -63,7 +64,8 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: ['google.com', 'purple.com']
+      links: ['google.com', 'purple.com'],
+      storiesToAdd: storiesToAdd
     }
 
     // TODO: once the api sends the newly created POI,
