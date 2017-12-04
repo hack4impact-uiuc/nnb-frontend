@@ -77,23 +77,27 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
+    const { selectedMap } = this.props
+
     return (
       <div>
-        <div className="image-container">
-          <Image
-            src={this.props.selectedMap.imageUrl}
-            responsive
-            ref={el => (this.image = el)}
-            onClick={this.onImageClick}
-            onLoad={this.mapImageLoaded}
-          />
-          {mapImageLoaded && (
-            <POIMarkers
-              {...this.props}
-              {...{ mapImageWidth, mapImageHeight }}
+        {selectedMap && (
+          <div className="image-container">
+            <Image
+              src={selectedMap.imageUrl}
+              responsive
+              ref={el => (this.image = el)}
+              onClick={this.onImageClick}
+              onLoad={this.mapImageLoaded}
             />
-          )}
-        </div>
+            {mapImageLoaded && (
+              <POIMarkers
+                {...this.props}
+                {...{ mapImageWidth, mapImageHeight }}
+              />
+            )}
+          </div>
+        )}
         {this.props.isEditing && (
           <Button
             onClick={
@@ -124,7 +128,7 @@ function POIMarkers({
   return activeEvents.map(poi => (
     <POIMarker
       {...poi}
-      isSelected={poi.id === selectedEvent.id}
+      isSelected={selectedEvent && poi.id === selectedEvent.id}
       key={poi.id}
       {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
     />

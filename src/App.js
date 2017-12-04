@@ -8,17 +8,17 @@ import {
   Timeline,
   MapManager
 } from './components'
-import { pois, stories, maps, Api } from './utils'
+import { Api } from './utils'
 import './styles/App.css'
 
 class App extends Component {
   // using dummy data until BE api is done
   state = {
-    maps: maps,
-    selectedMap: maps[0],
-    activeEvents: pois,
+    maps: [],
+    selectedMap: null,
+    activeEvents: [],
     selectedEvent: null,
-    stories: stories,
+    stories: [],
     selectedStory: null,
     isStorySelected: false,
     showPOIForm: false,
