@@ -34,16 +34,16 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel>
-        activeEvents.map(selectedEvent => (
-        <Carousel.Item>
-          <Image
-            width={500}
-            height={500}
-            alt={selectedEvent.caption}
-            src={selectedEvent.content_url}
-          />
-        </Carousel.Item>
-        )
+        {activeEvents.map(selectedEvent => (
+          <Carousel.Item>
+            <Image
+              width={500}
+              height={500}
+              alt={selectedEvent.caption}
+              src={selectedEvent.content_url}
+            />
+          </Carousel.Item>
+        ))}
       </Carousel>
     )
 
