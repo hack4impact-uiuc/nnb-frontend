@@ -66,18 +66,19 @@ class InfoPanel extends Component {
                 </li>
               ))}
             </ul>
-            {isStorySelected &&
-              isShownPrev && (
-                <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                  Previous
-                </Button>
-              )}
-            {isStorySelected &&
-              isShownNext && (
-                <Button bsStyle="primary" onClick={this.onClickNext}>
-                  Next
-                </Button>
-              )}
+            <h4>
+              POI: {curIndex + 1}/{activeEvents.length}
+            </h4>
+            {isShownPrev && (
+              <Button bsStyle="primary" onClick={this.onClickPrevious}>
+                Previous
+              </Button>
+            )}
+            {isShownNext && (
+              <Button bsStyle="primary" onClick={this.onClickNext}>
+                Next
+              </Button>
+            )}
           </div>
         </div>
       </div>
