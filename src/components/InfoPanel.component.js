@@ -7,6 +7,8 @@ class InfoPanel extends Component {
     super(props)
     this.onClickPrevious = this.onClickPrevious.bind(this)
     this.onClickNext = this.onClickNext.bind(this)
+    this.onClickEdit = this.onClickEdit.bind(this)
+    this.onClickDelete = this.onClickDelete.bind(this)
   }
 
   onClickPrevious() {
@@ -19,6 +21,16 @@ class InfoPanel extends Component {
     const { activeEvents, selectedEvent, setSelectedPOI } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     setSelectedPOI(activeEvents[curIndex + 1].id)
+  }
+
+  onClickEdit() {
+    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    //<--TODO: Add functionality - bring up add poi form
+  }
+
+  onClickDelete() {
+    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    //<--TODO: Add functionality - deletes poi with message
   }
 
   render() {
@@ -57,6 +69,22 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel">
+        <a class="btn btn-primary a-btn-slide-text">
+          <span class="glyphicon glyphicon-edit" onClick={this.onClickEdit} />
+          <span>
+            <strong>Edit</strong>
+          </span>
+        </a>
+        <a class="btn btn-primary a-btn-slide-text">
+          <span
+            class="glyphicon glyphicon-remove"
+            onClick={this.onClickDelete}
+          />
+          <span>
+            <strong>Delete</strong>
+          </span>
+        </a>
+
         <h1>
           <u>
             <b>{selectedEvent.title} </b>
