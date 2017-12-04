@@ -6,7 +6,7 @@ import {
   POIForm,
   StoryList,
   Timeline,
-  MapForm
+  MapManager
 } from './components'
 import { pois, stories, maps, Api } from './utils'
 import './styles/App.css'
@@ -17,12 +17,11 @@ class App extends Component {
     maps: maps,
     selectedMap: maps[0],
     activeEvents: pois,
-    selectedEvent: pois[0],
+    selectedEvent: null,
     stories: stories,
     selectedStory: null,
     isStorySelected: false,
     showPOIForm: false,
-    showMapForm: false,
     showSidebar: false,
     isEditing: true
   }
@@ -32,12 +31,12 @@ class App extends Component {
     this.loadPOIs = this.loadPOIs.bind(this)
     this.loadStories = this.loadStories.bind(this)
     this.loadMaps = this.loadMaps.bind(this)
+    this.deleteMap = this.deleteMap.bind(this)
     this.toggleEditMode = this.toggleEditMode.bind(this)
     this.setSelectedMap = this.setSelectedMap.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
-    this.setShowMapForm = this.setShowMapForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
     this.exitStory = this.exitStory.bind(this)
@@ -51,14 +50,19 @@ class App extends Component {
 
   componentDidMount() {
     // example of how to use api requests
-    this.loadPOIs()
     this.loadStories()
     this.loadMaps()
   }
 
   loadPOIs() {
     return Api.getPOIs().then(data =>
-      this.setState({ activeEvents: data, selectedEvent: data[0] })
+      this.setState({ activeEvents: data, selectedEvent: null })
+    )
+  }
+
+  loadPOIsForYear(year) {
+    return Api.getPOIsByYear(year).then(data =>
+      this.setState({ activeEvents: data, selectedEvent: null })
     )
   }
 
@@ -74,8 +78,17 @@ class App extends Component {
     })
   }
 
+  deleteMap(mapId) {
+    return Api.deleteMap(mapId).then(data => {
+      data.sort((a, b) => a.year - b.year)
+      this.setState({ maps: data })
+      this.setSelectedMap(data[0].year)
+    })
+  }
+
   setSelectedMap(mapYear) {
     const map = this.state.maps.find(map => map.year === mapYear)
+    this.loadPOIsForYear(map.year)
     this.setState({ selectedMap: map })
   }
 
@@ -120,12 +133,6 @@ class App extends Component {
     })
   }
 
-  setShowMapForm(shouldShow) {
-    this.setState({
-      showMapForm: shouldShow
-    })
-  }
-
   setClickedCoords(coords) {
     this.setState({
       clickedCoords: coords
@@ -133,7 +140,7 @@ class App extends Component {
   }
 
   render() {
-    const { showPOIForm, showMapForm, isEditing } = this.state
+    const { showPOIForm, isEditing } = this.state
 
     return (
       <div>
@@ -166,56 +173,41 @@ class App extends Component {
         </Navbar>
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
+          {!showPOIForm && (
+            <div className="nnb-map-container">
+              <NNBMap
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                setClickedCoords={this.setClickedCoords}
+              />
+            </div>
+          )}
           {!showPOIForm &&
-            !showMapForm && (
-              <div className="nnb-map-container">
-                <NNBMap
-                  {...this.state}
-                  setSelectedPOI={this.setSelectedPOI}
-                  setShowPOIForm={this.setShowPOIForm}
-                  setClickedCoords={this.setClickedCoords}
-                />
+            isEditing && (
+              <div className="map-manager-container">
+                <MapManager {...this.state} loadMaps={this.loadMaps} />
               </div>
             )}
-          {!showPOIForm &&
-            !showMapForm && (
-              <div className="timeline-container">
-                <Timeline
-                  {...this.state}
-                  setSelectedMap={this.setSelectedMap}
-                  setShowMapForm={this.setShowMapForm}
-                />
-              </div>
-            )}
-          {!showPOIForm &&
-            !showMapForm && (
-              <div className="info-panel-container">
-                <InfoPanel
-                  {...this.state}
-                  setSelectedPOI={this.setSelectedPOI}
-                />
-              </div>
-            )}
-          {showPOIForm &&
-            !showMapForm && (
-              <div className="poi-form-container container">
-                <POIForm
-                  {...this.state}
-                  setShowPOIForm={this.setShowPOIForm}
-                  loadPOIs={this.loadPOIs}
-                />
-              </div>
-            )}
-          {showMapForm &&
-            !showPOIForm && (
-              <div className="map-form-container">
-                <MapForm
-                  {...this.state}
-                  setShowMapForm={this.setShowMapForm}
-                  loadMaps={this.loadMaps}
-                />
-              </div>
-            )}
+          {!showPOIForm && (
+            <div className="timeline-container">
+              <Timeline {...this.state} setSelectedMap={this.setSelectedMap} />
+            </div>
+          )}
+          {!showPOIForm && (
+            <div className="info-panel-container">
+              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
+            </div>
+          )}
+          {showPOIForm && (
+            <div className="poi-form-container container">
+              <POIForm
+                {...this.state}
+                setShowPOIForm={this.setShowPOIForm}
+                loadPOIs={this.loadPOIs}
+              />
+            </div>
+          )}
         </div>
       </div>
     )

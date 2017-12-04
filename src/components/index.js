@@ -4,6 +4,14 @@ import POIForm from './POIForm.component'
 import POIMarker from './POIMarker.component'
 import StoryList from './StoryList.component'
 import Timeline from './Timeline.component'
-import MapForm from './MapForm.component'
+import MapManager from './MapManager.component'
 
-export { InfoPanel, NNBMap, POIForm, POIMarker, StoryList, Timeline, MapForm }
+export {
+  InfoPanel,
+  NNBMap,
+  POIForm,
+  POIMarker,
+  StoryList,
+  Timeline,
+  MapManager
+}

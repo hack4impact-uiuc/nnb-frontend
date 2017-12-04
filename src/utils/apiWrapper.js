@@ -94,6 +94,12 @@ function getPOIs() {
     .then(res => res.map(r => r.data).map(convertFromApiPOI))
 }
 
+function getPOIsByYear(year) {
+  return createRequest(REQUEST_METHODS.get, 'poi', { year: year })
+    .then(res => res.data)
+    .then(res => res.map(r => r.data).map(convertFromApiPOI))
+}
+
 function getStories() {
   return createRequest(REQUEST_METHODS.get, 'stories')
     .then(res => res.data)
@@ -139,13 +145,21 @@ function getPOIsByStory(storyId) {
   )
 }
 
+function deleteMap(mapId) {
+  return createRequest(REQUEST_METHODS.delete, `maps/${mapId}`).then(
+    res => res.data
+  )
+}
+
 export default {
   getPOIs,
+  getPOIsByYear,
   getStories,
   getStory,
   getMaps,
   postPOI,
   postStory,
   postMap,
-  getPOIsByStory
+  getPOIsByStory,
+  deleteMap
 }

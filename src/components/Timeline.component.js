@@ -1,29 +1,12 @@
 import React, { Component } from 'react'
-import {
-  Button,
-  ButtonToolbar,
-  ToggleButtonGroup,
-  ToggleButton
-} from 'react-bootstrap'
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 
 class Timeline extends Component {
-  constructor(props) {
-    super(props)
-    this.showMapForm = this.showMapForm.bind(this)
-  }
-
-  showMapForm() {
-    this.props.setShowMapForm(true)
-  }
-
   render() {
     const { maps, selectedMap, setSelectedMap } = this.props
 
     return (
       <div>
-        {this.props.isEditing && (
-          <Button onClick={this.showMapForm}>Add Map</Button>
-        )}
         <ButtonToolbar>
           <ToggleButtonGroup
             type="radio"
