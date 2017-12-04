@@ -40,6 +40,7 @@ function convertFromApiPOI(poi) {
 function convertToApiPOI(poi) {
   return {
     name: poi.title,
+    map_by_year: poi.mapByYear,
     year: poi.date.format('YYYY'),
     month: poi.date.format('MM'),
     day: poi.date.format('DD'),
@@ -73,11 +74,34 @@ function convertToApiStory(storyName) {
   }
 }
 
+function convertFromApiMap(map) {
+  return {
+    imageUrl: map.image_url,
+    year: map.year,
+    id: map.id
+  }
+}
+
+function convertToApiMap(map) {
+  return {
+    image_url: map.imageUrl,
+    year: map.year
+  }
+}
+
 // TODO: api url should be /pois
 function getPOIs() {
-  return createRequest(REQUEST_METHODS.get, 'poi')
+  return createRequest(REQUEST_METHODS.get, 'pois')
     .then(res => res.data)
     .then(res => res.map(r => r.data).map(convertFromApiPOI))
+}
+
+function getPOIsByYear(year) {
+  return createRequest(REQUEST_METHODS.get, `maps/years/${year}`).then(res => {
+    const pois = res.data.pois.map(convertFromApiPOI)
+    const map = convertFromApiMap(res.data.map[0])
+    return { map: map, pois: pois }
+  })
 }
 
 function getStories() {
@@ -93,8 +117,14 @@ function getStory(name) {
   )
 }
 
+function getMaps() {
+  return createRequest(REQUEST_METHODS.get, 'maps')
+    .then(res => res.data)
+    .then(res => res.map(convertFromApiMap))
+}
+
 function postPOI(poi) {
-  return createRequest(REQUEST_METHODS.post, 'poi', convertToApiPOI(poi)).then(
+  return createRequest(REQUEST_METHODS.post, 'pois', convertToApiPOI(poi)).then(
     res => res.data
   )
 }
@@ -107,17 +137,33 @@ function postStory(storyName) {
   ).then(res => res.data)
 }
 
+function postMap(map) {
+  return createRequest(REQUEST_METHODS.post, 'maps', convertToApiMap(map)).then(
+    res => res.data
+  )
+}
+
 function getPOIsByStory(storyId) {
   return createRequest(REQUEST_METHODS.get, `stories/${storyId}`).then(res =>
     res.pois.map(convertFromApiPOI)
   )
 }
 
+function deleteMap(mapId) {
+  return createRequest(REQUEST_METHODS.delete, `maps/${mapId}`).then(
+    res => res.data
+  )
+}
+
 export default {
   getPOIs,
+  getPOIsByYear,
   getStories,
   getStory,
+  getMaps,
   postPOI,
   postStory,
-  getPOIsByStory
+  postMap,
+  getPOIsByStory,
+  deleteMap
 }

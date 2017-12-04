@@ -62,3 +62,11 @@ export const stories = [
     name: 'Story 4'
   }
 ]
+
+export const maps = [
+  {
+    imageUrl:
+      'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X',
+    year: 0
+  }
+]

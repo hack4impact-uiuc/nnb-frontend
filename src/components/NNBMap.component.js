@@ -4,10 +4,6 @@ import { Image, Button } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
 
-//const IMAGE_URL = 'http://www.vectorstash.com/vectors/vectorstash-grid.svg'
-const IMAGE_URL =
-  'http://www.citymetric.com/sites/default/files/styles/nodeimage/public/article_2016/11/head.png?itok=VpwDz-7X'
-
 class NNBMap extends Component {
   state = {
     scaledCoords: [0, 0],
@@ -81,23 +77,27 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
+    const { selectedMap } = this.props
+
     return (
       <div>
-        <div className="image-container">
-          <Image
-            src={IMAGE_URL}
-            responsive
-            ref={el => (this.image = el)}
-            onClick={this.onImageClick}
-            onLoad={this.mapImageLoaded}
-          />
-          {mapImageLoaded && (
-            <POIMarkers
-              {...this.props}
-              {...{ mapImageWidth, mapImageHeight }}
+        {selectedMap && (
+          <div className="image-container">
+            <Image
+              src={selectedMap.imageUrl}
+              responsive
+              ref={el => (this.image = el)}
+              onClick={this.onImageClick}
+              onLoad={this.mapImageLoaded}
             />
-          )}
-        </div>
+            {mapImageLoaded && (
+              <POIMarkers
+                {...this.props}
+                {...{ mapImageWidth, mapImageHeight }}
+              />
+            )}
+          </div>
+        )}
         {this.props.isEditing && (
           <Button
             onClick={
@@ -128,7 +128,7 @@ function POIMarkers({
   return activeEvents.map(poi => (
     <POIMarker
       {...poi}
-      isSelected={poi.id === selectedEvent.id}
+      isSelected={selectedEvent && poi.id === selectedEvent.id}
       key={poi.id}
       {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
     />

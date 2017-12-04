@@ -3,5 +3,17 @@ import NNBMap from './NNBMap.component'
 import POIForm from './POIForm.component'
 import POIMarker from './POIMarker.component'
 import StoryList from './StoryList.component'
+import Timeline from './Timeline.component'
+import MapManager from './MapManager.component'
+import FieldGroup from './FieldGroup'
 
-export { InfoPanel, NNBMap, POIForm, POIMarker, StoryList }
+export {
+  InfoPanel,
+  NNBMap,
+  POIForm,
+  POIMarker,
+  StoryList,
+  Timeline,
+  MapManager,
+  FieldGroup
+}

@@ -7,6 +7,7 @@ $marker-diameter: 20px;
 }
 
 .marker {
+  cursor: pointer;
   position: absolute;
   border-radius: 100%;
   width: $marker-diameter;

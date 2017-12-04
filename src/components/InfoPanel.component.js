@@ -28,9 +28,6 @@ class InfoPanel extends Component {
       setSelectedPOI,
       isStorySelected
     } = this.props
-    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
-    const isShownNext = curIndex < activeEvents.length - 1
-    const isShownPrev = curIndex > 0
 
     const carousel = (
       <Carousel>
@@ -54,6 +51,9 @@ class InfoPanel extends Component {
         </div>
       )
     }
+    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
+    const isShownNext = curIndex < activeEvents.length - 1
+    const isShownPrev = curIndex > 0
 
     return (
       <div className="info-panel">
