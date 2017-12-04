@@ -12,7 +12,7 @@ class Timeline extends Component {
             type="radio"
             onChange={setSelectedMap}
             name="timeline"
-            defaultValue={selectedMap && selectedMap.year}
+            value={selectedMap && selectedMap.year}
           >
             {maps.map(map => (
               <ToggleButton value={map.year} key={map.year}>
