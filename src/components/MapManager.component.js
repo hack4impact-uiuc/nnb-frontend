@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
+import { FieldGroup } from '../components'
 import { Api } from './../utils'
 
 class MapManager extends Component {
@@ -79,25 +80,31 @@ class MapManager extends Component {
           {showInputFields ? 'Cancel' : 'Add map'}
         </Button>
         {showInputFields && (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Year:
-              <input
-                type="text"
-                value={this.state.inputYear}
-                onChange={this.onChangeYear}
-              />
-            </label>
-            <label>
-              Image URL:
-              <input
-                type="text"
-                value={this.state.inputImageUrl}
-                onChange={this.onChangeImageUrl}
-              />
-            </label>
-            <Button onClick={this.onSubmit}>Submit</Button>
-          </form>
+          <Form inline>
+            <FieldGroup
+              controlID="year"
+              label="Year"
+              inputType="text"
+              placeholder="Enter the map year here"
+              value={this.state.inputYear}
+              onChange={this.onChangeYear}
+            />
+            <FieldGroup
+              controlID="url"
+              label="Image URL"
+              inputType="text"
+              placeholder="Enter map image URL here"
+              value={this.state.inputImageUrl}
+              onChange={this.onChangeImageUrl}
+            />
+
+            <FieldGroup
+              inputType="button"
+              label=""
+              buttonText="Submit"
+              onClick={this.onSubmit}
+            />
+          </Form>
         )}
         {!showInputFields && (
           <Button onClick={this.showConfirmDeleteMap}>Delete map</Button>

@@ -1,16 +1,7 @@
 import React, { Component } from 'react'
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  Button,
-  Checkbox,
-  Form,
-  Col,
-  PageHeader
-} from 'react-bootstrap'
-import DatePicker from 'react-datepicker'
+import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
+import { FieldGroup } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -69,6 +60,7 @@ class POIForm extends Component {
     // TODO: once the api sends the newly created POI,
     //       we have to set it as the selectedEvent
     Api.postPOI(poi)
+      .then(res => console.log(res))
       .then(() => loadPOIs())
       .then(() => {
         setShowPOIForm(false)
@@ -167,85 +159,6 @@ class POIForm extends Component {
       </Form>
     )
   }
-}
-
-function FieldGroup({
-  controlId, //indentifier
-  label,
-  inputType, //text vs. textarea vs. file
-  placeholder,
-  value,
-  selected,
-  onChange,
-  onClick,
-  stories,
-  buttonText,
-  onStorySelect
-}) {
-  let fieldGroupModule
-
-  switch (inputType) {
-    case 'text':
-      fieldGroupModule = (
-        <FormControl
-          type="text"
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
-      )
-      break
-    case 'textarea':
-      fieldGroupModule = (
-        <FormControl
-          componentClass="textarea"
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
-      )
-      break
-    case 'file':
-      fieldGroupModule = <FormControl type="file" placeholder={placeholder} />
-      break
-    case 'date':
-      fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
-      break
-    case 'button':
-      fieldGroupModule = (
-        <Button bsStyle="primary" onClick={onClick}>
-          {buttonText}
-        </Button>
-      )
-      break
-    case 'checklist':
-      fieldGroupModule = stories.map(story => (
-        <div key={story.id}>
-          <Checkbox onClick={() => onStorySelect(story.id)}>
-            {story.name}
-          </Checkbox>
-        </div>
-      ))
-      break
-    default:
-      fieldGroupModule = (
-        <div>
-          <h1>
-            Please choose a valid inputType: text, textarea, file, date, button,
-            or checklist
-          </h1>
-        </div>
-      )
-  }
-
-  return (
-    <FormGroup controlid={controlId}>
-      <Col sm={2} componentClass={ControlLabel}>
-        {label}
-      </Col>
-      <Col sm={10}>{fieldGroupModule}</Col>
-    </FormGroup>
-  )
 }
 
 export default POIForm

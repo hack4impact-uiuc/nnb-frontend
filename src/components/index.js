@@ -5,6 +5,7 @@ import POIMarker from './POIMarker.component'
 import StoryList from './StoryList.component'
 import Timeline from './Timeline.component'
 import MapManager from './MapManager.component'
+import FieldGroup from './FieldGroup'
 
 export {
   InfoPanel,
@@ -13,5 +14,6 @@ export {
   POIMarker,
   StoryList,
   Timeline,
-  MapManager
+  MapManager,
+  FieldGroup
 }
