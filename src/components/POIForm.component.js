@@ -45,7 +45,8 @@ class POIForm extends Component {
       selectedMap,
       clickedCoords,
       loadPOIsForYear,
-      setShowPOIForm
+      setShowPOIForm,
+      setSelectedPOI
     } = this.props
     const { name, description, startDate } = this.state
     const [coordinateX, coordinateY] = clickedCoords
@@ -63,13 +64,11 @@ class POIForm extends Component {
       links: ['google.com', 'purple.com']
     }
 
-    // TODO: once the api sends the newly created POI,
-    //       we have to set it as the selectedEvent
     Api.postPOI(poi)
-      .then(() => loadPOIsForYear(selectedMap.year))
-      .then(() => {
-        setShowPOIForm(false)
-      })
+      .then(poi =>
+        loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
+      )
+      .then(() => setShowPOIForm(false))
   }
 
   onCancel() {
