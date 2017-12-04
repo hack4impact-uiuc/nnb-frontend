@@ -29,11 +29,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.loadPOIs = this.loadPOIs.bind(this)
+    this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
     this.loadMaps = this.loadMaps.bind(this)
     this.deleteMap = this.deleteMap.bind(this)
     this.toggleEditMode = this.toggleEditMode.bind(this)
-    this.setSelectedMap = this.setSelectedMap.bind(this)
     this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
@@ -61,9 +61,10 @@ class App extends Component {
   }
 
   loadPOIsForYear(year) {
-    return Api.getPOIsByYear(year).then(data =>
-      this.setState({ activeEvents: data, selectedEvent: null })
-    )
+    return Api.getPOIsByYear(year).then(data => {
+      this.setState({ activeEvents: data.pois, selectedEvent: null })
+      this.setState({ selectedMap: data.map })
+    })
   }
 
   loadStories() {
@@ -74,7 +75,7 @@ class App extends Component {
     return Api.getMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
-      this.setSelectedMap(data[0].year)
+      this.loadPOIsForYear(data[0].year)
     })
   }
 
@@ -82,12 +83,6 @@ class App extends Component {
     return Api.deleteMap(mapId).then(() => {
       this.loadMaps()
     })
-  }
-
-  setSelectedMap(mapYear) {
-    const map = this.state.maps.find(map => map.year === mapYear)
-    this.loadPOIsForYear(map.year)
-    this.setState({ selectedMap: map })
   }
 
   setSelectedPOI(POIMarkerId) {
@@ -183,7 +178,7 @@ class App extends Component {
           )}
           {!showPOIForm &&
             isEditing && (
-              <div className="map-manager-container">
+              <div>
                 <MapManager
                   {...this.state}
                   loadMaps={this.loadMaps}
@@ -193,7 +188,10 @@ class App extends Component {
             )}
           {!showPOIForm && (
             <div className="timeline-container">
-              <Timeline {...this.state} setSelectedMap={this.setSelectedMap} />
+              <Timeline
+                {...this.state}
+                loadPOIsForYear={this.loadPOIsForYear}
+              />
             </div>
           )}
           {!showPOIForm && (
@@ -207,7 +205,7 @@ class App extends Component {
                 {...this.state}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
-                loadPOIs={this.loadPOIs}
+                loadPOIsForYear={this.loadPOIsForYear}
               />
             </div>
           )}

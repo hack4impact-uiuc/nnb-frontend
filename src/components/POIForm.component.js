@@ -41,7 +41,12 @@ class POIForm extends Component {
   }
 
   onSubmit() {
-    const { selectedMap, clickedCoords, loadPOIs, setShowPOIForm } = this.props
+    const {
+      selectedMap,
+      clickedCoords,
+      loadPOIsForYear,
+      setShowPOIForm
+    } = this.props
     const { name, description, startDate } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
@@ -50,7 +55,7 @@ class POIForm extends Component {
     }
     const poi = {
       title: name,
-      map_by_year: selectedMap.year,
+      mapByYear: selectedMap.year,
       description,
       date: startDate,
       coordinateX,
@@ -61,8 +66,7 @@ class POIForm extends Component {
     // TODO: once the api sends the newly created POI,
     //       we have to set it as the selectedEvent
     Api.postPOI(poi)
-      .then(res => console.log(res))
-      .then(() => loadPOIs())
+      .then(() => loadPOIsForYear(selectedMap.year))
       .then(() => {
         setShowPOIForm(false)
       })

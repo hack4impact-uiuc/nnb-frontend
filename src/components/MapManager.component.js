@@ -72,7 +72,7 @@ class MapManager extends Component {
   }
 
   render() {
-    const { showInputFields } = this.state
+    const { showInputFields, inputImageUrl, inputYear } = this.state
 
     return (
       <div>
@@ -86,7 +86,7 @@ class MapManager extends Component {
               label="Year"
               inputType="text"
               placeholder="Enter the map year here"
-              value={this.state.inputYear}
+              value={inputYear}
               onChange={this.onChangeYear}
             />
             <FieldGroup
@@ -94,7 +94,7 @@ class MapManager extends Component {
               label="Image URL"
               inputType="text"
               placeholder="Enter map image URL here"
-              value={this.state.inputImageUrl}
+              value={inputImageUrl}
               onChange={this.onChangeImageUrl}
             />
 

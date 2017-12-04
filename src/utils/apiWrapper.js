@@ -40,7 +40,7 @@ function convertFromApiPOI(poi) {
 function convertToApiPOI(poi) {
   return {
     name: poi.title,
-    map_by_year: poi.map_by_year,
+    map_by_year: poi.mapByYear,
     year: poi.date.format('YYYY'),
     month: poi.date.format('MM'),
     day: poi.date.format('DD'),
@@ -97,10 +97,11 @@ function getPOIs() {
 }
 
 function getPOIsByYear(year) {
-  // will soon be `maps/year/<year>`
-  return createRequest(REQUEST_METHODS.get, `pois/year/${year}`)
-    .then(res => res.data.pois)
-    .then(res => res.map(convertFromApiPOI))
+  return createRequest(REQUEST_METHODS.get, `maps/years/${year}`).then(res => {
+    const pois = res.data.pois.map(convertFromApiPOI)
+    const map = convertFromApiMap(res.data.map[0])
+    return { map: map, pois: pois }
+  })
 }
 
 function getStories() {
