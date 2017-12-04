@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 
 class POIForm extends Component {
@@ -20,11 +21,14 @@ class POIForm extends Component {
     this.state = {
       startDate: moment(),
       name: '',
-      description: ''
+      description: '',
+      storiesToAdd: []
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onCancel = this.onCancel.bind(this)
+    this.onStorySelect = this.onStorySelect.bind(this)
   }
 
   onDateSelected(date) {
@@ -45,7 +49,54 @@ class POIForm extends Component {
     })
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const { clickedCoords, loadPOIs, setShowPOIForm } = this.props
+    const { name, description, startDate } = this.state
+    const [coordinateX, coordinateY] = clickedCoords
+
+    if (name === '' || description === '') {
+      console.warn('Warning: empty fields!')
+    }
+    const poi = {
+      title: name,
+      description,
+      date: startDate,
+      coordinateX,
+      coordinateY,
+      links: ['google.com', 'purple.com']
+    }
+
+    // TODO: once the api sends the newly created POI,
+    //       we have to set it as the selectedEvent
+    Api.postPOI(poi)
+      .then(() => loadPOIs())
+      .then(() => {
+        setShowPOIForm(false)
+      })
+  }
+
+  onCancel() {
+    this.setState({
+      startDate: '',
+      name: '',
+      description: '',
+      storiesToAdd: []
+    })
+    this.props.setShowPOIForm(false)
+  }
+
+  onStorySelect(storyId) {
+    const storiesSet = new Set(this.state.storiesToAdd)
+
+    if (storiesSet.has(storyId)) {
+      storiesSet.delete(storyId)
+    } else {
+      storiesSet.add(storyId)
+    }
+    this.setState({
+      storiesToAdd: [...storiesSet]
+    })
+  }
 
   render() {
     return (
@@ -95,6 +146,7 @@ class POIForm extends Component {
           inputType="checklist"
           stories={this.props.stories}
           label="Stories"
+          onStorySelect={this.onStorySelect}
         />
 
         <FormControl.Feedback />
@@ -104,6 +156,13 @@ class POIForm extends Component {
           label=""
           buttonText="Create"
           onClick={this.onSubmit}
+        />
+
+        <FieldGroup
+          inputType="button"
+          label=""
+          buttonText="Cancel"
+          onClick={this.onCancel}
         />
       </Form>
     )
@@ -120,7 +179,8 @@ function FieldGroup({
   onChange,
   onClick,
   stories,
-  buttonText
+  buttonText,
+  onStorySelect
 }) {
   let fieldGroupModule
 
@@ -161,7 +221,9 @@ function FieldGroup({
     case 'checklist':
       fieldGroupModule = stories.map(story => (
         <div key={story.id}>
-          <Checkbox>{story.name}</Checkbox>
+          <Checkbox onClick={() => onStorySelect(story.id)}>
+            {story.name}
+          </Checkbox>
         </div>
       ))
       break
