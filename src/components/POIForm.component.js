@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormControl, Form, PageHeader } from 'react-bootstrap'
+import { FormControl, Form, Image, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { FieldGroup } from '../components'
 import { Api } from './../utils'
@@ -13,13 +13,31 @@ class POIForm extends Component {
       startDate: moment(),
       name: '',
       description: '',
-      storiesToAdd: []
+      storiesToAdd: [],
+      isUploadingMedia: false
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onStorySelect = this.onStorySelect.bind(this)
+    this.onImageUpload = this.onImageUpload.bind(this)
+  }
+
+  // TODO: handle multiple file upload
+  onImageUpload(e) {
+    const image = e.target.files[0]
+    if (image) {
+      this.setState({ isUploadingMedia: true })
+      const reader = new FileReader()
+      reader.onload = e => {
+        const dataURL = e.target.result
+        Api.uploadImage(dataURL).then(mediaUrl => {
+          this.setState({ isUploadingMedia: false, mediaUrl })
+        })
+      }
+      reader.readAsDataURL(image)
+    }
   }
 
   onDateSelected(date) {
@@ -130,7 +148,11 @@ class POIForm extends Component {
           label="Upload Media"
           inputType="file"
           placeholder="Upload your files here"
+          onChange={this.onImageUpload}
         />
+
+        {this.state.isUploadingMedia && <div>Uploading...</div>}
+        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
 
         <FieldGroup
           controlId="links"

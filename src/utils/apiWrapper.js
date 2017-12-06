@@ -1,5 +1,6 @@
 import request from 'superagent'
-import { config } from './apiConfig'
+import cloudinary from 'cloudinary'
+import { apiConfig, cloudinaryConfig } from './apiConfig'
 
 const REQUEST_METHODS = {
   get: 'get',
@@ -8,8 +9,17 @@ const REQUEST_METHODS = {
   delete: 'delete'
 }
 
+cloudinary.config(cloudinaryConfig)
+
+function uploadImage(imageDataURL) {
+  return cloudinary.uploader
+    .upload(imageDataURL)
+    .then(res => res.secure_url)
+    .catch(err => console.error(err))
+}
+
 function createRequest(method, endpoint, options) {
-  let req = request[method](`${config.apiUrl}/${endpoint}`)
+  let req = request[method](`${apiConfig.apiUrl}/${endpoint}`)
   if (options) {
     if (method === REQUEST_METHODS.get) {
       req = req.query(options)
@@ -156,6 +166,7 @@ function deleteMap(mapId) {
 }
 
 export default {
+  uploadImage,
   getPOIs,
   getPOIsByYear,
   getStories,
