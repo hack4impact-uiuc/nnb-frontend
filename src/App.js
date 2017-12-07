@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import {
   InfoPanel,
   NNBMap,
@@ -8,6 +7,7 @@ import {
   Timeline,
   MapManager
 } from './components'
+import NavBar from './components/NavBar'
 import { Api } from './utils'
 import './styles/App.css'
 
@@ -144,26 +144,7 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
         />
-        <Navbar inverse>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <div className="sidebar-menu" onClick={this.toggleSidebar}>
-                  =
-                </div>
-                <a href="/">NNB</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <ToggleButtonGroup
-              type="checkbox"
-              value={isEditing ? [1] : []}
-              onChange={this.toggleEditMode}
-            >
-              <ToggleButton value={1}>Edit</ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-        </Navbar>
+        <NavBar showEdit={true} isEditing={isEditing} />
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
           {!showPOIForm && (

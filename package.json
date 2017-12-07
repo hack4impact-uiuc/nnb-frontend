@@ -7,16 +7,17 @@
     "classnames": "^2.2.5",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
+    "moment": "^2.19.2",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
     "react-datepicker": "^0.60.2",
     "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
-    "superagent": "^3.8.1",
     "react-sidebar": "^2.3.2",
-    "moment": "^2.19.2"
+    "superagent": "^3.8.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
