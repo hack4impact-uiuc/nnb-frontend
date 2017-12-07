@@ -14,15 +14,28 @@ class NNBMap extends Component {
   constructor(props) {
     super(props)
     this.onImageClick = this.onImageClick.bind(this)
-    this.mapImageLoaded = this.mapImageLoaded.bind(this)
+    this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
     this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
     this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
+    this.onWindowResize = this.onWindowResize.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
+    const { selectedMap } = this.props
     if (nextProps.isEditing === false) {
       this.setState({ isChoosingNewPOICoords: false })
     }
+    if (selectedMap && nextProps.selectedMap.year != selectedMap.year) {
+      this.setState({ mapImageLoaded: false })
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onWindowResize, false)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize, false)
   }
 
   onImageClick(event) {
@@ -48,7 +61,11 @@ class NNBMap extends Component {
     }
   }
 
-  mapImageLoaded() {
+  onWindowResize() {
+    this.updateMapImageDimensions()
+  }
+
+  updateMapImageDimensions() {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     this.setState({
       mapImageLoaded: true,
@@ -88,7 +105,7 @@ class NNBMap extends Component {
               responsive
               ref={el => (this.image = el)}
               onClick={this.onImageClick}
-              onLoad={this.mapImageLoaded}
+              onLoad={this.updateMapImageDimensions}
             />
             {mapImageLoaded && (
               <POIMarkers

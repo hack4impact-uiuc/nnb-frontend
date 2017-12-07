@@ -47,7 +47,13 @@ function FieldGroup({
       )
       break
     case 'file':
-      fieldGroupModule = <FormControl type="file" placeholder={placeholder} />
+      fieldGroupModule = (
+        <FormControl
+          type="file"
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+      )
       break
     case 'date':
       fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />

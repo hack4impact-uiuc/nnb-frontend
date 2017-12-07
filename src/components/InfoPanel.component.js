@@ -7,6 +7,8 @@ class InfoPanel extends Component {
     super(props)
     this.onClickPrevious = this.onClickPrevious.bind(this)
     this.onClickNext = this.onClickNext.bind(this)
+    this.onClickEdit = this.onClickEdit.bind(this)
+    this.onClickDelete = this.onClickDelete.bind(this)
   }
 
   onClickPrevious() {
@@ -21,12 +23,21 @@ class InfoPanel extends Component {
     setSelectedPOI(activeEvents[curIndex + 1].id)
   }
 
+  onClickEdit() {
+    //<--TODO: Add functionality - bring up add poi form
+  }
+
+  onClickDelete() {
+    //<--TODO: Add functionality - deletes poi with message
+  }
+
   render() {
     const {
       activeEvents,
       selectedEvent,
       setSelectedPOI,
-      isStorySelected
+      isStorySelected,
+      isEditing
     } = this.props
 
     const carousel = (
@@ -57,6 +68,23 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel">
+        {isEditing && (
+          <a className="btn btn-primary a-btn-slide-text">
+            <span
+              className="glyphicon glyphicon-edit"
+              onClick={this.onClickEdit}
+            />
+            Edit
+          </a>
+        )}
+        <a className="btn btn-primary a-btn-slide-text">
+          <span
+            className="glyphicon glyphicon-remove"
+            onClick={this.onClickDelete}
+          />
+          Delete
+        </a>
+
         <h1>
           <u>
             <b>{selectedEvent.title} </b>

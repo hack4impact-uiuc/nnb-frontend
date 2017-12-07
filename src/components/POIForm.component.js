@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormControl, Form, PageHeader } from 'react-bootstrap'
+import { FormControl, Form, Image, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
@@ -13,13 +13,31 @@ class POIForm extends Component {
       startDate: moment(),
       name: '',
       description: '',
-      storiesToAdd: []
+      storiesToAdd: [],
+      isUploadingMedia: false
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onStorySelect = this.onStorySelect.bind(this)
+    this.onImageUpload = this.onImageUpload.bind(this)
+  }
+
+  // TODO: handle multiple file upload
+  onImageUpload(e) {
+    const image = e.target.files[0]
+    if (image) {
+      this.setState({ isUploadingMedia: true })
+      const reader = new FileReader()
+      reader.onload = e => {
+        const dataURL = e.target.result
+        Api.uploadImage(dataURL).then(mediaUrl => {
+          this.setState({ isUploadingMedia: false, mediaUrl })
+        })
+      }
+      reader.readAsDataURL(image)
+    }
   }
 
   onDateSelected(date) {
@@ -45,7 +63,8 @@ class POIForm extends Component {
       selectedMap,
       clickedCoords,
       loadPOIsForYear,
-      setShowPOIForm
+      setShowPOIForm,
+      setSelectedPOI
     } = this.props
     const { name, description, startDate } = this.state
     const [coordinateX, coordinateY] = clickedCoords
@@ -63,13 +82,11 @@ class POIForm extends Component {
       links: ['google.com', 'purple.com']
     }
 
-    // TODO: once the api sends the newly created POI,
-    //       we have to set it as the selectedEvent
     Api.postPOI(poi)
-      .then(() => loadPOIsForYear(selectedMap.year))
-      .then(() => {
-        setShowPOIForm(false)
-      })
+      .then(poi =>
+        loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
+      )
+      .then(() => setShowPOIForm(false))
   }
 
   onCancel() {
@@ -130,7 +147,10 @@ class POIForm extends Component {
           label="Upload Media"
           inputType="file"
           placeholder="Upload your files here"
+          onChange={this.onImageUpload}
         />
+        {this.state.isUploadingMedia && <div>Uploading...</div>}
+        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
 
         <div>
           <OurTable colNames={['Link URL', 'Display Name']} />
