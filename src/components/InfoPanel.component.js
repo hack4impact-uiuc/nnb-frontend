@@ -68,19 +68,19 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel">
-        <a class="btn btn-primary a-btn-slide-text">
-          <span class="glyphicon glyphicon-edit" onClick={this.onClickEdit} />
-          <span>Edit</span>
-        </a>
         {isEditing && (
           <a class="btn btn-primary a-btn-slide-text">
-            <span
-              class="glyphicon glyphicon-remove"
-              onClick={this.onClickDelete}
-            />
-            <span>Delete</span>
+            <span class="glyphicon glyphicon-edit" onClick={this.onClickEdit} />
+            <span>Edit</span>
           </a>
         )}
+        <a class="btn btn-primary a-btn-slide-text">
+          <span
+            class="glyphicon glyphicon-remove"
+            onClick={this.onClickDelete}
+          />
+          <span>Delete</span>
+        </a>
 
         <h1>
           <u>
