@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
-import { FieldGroup } from '../components'
+import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -132,12 +132,9 @@ class POIForm extends Component {
           placeholder="Upload your files here"
         />
 
-        <FieldGroup
-          controlId="links"
-          label="POI Links"
-          inputType="textarea"
-          placeholder="Enter related links here, separated by commas"
-        />
+        <div>
+          <OurTable colNames={['Link URL', 'Display Name']} />
+        </div>
 
         <FieldGroup
           inputType="checklist"

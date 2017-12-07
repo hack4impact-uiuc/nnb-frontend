@@ -138,7 +138,12 @@ class App extends Component {
 
     return (
       <div>
-        <OurTable colNames={['link', 'name', 'bloop', 'number']} />
+        <POIForm
+          {...this.state}
+          setSelectedPOI={this.setSelectedPOI}
+          setShowPOIForm={this.setShowPOIForm}
+          loadPOIsForYear={this.loadPOIsForYear}
+        />
       </div>
     )
   }
