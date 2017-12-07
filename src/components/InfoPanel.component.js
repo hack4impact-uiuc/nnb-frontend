@@ -77,14 +77,15 @@ class InfoPanel extends Component {
             Edit
           </a>
         )}
-        <a className="btn btn-primary a-btn-slide-text">
-          <span
-            className="glyphicon glyphicon-remove"
-            onClick={this.onClickDelete}
-          />
-          Delete
-        </a>
-
+        {isEditing && (
+          <a className="btn btn-primary a-btn-slide-text">
+            <span
+              className="glyphicon glyphicon-remove"
+              onClick={this.onClickDelete}
+            />
+            Delete
+          </a>
+        )}
         <h1>
           <u>
             <b>{selectedEvent.title} </b>
