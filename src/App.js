@@ -197,7 +197,16 @@ class App extends Component {
           )}
           {!showPOIForm && (
             <div className="info-panel-container">
-              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
+              <InfoPanel
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                loadPOIsForYear={this.loadPOIsForYear}
+                year={
+                  this.state.maps && this.state.maps[0]
+                    ? this.state.maps[0].year
+                    : undefined
+                }
+              />
             </div>
           )}
           {showPOIForm && (
