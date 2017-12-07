@@ -24,12 +24,10 @@ class InfoPanel extends Component {
   }
 
   onClickEdit() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
     //<--TODO: Add functionality - bring up add poi form
   }
 
   onClickDelete() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
     //<--TODO: Add functionality - deletes poi with message
   }
 
@@ -38,7 +36,8 @@ class InfoPanel extends Component {
       activeEvents,
       selectedEvent,
       setSelectedPOI,
-      isStorySelected
+      isStorySelected,
+      isEditing
     } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
@@ -71,19 +70,17 @@ class InfoPanel extends Component {
       <div className="info-panel">
         <a class="btn btn-primary a-btn-slide-text">
           <span class="glyphicon glyphicon-edit" onClick={this.onClickEdit} />
-          <span>
-            <strong>Edit</strong>
-          </span>
+          <span>Edit</span>
         </a>
-        <a class="btn btn-primary a-btn-slide-text">
-          <span
-            class="glyphicon glyphicon-remove"
-            onClick={this.onClickDelete}
-          />
-          <span>
-            <strong>Delete</strong>
-          </span>
-        </a>
+        {isEditing && (
+          <a class="btn btn-primary a-btn-slide-text">
+            <span
+              class="glyphicon glyphicon-remove"
+              onClick={this.onClickDelete}
+            />
+            <span>Delete</span>
+          </a>
+        )}
 
         <h1>
           <u>
