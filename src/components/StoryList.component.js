@@ -34,12 +34,12 @@ class StoryList extends Component {
   }
 
   onClickEdit(id) {
-    alert('Edit Button #' + id)
+    console.log('Edit Button #' + id)
   }
 
   onClickDelete(id) {
     //<--TODO: Add delete message
-    alert('Delete Button #' + id)
+    console.log('Delete Button #' + id)
   }
 
   submitStoryName() {
@@ -130,8 +130,18 @@ function SidebarContent({
             {story.name}
           </div>
 
-          <div onClick={() => onClickEdit(story.id)}>Edit</div>
-          <div onClick={() => onClickDelete(story.id)}>Delete</div>
+          <div
+            className="story-panel-button"
+            onClick={() => onClickEdit(story.id)}
+          >
+            Edit
+          </div>
+          <div
+            className="story-panel-button"
+            onClick={() => onClickDelete(story.id)}
+          >
+            Delete
+          </div>
 
           <div className="divider" />
         </div>
