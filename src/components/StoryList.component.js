@@ -129,10 +129,11 @@ function SidebarContent({
           >
             {story.name}
           </div>
-          <div className="divider" />
 
           <div onClick={() => onClickEdit(story.id)}>Edit</div>
           <div onClick={() => onClickDelete(story.id)}>Delete</div>
+
+          <div className="divider" />
         </div>
       ))}
 
