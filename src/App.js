@@ -6,7 +6,8 @@ import {
   POIForm,
   StoryList,
   Timeline,
-  MapManager
+  MapManager,
+  OurTable
 } from './components'
 import { Api } from './utils'
 import './styles/App.css'

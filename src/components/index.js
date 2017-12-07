@@ -6,6 +6,7 @@ import StoryList from './StoryList.component'
 import Timeline from './Timeline.component'
 import MapManager from './MapManager.component'
 import FieldGroup from './FieldGroup'
+import OurTable from './OurTable.component'
 
 export {
   InfoPanel,
@@ -15,5 +16,6 @@ export {
   StoryList,
   Timeline,
   MapManager,
-  FieldGroup
+  FieldGroup,
+  OurTable
 }
