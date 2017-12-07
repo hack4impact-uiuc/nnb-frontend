@@ -73,7 +73,7 @@ class InfoPanel extends Component {
             <span
               className="glyphicon glyphicon-edit"
               onClick={this.onClickEdit}
-            />{' '}
+            />
             Edit
           </a>
         )}
@@ -81,7 +81,7 @@ class InfoPanel extends Component {
           <span
             className="glyphicon glyphicon-remove"
             onClick={this.onClickDelete}
-          />{' '}
+          />
           Delete
         </a>
 
