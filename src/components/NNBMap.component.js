@@ -20,8 +20,12 @@ class NNBMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { selectedMap } = this.props
     if (nextProps.isEditing === false) {
       this.setState({ isChoosingNewPOICoords: false })
+    }
+    if (selectedMap && nextProps.selectedMap.year != selectedMap.year) {
+      this.setState({ mapImageLoaded: false })
     }
   }
 
