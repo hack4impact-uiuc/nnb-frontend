@@ -106,7 +106,7 @@ class App extends Component {
   }
 
   exitStory() {
-    this.loadPOIs().then(() => {
+    this.loadPOIsForYear(this.state.selectedMap.year).then(() => {
       this.setState({
         selectedStory: null,
         isStorySelected: false
