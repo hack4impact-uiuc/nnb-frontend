@@ -5,50 +5,64 @@ import { FieldGroup } from '../components'
 class OurTable extends Component {
   constructor(props) {
     super(props)
+    //colNames
+
     this.state = {
-      firstCol: [['', ''], ['', '']], //rename
-      rowCount: [0, 1]
+      data: [new Array(props.colNames.length - 1).fill('')]
     }
     this.onAddRow = this.onAddRow.bind(this)
     this.onChangeLink = this.onChangeLink.bind(this)
   }
 
   onAddRow() {
-    //add a flippin row
+    this.setState({
+      data: this.state.data.concat([
+        new Array(this.props.colNames.length - 1).fill('')
+      ])
+    })
   }
 
   onChangeLink(row, column, inputLink) {
-    let temp = this.state.firstCol.slice() //copies firstCol
-    temp[row].splice(column, 1, inputLink.target.value)
+    let temp = this.state.data.slice() //copies data
+    temp[row].splice(column, 1, inputLink.target.value) //replace stuff at specified column with our target value
     this.setState({
-      firstCol: temp
+      data: temp
     })
   }
 
   //languages.splice(1, 1, 'Python');
 
   render() {
-    // let colNames = ['Link URL', 'Display Name', 'Remove']
-    let colNames = [0, 1, 2]
-
     return (
       <div>
         <Table striped bordered condensed hover>
           <thead>
-            <tr>{colNames.map(name => <th>{name}</th>)}</tr>
+            {
+              //creates table header for each column name
+            }
+            <tr>{this.props.colNames.map(name => <th>{name}</th>)}</tr>
           </thead>
           <tbody>
-            {this.state.rowCount.map(row => (
+            {
+              //for every row in rowCount
+            }
+            {this.state.data.map((_, row_index) => (
               <tr>
-                {colNames.slice(0, colNames.length - 1).map(column => (
-                  <th>
-                    <FieldGroup
-                      inputType="text"
-                      value={this.state.firstCol[row][column]}
-                      onChange={e => this.onChangeLink(row, column, e)}
-                    />
-                  </th>
-                ))}
+                {
+                  //create an editable textfield cell for each column name except for the last one
+                }
+                {this.props.colNames
+                  .slice(0, this.props.colNames.length - 1)
+                  .map((_, col_index) => (
+                    <th>
+                      <FieldGroup
+                        inputType="text" //editable textfield
+                        value={this.state.data[row_index][col_index]}
+                        onChange={e =>
+                          this.onChangeLink(row_index, col_index, e)} //set the value
+                      />
+                    </th>
+                  ))}
                 <th>X</th>
               </tr>
             ))}
