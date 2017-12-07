@@ -138,7 +138,7 @@ class App extends Component {
 
     return (
       <div>
-        <OurTable colNames={['link', 'name', 'remove']} />
+        <OurTable colNames={['link', 'name', 'bloop', 'number']} />
       </div>
     )
   }

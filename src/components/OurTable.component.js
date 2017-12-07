@@ -8,7 +8,7 @@ class OurTable extends Component {
     //colNames
 
     this.state = {
-      data: [new Array(props.colNames.length - 1).fill('')]
+      data: [new Array(props.colNames.length).fill('')]
     }
     this.onAddRow = this.onAddRow.bind(this)
     this.onChangeLink = this.onChangeLink.bind(this)
@@ -18,7 +18,7 @@ class OurTable extends Component {
   onAddRow() {
     this.setState({
       data: this.state.data.concat([
-        new Array(this.props.colNames.length - 1).fill('')
+        new Array(this.props.colNames.length).fill('')
       ])
     })
   }
@@ -49,7 +49,11 @@ class OurTable extends Component {
             {
               //creates table header for each column name
             }
-            <tr>{this.props.colNames.map(name => <th>{name}</th>)}</tr>
+            <tr>
+              {this.props.colNames
+                .concat(['Remove'])
+                .map(name => <th>{name}</th>)}
+            </tr>
           </thead>
           <tbody>
             {
@@ -61,7 +65,7 @@ class OurTable extends Component {
                   //create an editable textfield cell for each column name except for the last one
                 }
                 {this.props.colNames
-                  .slice(0, this.props.colNames.length - 1)
+                  .slice(0, this.props.colNames.length)
                   .map((_, col_index) => (
                     <th>
                       <FieldGroup
