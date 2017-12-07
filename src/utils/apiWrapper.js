@@ -78,6 +78,20 @@ function postPOI(poi) {
   ).then(res => res.data)
 }
 
+function editPOI(poiId, poi) {
+  return createRequest(
+    REQUEST_METHODS.PUT,
+    `pois/${poiId}`,
+    adapters.convertToApiPOI(poi)
+  ).then(res => res.data)
+}
+
+function deletePOI(poiId) {
+  return createRequest(REQUEST_METHODS.DELETE, `pois/${poiId}`).then(
+    res => res.data
+  )
+}
+
 /**
  * Story
  */
@@ -102,6 +116,20 @@ function postStory(storyName) {
   ).then(res => res.data)
 }
 
+function editStory(storyId, storyName) {
+  return createRequest(
+    REQUEST_METHODS.PUT,
+    `stories/${storyId}`,
+    adapters.convertToApiStory(storyName)
+  ).then(res => res.data)
+}
+
+function deleteStory(storyId) {
+  return createRequest(REQUEST_METHODS.DELETE, `stories/${storyId}`).then(
+    res => res.data
+  )
+}
+
 /**
  * Cloudinary
  */
@@ -120,8 +148,12 @@ export default {
   getPOIsByYear,
   getPOIsByStory,
   postPOI,
+  editPOI,
+  deletePOI,
   getStories,
   getStory,
   postStory,
+  editStory,
+  deleteStory,
   uploadImage
 }
