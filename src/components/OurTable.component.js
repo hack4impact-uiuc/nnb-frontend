@@ -12,6 +12,7 @@ class OurTable extends Component {
     }
     this.onAddRow = this.onAddRow.bind(this)
     this.onChangeLink = this.onChangeLink.bind(this)
+    this.onDeleteRow = this.onDeleteRow.bind(this)
   }
 
   onAddRow() {
@@ -30,7 +31,15 @@ class OurTable extends Component {
     })
   }
 
-  //languages.splice(1, 1, 'Python');
+  onDeleteRow(row) {
+    let temp = this.state.data.slice()
+    temp.splice(row, 1)
+    this.setState({
+      data: temp
+    })
+  }
+
+  //languages.splice(1, 1, 'Python');  sfv
 
   render() {
     return (
@@ -63,7 +72,9 @@ class OurTable extends Component {
                       />
                     </th>
                   ))}
-                <th>X</th>
+                <th>
+                  <div onClick={() => this.onDeleteRow(row_index)}>X</div>
+                </th>
               </tr>
             ))}
           </tbody>
