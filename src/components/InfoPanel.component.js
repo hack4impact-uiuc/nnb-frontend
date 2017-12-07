@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, Button, Carousel } from 'react-bootstrap'
 import './../styles/App.css'
+import { Api } from './../utils'
 
 class InfoPanel extends Component {
   constructor(props) {
@@ -28,6 +29,11 @@ class InfoPanel extends Component {
   }
 
   onClickDelete() {
+    console.log('onclickdelete function')
+    const { selectedEvent, loadPOIsForYear, year } = this.props
+    if (year) {
+      Api.deletePOI(selectedEvent.id).then(() => loadPOIsForYear(year))
+    }
     //<--TODO: Add functionality - deletes poi with message
   }
 
@@ -69,22 +75,24 @@ class InfoPanel extends Component {
     return (
       <div className="info-panel">
         {isEditing && (
-          <a className="btn btn-primary a-btn-slide-text">
+          <div className="btn btn-primary a-btn-slide-text">
             <span
               className="glyphicon glyphicon-edit"
               onClick={this.onClickEdit}
-            />
-            Edit
-          </a>
+            >
+              Edit
+            </span>
+          </div>
         )}
         {isEditing && (
-          <a className="btn btn-primary a-btn-slide-text">
+          <div className="btn btn-primary a-btn-slide-text">
             <span
               className="glyphicon glyphicon-remove"
               onClick={this.onClickDelete}
-            />
-            Delete
-          </a>
+            >
+              Delete
+            </span>
+          </div>
         )}
         <h1>
           <u>
