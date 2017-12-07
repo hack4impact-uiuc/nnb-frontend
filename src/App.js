@@ -144,7 +144,11 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
         />
-        <NavBar showEdit={true} isEditing={isEditing} />
+        <NavBar
+          showEdit={true}
+          onEdit={this.toggleEditMode}
+          isEditing={isEditing}
+        />
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
           {!showPOIForm && (

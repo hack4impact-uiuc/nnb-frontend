@@ -23,9 +23,9 @@ class NavBar extends PureComponent {
         <ToggleButtonGroup
           type="checkbox"
           value={this.props.isEditing ? [1] : []}
-          onChange={this.toggleEditMode}
+          onChange={this.props.onEdit}
         >
-          {this.props.isEditing ? (
+          {this.props.showEdit ? (
             <ToggleButton value={1}>Edit</ToggleButton>
           ) : null}
           <Link to="/login">

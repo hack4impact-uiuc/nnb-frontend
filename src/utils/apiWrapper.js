@@ -8,7 +8,7 @@ const REQUEST_METHODS = {
   delete: 'delete'
 }
 
-export function createRequest(method, endpoint, options) {
+function createRequest(method, endpoint, options) {
   let req = request[method](`${config.apiUrl}/${endpoint}`)
   if (options) {
     if (method === REQUEST_METHODS.get) {
@@ -20,7 +20,7 @@ export function createRequest(method, endpoint, options) {
   return req.then(response => response.body).catch(err => console.error(err))
 }
 
-export function convertFromApiPOI(poi) {
+function convertFromApiPOI(poi) {
   return {
     id: poi.id,
     title: poi.name,
@@ -37,7 +37,7 @@ export function convertFromApiPOI(poi) {
   }
 }
 
-export function convertToApiPOI(poi) {
+function convertToApiPOI(poi) {
   return {
     name: poi.title,
     map_by_year: poi.mapByYear,
@@ -61,20 +61,20 @@ export function convertToApiPOI(poi) {
   }
 }
 
-export function convertFromApiStory(story) {
+function convertFromApiStory(story) {
   return {
     id: story.id,
     name: story.story_name
   }
 }
 
-export function convertToApiStory(storyName) {
+function convertToApiStory(storyName) {
   return {
     story_name: storyName
   }
 }
 
-export function convertFromApiMap(map) {
+function convertFromApiMap(map) {
   return {
     imageUrl: map.image_url,
     year: map.year,
@@ -82,7 +82,7 @@ export function convertFromApiMap(map) {
   }
 }
 
-export function convertToApiMap(map) {
+function convertToApiMap(map) {
   return {
     image_url: map.imageUrl,
     year: map.year
@@ -90,13 +90,13 @@ export function convertToApiMap(map) {
 }
 
 // TODO: api url should be /pois
-export function getPOIs() {
+function getPOIs() {
   return createRequest(REQUEST_METHODS.get, 'pois')
     .then(res => res.data)
     .then(res => res.map(r => r.data).map(convertFromApiPOI))
 }
 
-export function getPOIsByYear(year) {
+function getPOIsByYear(year) {
   return createRequest(REQUEST_METHODS.get, `maps/years/${year}`).then(res => {
     const pois = res.data.pois.map(convertFromApiPOI)
     const map = convertFromApiMap(res.data.map[0])
@@ -104,32 +104,32 @@ export function getPOIsByYear(year) {
   })
 }
 
-export function getStories() {
+function getStories() {
   return createRequest(REQUEST_METHODS.get, 'stories')
     .then(res => res.data)
     .then(res => res.map(convertFromApiStory))
 }
 
 // TODO: api should take in story id, not name
-export function getStory(name) {
+function getStory(name) {
   return createRequest(REQUEST_METHODS.get, `stories/${name}`).then(
     res => res.data
   )
 }
 
-export function getMaps() {
+function getMaps() {
   return createRequest(REQUEST_METHODS.get, 'maps')
     .then(res => res.data)
     .then(res => res.map(convertFromApiMap))
 }
 
-export function postPOI(poi) {
+function postPOI(poi) {
   return createRequest(REQUEST_METHODS.post, 'pois', convertToApiPOI(poi)).then(
     res => res.data
   )
 }
 
-export function postStory(storyName) {
+function postStory(storyName) {
   return createRequest(
     REQUEST_METHODS.post,
     'stories',
@@ -137,24 +137,38 @@ export function postStory(storyName) {
   ).then(res => res.data)
 }
 
-export function postMap(map) {
+function postMap(map) {
   return createRequest(REQUEST_METHODS.post, 'maps', convertToApiMap(map)).then(
     res => res.data
   )
 }
 
-export function getPOIsByStory(storyId) {
+function getPOIsByStory(storyId) {
   return createRequest(REQUEST_METHODS.get, `stories/${storyId}`).then(res =>
     res.pois.map(convertFromApiPOI)
   )
 }
 
-export function deleteMap(mapId) {
+function deleteMap(mapId) {
   return createRequest(REQUEST_METHODS.delete, `maps/${mapId}`).then(
     res => res.data
   )
 }
 
-export function postLogin(loginInfo) {
+function postLogin(loginInfo) {
   return createRequest(REQUEST_METHODS.post, 'login', loginInfo)
+}
+
+export default {
+  getPOIs,
+  getPOIsByYear,
+  getStories,
+  getStory,
+  getMaps,
+  postPOI,
+  postStory,
+  postMap,
+  getPOIsByStory,
+  deleteMap,
+  postLogin
 }

@@ -13,7 +13,7 @@ import {
 import { withRouter } from 'react-router'
 
 import NavBar from './components/NavBar'
-import { postLogin } from './utils/apiWrapper'
+import { Api } from './utils'
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -39,8 +39,9 @@ class Login extends Component {
     }
 
     // TODO: replace URL with correct url
-    postLogin(data)
+    Api.postLogin(data)
       .then(({ message: error, status }) => {
+        this.props.history.push('/', { isEditing: true })
         if (status === 'failed') {
           this.setState({ error })
         } else {
