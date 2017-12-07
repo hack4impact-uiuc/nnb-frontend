@@ -138,12 +138,79 @@ class App extends Component {
 
     return (
       <div>
-        <POIForm
+        <StoryList
           {...this.state}
-          setSelectedPOI={this.setSelectedPOI}
-          setShowPOIForm={this.setShowPOIForm}
-          loadPOIsForYear={this.loadPOIsForYear}
+          toggleSidebar={this.toggleSidebar}
+          setSelectedStory={this.setSelectedStory}
+          exitStory={this.exitStory}
+          loadStories={this.loadStories}
         />
+        <Navbar inverse>
+          <Grid>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <div className="sidebar-menu" onClick={this.toggleSidebar}>
+                  =
+                </div>
+                <a href="/">NNB</a>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <ToggleButtonGroup
+              type="checkbox"
+              value={isEditing ? [1] : []}
+              onChange={this.toggleEditMode}
+            >
+              <ToggleButton value={1}>Edit</ToggleButton>
+            </ToggleButtonGroup>
+          </Grid>
+        </Navbar>
+        {/* Comment out the components to leave only the one you need to work on */}
+        <div className="nnb-app">
+          {!showPOIForm && (
+            <div className="nnb-map-container">
+              <NNBMap
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                setClickedCoords={this.setClickedCoords}
+              />
+            </div>
+          )}
+          {!showPOIForm &&
+            isEditing && (
+              <div>
+                <MapManager
+                  {...this.state}
+                  loadMaps={this.loadMaps}
+                  deleteMap={this.deleteMap}
+                />
+              </div>
+            )}
+          {!showPOIForm && (
+            <div className="timeline-container">
+              <Timeline
+                {...this.state}
+                loadPOIsForYear={this.loadPOIsForYear}
+              />
+            </div>
+          )}
+          {!showPOIForm && (
+            <div className="info-panel-container">
+              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
+            </div>
+          )}
+          {showPOIForm && (
+            <div className="poi-form-container container">
+              <POIForm
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                loadPOIsForYear={this.loadPOIsForYear}
+              />
+            </div>
+          )}
+        </div>
       </div>
     )
   }
