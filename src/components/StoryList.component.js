@@ -17,6 +17,8 @@ class StoryList extends Component {
     this.addStoryExit = this.addStoryExit.bind(this)
     this.storyNameChange = this.storyNameChange.bind(this)
     this.submitStoryName = this.submitStoryName.bind(this)
+    this.onClickEdit = this.onClickEdit.bind(this)
+    this.onClickDelete = this.onClickDelete.bind(this)
   }
 
   addStoryClicked() {
@@ -29,6 +31,15 @@ class StoryList extends Component {
 
   storyNameChange(e) {
     this.setState({ storyName: e.target.value })
+  }
+
+  onClickEdit(id) {
+    console.log('Edit Button #' + id)
+  }
+
+  onClickDelete(id) {
+    //<--TODO: Add delete message
+    console.log('Delete Button #' + id)
   }
 
   submitStoryName() {
@@ -56,6 +67,8 @@ class StoryList extends Component {
         storyNameChange={this.storyNameChange}
         submitStoryName={this.submitStoryName}
         exitStory={this.props.exitStory}
+        onClickEdit={this.onClickEdit}
+        onClickDelete={this.onClickDelete}
       />
     )
 
@@ -93,6 +106,8 @@ function SidebarContent({
   storyNameChange,
   submitStoryName,
   exitStory,
+  onClickEdit,
+  onClickDelete,
   ...props
 }) {
   return (
@@ -114,6 +129,20 @@ function SidebarContent({
           >
             {story.name}
           </div>
+
+          <div
+            className="story-panel-button"
+            onClick={() => onClickEdit(story.id)}
+          >
+            Edit
+          </div>
+          <div
+            className="story-panel-button"
+            onClick={() => onClickDelete(story.id)}
+          >
+            Delete
+          </div>
+
           <div className="divider" />
         </div>
       ))}

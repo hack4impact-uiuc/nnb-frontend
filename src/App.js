@@ -5,7 +5,8 @@ import {
   POIForm,
   StoryList,
   Timeline,
-  MapManager
+  MapManager,
+  OurTable
 } from './components'
 import NavBar from './components/NavBar'
 import { Api } from './utils'
@@ -106,7 +107,7 @@ class App extends Component {
   }
 
   exitStory() {
-    this.loadPOIs().then(() => {
+    this.loadPOIsForYear(this.state.selectedMap.year).then(() => {
       this.setState({
         selectedStory: null,
         isStorySelected: false
@@ -181,7 +182,16 @@ class App extends Component {
           )}
           {!showPOIForm && (
             <div className="info-panel-container">
-              <InfoPanel {...this.state} setSelectedPOI={this.setSelectedPOI} />
+              <InfoPanel
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                loadPOIsForYear={this.loadPOIsForYear}
+                year={
+                  this.state.maps && this.state.maps[0]
+                    ? this.state.maps[0].year
+                    : undefined
+                }
+              />
             </div>
           )}
           {showPOIForm && (
