@@ -131,6 +131,14 @@ class POIForm extends Component {
   }
 
   render() {
+    const {
+      name,
+      startDate,
+      description,
+      isUploadingMedia,
+      content
+    } = this.state
+
     return (
       <Form horizontal>
         <PageHeader>Create POI</PageHeader>
@@ -140,14 +148,14 @@ class POIForm extends Component {
           label="POI Name"
           inputType="text"
           placeholder="Enter your POI name here"
-          value={this.state.name}
+          value={name}
           onChange={this.onChangeName}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={this.state.startDate}
+          selected={startDate}
           onChange={this.onDateSelected}
         />
 
@@ -156,7 +164,7 @@ class POIForm extends Component {
           label="POI Description"
           inputType="textarea"
           placeholder="Enter your POI description here"
-          value={this.state.description}
+          value={description}
           onChange={this.onChangeDescription}
         />
 
@@ -167,8 +175,11 @@ class POIForm extends Component {
           placeholder="Upload your files here"
           onChange={this.onImageUpload}
         />
-        {this.state.isUploadingMedia && <div>Uploading...</div>}
-        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
+        {isUploadingMedia && <div>Uploading...</div>}
+        {content.length &&
+          content.map(contentUrl => (
+            <Image key={contentUrl} src={contentUrl} responsive />
+          ))}
 
         <div>
           <OurTable colNames={['Link URL', 'Display Name']} />

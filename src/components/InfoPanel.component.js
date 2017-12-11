@@ -45,21 +45,6 @@ class InfoPanel extends Component {
       isEditing
     } = this.props
 
-    const carousel = (
-      <Carousel>
-        {activeEvents.map(selectedEvent => (
-          <Carousel.Item>
-            <Image
-              width={500}
-              height={500}
-              alt={selectedEvent.caption}
-              src={selectedEvent.content_url}
-            />
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    )
-
     if (!selectedEvent) {
       return (
         <div className="info-panel">
@@ -67,6 +52,22 @@ class InfoPanel extends Component {
         </div>
       )
     }
+
+    const carousel = (
+      <Carousel>
+        {selectedEvent.content.map(content => (
+          <Carousel.Item key={content.contentUrl}>
+            <Image
+              width={500}
+              height={500}
+              alt={content.caption}
+              src={content.contentUrl}
+            />
+          </Carousel.Item>
+        ))}
+      </Carousel>
+    )
+
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
@@ -100,12 +101,6 @@ class InfoPanel extends Component {
         </h1>
         <div>
           <div>
-            <Image
-              src={selectedEvent.image}
-              alt={selectedEvent.title}
-              responsive
-            />
-            <hr />
             {carousel}
             <hr />
             <h3>Description:</h3>

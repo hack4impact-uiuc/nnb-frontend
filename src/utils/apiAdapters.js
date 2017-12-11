@@ -53,13 +53,15 @@ function convertFromApiPOI(poi) {
     // TODO: change api to date
     date: poi.data,
     description: poi.event_info,
-    // TODO: support multiple media items
-    image: poi.content && poi.content.length ? poi.content[0] : '',
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
     // TODO: additional_links should just be list of links
     // (no need for POI id, that's kinda redundant)
-    links: (poi.additional_links || []).map(l => l.url)
+    links: (poi.additional_links || []).map(l => l.url),
+    content: poi.content.map(image => ({
+      contentUrl: image.content_url,
+      caption: image.caption
+    }))
   }
 }
 
