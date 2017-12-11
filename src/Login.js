@@ -8,38 +8,46 @@ import {
   FormControl,
   HelpBlock,
   Button,
-  Alert
+  Alert,
+  Form
 } from 'react-bootstrap'
 import { withRouter } from 'react-router'
 
 import NavBar from './components/NavBar'
 import { Api } from './utils'
-
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  )
-}
+import { FieldGroup } from './components'
 
 class Login extends Component {
-  state = {
-    error: null
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      username: '',
+      password: ''
+    }
+    this.onChangeUsername = this.onChangeUsername.bind(this)
+    this.onChangePassword = this.onChangePassword.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onSubmitForm = e => {
-    e.preventDefault()
-    const { username, password } = e.target
-    const data = {
-      username: username.value,
-      password: password.value
-    }
-    // console.log(username.value)
+  onChangeUsername(inputUsername) {
+    this.setState({
+      username: inputUsername.target.value
+    })
+  }
 
-    // // TODO: replace URL with correct url
+  onChangePassword(inputPassword) {
+    this.setState({
+      password: inputPassword.target.value
+    })
+  }
+
+  onSubmit() {
+    const { username, password } = this.state
+    const data = {
+      username: username,
+      password: password
+    }
     Api.postLogin(data)
       .then(({ message: error, status }) => {
         if (status === 'failed') {
@@ -59,27 +67,34 @@ class Login extends Component {
     return (
       <div>
         <NavBar isEditing={false} />
-        <Grid>
-          <Row>
-            <Col md={4} xs={18} mdOffset={4}>
-              <form onSubmit={this.onSubmitForm}>
-                {' '}
-                {/* TODO: replace with URL for form */}
-                <FieldGroup
-                  id="username"
-                  type="text"
-                  label="Username"
-                  placeholder="Username"
-                />
-                <FieldGroup id="password" label="Password" type="password" />
-                {!this.state.error && (
-                  <Alert bsStyle="danger">{this.state.error}</Alert>
-                )}
-                <Button type="submit">Submit</Button>
-              </form>
-            </Col>
-          </Row>
-        </Grid>
+        {/* <Form horizontal> */}
+        <Form horizontal className="container">
+          <FieldGroup
+            controlID="username"
+            label="username"
+            inputType="text"
+            placeholder="Enter your username here"
+            value={this.state.username}
+            onChange={this.onChangeUsername}
+          />
+          <FieldGroup
+            controlID="password"
+            label="password"
+            inputType="text"
+            placeholder="Enter your password here"
+            value={this.state.password}
+            onChange={this.onChangePassword}
+          />
+          {this.state.error && (
+            <Alert bsStyle="danger">{this.state.error}</Alert>
+          )}
+          <FieldGroup
+            inputType="button"
+            label=""
+            buttonText="Submit"
+            onClick={this.onSubmit}
+          />
+        </Form>
       </div>
     )
   }
