@@ -141,7 +141,7 @@ function uploadImage(imageDataURL) {
 }
 
 function postLogin(loginInfo) {
-  return createRequest(REQUEST_METHODS.post, 'login', loginInfo)
+  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
 }
 
 export default {
@@ -158,10 +158,8 @@ export default {
   getStory,
   postStory,
   postMap,
-  getPOIsByStory,
-  deleteMap,
-  postLogin
+  postLogin,
   editStory,
   deleteStory,
-  uploadImage,
+  uploadImage
 }

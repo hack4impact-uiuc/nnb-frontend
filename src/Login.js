@@ -37,11 +37,11 @@ class Login extends Component {
       username: username.value,
       password: password.value
     }
+    // console.log(username.value)
 
-    // TODO: replace URL with correct url
+    // // TODO: replace URL with correct url
     Api.postLogin(data)
       .then(({ message: error, status }) => {
-        this.props.history.push('/', { isEditing: true })
         if (status === 'failed') {
           this.setState({ error })
         } else {
@@ -51,7 +51,7 @@ class Login extends Component {
       .catch(err => {
         //TODO: Handle any error from request
         console.error(err)
-        this.setState({ error: 'An unkonwn error occured' })
+        this.setState({ error: 'An unknown error occured' })
       })
   }
 
@@ -72,7 +72,7 @@ class Login extends Component {
                   placeholder="Username"
                 />
                 <FieldGroup id="password" label="Password" type="password" />
-                {this.state.error === null ? null : (
+                {!this.state.error && (
                   <Alert bsStyle="danger">{this.state.error}</Alert>
                 )}
                 <Button type="submit">Submit</Button>

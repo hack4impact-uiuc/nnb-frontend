@@ -25,9 +25,7 @@ class NavBar extends PureComponent {
           value={this.props.isEditing ? [1] : []}
           onChange={this.props.onEdit}
         >
-          {this.props.showEdit ? (
-            <ToggleButton value={1}>Edit</ToggleButton>
-          ) : null}
+          {this.props.showEdit && <ToggleButton value={1}>Edit</ToggleButton>}
           <Link to="/login">
             <Button>Login</Button>
           </Link>
