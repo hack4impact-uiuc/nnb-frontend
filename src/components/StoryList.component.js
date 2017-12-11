@@ -38,8 +38,20 @@ class StoryList extends Component {
   }
 
   onClickDelete(id) {
-    //<--TODO: Add delete message
-    console.log('Delete Button #' + id)
+    const { selectedEvent, loadStories, exitStory, selectedStory } = this.props
+    if (
+      window.confirm(
+        'Delete the current story? This will permanently remove the story from the story-list.'
+      )
+    ) {
+      Api.deleteStory(id)
+        .then(() => {
+          if (id === selectedStory) {
+            return exitStory()
+          }
+        })
+        .then(() => loadStories())
+    }
   }
 
   submitStoryName() {
