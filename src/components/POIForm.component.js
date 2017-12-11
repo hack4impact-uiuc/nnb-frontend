@@ -15,7 +15,7 @@ class POIForm extends Component {
       description: '',
       storiesToAdd: [],
       isUploadingMedia: false,
-      content: []
+      content: [],
       linkData: [[]]
     }
     this.onChangeName = this.onChangeName.bind(this)
