@@ -38,14 +38,18 @@ class StoryList extends Component {
   }
 
   onClickDelete(id) {
-    const { selectedEvent, loadStories, exitStory } = this.props
+    const { selectedEvent, loadStories, exitStory, selectedStory } = this.props
     if (
       window.confirm(
         'Delete the current story? This will permanently remove the story from the story-list.'
       )
     ) {
       Api.deleteStory(id)
-        .then(() => exitStory())
+        .then(() => {
+          if (id === selectedStory) {
+            return exitStory()
+          }
+        })
         .then(() => loadStories())
     }
   }
