@@ -92,6 +92,10 @@ class POIForm extends Component {
     }
 
     Api.postPOI(poi)
+      .then(poi => {
+        Api.postPOIToStories(poi, this.state.storiesToAdd)
+        return poi
+      })
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )

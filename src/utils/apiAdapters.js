@@ -38,6 +38,13 @@ function convertToApiStory(storyName) {
   }
 }
 
+function convertToApiStoriesMultiple(poi, selectedStories) {
+  return {
+    input_story_name_id: selectedStories,
+    input_poi_id: poi.id
+  }
+}
+
 /**
  * convert from api
  */
@@ -77,6 +84,7 @@ export default {
   convertToApiMap,
   convertToApiPOI,
   convertToApiStory,
+  convertToApiStoriesMultiple,
   convertFromApiMap,
   convertFromApiPOI,
   convertFromApiStory

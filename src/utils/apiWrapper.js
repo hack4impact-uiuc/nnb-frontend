@@ -70,6 +70,14 @@ function getPOIsByStory(storyId) {
   )
 }
 
+function postPOIToStories(poi, selectedStories) {
+  return createRequest(
+    REQUEST_METHODS.POST,
+    'stories/add/multiple',
+    adapters.convertToApiStoriesMultiple(poi, selectedStories)
+  )
+}
+
 function postPOI(poi) {
   return createRequest(
     REQUEST_METHODS.POST,
@@ -147,6 +155,7 @@ export default {
   getPOIs,
   getPOIsByYear,
   getPOIsByStory,
+  postPOIToStories,
   postPOI,
   editPOI,
   deletePOI,
