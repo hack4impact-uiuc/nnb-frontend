@@ -14,7 +14,8 @@ class POIForm extends Component {
       name: '',
       description: '',
       storiesToAdd: [],
-      isUploadingMedia: false
+      isUploadingMedia: false,
+      linkData: [[]]
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
@@ -22,6 +23,14 @@ class POIForm extends Component {
     this.onCancel = this.onCancel.bind(this)
     this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
+    this.setLinkData = this.setLinkData.bind(this)
+  }
+
+  setLinkData(data) {
+    //data: [[]]
+    this.setState({
+      linkData: data
+    })
   }
 
   // TODO: handle multiple file upload
@@ -153,7 +162,10 @@ class POIForm extends Component {
         {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
 
         <div>
-          <OurTable colNames={['Link URL', 'Display Name']} />
+          <OurTable
+            colNames={['Link URL', 'Display Name']}
+            setLinkData={this.setLinkData}
+          />
         </div>
 
         <FieldGroup
