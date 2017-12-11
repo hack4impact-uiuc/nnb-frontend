@@ -15,6 +15,7 @@ class POIForm extends Component {
       description: '',
       storiesToAdd: [],
       isUploadingMedia: false,
+      content: [],
       linkData: [[]]
     }
     this.onChangeName = this.onChangeName.bind(this)
@@ -42,7 +43,10 @@ class POIForm extends Component {
       reader.onload = e => {
         const dataURL = e.target.result
         Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({ isUploadingMedia: false, mediaUrl })
+          this.setState({
+            isUploadingMedia: false,
+            content: [...this.state.content, mediaUrl]
+          })
         })
       }
       reader.readAsDataURL(image)
@@ -75,9 +79,20 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
-    const { name, description, startDate } = this.state
+    const {
+      name,
+      description,
+      startDate,
+      isUploadingMedia,
+      content,
+      linkData
+    } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
+    if (isUploadingMedia) {
+      alert('Wait for media to upload!')
+      return
+    }
     if (name === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
@@ -88,7 +103,14 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: ['google.com', 'purple.com']
+      links: linkData.map(linkTuple => ({
+        url: linkTuple[0],
+        urlName: linkTuple[1]
+      })),
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl,
+        caption: 'caption'
+      }))
     }
 
     Api.postPOI(poi)
@@ -122,6 +144,14 @@ class POIForm extends Component {
   }
 
   render() {
+    const {
+      name,
+      startDate,
+      description,
+      isUploadingMedia,
+      content
+    } = this.state
+
     return (
       <Form horizontal>
         <PageHeader>Create POI</PageHeader>
@@ -131,14 +161,14 @@ class POIForm extends Component {
           label="POI Name"
           inputType="text"
           placeholder="Enter your POI name here"
-          value={this.state.name}
+          value={name}
           onChange={this.onChangeName}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={this.state.startDate}
+          selected={startDate}
           onChange={this.onDateSelected}
         />
 
@@ -147,7 +177,7 @@ class POIForm extends Component {
           label="POI Description"
           inputType="textarea"
           placeholder="Enter your POI description here"
-          value={this.state.description}
+          value={description}
           onChange={this.onChangeDescription}
         />
 
@@ -158,8 +188,11 @@ class POIForm extends Component {
           placeholder="Upload your files here"
           onChange={this.onImageUpload}
         />
-        {this.state.isUploadingMedia && <div>Uploading...</div>}
-        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
+        {isUploadingMedia && <div>Uploading...</div>}
+        {content.length &&
+          content.map(contentUrl => (
+            <Image key={contentUrl} src={contentUrl} responsive />
+          ))}
 
         <div>
           <OurTable
