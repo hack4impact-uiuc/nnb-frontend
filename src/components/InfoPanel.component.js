@@ -108,11 +108,14 @@ class InfoPanel extends Component {
             <hr />
             <h3>Additional Links:</h3>
             <ul>
-              {selectedEvent.links.map(link => (
-                <li key={link}>
-                  <a href={link}>{link}</a>
-                </li>
-              ))}
+              {selectedEvent.links.map(link => {
+                const displayText = link.urlName ? link.urlName : link.url
+                return (
+                  <li key={link.url}>
+                    <a href={link.url}>{displayText}</a>
+                  </li>
+                )
+              })}
             </ul>
             <h4>
               POI: {curIndex + 1}/{activeEvents.length}

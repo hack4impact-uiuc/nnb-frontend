@@ -55,9 +55,10 @@ function convertFromApiPOI(poi) {
     description: poi.event_info,
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
-    // TODO: additional_links should just be list of links
-    // (no need for POI id, that's kinda redundant)
-    links: (poi.additional_links || []).map(l => l.url),
+    links: poi.additional_links.map(link => ({
+      url: link.url,
+      urlName: link.url_name
+    })),
     content: poi.content.map(image => ({
       contentUrl: image.content_url,
       caption: image.caption

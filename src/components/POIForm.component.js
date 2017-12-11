@@ -84,7 +84,8 @@ class POIForm extends Component {
       description,
       startDate,
       isUploadingMedia,
-      content
+      content,
+      linkData
     } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
@@ -102,7 +103,10 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: [],
+      links: linkData.map(linkTuple => ({
+        url: linkTuple[0],
+        urlName: linkTuple[1]
+      })),
       content: content.map(contentUrl => ({
         contentUrl: contentUrl,
         caption: 'caption'
