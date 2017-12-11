@@ -14,7 +14,8 @@ class POIForm extends Component {
       name: '',
       description: '',
       storiesToAdd: [],
-      isUploadingMedia: false
+      isUploadingMedia: false,
+      content: []
     }
     this.onChangeName = this.onChangeName.bind(this)
     this.onChangeDescription = this.onChangeDescription.bind(this)
@@ -33,7 +34,10 @@ class POIForm extends Component {
       reader.onload = e => {
         const dataURL = e.target.result
         Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({ isUploadingMedia: false, mediaUrl })
+          this.setState({
+            isUploadingMedia: false,
+            content: [...this.state.content, mediaUrl]
+          })
         })
       }
       reader.readAsDataURL(image)
@@ -66,9 +70,19 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
-    const { name, description, startDate } = this.state
+    const {
+      name,
+      description,
+      startDate,
+      isUploadingMedia,
+      content
+    } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
+    if (isUploadingMedia) {
+      alert('Wait for media to upload!')
+      return
+    }
     if (name === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
@@ -79,7 +93,11 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: ['google.com', 'purple.com']
+      links: [],
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl,
+        caption: 'caption'
+      }))
     }
 
     Api.postPOI(poi)
