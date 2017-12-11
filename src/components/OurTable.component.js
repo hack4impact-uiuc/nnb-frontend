@@ -21,6 +21,7 @@ class OurTable extends Component {
         new Array(this.props.colNames.length).fill('')
       ])
     })
+    this.props.setLinkData(this.state.data)
   }
 
   onChangeLink(row, column, inputLink) {
@@ -29,6 +30,7 @@ class OurTable extends Component {
     this.setState({
       data: temp
     })
+    this.props.setLinkData(this.state.data)
   }
 
   onDeleteRow(row) {
@@ -37,6 +39,7 @@ class OurTable extends Component {
     this.setState({
       data: temp
     })
+    this.props.setLinkData(this.state.data)
   }
 
   //languages.splice(1, 1, 'Python');  sfv
