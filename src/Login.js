@@ -1,16 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Grid,
-  Row,
-  Col,
-  FormGroup,
-  ControlLabel,
-  FormControl,
-  HelpBlock,
-  Button,
-  Alert,
-  Form
-} from 'react-bootstrap'
+import { Alert, Form } from 'react-bootstrap'
 import { withRouter } from 'react-router'
 
 import NavBar from './components/NavBar'
@@ -23,11 +12,14 @@ class Login extends Component {
     this.state = {
       error: null,
       username: '',
-      password: ''
+      password: '',
+      logged_in: false,
+      enter_edit: false
     }
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.returnToMain = this.returnToMain.bind(this)
   }
 
   onChangeUsername(inputUsername) {
@@ -43,17 +35,18 @@ class Login extends Component {
   }
 
   onSubmit() {
+    this.setState({ error: '' })
     const { username, password } = this.state
     const data = {
-      username: username,
-      password: password
+      username,
+      password
     }
     Api.postLogin(data)
       .then(({ message: error, status }) => {
         if (status === 'failed') {
           this.setState({ error })
         } else {
-          this.props.history.push('/', { isEditing: true })
+          this.setState({ logged_in: true })
         }
       })
       .catch(err => {
@@ -61,6 +54,10 @@ class Login extends Component {
         console.error(err)
         this.setState({ error: 'An unknown error occured' })
       })
+  }
+
+  returnToMain() {
+    this.setState({ enter_edit: true })
   }
 
   render() {
@@ -88,12 +85,33 @@ class Login extends Component {
           {this.state.error && (
             <Alert bsStyle="danger">{this.state.error}</Alert>
           )}
-          <FieldGroup
-            inputType="button"
-            label=""
-            buttonText="Submit"
-            onClick={this.onSubmit}
-          />
+
+          {this.state.enter_edit && (
+            <div>
+              <FieldGroup
+                onClick={this.props.history.push('/', { isEditing: true })}
+              />
+            </div>
+          )}
+
+          {this.state.logged_in && (
+            <div>
+              <FieldGroup
+                inputType="button"
+                buttonText="Enter Edit Mode"
+                onClick={this.returnToMain}
+              />
+            </div>
+          )}
+          {!this.state.logged_in && (
+            <div>
+              <FieldGroup
+                inputType="button"
+                buttonText="Login"
+                onClick={this.onSubmit}
+              />
+            </div>
+          )}
         </Form>
       </div>
     )

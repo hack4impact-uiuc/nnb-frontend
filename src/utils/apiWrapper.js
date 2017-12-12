@@ -157,7 +157,6 @@ export default {
   getStories,
   getStory,
   postStory,
-  postMap,
   postLogin,
   editStory,
   deleteStory,
