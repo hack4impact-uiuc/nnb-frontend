@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
 import { withRouter } from 'react-router'
 
-import NavBar from './components/NavBar'
+import { NavBar } from './components/NavBar'
 import { Api } from './utils'
 import { FieldGroup } from './components'
 
