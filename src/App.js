@@ -8,7 +8,7 @@ import {
   MapManager,
   OurTable
 } from './components'
-import NavBar from './components/NavBar'
+import { NavBar } from './components/NavBar'
 import { Api } from './utils'
 import './styles/App.css'
 
