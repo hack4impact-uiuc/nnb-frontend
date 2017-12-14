@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import {
   InfoPanel,
   NNBMap,
@@ -7,7 +6,8 @@ import {
   StoryList,
   Timeline,
   MapManager,
-  OurTable
+  OurTable,
+  NavBar
 } from './components'
 import { Api } from './utils'
 import './styles/App.css'
@@ -24,7 +24,8 @@ class App extends Component {
     isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true
+    isEditing: false,
+    isLoggedIn: false
   }
 
   constructor(props) {
@@ -145,26 +146,12 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
         />
-        <Navbar inverse>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <div className="sidebar-menu" onClick={this.toggleSidebar}>
-                  =
-                </div>
-                <a href="/">NNB</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <ToggleButtonGroup
-              type="checkbox"
-              value={isEditing ? [1] : []}
-              onChange={this.toggleEditMode}
-            >
-              <ToggleButton value={1}>Edit</ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-        </Navbar>
+        {/*TODO: change to is logged in*/}
+        <NavBar
+          showEdit={true}
+          onEdit={this.toggleEditMode}
+          isEditing={isEditing}
+        />
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">
           {!showPOIForm && (

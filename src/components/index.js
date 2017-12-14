@@ -7,6 +7,7 @@ import Timeline from './Timeline.component'
 import MapManager from './MapManager.component'
 import FieldGroup from './FieldGroup'
 import OurTable from './OurTable.component'
+import NavBar from './NavBar'
 
 export {
   InfoPanel,
@@ -17,5 +18,6 @@ export {
   Timeline,
   MapManager,
   FieldGroup,
-  OurTable
+  OurTable,
+  NavBar
 }

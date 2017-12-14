@@ -148,6 +148,10 @@ function uploadImage(imageDataURL) {
     .catch(err => console.error(err))
 }
 
+function postLogin(loginInfo) {
+  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
+}
+
 export default {
   getMaps,
   postMap,
@@ -162,6 +166,7 @@ export default {
   getStories,
   getStory,
   postStory,
+  postLogin,
   editStory,
   deleteStory,
   uploadImage
