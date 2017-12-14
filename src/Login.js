@@ -16,7 +16,6 @@ class Login extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    // this.returnToMain = this.returnToMain.bind(this)
   }
 
   onChangeUsername(inputUsername) {
@@ -54,15 +53,10 @@ class Login extends Component {
       })
   }
 
-  // returnToMain() {
-  //   this.props.history.push('/', { isLoggedIn: true })
-  // }
-
   render() {
     return (
       <div>
         <NavBar isEditing={false} />
-        {/* <Form horizontal> */}
         <Form horizontal className="container">
           <FieldGroup
             controlID="username"
@@ -84,15 +78,6 @@ class Login extends Component {
             <Alert bsStyle="danger">{this.state.error}</Alert>
           )}
 
-          {/* {this.state.loggedIn && (
-            <div>
-              <FieldGroup
-                inputType="button"
-                buttonText="Enter Edit Mode"
-                onClick={this.returnToMain}
-              />
-            </div>
-          )} */}
           {!this.state.loggedIn && (
             <div>
               <FieldGroup
