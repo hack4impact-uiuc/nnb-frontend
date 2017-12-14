@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
 import { withRouter } from 'react-router'
 
-import { NavBar } from './components/NavBar'
 import { Api } from './utils'
-import { FieldGroup } from './components'
+import { NavBar, FieldGroup } from './components'
 
 class Login extends Component {
   constructor(props) {
@@ -12,14 +11,12 @@ class Login extends Component {
     this.state = {
       error: null,
       username: '',
-      password: '',
-      logged_in: false,
-      enter_edit: false
+      password: ''
     }
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.returnToMain = this.returnToMain.bind(this)
+    // this.returnToMain = this.returnToMain.bind(this)
   }
 
   onChangeUsername(inputUsername) {
@@ -46,7 +43,8 @@ class Login extends Component {
         if (status === 'failed') {
           this.setState({ error })
         } else {
-          this.setState({ logged_in: true })
+          // this.setState({ logged_in: true })
+          this.props.history.push('/', { isEditing: true })
         }
       })
       .catch(err => {
@@ -56,9 +54,9 @@ class Login extends Component {
       })
   }
 
-  returnToMain() {
-    this.setState({ enter_edit: true })
-  }
+  // returnToMain() {
+  //   this.props.history.push('/', { isLoggedIn: true })
+  // }
 
   render() {
     return (
@@ -86,15 +84,7 @@ class Login extends Component {
             <Alert bsStyle="danger">{this.state.error}</Alert>
           )}
 
-          {this.state.enter_edit && (
-            <div>
-              <FieldGroup
-                onClick={this.props.history.push('/', { isEditing: true })}
-              />
-            </div>
-          )}
-
-          {this.state.logged_in && (
+          {/* {this.state.loggedIn && (
             <div>
               <FieldGroup
                 inputType="button"
@@ -102,8 +92,8 @@ class Login extends Component {
                 onClick={this.returnToMain}
               />
             </div>
-          )}
-          {!this.state.logged_in && (
+          )} */}
+          {!this.state.loggedIn && (
             <div>
               <FieldGroup
                 inputType="button"

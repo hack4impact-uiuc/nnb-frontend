@@ -6,9 +6,9 @@ import {
   StoryList,
   Timeline,
   MapManager,
-  OurTable
+  OurTable,
+  NavBar
 } from './components'
-import { NavBar } from './components/NavBar'
 import { Api } from './utils'
 import './styles/App.css'
 
@@ -24,7 +24,8 @@ class App extends Component {
     isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true
+    isEditing: false,
+    isLoggedIn: false
   }
 
   constructor(props) {
@@ -145,6 +146,7 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
         />
+        {/*TODO: change to is logged in*/}
         <NavBar
           showEdit={true}
           onEdit={this.toggleEditMode}
