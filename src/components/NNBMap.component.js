@@ -101,9 +101,9 @@ class NNBMap extends Component {
     const { selectedMap } = this.props
 
     return (
-      <div>
+      <div className="image-container">
         {selectedMap && (
-          <div className="image-container">
+          <div>
             <Image
               src={selectedMap.imageUrl}
               responsive

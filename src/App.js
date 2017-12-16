@@ -162,26 +162,24 @@ class App extends Component {
                 setShowPOIForm={this.setShowPOIForm}
                 setClickedCoords={this.setClickedCoords}
               />
-            </div>
-          )}
-          {!showPOIForm &&
-            isEditing && (
-              <div>
-                <MapManager
+              {isEditing && (
+                <div>
+                  <MapManager
+                    {...this.state}
+                    loadMaps={this.loadMaps}
+                    deleteMap={this.deleteMap}
+                  />
+                </div>
+              )}
+              <div className="timeline-container">
+                <Timeline
                   {...this.state}
-                  loadMaps={this.loadMaps}
-                  deleteMap={this.deleteMap}
+                  loadPOIsForYear={this.loadPOIsForYear}
                 />
               </div>
-            )}
-          {!showPOIForm && (
-            <div className="timeline-container">
-              <Timeline
-                {...this.state}
-                loadPOIsForYear={this.loadPOIsForYear}
-              />
             </div>
           )}
+
           {!showPOIForm && (
             <div className="info-panel-container">
               <InfoPanel

@@ -1,0 +1,26 @@
+$marker-diameter: 20px;
+
+.timeline{
+	display: flex;
+	padding: 0em;
+}
+
+.interval{
+	
+}
+
+.interval:hover{
+    background-color: cyan;
+}
+
+.line{
+	border-top: 4px solid cyan;
+	position:relative;
+	top: 50%;
+}
+
+.tick{
+	border-left: 4px solid blue;
+	height: 100%;
+}
+

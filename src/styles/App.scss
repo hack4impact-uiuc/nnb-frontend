@@ -11,13 +11,18 @@ $navbar-height: 50px;
 }
 
 .nnb-map-container {
+  display: flex;
+  flex-direction: column;
   width: 70%;
   // alternative would be to use flexbox with nav and app inside it
   height: calc(100vh - #{$navbar-height});
+  // height: 60%
 }
 
 .timeline-container {
-
+  display: flex;
+  position: relative;
+  height: 7%
 }
 
 .info-panel-container {

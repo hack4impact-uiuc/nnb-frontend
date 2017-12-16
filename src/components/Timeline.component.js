@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
+import { Interval } from '../components'
 import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import './../styles/timeline.css'
 
 class Timeline extends Component {
   render() {
     const { maps, selectedMap, loadPOIsForYear } = this.props
 
     return (
-      <div>
-        <ButtonToolbar>
-          <ToggleButtonGroup
-            type="radio"
-            onChange={loadPOIsForYear}
-            name="timeline"
-            value={selectedMap && selectedMap.year}
-          >
-            {maps.map(map => (
-              <ToggleButton value={map.year} key={map.year}>
-                {map.year}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </ButtonToolbar>
+      <div className="timeline">
+        {maps.map(map => (
+          <Interval
+            startYear={map.year}
+            loadPOIsForYear={loadPOIsForYear}
+            numMaps={maps.length}
+          />
+        ))}
       </div>
     )
   }
