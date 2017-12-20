@@ -11,11 +11,9 @@ class Interval extends Component {
       <div
         className="interval"
         onClick={() => this.props.loadPOIsForYear(this.props.startYear)}
+        style={{ width: this.props.ratio * 100 + '%' }}
       >
-        <div
-          className="line"
-          style={{ width: 1190 / this.props.numMaps + 'px' }}
-        />
+        <div className="line" />
         <div className="tick" />
         {this.props.startYear}
       </div>
