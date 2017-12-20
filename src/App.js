@@ -151,6 +151,7 @@ class App extends Component {
           showEdit={true}
           onEdit={this.toggleEditMode}
           isEditing={isEditing}
+          toggleSidebar={this.toggleSidebar}
         />
         {/* Comment out the components to leave only the one you need to work on */}
         <div className="nnb-app">

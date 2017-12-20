@@ -13,7 +13,7 @@ class NavBar extends PureComponent {
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <div className="sidebar-menu" onClick={this.toggleSidebar}>
+            <div className="sidebar-menu" onClick={this.props.toggleSidebar}>
               =
             </div>
             <Link to="/">NNB</Link>
