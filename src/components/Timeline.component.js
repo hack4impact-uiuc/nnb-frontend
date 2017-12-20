@@ -1,26 +1,34 @@
 import React, { Component } from 'react'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Interval } from '../components'
+import './../styles/timeline.css'
 
 class Timeline extends Component {
-  render() {
-    const { maps, selectedMap, loadPOIsForYear } = this.props
+  constructor(props) {
+    super(props)
+    this.calcRatio = this.calcRatio.bind(this)
+  }
 
+  calcRatio(mapYears) {
+    const ratios = mapYears.slice(1).map((n, i) => n - mapYears[i])
+    const total = ratios.reduce((a, b) => a + b, 0)
+    return ratios.map(ratio => ratio / total * 0.9) //TODO: change 0.9 to a predefined constant
+  }
+
+  render() {
+    const { maps, loadPOIsForYear } = this.props
+    const years = maps.map(map => map.year)
+    const ratios = [...this.calcRatio(years), 0.1] //TODO: change 0.1 to a predefined constant
     return (
-      <div>
-        <ButtonToolbar>
-          <ToggleButtonGroup
-            type="radio"
-            onChange={loadPOIsForYear}
-            name="timeline"
-            value={selectedMap && selectedMap.year}
-          >
-            {maps.map(map => (
-              <ToggleButton value={map.year} key={map.year}>
-                {map.year}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </ButtonToolbar>
+      <div className="timeline" style={{ width: 100 + '%' }}>
+        {maps.map((map, i) => (
+          <Interval
+            startYear={map.year}
+            loadPOIsForYear={loadPOIsForYear}
+            numMaps={maps.length}
+            ratio={ratios[i]}
+            key={map.year}
+          />
+        ))}
       </div>
     )
   }
