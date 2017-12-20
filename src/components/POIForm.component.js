@@ -172,7 +172,7 @@ class POIForm extends Component {
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={startDate}
+          selected={moment('1/1/' + this.props.selectedMap.year)}
           onChange={this.onDateSelected}
         />
 

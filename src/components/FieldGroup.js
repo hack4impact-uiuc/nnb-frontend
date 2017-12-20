@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import moment from 'moment'
 
 function FieldGroup({
   controlId, //indentifier
@@ -21,7 +22,8 @@ function FieldGroup({
   onClick,
   stories,
   buttonText,
-  onStorySelect
+  onStorySelect,
+  startYear
 }) {
   let fieldGroupModule
 
@@ -56,6 +58,7 @@ function FieldGroup({
       )
       break
     case 'date':
+      // const startDate =
       fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
       break
     case 'button':

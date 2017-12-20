@@ -11,6 +11,7 @@ import {
 } from './components'
 import { Api } from './utils'
 import './styles/App.css'
+import moment from 'moment'
 
 class App extends Component {
   // using dummy data until BE api is done
@@ -104,7 +105,15 @@ class App extends Component {
         activeEvents: storyPOIs,
         selectedEvent: storyPOIs[0]
       })
+      console.log(this.state.selectedEvent)
+      const yr = moment(this.state.selectedEvent.date).year()
+      console.log(yr)
+      const mp = this.state.maps.find(map => map.year === yr)
+      console.log(mp)
+      this.setState({ selectedMap: mp })
     })
+
+    this.toggleSidebar()
   }
 
   exitStory() {
