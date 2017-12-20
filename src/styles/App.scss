@@ -1,5 +1,5 @@
-
 $navbar-height: 50px;
+$timeline-height: 7%;
 
 // override default bootstrap style
 .navbar {
@@ -16,13 +16,12 @@ $navbar-height: 50px;
   width: 70%;
   // alternative would be to use flexbox with nav and app inside it
   height: calc(100vh - #{$navbar-height});
-  // height: 60%
 }
 
 .timeline-container {
   display: flex;
   position: relative;
-  height: 7%
+  height: $timeline-height;
 }
 
 .info-panel-container {

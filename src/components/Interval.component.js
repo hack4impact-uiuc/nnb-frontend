@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import './../styles/timeline.css'
 
 class Interval extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div

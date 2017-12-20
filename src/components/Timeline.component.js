@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Interval } from '../components'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import './../styles/timeline.css'
 
 class Timeline extends Component {
@@ -16,9 +15,9 @@ class Timeline extends Component {
   }
 
   render() {
-    const { maps, selectedMap, loadPOIsForYear } = this.props
+    const { maps, loadPOIsForYear } = this.props
     const years = maps.map(map => map.year)
-    const ratios = this.calcRatio(years).concat([0.1]) //TODO: change 0.1 to a predefined constant
+    const ratios = [...this.calcRatio(years), 0.1] //TODO: change 0.1 to a predefined constant
     return (
       <div className="timeline" style={{ width: 100 + '%' }}>
         {maps.map((map, i) => (
@@ -27,6 +26,7 @@ class Timeline extends Component {
             loadPOIsForYear={loadPOIsForYear}
             numMaps={maps.length}
             ratio={ratios[i]}
+            key={map.year}
           />
         ))}
       </div>
