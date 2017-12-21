@@ -1,10 +1,10 @@
+@import "variables.scss";
+
 $marker-diameter: 20px;
 
-.image-container {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  position: relative;
-  height:90%;
+.image-fill {
+  height: calc(100vh - #{$navbar-height} - #{$timeline-height});
+  object-fit: cover;
 }
 
 .marker {

@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato');
-
-$main-font: 'Lato', sans-serif;
-$navbar-height: 50px;
-$timeline-height: 10%;
+@import "variables.scss";
 
 .app {
   font-family: $main-font;
