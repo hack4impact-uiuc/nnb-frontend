@@ -70,6 +70,14 @@ function getPOIsByStory(storyId) {
   )
 }
 
+function postPOIToStories(poi, selectedStories) {
+  return createRequest(
+    REQUEST_METHODS.POST,
+    'stories/add/multiple',
+    adapters.convertToApiStoriesMultiple(poi, selectedStories)
+  )
+}
+
 function postPOI(poi) {
   return createRequest(
     REQUEST_METHODS.POST,
@@ -140,6 +148,10 @@ function uploadImage(imageDataURL) {
     .catch(err => console.error(err))
 }
 
+function postLogin(loginInfo) {
+  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
+}
+
 export default {
   getMaps,
   postMap,
@@ -147,12 +159,14 @@ export default {
   getPOIs,
   getPOIsByYear,
   getPOIsByStory,
+  postPOIToStories,
   postPOI,
   editPOI,
   deletePOI,
   getStories,
   getStory,
   postStory,
+  postLogin,
   editStory,
   deleteStory,
   uploadImage

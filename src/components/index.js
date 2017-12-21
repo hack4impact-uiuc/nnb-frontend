@@ -9,6 +9,8 @@ import FieldGroup from './FieldGroup'
 import OurTable from './OurTable.component'
 import MapTimeline from './MapTimeline.component'
 import POIFormPanel from './POIFormPanel.component'
+import NavBar from './NavBar'
+import Interval from './Interval.component'
 
 export {
   InfoPanel,
@@ -21,5 +23,7 @@ export {
   FieldGroup,
   OurTable,
   MapTimeline,
-  POIFormPanel
+  POIFormPanel,
+  NavBar,
+  Interval
 }

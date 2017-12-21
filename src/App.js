@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
-import { StoryList, POIFormPanel, MapTimeline } from './components'
+import { StoryList, POIFormPanel, MapTimeline, NavBar } from './components'
 import { Api } from './utils'
 import './styles/App.css'
 
@@ -16,8 +15,8 @@ class App extends Component {
     isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true,
-    realTimePOI: null
+    isEditing: false,
+    isLoggedIn: false
   }
 
   constructor(props) {
@@ -138,26 +137,13 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
         />
-        <Navbar inverse>
-          <Grid>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <div className="sidebar-menu" onClick={this.toggleSidebar}>
-                  =
-                </div>
-                <a href="/">NNB</a>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <ToggleButtonGroup
-              type="checkbox"
-              value={isEditing ? [1] : []}
-              onChange={this.toggleEditMode}
-            >
-              <ToggleButton value={1}>Edit</ToggleButton>
-            </ToggleButtonGroup>
-          </Grid>
-        </Navbar>
+        {/*TODO: change to is logged in*/}
+        <NavBar
+          showEdit={true}
+          onEdit={this.toggleEditMode}
+          isEditing={isEditing}
+          toggleSidebar={this.toggleSidebar}
+        />
         {/* Comment out the components to leave only the one you need to work on */}
         <div>
           {!showPOIForm && (

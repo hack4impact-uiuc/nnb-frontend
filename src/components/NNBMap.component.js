@@ -25,7 +25,11 @@ class NNBMap extends Component {
     if (nextProps.isEditing === false) {
       this.setState({ isChoosingNewPOICoords: false })
     }
-    if (selectedMap && nextProps.selectedMap.year !== selectedMap.year) {
+    if (
+      selectedMap &&
+      nextProps.selectedMap.imageUrl !== selectedMap.imageUrl &&
+      nextProps.selectedMap.year !== selectedMap.year
+    ) {
       this.setState({ mapImageLoaded: false })
     }
   }
@@ -97,9 +101,9 @@ class NNBMap extends Component {
     const { selectedMap } = this.props
 
     return (
-      <div>
+      <div className="image-container">
         {selectedMap && (
-          <div className="image-container">
+          <div>
             <Image
               src={selectedMap.imageUrl}
               responsive

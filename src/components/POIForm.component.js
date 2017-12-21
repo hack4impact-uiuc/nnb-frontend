@@ -14,13 +14,17 @@ class POIForm extends Component {
       title: '',
       description: '',
       stories: [],
-      isUploadingMedia: false
+      isUploadingMedia: false,
+      storiesToAdd: [],
+      content: [],
+      linkData: [[]]
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     // this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
+    this.setLinkData = this.setLinkData.bind(this)
   }
 
   handleFormInput(type, input) {
@@ -55,6 +59,13 @@ class POIForm extends Component {
     })
   }
 
+  setLinkData(data) {
+    //data: [[]]
+    this.setState({
+      linkData: data
+    })
+  }
+
   // TODO: handle multiple file upload
   onImageUpload(e) {
     const image = e.target.files[0]
@@ -64,8 +75,12 @@ class POIForm extends Component {
       reader.onload = e => {
         const dataURL = e.target.result
         Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({ isUploadingMedia: false, mediaUrl }, () =>
-            this.props.updatePOI(this.state)
+          this.setState(
+            {
+              isUploadingMedia: false,
+              content: [...this.state.content, mediaUrl]
+            },
+            () => this.props.updatePOI(this.state)
           )
         })
       }
@@ -81,10 +96,24 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
-    const { title, description, startDate } = this.state
+
+    const {
+      name,
+      description,
+      startDate,
+      isUploadingMedia,
+      content,
+      linkData
+    } = this.state
+
     const [coordinateX, coordinateY] = clickedCoords
 
-    if (title === '' || description === '') {
+    if (isUploadingMedia) {
+      alert('Wait for media to upload!')
+      return
+    }
+
+    if (name === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
     const poi = {
@@ -94,10 +123,21 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: ['google.com', 'purple.com']
+      links: linkData.map(linkTuple => ({
+        url: linkTuple[0],
+        urlName: linkTuple[1]
+      })),
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl,
+        caption: 'caption'
+      }))
     }
 
     Api.postPOI(poi)
+      .then(poi => {
+        Api.postPOIToStories(poi, this.state.storiesToAdd)
+        return poi
+      })
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )
@@ -148,6 +188,14 @@ class POIForm extends Component {
   // }
 
   render() {
+    const {
+      name,
+      startDate,
+      description,
+      isUploadingMedia,
+      content
+    } = this.state
+
     return (
       <Form horizontal>
         <PageHeader>Create POI</PageHeader>
@@ -156,15 +204,15 @@ class POIForm extends Component {
           controlID="title"
           label="POI Title"
           inputType="text"
-          placeholder="Enter your POI title here"
-          value={this.state.title}
+          placeholder="Enter your POI name here"
+          value={name}
           onChange={this.handleFormInput.bind(this, 'title')}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={this.state.startDate}
+          selected={startDate}
           onChange={this.handleFormInput.bind(this, 'date')}
         />
 
@@ -173,7 +221,7 @@ class POIForm extends Component {
           label="POI Description"
           inputType="textarea"
           placeholder="Enter your POI description here"
-          value={this.state.description}
+          value={description}
           onChange={this.handleFormInput.bind(this, 'description')}
         />
 
@@ -184,10 +232,16 @@ class POIForm extends Component {
           placeholder="Upload your files here"
           onChange={this.onImageUpload}
         />
-        {this.state.isUploadingMedia && <div>Uploading...</div>}
-        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
+        {isUploadingMedia && <div>Uploading...</div>}
+        {content.length &&
+          content.map(contentUrl => (
+            <Image key={contentUrl} src={contentUrl} responsive />
+          ))}
 
-        <OurTable colNames={['Link URL', 'Display Name']} />
+        <OurTable
+          colNames={['Link URL', 'Display Name']}
+          setLinkData={this.setLinkData}
+        />
 
         <FieldGroup
           inputType="checklist"

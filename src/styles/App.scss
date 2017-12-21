@@ -1,5 +1,5 @@
-// this is a (highly educated and researched) guess
 $navbar-height: 50px;
+$timeline-height: 7%;
 
 // override default bootstrap style
 .navbar {
@@ -11,13 +11,17 @@ $navbar-height: 50px;
 }
 
 .nnb-map-container {
+  display: flex;
+  flex-direction: column;
   width: 70%;
   // alternative would be to use flexbox with nav and app inside it
   height: calc(100vh - #{$navbar-height});
 }
 
 .timeline-container {
-
+  display: flex;
+  position: relative;
+  height: $timeline-height;
 }
 
 .info-panel-container {
