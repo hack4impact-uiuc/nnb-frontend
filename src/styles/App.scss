@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+$main-font: 'Lato', sans-serif;
 $navbar-height: 50px;
-$timeline-height: 7%;
+$timeline-height: 10%;
+
+.app {
+  font-family: $main-font;
+}
 
 // override default bootstrap style
 .navbar {
@@ -12,6 +19,7 @@ $timeline-height: 7%;
 
 .nnb-map-container {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   width: 70%;
   // alternative would be to use flexbox with nav and app inside it

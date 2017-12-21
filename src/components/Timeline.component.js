@@ -15,7 +15,8 @@ class Timeline extends Component {
   }
 
   render() {
-    const { maps, loadPOIsForYear } = this.props
+    const { maps, loadPOIsForYear, selectedMap } = this.props
+    const currSelectedYear = !!selectedMap && selectedMap.year
     const years = maps.map(map => map.year)
     const ratios = [...this.calcRatio(years), 0.1] //TODO: change 0.1 to a predefined constant
     return (
@@ -27,6 +28,7 @@ class Timeline extends Component {
             numMaps={maps.length}
             ratio={ratios[i]}
             key={map.year}
+            isSelected={currSelectedYear === map.year}
           />
         ))}
       </div>

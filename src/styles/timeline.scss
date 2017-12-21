@@ -1,24 +1,44 @@
 $marker-diameter: 20px;
 
-.timeline{
+.timeline {
   display: flex;
-  padding: 0em;
+  padding: 0 2rem;
+  border-top: 1px solid #ddd;
 }
 
 .interval {
+  position: relative;
+
+  &--selected {
+    background-color: #eee;
+  }
+
   &:hover {
-    background-color: cyan;
+    background-color: #ddd;
   }
 }
 
-.line{
-  border-top: 4px solid cyan;
-  position:relative;
+.line {
+  border-top: 2px solid #bbb;
+  position: relative;
   top: 50%;
 }
 
-.tick{
-  border-left: 4px solid blue;
-  height: 100%;
+.year {
+  font-size: 0.8em;
+  color: #777;
+  position: absolute;
+  top: 15%;
+  left: -12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #fd9379;
+  position: relative;
+  top: 42%;
+  left: -5px;
 }
 
