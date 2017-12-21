@@ -15,13 +15,11 @@ class POIForm extends Component {
       description: '',
       stories: [],
       isUploadingMedia: false,
-      storiesToAdd: [],
       content: [],
       linkData: [[]]
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
-    // this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
     this.setLinkData = this.setLinkData.bind(this)
@@ -53,14 +51,14 @@ class POIForm extends Component {
       startDate: moment(),
       title: '',
       description: '',
-      storiesToAdd: [],
+      stories: [],
       isUploadingMedia: false,
       mediaUrl: ''
     })
   }
 
   setLinkData(data) {
-    //data: [[]]
+    // data: [[]]
     this.setState({
       linkData: data
     })
@@ -135,7 +133,7 @@ class POIForm extends Component {
 
     Api.postPOI(poi)
       .then(poi => {
-        Api.postPOIToStories(poi, this.state.storiesToAdd)
+        Api.postPOIToStories(poi, this.state.stories)
         return poi
       })
       .then(poi =>
@@ -150,7 +148,6 @@ class POIForm extends Component {
         startDate: '',
         title: '',
         description: '',
-        storiesToAdd: [],
         isUploadingMedia: false,
         mediaUrl: ''
       },
@@ -160,7 +157,7 @@ class POIForm extends Component {
   }
 
   handleStorySelect(storyId) {
-    const storiesSet = new Set(this.state.storiesToAdd)
+    const storiesSet = new Set(this.state.stories)
 
     if (storiesSet.has(storyId)) {
       storiesSet.delete(storyId)
@@ -170,22 +167,6 @@ class POIForm extends Component {
 
     return [...storiesSet]
   }
-
-  // onStorySelect(storyId) {
-  //   const storiesSet = new Set(this.state.storiesToAdd)
-
-  //   if (storiesSet.has(storyId)) {
-  //     storiesSet.delete(storyId)
-  //   } else {
-  //     storiesSet.add(storyId)
-  //   }
-  //   // this.setState({
-  //   //   storiesToAdd: [...storiesSet]
-  //   // })
-  //   const storiesToAdd = [...storiesSet]
-  //   this.handleFormInput('stories', storiesToAdd)
-  //   // this.props.updatePOI(this.state)
-  // }
 
   render() {
     const { startDate, description, isUploadingMedia, content } = this.state
