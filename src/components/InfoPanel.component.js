@@ -44,7 +44,7 @@ class InfoPanel extends Component {
       selectedEvent,
       isEditing,
       isStorySelected,
-      realTimePOI
+      isRealTimePOI
     } = this.props
 
     if (!selectedEvent) {
@@ -58,12 +58,12 @@ class InfoPanel extends Component {
     const carousel = (
       <Carousel>
         {selectedEvent.content.map(content => (
-          <Carousel.Item key={content.contentUrl}>
+          <Carousel.Item key={isRealTimePOI ? content : content.contentUrl}>
             <Image
               width={500}
               height={500}
-              alt={content.caption}
-              src={content.contentUrl}
+              alt={isRealTimePOI ? content : content.caption}
+              src={isRealTimePOI ? content : content.contentUrl}
             />
           </Carousel.Item>
         ))}
@@ -77,7 +77,7 @@ class InfoPanel extends Component {
     return (
       <div className="info-panel">
         {isEditing &&
-          !realTimePOI && (
+          !isRealTimePOI && (
             <div className="btn btn-primary a-btn-slide-text">
               <span
                 className="glyphicon glyphicon-edit"
@@ -88,7 +88,7 @@ class InfoPanel extends Component {
             </div>
           )}
         {isEditing &&
-          !realTimePOI && (
+          !isRealTimePOI && (
             <div className="btn btn-primary a-btn-slide-text">
               <span
                 className="glyphicon glyphicon-remove"
@@ -98,11 +98,7 @@ class InfoPanel extends Component {
               </span>
             </div>
           )}
-        <h1>
-          <u>
-            <b>{selectedEvent.name} </b>
-          </u>
-        </h1>
+        <h1>{selectedEvent.name}</h1>
         <div>
           <div>
             {carousel}

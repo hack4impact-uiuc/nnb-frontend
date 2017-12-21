@@ -29,7 +29,11 @@ class POIFormPanel extends Component {
           />
         </div>
         <div className="info-panel-container">
-          <InfoPanel {...this.props} selectedEvent={realTimePOI} />
+          <InfoPanel
+            {...this.props}
+            selectedEvent={realTimePOI}
+            isRealTimePOI={true}
+          />
         </div>
       </div>
     )

@@ -207,10 +207,6 @@ class POIForm extends Component {
           onChange={this.onImageUpload}
         />
         {isUploadingMedia && <div>Uploading...</div>}
-        {content.length &&
-          content.map(contentUrl => (
-            <Image key={contentUrl} src={contentUrl} responsive />
-          ))}
 
         <OurTable
           colNames={['Link URL', 'Display Name']}
