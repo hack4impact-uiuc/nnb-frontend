@@ -24,7 +24,8 @@ function FieldGroup({
   // expects an array containing objects of { id, name }. will be fed into checklists
   options,
   buttonText,
-  onStorySelect
+  onStorySelect,
+  startYear
 }) {
   let fieldGroupModule
 

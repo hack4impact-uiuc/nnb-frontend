@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StoryList, POIFormPanel, MapTimeline, NavBar } from './components'
 import { Api } from './utils'
 import './styles/App.css'
+import moment from 'moment'
 
 class App extends Component {
   // using dummy data until BE api is done
@@ -32,6 +33,7 @@ class App extends Component {
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
   }
 
@@ -82,20 +84,53 @@ class App extends Component {
     const clickedPOI = this.state.activeEvents.find(
       POI => POI.id === POIMarkerId
     )
-    this.setState({
-      selectedEvent: clickedPOI
-    })
+    //Check for POI in different map in the case of stories
+    let prevSelectedEvent
+    if (this.state.selectedEvent) {
+      prevSelectedEvent = this.state.selectedEvent.mapByYear
+    }
+    this.setState(
+      {
+        selectedEvent: clickedPOI
+      },
+      () => {
+        if (
+          this.state.selectedEvent &&
+          clickedPOI.mapByYear !== prevSelectedEvent
+        ) {
+          this.updateMap()
+        }
+      }
+    )
   }
 
   setSelectedStory(storyId) {
     Api.getPOIsByStory(storyId).then(storyPOIs => {
-      this.setState({
-        selectedStory: storyId,
-        isStorySelected: true,
-        activeEvents: storyPOIs,
-        selectedEvent: storyPOIs[0]
-      })
+      storyPOIs.sort(compareYear)
+      this.setState(
+        {
+          selectedStory: storyId,
+          isStorySelected: true,
+          activeEvents: storyPOIs,
+          selectedEvent: storyPOIs[0]
+        },
+        () => {
+          this.updateMap()
+        }
+      )
     })
+
+    this.toggleSidebar()
+  }
+
+  //Update map based on the map year of the currently selected event
+  updateMap() {
+    if (this.state.selectedEvent) {
+      const selectedMap = this.state.maps.find(
+        map => map.year === this.state.selectedEvent.mapByYear
+      )
+      this.setState({ selectedMap })
+    }
   }
 
   exitStory() {
@@ -155,6 +190,7 @@ class App extends Component {
               loadMaps={this.loadMaps}
               deleteMap={this.deleteMap}
               loadPOIsForYear={this.loadPOIsForYear}
+              updateMap={this.updateMap}
             />
           )}
           {showPOIForm && (
@@ -163,12 +199,17 @@ class App extends Component {
               setSelectedPOI={this.setSelectedPOI}
               setShowPOIForm={this.setShowPOIForm}
               loadPOIsForYear={this.loadPOIsForYear}
+              updateMap={this.updateMap}
             />
           )}
         </div>
       </div>
     )
   }
+}
+
+function compareYear(a, b) {
+  return moment(a.date).isAfter(moment(b.date))
 }
 
 export default App

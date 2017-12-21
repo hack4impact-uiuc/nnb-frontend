@@ -27,6 +27,7 @@ class NNBMap extends Component {
     }
     if (
       selectedMap &&
+      nextProps.selectedMap &&
       nextProps.selectedMap.imageUrl !== selectedMap.imageUrl &&
       nextProps.selectedMap.year !== selectedMap.year
     ) {
@@ -143,10 +144,15 @@ function POIMarkers({
   activeEvents,
   selectedEvent,
   setSelectedPOI,
+  selectedMap,
   mapImageWidth,
   mapImageHeight
 }) {
-  return activeEvents.map(poi => (
+  const displayEvents = activeEvents.filter(
+    poi => poi.mapByYear === selectedMap.year
+  )
+
+  return displayEvents.map(poi => (
     <POIMarker
       {...poi}
       isSelected={selectedEvent && poi.id === selectedEvent.id}

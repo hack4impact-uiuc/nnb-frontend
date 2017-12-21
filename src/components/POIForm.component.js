@@ -10,8 +10,8 @@ class POIForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: moment(),
-      title: '',
+      startDate: moment('1/1/' + this.props.selectedMap.year),
+      name: '',
       description: '',
       stories: [],
       isUploadingMedia: false,
@@ -47,7 +47,7 @@ class POIForm extends Component {
     this.setState(
       {
         startDate: moment(),
-        title: '',
+        name: '',
         description: '',
         stories: [],
         links: [],
@@ -109,7 +109,7 @@ class POIForm extends Component {
       console.warn('Warning: empty fields!')
     }
     const poi = {
-      title: name,
+      name,
       mapByYear: selectedMap.year,
       description,
       date: startDate,

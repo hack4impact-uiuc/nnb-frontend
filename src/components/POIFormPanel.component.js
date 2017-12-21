@@ -33,6 +33,7 @@ class POIFormPanel extends Component {
             {...this.props}
             selectedEvent={realTimePOI}
             isRealTimePOI={true}
+            updateMap={this.props.updateMap}
           />
         </div>
       </div>

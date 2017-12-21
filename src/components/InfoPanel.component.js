@@ -109,13 +109,13 @@ class InfoPanel extends Component {
         <h1>{selectedEvent.name}</h1>
         <div>
           <div>
-            {carousel}
+            {!!selectedEvent.content.length && carousel}
             <hr />
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
             {links &&
-              links.length && (
+              !!links.length && (
                 <div>
                   <h3>Additional Links:</h3>
                   <ul>

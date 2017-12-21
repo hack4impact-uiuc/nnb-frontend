@@ -10,7 +10,7 @@ function convertToApiMap(map) {
 
 function convertToApiPOI(poi) {
   return {
-    name: poi.title,
+    name: poi.name,
     map_by_year: poi.mapByYear,
     year: poi.date.format('YYYY'),
     month: poi.date.format('MM'),
@@ -56,12 +56,12 @@ function convertFromApiMap(map) {
 function convertFromApiPOI(poi) {
   return {
     id: poi.id,
-    title: poi.name,
-    // TODO: change api to date
-    date: poi.data,
+    name: poi.name,
+    date: poi.date,
     description: poi.event_info,
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
+    mapByYear: poi.map_by_year,
     links: poi.additional_links.map(link => ({
       url: link.url,
       urlName: link.url_name
