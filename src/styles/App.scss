@@ -7,6 +7,43 @@
 // override default bootstrap style
 .navbar {
   margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  background: $navbar-color;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0px 5px $navbar-color;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+
+  // browser normally really wants to render a non square div,
+  // so manually setting this.
+  // Make sure it's aligned with icon size!
+  &__icon {
+    height: 25px;
+  }
+
+  &__title {
+    margin-right: auto;
+    font-size: 2rem;
+  }
+
+  &__item {
+    color: #ddd;
+    padding: 0 1rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      // TODO
+      text-decoration: none;
+    }
+  }
 }
 
 .nnb-app {
