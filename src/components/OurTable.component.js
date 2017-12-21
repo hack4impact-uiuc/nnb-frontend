@@ -16,30 +16,36 @@ class OurTable extends Component {
   }
 
   onAddRow() {
-    this.setState({
-      data: this.state.data.concat([
-        new Array(this.props.colNames.length).fill('')
-      ])
-    })
-    this.props.setLinkData(this.state.data)
+    this.setState(
+      {
+        data: this.state.data.concat([
+          new Array(this.props.colNames.length).fill('')
+        ])
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   onChangeLink(row, column, inputLink) {
     let temp = this.state.data.slice() //copies data
     temp[row].splice(column, 1, inputLink.target.value) //replace stuff at specified column with our target value
-    this.setState({
-      data: temp
-    })
-    this.props.setLinkData(this.state.data)
+    this.setState(
+      {
+        data: temp
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   onDeleteRow(row) {
     let temp = this.state.data.slice()
     temp.splice(row, 1)
-    this.setState({
-      data: temp
-    })
-    this.props.setLinkData(this.state.data)
+    this.setState(
+      {
+        data: temp
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   //languages.splice(1, 1, 'Python');  sfv

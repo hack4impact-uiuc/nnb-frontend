@@ -74,6 +74,14 @@ class InfoPanel extends Component {
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
+    let links = selectedEvent.links
+    if (links && isRealTimePOI) {
+      links = selectedEvent.links.map(linkPair => ({
+        url: linkPair[0],
+        urlName: linkPair[1]
+      }))
+    }
+
     return (
       <div className="info-panel">
         {isEditing &&
@@ -106,12 +114,12 @@ class InfoPanel extends Component {
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
-            {selectedEvent.links &&
-              selectedEvent.links.length && (
+            {links &&
+              links.length && (
                 <div>
                   <h3>Additional Links:</h3>
                   <ul>
-                    {selectedEvent.links.map(link => {
+                    {links.map(link => {
                       const displayText = link.urlName ? link.urlName : link.url
                       return (
                         <li key={link.url}>

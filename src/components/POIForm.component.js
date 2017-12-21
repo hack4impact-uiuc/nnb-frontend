@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormControl, Form, Image, PageHeader } from 'react-bootstrap'
+import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
@@ -16,13 +16,12 @@ class POIForm extends Component {
       stories: [],
       isUploadingMedia: false,
       content: [],
-      linkData: [[]]
+      links: []
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
-    this.setLinkData = this.setLinkData.bind(this)
   }
 
   handleFormInput(type, input) {
@@ -35,33 +34,28 @@ class POIForm extends Component {
       case 'stories':
         newVal = this.handleStorySelect(input)
         break
+      case 'links':
+        newVal = input
+        break
       default:
         newVal = input
     }
-    this.setState(
-      {
-        [type]: newVal
-      },
-      () => this.props.updatePOI(this.state)
-    )
+    this.setState({ [type]: newVal }, () => this.props.updatePOI(this.state))
   }
 
   clearState() {
-    this.setState({
-      startDate: moment(),
-      title: '',
-      description: '',
-      stories: [],
-      isUploadingMedia: false,
-      mediaUrl: ''
-    })
-  }
-
-  setLinkData(data) {
-    // data: [[]]
-    this.setState({
-      linkData: data
-    })
+    this.setState(
+      {
+        startDate: moment(),
+        title: '',
+        description: '',
+        stories: [],
+        links: [],
+        isUploadingMedia: false,
+        mediaUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
   }
 
   // TODO: handle multiple file upload
@@ -101,7 +95,7 @@ class POIForm extends Component {
       startDate,
       isUploadingMedia,
       content,
-      linkData
+      links
     } = this.state
 
     const [coordinateX, coordinateY] = clickedCoords
@@ -121,7 +115,7 @@ class POIForm extends Component {
       date: startDate,
       coordinateX,
       coordinateY,
-      links: linkData.map(linkTuple => ({
+      links: links.map(linkTuple => ({
         url: linkTuple[0],
         urlName: linkTuple[1]
       })),
@@ -143,16 +137,7 @@ class POIForm extends Component {
   }
 
   onCancel() {
-    this.setState(
-      {
-        startDate: '',
-        title: '',
-        description: '',
-        isUploadingMedia: false,
-        mediaUrl: ''
-      },
-      () => this.props.updatePOI(this.state)
-    )
+    this.clearState()
     this.props.setShowPOIForm(false)
   }
 
@@ -169,7 +154,7 @@ class POIForm extends Component {
   }
 
   render() {
-    const { startDate, description, isUploadingMedia, content } = this.state
+    const { startDate, description, isUploadingMedia } = this.state
 
     return (
       <Form horizontal>
@@ -210,7 +195,7 @@ class POIForm extends Component {
 
         <OurTable
           colNames={['Link URL', 'Display Name']}
-          setLinkData={this.setLinkData}
+          setLinkData={this.handleFormInput.bind(this, 'links')}
         />
 
         <FieldGroup
