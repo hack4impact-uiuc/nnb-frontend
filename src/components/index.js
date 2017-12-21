@@ -7,6 +7,8 @@ import Timeline from './Timeline.component'
 import MapManager from './MapManager.component'
 import FieldGroup from './FieldGroup'
 import OurTable from './OurTable.component'
+import MapTimeline from './MapTimeline.component'
+import POIFormPanel from './POIFormPanel.component'
 import NavBar from './NavBar'
 import Interval from './Interval.component'
 
@@ -20,6 +22,8 @@ export {
   MapManager,
   FieldGroup,
   OurTable,
+  MapTimeline,
+  POIFormPanel,
   NavBar,
   Interval
 }

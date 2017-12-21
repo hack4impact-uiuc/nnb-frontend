@@ -10,7 +10,7 @@ function convertToApiMap(map) {
 
 function convertToApiPOI(poi) {
   return {
-    name: poi.title,
+    name: poi.name,
     map_by_year: poi.mapByYear,
     year: poi.date.format('YYYY'),
     month: poi.date.format('MM'),
@@ -56,7 +56,7 @@ function convertFromApiMap(map) {
 function convertFromApiPOI(poi) {
   return {
     id: poi.id,
-    title: poi.name,
+    name: poi.name,
     date: poi.date,
     description: poi.event_info,
     coordinateX: poi.x_coord,

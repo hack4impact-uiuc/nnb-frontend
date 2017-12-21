@@ -1,37 +1,61 @@
 import React, { Component } from 'react'
-import { FormControl, Form, Image, PageHeader } from 'react-bootstrap'
+import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
+import './../styles/App.css'
 
 class POIForm extends Component {
   constructor(props) {
     super(props)
-    this.onDateSelected = this.onDateSelected.bind(this)
     this.state = {
       startDate: moment('1/1/' + this.props.selectedMap.year),
       name: '',
       description: '',
-      storiesToAdd: [],
+      stories: [],
       isUploadingMedia: false,
       content: [],
-      linkData: [[]]
+      links: []
     }
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
-    this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
-    this.setLinkData = this.setLinkData.bind(this)
+    this.handleFormInput = this.handleFormInput.bind(this)
   }
 
-  setLinkData(data) {
-    //data: [[]]
-    this.setState({
-      linkData: data
-    })
+  handleFormInput(type, input) {
+    let newVal
+    switch (type) {
+      case 'name':
+      case 'description':
+        newVal = input.target.value
+        break
+      case 'stories':
+        newVal = this.handleStorySelect(input)
+        break
+      case 'links':
+        newVal = input
+        break
+      default:
+        newVal = input
+    }
+    this.setState({ [type]: newVal }, () => this.props.updatePOI(this.state))
+  }
+
+  clearState() {
+    this.setState(
+      {
+        startDate: moment(),
+        name: '',
+        description: '',
+        stories: [],
+        links: [],
+        isUploadingMedia: false,
+        mediaUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
   }
 
   // TODO: handle multiple file upload
@@ -43,32 +67,17 @@ class POIForm extends Component {
       reader.onload = e => {
         const dataURL = e.target.result
         Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({
-            isUploadingMedia: false,
-            content: [...this.state.content, mediaUrl]
-          })
+          this.setState(
+            {
+              isUploadingMedia: false,
+              content: [...this.state.content, mediaUrl]
+            },
+            () => this.props.updatePOI(this.state)
+          )
         })
       }
       reader.readAsDataURL(image)
     }
-  }
-
-  onDateSelected(date) {
-    this.setState({
-      startDate: date
-    })
-  }
-
-  onChangeName(inputName) {
-    this.setState({
-      name: inputName.target.value
-    })
-  }
-
-  onChangeDescription(inputDesription) {
-    this.setState({
-      description: inputDesription.target.value
-    })
   }
 
   onSubmit() {
@@ -79,31 +88,35 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
+
     const {
       name,
       description,
       startDate,
       isUploadingMedia,
       content,
-      linkData
+      links,
+      stories
     } = this.state
+
     const [coordinateX, coordinateY] = clickedCoords
 
     if (isUploadingMedia) {
       alert('Wait for media to upload!')
       return
     }
+
     if (name === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
     const poi = {
-      title: name,
+      name,
       mapByYear: selectedMap.year,
       description,
       date: startDate,
       coordinateX,
       coordinateY,
-      links: linkData.map(linkTuple => ({
+      links: links.map(linkTuple => ({
         url: linkTuple[0],
         urlName: linkTuple[1]
       })),
@@ -115,7 +128,7 @@ class POIForm extends Component {
 
     Api.postPOI(poi)
       .then(poi => {
-        Api.postPOIToStories(poi, this.state.storiesToAdd)
+        Api.postPOIToStories(poi, stories)
         return poi
       })
       .then(poi =>
@@ -125,36 +138,24 @@ class POIForm extends Component {
   }
 
   onCancel() {
-    this.setState({
-      startDate: '',
-      name: '',
-      description: '',
-      storiesToAdd: []
-    })
+    this.clearState()
     this.props.setShowPOIForm(false)
   }
 
-  onStorySelect(storyId) {
-    const storiesSet = new Set(this.state.storiesToAdd)
+  handleStorySelect(storyId) {
+    const storiesSet = new Set(this.state.stories)
 
     if (storiesSet.has(storyId)) {
       storiesSet.delete(storyId)
     } else {
       storiesSet.add(storyId)
     }
-    this.setState({
-      storiesToAdd: [...storiesSet]
-    })
+
+    return [...storiesSet]
   }
 
   render() {
-    const {
-      name,
-      startDate,
-      description,
-      isUploadingMedia,
-      content
-    } = this.state
+    const { startDate, description, isUploadingMedia } = this.state
 
     return (
       <Form horizontal>
@@ -165,15 +166,14 @@ class POIForm extends Component {
           label="POI Name"
           inputType="text"
           placeholder="Enter your POI name here"
-          value={name}
-          onChange={this.onChangeName}
+          onChange={this.handleFormInput.bind(this, 'name')}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={this.state.startDate}
-          onChange={this.onDateSelected}
+          selected={startDate}
+          onChange={this.handleFormInput.bind(this, 'date')}
         />
 
         <FieldGroup
@@ -182,7 +182,7 @@ class POIForm extends Component {
           inputType="textarea"
           placeholder="Enter your POI description here"
           value={description}
-          onChange={this.onChangeDescription}
+          onChange={this.handleFormInput.bind(this, 'description')}
         />
 
         <FieldGroup
@@ -193,23 +193,17 @@ class POIForm extends Component {
           onChange={this.onImageUpload}
         />
         {isUploadingMedia && <div>Uploading...</div>}
-        {content.length &&
-          content.map(contentUrl => (
-            <Image key={contentUrl} src={contentUrl} responsive />
-          ))}
 
-        <div>
-          <OurTable
-            colNames={['Link URL', 'Display Name']}
-            setLinkData={this.setLinkData}
-          />
-        </div>
+        <OurTable
+          colNames={['Link URL', 'Display Name']}
+          setLinkData={this.handleFormInput.bind(this, 'links')}
+        />
 
         <FieldGroup
           inputType="checklist"
-          stories={this.props.stories}
+          options={this.props.stories}
           label="Stories"
-          onStorySelect={this.onStorySelect}
+          onClick={this.handleFormInput.bind(this, 'stories')}
         />
 
         <FormControl.Feedback />

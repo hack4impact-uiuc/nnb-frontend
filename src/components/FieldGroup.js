@@ -11,15 +11,18 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 function FieldGroup({
-  controlId, //indentifier
+  // indentifier
+  controlId,
   label,
-  inputType, //{text,textarea,file,date,button,checklist}
+  // { text, textarea, file, date, button, checklist }
+  inputType,
   placeholder,
   value,
   selected,
   onChange,
   onClick,
-  stories,
+  // expects an array containing objects of { id, name }. will be fed into checklists
+  options,
   buttonText,
   onStorySelect,
   startYear
@@ -67,11 +70,9 @@ function FieldGroup({
       )
       break
     case 'checklist':
-      fieldGroupModule = stories.map(story => (
-        <div key={story.id}>
-          <Checkbox onClick={() => onStorySelect(story.id)}>
-            {story.name}
-          </Checkbox>
+      fieldGroupModule = options.map(option => (
+        <div key={option.id}>
+          <Checkbox onClick={() => onClick(option.id)}>{option.name}</Checkbox>
         </div>
       ))
       break

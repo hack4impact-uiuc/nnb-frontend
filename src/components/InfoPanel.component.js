@@ -42,9 +42,9 @@ class InfoPanel extends Component {
     const {
       activeEvents,
       selectedEvent,
-      setSelectedPOI,
+      isEditing,
       isStorySelected,
-      isEditing
+      isRealTimePOI
     } = this.props
 
     if (!selectedEvent) {
@@ -58,12 +58,12 @@ class InfoPanel extends Component {
     const carousel = (
       <Carousel>
         {selectedEvent.content.map(content => (
-          <Carousel.Item key={content.contentUrl}>
+          <Carousel.Item key={isRealTimePOI ? content : content.contentUrl}>
             <Image
               width={500}
               height={500}
-              alt={content.caption}
-              src={content.contentUrl}
+              alt={isRealTimePOI ? content : content.caption}
+              src={isRealTimePOI ? content : content.contentUrl}
             />
           </Carousel.Item>
         ))}
@@ -74,64 +74,79 @@ class InfoPanel extends Component {
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
+    let links = selectedEvent.links
+    if (links && isRealTimePOI) {
+      links = selectedEvent.links.map(linkPair => ({
+        url: linkPair[0],
+        urlName: linkPair[1]
+      }))
+    }
+
     return (
       <div className="info-panel">
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-edit"
-              onClick={this.onClickEdit}
-            >
-              Edit
-            </span>
-          </div>
-        )}
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-remove"
-              onClick={this.onClickDelete}
-            >
-              Delete
-            </span>
-          </div>
-        )}
-        <h1>
-          <u>
-            <b>{selectedEvent.title} </b>
-          </u>
-        </h1>
+        {isEditing &&
+          !isRealTimePOI && (
+            <div className="btn btn-primary a-btn-slide-text">
+              <span
+                className="glyphicon glyphicon-edit"
+                onClick={this.onClickEdit}
+              >
+                Edit
+              </span>
+            </div>
+          )}
+        {isEditing &&
+          !isRealTimePOI && (
+            <div className="btn btn-primary a-btn-slide-text">
+              <span
+                className="glyphicon glyphicon-remove"
+                onClick={this.onClickDelete}
+              >
+                Delete
+              </span>
+            </div>
+          )}
+        <h1>{selectedEvent.name}</h1>
         <div>
           <div>
-            {carousel}
+            {!!selectedEvent.content.length && carousel}
             <hr />
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
-            <h3>Additional Links:</h3>
-            <ul>
-              {selectedEvent.links.map(link => {
-                const displayText = link.urlName ? link.urlName : link.url
-                return (
-                  <li key={link.url}>
-                    <a href={link.url}>{displayText}</a>
-                  </li>
-                )
-              })}
-            </ul>
-            <h4>
-              POI: {curIndex + 1}/{activeEvents.length}
-            </h4>
-            {isShownPrev && (
-              <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                Previous
-              </Button>
+            {links &&
+              !!links.length && (
+                <div>
+                  <h3>Additional Links:</h3>
+                  <ul>
+                    {links.map(link => {
+                      const displayText = link.urlName ? link.urlName : link.url
+                      return (
+                        <li key={link.url}>
+                          <a href={link.url}>{displayText}</a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )}
+            {isStorySelected && (
+              <h4>
+                POI: {curIndex + 1}/{activeEvents.length}
+              </h4>
             )}
-            {isShownNext && (
-              <Button bsStyle="primary" onClick={this.onClickNext}>
-                Next
-              </Button>
-            )}
+            {isStorySelected &&
+              isShownPrev && (
+                <Button bsStyle="primary" onClick={this.onClickPrevious}>
+                  Previous
+                </Button>
+              )}
+            {isStorySelected &&
+              isShownNext && (
+                <Button bsStyle="primary" onClick={this.onClickNext}>
+                  Next
+                </Button>
+              )}
           </div>
         </div>
       </div>
