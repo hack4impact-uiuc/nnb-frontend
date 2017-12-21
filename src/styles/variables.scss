@@ -4,3 +4,9 @@ $main-font: 'Lato', sans-serif;
 $navbar-height: 50px;
 $navbar-color: #333;
 $timeline-height: 7rem;
+
+// browser normally really wants to render a non square div,
+// so manually setting this.
+// Make sure it's aligned with icon size!
+$icon-size-large: 25px;
+$icon-size-small: 15px;

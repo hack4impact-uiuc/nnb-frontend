@@ -9,10 +9,9 @@ class NavBar extends PureComponent {
       <Navbar>
         <div className="navbar-content">
           <div
-            className="navbar-content__item navbar-content__icon"
+            className="navbar-content__item eather-icon feather-icon--large"
             onClick={this.props.toggleSidebar}
           >
-            {/* Make sure size is aligned with `navbar-content__icon` height! */}
             <Menu size={25} />
           </div>
           <div className="navbar-content__item navbar-content__title ">NNB</div>

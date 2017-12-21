@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import { X, Trash2 as Trash, Edit2 as Edit } from 'react-feather'
 import { Api } from './../utils'
 import './../styles/storylist.css'
+import './../styles/App.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
@@ -38,7 +40,7 @@ class StoryList extends Component {
   }
 
   onClickDelete(id) {
-    const { selectedEvent, loadStories, exitStory, selectedStory } = this.props
+    const { loadStories, exitStory, selectedStory } = this.props
     if (
       window.confirm(
         'Delete the current story? This will permanently remove the story from the story-list.'
@@ -124,35 +126,40 @@ function SidebarContent({
 }) {
   return (
     <div className="sidebar">
-      <div>
-        <h2 className="sidebar-title">Story List</h2>
-        <div className="exit" onClick={props.toggleSidebar}>
-          X
+      <div className="sidebar__header">
+        <h2 className="sidebar__title">Story List</h2>
+        <div
+          className="sidebar__exit feather-icon feather-icon--large"
+          onClick={props.toggleSidebar}
+        >
+          <X size={25} />
         </div>
       </div>
+
       <div className="divider" />
 
       {stories.map(story => (
         <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
           <div
-            className={classnames('sidebar-link', {
-              'sidebar-link--selected': story.id === props.selectedStory
+            className={classnames('story-item', {
+              'story-item--selected': story.id === props.selectedStory
             })}
           >
-            {story.name}
-          </div>
+            <div className="story-item__name">{story.name}</div>
 
-          <div
-            className="story-panel-button"
-            onClick={() => onClickEdit(story.id)}
-          >
-            Edit
-          </div>
-          <div
-            className="story-panel-button"
-            onClick={() => onClickDelete(story.id)}
-          >
-            Delete
+            <div
+              className="feather-icon feather-icon--small story-item__icon"
+              onClick={() => onClickEdit(story.id)}
+            >
+              <Edit size={15} />
+            </div>
+
+            <div
+              className="feather-icon feather-icon--small story-item__icon"
+              onClick={() => onClickDelete(story.id)}
+            >
+              <Trash size={15} />
+            </div>
           </div>
 
           <div className="divider" />

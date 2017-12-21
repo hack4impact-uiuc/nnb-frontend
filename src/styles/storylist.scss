@@ -1,41 +1,51 @@
+@import "variables.scss";
+
 .sidebar {
   width: 256px;
-  height: 100%;
-  background-color: #404B50;
+  background-color: $navbar-color;
+  color: #fafafa;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__exit {
+    color: #FFF;
+    margin-left: auto;
+  }
 }
 
-.sidebar-title {
-  display: inline;
-  color: #FFF;	
-}
+.story-item {
+  display: flex;
+  align-items: center;
+  padding: 2rem 1rem;
 
-.sidebar-link {
-  display: block;
-  padding: 16px 0px;
-  color: #FFF;
-  text-decoration: none;
-  cursor: pointer;
-  &--selected{
-    color: #000;
+  &__name {
+    margin-right: auto;
+    cursor: pointer;
+  }
+
+  &__icon {
+    padding: 0 0.5rem;
+  }
+
+  &--selected {
+    background: #666;
+  }
+
+  &:hover {
+    background: #888;
   }
 }
 
 .divider {
-  margin: 8px 0;
   height: 1px;
-  background-color: #FFF;
+  background-color: #888;
 }
 
-.exit {
-  float: right;
-  color: #FFF;
-  padding-right: 0.5cm;
-  padding-top: 0.20cm;
-  cursor: pointer;
-}
-
-.story-panel-button {
-  color: white;
-}
-
-	

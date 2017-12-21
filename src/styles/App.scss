@@ -4,6 +4,18 @@
   font-family: $main-font;
 }
 
+.feather-icon {
+  cursor: pointer;
+
+  &--large {
+    height: $icon-size-large;
+  }
+
+  &--small {
+    height: $icon-size-small;
+  }
+}
+
 // override default bootstrap style
 .navbar {
   margin-bottom: 0;
@@ -20,13 +32,6 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-
-  // browser normally really wants to render a non square div,
-  // so manually setting this.
-  // Make sure it's aligned with icon size!
-  &__icon {
-    height: 25px;
-  }
 
   &__title {
     margin-right: auto;
