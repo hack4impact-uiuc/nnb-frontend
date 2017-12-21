@@ -57,11 +57,11 @@ function convertFromApiPOI(poi) {
   return {
     id: poi.id,
     title: poi.name,
-    // TODO: change api to date
-    date: poi.data,
+    date: poi.date,
     description: poi.event_info,
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
+    mapByYear: poi.map_by_year,
     links: poi.additional_links.map(link => ({
       url: link.url,
       urlName: link.url_name

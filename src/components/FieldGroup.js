@@ -21,7 +21,8 @@ function FieldGroup({
   onClick,
   stories,
   buttonText,
-  onStorySelect
+  onStorySelect,
+  startYear
 }) {
   let fieldGroupModule
 

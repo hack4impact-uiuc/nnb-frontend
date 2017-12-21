@@ -10,7 +10,7 @@ class POIForm extends Component {
     super(props)
     this.onDateSelected = this.onDateSelected.bind(this)
     this.state = {
-      startDate: moment(),
+      startDate: moment('1/1/' + this.props.selectedMap.year),
       name: '',
       description: '',
       storiesToAdd: [],
@@ -172,7 +172,7 @@ class POIForm extends Component {
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={startDate}
+          selected={this.state.startDate}
           onChange={this.onDateSelected}
         />
 
