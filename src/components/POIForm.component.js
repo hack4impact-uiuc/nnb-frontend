@@ -95,7 +95,8 @@ class POIForm extends Component {
       startDate,
       isUploadingMedia,
       content,
-      links
+      links,
+      stories
     } = this.state
 
     const [coordinateX, coordinateY] = clickedCoords
@@ -127,7 +128,7 @@ class POIForm extends Component {
 
     Api.postPOI(poi)
       .then(poi => {
-        Api.postPOIToStories(poi, this.state.stories)
+        Api.postPOIToStories(poi, stories)
         return poi
       })
       .then(poi =>
