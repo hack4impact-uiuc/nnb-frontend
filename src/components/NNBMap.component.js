@@ -107,7 +107,7 @@ class NNBMap extends Component {
           <div>
             <Image
               src={selectedMap.imageUrl}
-              className="image-fill"
+              className="image-fill map-image"
               responsive
               ref={el => (this.image = el)}
               onClick={this.onImageClick}

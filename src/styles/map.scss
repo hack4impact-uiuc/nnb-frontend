@@ -7,6 +7,10 @@ $marker-diameter: 20px;
   object-fit: cover;
 }
 
+.map-image {
+  opacity: 0.85;
+}
+
 .marker {
   cursor: pointer;
   position: absolute;
