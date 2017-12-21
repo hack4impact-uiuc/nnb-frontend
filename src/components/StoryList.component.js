@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Button, FormControl } from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
 import { X, Trash2 as Trash, Edit2 as Edit } from 'react-feather'
 import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
+import './../styles/button.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
@@ -166,31 +167,49 @@ function SidebarContent({
         </div>
       ))}
 
-      {props.isStorySelected && <Button onClick={exitStory}>Exit Story</Button>}
-
       {props.isEditing &&
         !addStorySelected && (
-          <Button onClick={addStoryClicked}>Add Story</Button>
+          <button className="button button--wide" onClick={addStoryClicked}>
+            Add Story
+          </button>
         )}
 
       {props.isEditing &&
         addStorySelected && (
-          <div>
-            <h3 className="sidebar-title">Enter Story Name:</h3>
-            <div className="exit" onClick={addStoryExit}>
-              X
+          <div className="story-form">
+            <div className="story-form__heading">
+              <h4>Enter Story Name:</h4>
+              <div
+                className="story-form__exit feather-icon feather-icon--small"
+                onClick={addStoryExit}
+              >
+                <X size={15} />
+              </div>
             </div>
 
-            <FormControl
-              type="text"
-              value={storyName}
-              placeholder="Enter text"
-              onChange={storyNameChange}
-            />
+            <div className="story-form__input">
+              <FormControl
+                type="text"
+                value={storyName}
+                placeholder="Enter text"
+                onChange={storyNameChange}
+              />
+            </div>
 
-            <Button onClick={submitStoryName}>Submit</Button>
+            <button className="button button--wide" onClick={submitStoryName}>
+              Submit
+            </button>
           </div>
         )}
+
+      {props.isStorySelected && (
+        <button
+          className="button button--wide sidebar__exit-story"
+          onClick={exitStory}
+        >
+          Exit Story
+        </button>
+      )}
     </div>
   )
 }
