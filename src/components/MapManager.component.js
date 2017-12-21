@@ -6,17 +6,16 @@ import { Api } from './../utils'
 class MapManager extends Component {
   state = {
     showInputFields: false,
-    inputYear: '',
-    inputImageUrl: ''
+    inputYear: ''
   }
 
   constructor(props) {
     super(props)
     this.toggleShowInputFields = this.toggleShowInputFields.bind(this)
     this.onChangeYear = this.onChangeYear.bind(this)
-    this.onChangeImageUrl = this.onChangeImageUrl.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
+    this.onImageUpload = this.onImageUpload.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +28,7 @@ class MapManager extends Component {
     this.setState({
       showInputFields: !this.state.showInputFields,
       inputYear: '',
-      inputImageUrl: ''
+      imageUrl: ''
     })
   }
 
@@ -39,26 +38,22 @@ class MapManager extends Component {
     })
   }
 
-  onChangeImageUrl(inputImageUrl) {
-    this.setState({
-      inputImageUrl: inputImageUrl.target.value
-    })
-  }
-
   onSubmit() {
     const { loadMaps } = this.props
-    const { inputYear, inputImageUrl } = this.state
+    const { inputYear, imageUrl } = this.state
 
-    if (inputYear === '' || inputImageUrl === '') {
+    if (inputYear === '' || imageUrl === '') {
       console.warn('Warning: empty fields!')
       return
     }
     const map = {
-      imageUrl: inputImageUrl,
+      imageUrl,
       year: inputYear
     }
 
-    Api.postMap(map).then(() => loadMaps())
+    Api.postMap(map)
+      .then(() => loadMaps())
+      .then(() => this.toggleShowInputFields())
   }
 
   showConfirmDeleteMap() {
@@ -71,8 +66,26 @@ class MapManager extends Component {
     }
   }
 
+  onImageUpload(e) {
+    const image = e.target.files[0]
+    if (image) {
+      this.setState({ isUploadingMedia: true })
+      const reader = new FileReader()
+      reader.onload = e => {
+        const dataURL = e.target.result
+        Api.uploadImage(dataURL).then(imageUrl => {
+          this.setState({
+            isUploadingMedia: false,
+            imageUrl
+          })
+        })
+      }
+      reader.readAsDataURL(image)
+    }
+  }
+
   render() {
-    const { showInputFields, inputImageUrl, inputYear } = this.state
+    const { showInputFields, inputYear, isUploadingMedia } = this.state
 
     return (
       <div>
@@ -89,14 +102,15 @@ class MapManager extends Component {
               value={inputYear}
               onChange={this.onChangeYear}
             />
+
             <FieldGroup
-              controlID="url"
-              label="Image URL"
-              inputType="text"
-              placeholder="Enter map image URL here"
-              value={inputImageUrl}
-              onChange={this.onChangeImageUrl}
+              controlID="chooseFile"
+              label="Upload Media"
+              inputType="file"
+              placeholder="Upload your files here"
+              onChange={this.onImageUpload}
             />
+            {isUploadingMedia && <div>Uploading...</div>}
 
             <FieldGroup
               inputType="button"
