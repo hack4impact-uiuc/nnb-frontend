@@ -100,7 +100,7 @@ class InfoPanel extends Component {
           )}
         <h1>
           <u>
-            <b>{selectedEvent.title} </b>
+            <b>{selectedEvent.name} </b>
           </u>
         </h1>
         <div>
@@ -110,21 +110,22 @@ class InfoPanel extends Component {
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
-            {selectedEvent.links.length && (
-              <div>
-                <h3>Additional Links:</h3>
-                <ul>
-                  {selectedEvent.links.map(link => {
-                    const displayText = link.urlName ? link.urlName : link.url
-                    return (
-                      <li key={link.url}>
-                        <a href={link.url}>{displayText}</a>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            )}
+            {selectedEvent.links &&
+              selectedEvent.links.length && (
+                <div>
+                  <h3>Additional Links:</h3>
+                  <ul>
+                    {selectedEvent.links.map(link => {
+                      const displayText = link.urlName ? link.urlName : link.url
+                      return (
+                        <li key={link.url}>
+                          <a href={link.url}>{displayText}</a>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+              )}
             {isStorySelected && (
               <h4>
                 POI: {curIndex + 1}/{activeEvents.length}

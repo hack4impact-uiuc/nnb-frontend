@@ -30,7 +30,7 @@ class POIForm extends Component {
   handleFormInput(type, input) {
     let newVal
     switch (type) {
-      case 'title':
+      case 'name':
       case 'description':
         newVal = input.target.value
         break
@@ -117,7 +117,7 @@ class POIForm extends Component {
       console.warn('Warning: empty fields!')
     }
     const poi = {
-      title: title,
+      title: name,
       mapByYear: selectedMap.year,
       description,
       date: startDate,
@@ -188,25 +188,18 @@ class POIForm extends Component {
   // }
 
   render() {
-    const {
-      name,
-      startDate,
-      description,
-      isUploadingMedia,
-      content
-    } = this.state
+    const { startDate, description, isUploadingMedia, content } = this.state
 
     return (
       <Form horizontal>
         <PageHeader>Create POI</PageHeader>
 
         <FieldGroup
-          controlID="title"
-          label="POI Title"
+          controlID="name"
+          label="POI Name"
           inputType="text"
           placeholder="Enter your POI name here"
-          value={name}
-          onChange={this.handleFormInput.bind(this, 'title')}
+          onChange={this.handleFormInput.bind(this, 'name')}
         />
 
         <FieldGroup
