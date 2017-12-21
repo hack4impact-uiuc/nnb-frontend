@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Navbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
-import {
-  InfoPanel,
-  NNBMap,
-  POIForm,
-  StoryList,
-  Timeline,
-  MapManager,
-  OurTable
-} from './components'
+import { StoryList, POIFormPanel, MapTimeline } from './components'
 import { Api } from './utils'
 import './styles/App.css'
 
@@ -24,7 +16,8 @@ class App extends Component {
     isStorySelected: false,
     showPOIForm: false,
     showSidebar: false,
-    isEditing: true
+    isEditing: true,
+    realTimePOI: null
   }
 
   constructor(props) {
@@ -166,58 +159,25 @@ class App extends Component {
           </Grid>
         </Navbar>
         {/* Comment out the components to leave only the one you need to work on */}
-        <div className="nnb-app">
+        <div>
           {!showPOIForm && (
-            <div className="nnb-map-container">
-              <NNBMap
-                {...this.state}
-                setSelectedPOI={this.setSelectedPOI}
-                setShowPOIForm={this.setShowPOIForm}
-                setClickedCoords={this.setClickedCoords}
-              />
-            </div>
-          )}
-          {!showPOIForm &&
-            isEditing && (
-              <div>
-                <MapManager
-                  {...this.state}
-                  loadMaps={this.loadMaps}
-                  deleteMap={this.deleteMap}
-                />
-              </div>
-            )}
-          {!showPOIForm && (
-            <div className="timeline-container">
-              <Timeline
-                {...this.state}
-                loadPOIsForYear={this.loadPOIsForYear}
-              />
-            </div>
-          )}
-          {!showPOIForm && (
-            <div className="info-panel-container">
-              <InfoPanel
-                {...this.state}
-                setSelectedPOI={this.setSelectedPOI}
-                loadPOIsForYear={this.loadPOIsForYear}
-                year={
-                  this.state.maps && this.state.maps[0]
-                    ? this.state.maps[0].year
-                    : undefined
-                }
-              />
-            </div>
+            <MapTimeline
+              {...this.state}
+              setSelectedPOI={this.setSelectedPOI}
+              setShowPOIForm={this.setShowPOIForm}
+              setClickedCoords={this.setClickedCoords}
+              loadMaps={this.loadMaps}
+              deleteMap={this.deleteMap}
+              loadPOIsForYear={this.loadPOIsForYear}
+            />
           )}
           {showPOIForm && (
-            <div className="poi-form-container container">
-              <POIForm
-                {...this.state}
-                setSelectedPOI={this.setSelectedPOI}
-                setShowPOIForm={this.setShowPOIForm}
-                loadPOIsForYear={this.loadPOIsForYear}
-              />
-            </div>
+            <POIFormPanel
+              {...this.state}
+              setSelectedPOI={this.setSelectedPOI}
+              setShowPOIForm={this.setShowPOIForm}
+              loadPOIsForYear={this.loadPOIsForYear}
+            />
           )}
         </div>
       </div>

@@ -4,24 +4,55 @@ import moment from 'moment'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
+import './../styles/App.css'
 
 class POIForm extends Component {
   constructor(props) {
     super(props)
-    this.onDateSelected = this.onDateSelected.bind(this)
     this.state = {
       startDate: moment(),
-      name: '',
+      title: '',
       description: '',
-      storiesToAdd: [],
+      stories: [],
       isUploadingMedia: false
     }
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
-    this.onStorySelect = this.onStorySelect.bind(this)
+    // this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
+    this.handleFormInput = this.handleFormInput.bind(this)
+  }
+
+  handleFormInput(type, input) {
+    let newVal
+    switch (type) {
+      case 'title':
+      case 'description':
+        newVal = input.target.value
+        break
+      case 'stories':
+        newVal = this.handleStorySelect(input)
+        break
+      default:
+        newVal = input
+    }
+    this.setState(
+      {
+        [type]: newVal
+      },
+      () => this.props.updatePOI(this.state)
+    )
+  }
+
+  clearState() {
+    this.setState({
+      startDate: moment(),
+      title: '',
+      description: '',
+      storiesToAdd: [],
+      isUploadingMedia: false,
+      mediaUrl: ''
+    })
   }
 
   // TODO: handle multiple file upload
@@ -33,29 +64,13 @@ class POIForm extends Component {
       reader.onload = e => {
         const dataURL = e.target.result
         Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({ isUploadingMedia: false, mediaUrl })
+          this.setState({ isUploadingMedia: false, mediaUrl }, () =>
+            this.props.updatePOI(this.state)
+          )
         })
       }
       reader.readAsDataURL(image)
     }
-  }
-
-  onDateSelected(date) {
-    this.setState({
-      startDate: date
-    })
-  }
-
-  onChangeName(inputName) {
-    this.setState({
-      name: inputName.target.value
-    })
-  }
-
-  onChangeDescription(inputDesription) {
-    this.setState({
-      description: inputDesription.target.value
-    })
   }
 
   onSubmit() {
@@ -66,14 +81,14 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
-    const { name, description, startDate } = this.state
+    const { title, description, startDate } = this.state
     const [coordinateX, coordinateY] = clickedCoords
 
-    if (name === '' || description === '') {
+    if (title === '' || description === '') {
       console.warn('Warning: empty fields!')
     }
     const poi = {
-      title: name,
+      title: title,
       mapByYear: selectedMap.year,
       description,
       date: startDate,
@@ -90,16 +105,21 @@ class POIForm extends Component {
   }
 
   onCancel() {
-    this.setState({
-      startDate: '',
-      name: '',
-      description: '',
-      storiesToAdd: []
-    })
+    this.setState(
+      {
+        startDate: '',
+        title: '',
+        description: '',
+        storiesToAdd: [],
+        isUploadingMedia: false,
+        mediaUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
     this.props.setShowPOIForm(false)
   }
 
-  onStorySelect(storyId) {
+  handleStorySelect(storyId) {
     const storiesSet = new Set(this.state.storiesToAdd)
 
     if (storiesSet.has(storyId)) {
@@ -107,10 +127,25 @@ class POIForm extends Component {
     } else {
       storiesSet.add(storyId)
     }
-    this.setState({
-      storiesToAdd: [...storiesSet]
-    })
+
+    return [...storiesSet]
   }
+
+  // onStorySelect(storyId) {
+  //   const storiesSet = new Set(this.state.storiesToAdd)
+
+  //   if (storiesSet.has(storyId)) {
+  //     storiesSet.delete(storyId)
+  //   } else {
+  //     storiesSet.add(storyId)
+  //   }
+  //   // this.setState({
+  //   //   storiesToAdd: [...storiesSet]
+  //   // })
+  //   const storiesToAdd = [...storiesSet]
+  //   this.handleFormInput('stories', storiesToAdd)
+  //   // this.props.updatePOI(this.state)
+  // }
 
   render() {
     return (
@@ -118,19 +153,19 @@ class POIForm extends Component {
         <PageHeader>Create POI</PageHeader>
 
         <FieldGroup
-          controlID="name"
-          label="POI Name"
+          controlID="title"
+          label="POI Title"
           inputType="text"
-          placeholder="Enter your POI name here"
-          value={this.state.name}
-          onChange={this.onChangeName}
+          placeholder="Enter your POI title here"
+          value={this.state.title}
+          onChange={this.handleFormInput.bind(this, 'title')}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
           selected={this.state.startDate}
-          onChange={this.onDateSelected}
+          onChange={this.handleFormInput.bind(this, 'date')}
         />
 
         <FieldGroup
@@ -139,7 +174,7 @@ class POIForm extends Component {
           inputType="textarea"
           placeholder="Enter your POI description here"
           value={this.state.description}
-          onChange={this.onChangeDescription}
+          onChange={this.handleFormInput.bind(this, 'description')}
         />
 
         <FieldGroup
@@ -152,15 +187,13 @@ class POIForm extends Component {
         {this.state.isUploadingMedia && <div>Uploading...</div>}
         {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
 
-        <div>
-          <OurTable colNames={['Link URL', 'Display Name']} />
-        </div>
+        <OurTable colNames={['Link URL', 'Display Name']} />
 
         <FieldGroup
           inputType="checklist"
-          stories={this.props.stories}
+          options={this.props.stories}
           label="Stories"
-          onStorySelect={this.onStorySelect}
+          onClick={this.handleFormInput.bind(this, 'stories')}
         />
 
         <FormControl.Feedback />

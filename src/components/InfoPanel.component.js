@@ -29,9 +29,11 @@ class InfoPanel extends Component {
   }
 
   onClickDelete() {
-    const { selectedEvent, loadPOIsForYear, year } = this.props
-    if (year) {
-      Api.deletePOI(selectedEvent.id).then(() => loadPOIsForYear(year))
+    const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
+    if (selectedMap) {
+      Api.deletePOI(selectedEvent.id).then(() =>
+        loadPOIsForYear(selectedMap.year)
+      )
     }
     //<--TODO: Add functionality - deletes poi with message
   }
@@ -40,15 +42,15 @@ class InfoPanel extends Component {
     const {
       activeEvents,
       selectedEvent,
-      setSelectedPOI,
+      isEditing,
       isStorySelected,
-      isEditing
+      realTimePOI
     } = this.props
 
     const carousel = (
       <Carousel>
         {activeEvents.map(selectedEvent => (
-          <Carousel.Item>
+          <Carousel.Item key={selectedEvent.id}>
             <Image
               width={500}
               height={500}
@@ -73,26 +75,28 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel">
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-edit"
-              onClick={this.onClickEdit}
-            >
-              Edit
-            </span>
-          </div>
-        )}
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-remove"
-              onClick={this.onClickDelete}
-            >
-              Delete
-            </span>
-          </div>
-        )}
+        {isEditing &&
+          !realTimePOI && (
+            <div className="btn btn-primary a-btn-slide-text">
+              <span
+                className="glyphicon glyphicon-edit"
+                onClick={this.onClickEdit}
+              >
+                Edit
+              </span>
+            </div>
+          )}
+        {isEditing &&
+          !realTimePOI && (
+            <div className="btn btn-primary a-btn-slide-text">
+              <span
+                className="glyphicon glyphicon-remove"
+                onClick={this.onClickDelete}
+              >
+                Delete
+              </span>
+            </div>
+          )}
         <h1>
           <u>
             <b>{selectedEvent.title} </b>
@@ -111,27 +115,35 @@ class InfoPanel extends Component {
             <h3>Description:</h3>
             <p>{selectedEvent.description}</p>
             <hr />
-            <h3>Additional Links:</h3>
-            <ul>
-              {selectedEvent.links.map(link => (
-                <li key={link}>
-                  <a href={link}>{link}</a>
-                </li>
-              ))}
-            </ul>
-            <h4>
-              POI: {curIndex + 1}/{activeEvents.length}
-            </h4>
-            {isShownPrev && (
-              <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                Previous
-              </Button>
+            {selectedEvent.links && (
+              <div>
+                <h3>Additional Links:</h3>
+                <ul>
+                  {selectedEvent.links.map(link => (
+                    <li key={link}>
+                      <a href={link}>{link}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
-            {isShownNext && (
-              <Button bsStyle="primary" onClick={this.onClickNext}>
-                Next
-              </Button>
+            {isStorySelected && (
+              <h4>
+                POI: {curIndex + 1}/{activeEvents.length}
+              </h4>
             )}
+            {isStorySelected &&
+              isShownPrev && (
+                <Button bsStyle="primary" onClick={this.onClickPrevious}>
+                  Previous
+                </Button>
+              )}
+            {isStorySelected &&
+              isShownNext && (
+                <Button bsStyle="primary" onClick={this.onClickNext}>
+                  Next
+                </Button>
+              )}
           </div>
         </div>
       </div>

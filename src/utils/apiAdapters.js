@@ -18,7 +18,7 @@ function convertToApiPOI(poi) {
     info: poi.description,
     x_coor: poi.coordinateX,
     y_coor: poi.coordinateY,
-    additional_links: poi.links.map(link => ({ url: link })),
+    additional_links: poi.links.map(link => ({ url: link, url_name: link })),
     content: [
       {
         content_url: 'url',
