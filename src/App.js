@@ -98,19 +98,33 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
+    function compareYr(a, b) {
+      // console.log(,b,moment(a.year).isAfter(moment(b.year)))
+      return moment(a.date).isAfter(moment(b.date))
+    }
+
     Api.getPOIsByStory(storyId).then(storyPOIs => {
-      this.setState({
-        selectedStory: storyId,
-        isStorySelected: true,
-        activeEvents: storyPOIs,
-        selectedEvent: storyPOIs[0]
-      })
-      console.log(this.state.selectedEvent)
-      const yr = moment(this.state.selectedEvent.date).year()
-      console.log(yr)
-      const mp = this.state.maps.find(map => map.year === yr)
-      console.log(mp)
-      this.setState({ selectedMap: mp })
+      storyPOIs.sort(compareYr)
+      this.setState(
+        {
+          selectedStory: storyId,
+          isStorySelected: true,
+          activeEvents: storyPOIs,
+          selectedEvent: storyPOIs[0]
+        },
+        () => {
+          console.log(this.state.selectedEvent)
+          // console.log(moment(this.state.selectedEvent.date))
+          // moment(this.state.selectedEvent.date).add(2, 'days')
+          // console.log(moment.utc(this.state.selectedEvent.date))
+          const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
+          console.log(yr)
+          const mp = this.state.maps.find(map => map.year === yr)
+          // console.log(mp)
+          this.setState({ selectedMap: mp })
+        }
+      )
+      // console.log(this.state.selectedEvent)
     })
 
     this.toggleSidebar()

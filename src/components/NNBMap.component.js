@@ -27,6 +27,7 @@ class NNBMap extends Component {
     }
     if (
       selectedMap &&
+      nextProps.selectedMap &&
       nextProps.selectedMap.imageUrl !== selectedMap.imageUrl &&
       nextProps.selectedMap.year !== selectedMap.year
     ) {
