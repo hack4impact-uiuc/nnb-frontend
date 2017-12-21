@@ -42,6 +42,7 @@ class App extends Component {
     this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
   }
 
@@ -92,9 +93,26 @@ class App extends Component {
     const clickedPOI = this.state.activeEvents.find(
       POI => POI.id === POIMarkerId
     )
-    this.setState({
-      selectedEvent: clickedPOI
-    })
+    //Check for POI in different map in the case of stories
+    if (
+      this.state.selectedEvent &&
+      !moment
+        .utc(clickedPOI.date)
+        .isSame(moment.utc(this.state.selectedEvent.date), 'year')
+    ) {
+      this.setState(
+        {
+          selectedEvent: clickedPOI
+        },
+        () => {
+          this.updateMap()
+        }
+      )
+    } else {
+      this.setState({
+        selectedEvent: clickedPOI
+      })
+    }
   }
 
   setSelectedStory(storyId) {
@@ -113,21 +131,28 @@ class App extends Component {
           selectedEvent: storyPOIs[0]
         },
         () => {
-          console.log(this.state.selectedEvent)
-          // console.log(moment(this.state.selectedEvent.date))
-          // moment(this.state.selectedEvent.date).add(2, 'days')
-          // console.log(moment.utc(this.state.selectedEvent.date))
-          const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
-          console.log(yr)
-          const mp = this.state.maps.find(map => map.year === yr)
-          // console.log(mp)
-          this.setState({ selectedMap: mp })
+          // console.log(this.state.selectedEvent)
+          // // console.log(moment(this.state.selectedEvent.date))
+          // // moment(this.state.selectedEvent.date).add(2, 'days')
+          // // console.log(moment.utc(this.state.selectedEvent.date))
+          // const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
+          // console.log(yr)
+          // const mp = this.state.maps.find(map => map.year === yr)
+          // // console.log(mp)
+          // this.setState({ selectedMap: mp })
+          this.updateMap()
         }
       )
       // console.log(this.state.selectedEvent)
     })
 
     this.toggleSidebar()
+  }
+
+  updateMap() {
+    const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
+    const mp = this.state.maps.find(map => map.year === yr)
+    this.setState({ selectedMap: mp })
   }
 
   exitStory() {
@@ -210,6 +235,7 @@ class App extends Component {
                 {...this.state}
                 setSelectedPOI={this.setSelectedPOI}
                 loadPOIsForYear={this.loadPOIsForYear}
+                updateMap={this.updateMap}
               />
             </div>
           )}

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, Button, Carousel } from 'react-bootstrap'
 import './../styles/App.css'
 import { Api } from './../utils'
+import moment from 'moment'
 
 class InfoPanel extends Component {
   constructor(props) {
@@ -11,6 +12,12 @@ class InfoPanel extends Component {
     this.onClickEdit = this.onClickEdit.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (moment.utc(nextProps.selectedEvent.date).isSame(moment.utc(this.props.selectedEvent.date),'year')) {
+  //     this.props.updateMap()
+  //   }
+  // }
 
   onClickPrevious() {
     const { activeEvents, selectedEvent, setSelectedPOI } = this.props
