@@ -94,7 +94,10 @@ class App extends Component {
       POI => POI.id === POIMarkerId
     )
     //Check for POI in different map in the case of stories
-    const prevSelectedEvent = this.state.selectedEvent.mapByYear
+    let prevSelectedEvent
+    if (this.state.selectedEvent) {
+      prevSelectedEvent = this.state.selectedEvent.mapByYear
+    }
     this.setState(
       {
         selectedEvent: clickedPOI

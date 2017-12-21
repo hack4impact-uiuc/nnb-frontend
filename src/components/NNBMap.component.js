@@ -151,6 +151,7 @@ function POIMarkers({
   const displayEvents = activeEvents.filter(
     poi => poi.mapByYear === selectedMap.year
   )
+  console.log(displayEvents)
 
   return displayEvents.map(poi => (
     <POIMarker
