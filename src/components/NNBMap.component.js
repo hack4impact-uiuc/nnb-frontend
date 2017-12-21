@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { Image, Button } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
-import moment from 'moment'
 
 class NNBMap extends Component {
   state = {

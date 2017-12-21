@@ -94,32 +94,25 @@ class App extends Component {
       POI => POI.id === POIMarkerId
     )
     //Check for POI in different map in the case of stories
-    if (
-      this.state.selectedEvent &&
-      clickedPOI.mapByYear !== this.state.selectedEvent.mapByYear
-    ) {
-      this.setState(
-        {
-          selectedEvent: clickedPOI
-        },
-        () => {
+    const prevSelectedEvent = this.state.selectedEvent.mapByYear
+    this.setState(
+      {
+        selectedEvent: clickedPOI
+      },
+      () => {
+        if (
+          this.state.selectedEvent &&
+          clickedPOI.mapByYear !== prevSelectedEvent
+        ) {
           this.updateMap()
         }
-      )
-    } else {
-      this.setState({
-        selectedEvent: clickedPOI
-      })
-    }
+      }
+    )
   }
 
   setSelectedStory(storyId) {
-    function compareYr(a, b) {
-      return moment(a.date).isAfter(moment(b.date))
-    }
-
     Api.getPOIsByStory(storyId).then(storyPOIs => {
-      storyPOIs.sort(compareYr)
+      storyPOIs.sort(compareYear)
       this.setState(
         {
           selectedStory: storyId,
@@ -139,10 +132,10 @@ class App extends Component {
   //Update map based on the map year of the currently selected event
   updateMap() {
     if (this.state.selectedEvent) {
-      const mp = this.state.maps.find(
+      const selectedMap = this.state.maps.find(
         map => map.year === this.state.selectedEvent.mapByYear
       )
-      this.setState({ selectedMap: mp })
+      this.setState({ selectedMap })
     }
   }
 
@@ -244,6 +237,10 @@ class App extends Component {
       </div>
     )
   }
+}
+
+function compareYear(a, b) {
+  return moment(a.date).isAfter(moment(b.date))
 }
 
 export default App

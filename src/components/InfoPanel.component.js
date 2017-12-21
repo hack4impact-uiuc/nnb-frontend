@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Image, Button, Carousel } from 'react-bootstrap'
 import './../styles/App.css'
 import { Api } from './../utils'
-import moment from 'moment'
 
 class InfoPanel extends Component {
   constructor(props) {
