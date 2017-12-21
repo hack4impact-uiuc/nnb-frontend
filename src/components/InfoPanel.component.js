@@ -13,12 +13,6 @@ class InfoPanel extends Component {
     this.onClickDelete = this.onClickDelete.bind(this)
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (moment.utc(nextProps.selectedEvent.date).isSame(moment.utc(this.props.selectedEvent.date),'year')) {
-  //     this.props.updateMap()
-  //   }
-  // }
-
   onClickPrevious() {
     const { activeEvents, selectedEvent, setSelectedPOI } = this.props
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)

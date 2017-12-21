@@ -96,9 +96,7 @@ class App extends Component {
     //Check for POI in different map in the case of stories
     if (
       this.state.selectedEvent &&
-      !moment
-        .utc(clickedPOI.date)
-        .isSame(moment.utc(this.state.selectedEvent.date), 'year')
+      clickedPOI.mapByYear !== this.state.selectedEvent.mapByYear
     ) {
       this.setState(
         {
@@ -117,7 +115,6 @@ class App extends Component {
 
   setSelectedStory(storyId) {
     function compareYr(a, b) {
-      // console.log(,b,moment(a.year).isAfter(moment(b.year)))
       return moment(a.date).isAfter(moment(b.date))
     }
 
@@ -131,28 +128,22 @@ class App extends Component {
           selectedEvent: storyPOIs[0]
         },
         () => {
-          // console.log(this.state.selectedEvent)
-          // // console.log(moment(this.state.selectedEvent.date))
-          // // moment(this.state.selectedEvent.date).add(2, 'days')
-          // // console.log(moment.utc(this.state.selectedEvent.date))
-          // const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
-          // console.log(yr)
-          // const mp = this.state.maps.find(map => map.year === yr)
-          // // console.log(mp)
-          // this.setState({ selectedMap: mp })
           this.updateMap()
         }
       )
-      // console.log(this.state.selectedEvent)
     })
 
     this.toggleSidebar()
   }
 
+  //Update map based on the map year of the currently selected event
   updateMap() {
-    const yr = +moment.utc(this.state.selectedEvent.date).format('YYYY')
-    const mp = this.state.maps.find(map => map.year === yr)
-    this.setState({ selectedMap: mp })
+    if (this.state.selectedEvent) {
+      const mp = this.state.maps.find(
+        map => map.year === this.state.selectedEvent.mapByYear
+      )
+      this.setState({ selectedMap: mp })
+    }
   }
 
   exitStory() {

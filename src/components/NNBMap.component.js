@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Image, Button } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker } from '../components'
+import moment from 'moment'
 
 class NNBMap extends Component {
   state = {
@@ -144,10 +145,15 @@ function POIMarkers({
   activeEvents,
   selectedEvent,
   setSelectedPOI,
+  selectedMap,
   mapImageWidth,
   mapImageHeight
 }) {
-  return activeEvents.map(poi => (
+  const displayEvents = activeEvents.filter(
+    poi => poi.mapByYear === selectedMap.year
+  )
+
+  return displayEvents.map(poi => (
     <POIMarker
       {...poi}
       isSelected={selectedEvent && poi.id === selectedEvent.id}
