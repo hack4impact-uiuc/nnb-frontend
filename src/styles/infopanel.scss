@@ -44,8 +44,16 @@
   }
 }
 
+.walkthrough-container {
+  margin-top: auto;
+}
+
 .walkthrough {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &__page-counter {
+    color: #333;
+  }
 }

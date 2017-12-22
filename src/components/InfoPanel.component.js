@@ -149,7 +149,7 @@ class InfoPanel extends Component {
           )}
 
         {isStorySelected && (
-          <div>
+          <div className="walkthrough-container">
             <hr />
             <div className="walkthrough">
               <Icon
@@ -158,8 +158,8 @@ class InfoPanel extends Component {
                 onClick={this.onClickPrevious}
                 disabled={!isShownPrev}
               />
-              <h4>
-                {curIndex + 1}/{activeEvents.length}
+              <h4 className="walkthrough__page-counter">
+                {curIndex + 1} / {activeEvents.length}
               </h4>
               <Icon
                 type="ArrowRight"
