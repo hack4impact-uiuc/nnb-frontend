@@ -11,6 +11,7 @@ import MapTimeline from './MapTimeline.component'
 import POIFormPanel from './POIFormPanel.component'
 import NavBar from './NavBar'
 import Interval from './Interval.component'
+import Icon from './Icon.component'
 
 export {
   InfoPanel,
@@ -25,5 +26,6 @@ export {
   MapTimeline,
   POIFormPanel,
   NavBar,
-  Interval
+  Interval,
+  Icon
 }

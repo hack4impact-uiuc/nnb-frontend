@@ -1,0 +1,51 @@
+@import "variables.scss";
+@import "button.scss";
+
+.info-panel {
+  border-left: 1px solid #ddd;
+  padding: 2rem;
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+
+  &__name {
+    margin-right: auto;
+  }
+}
+
+.description {
+  &__text {
+    white-space: pre-wrap;
+    margin: 0;
+  }
+}
+
+.additional-links {
+  &__ul {
+    list-style: none;
+    margin: 0;
+    padding: 1rem 1rem 0;
+  }
+
+  &__li {
+    padding-bottom: 0.5rem;
+
+    &:before {
+      content: "\0BB \020";
+      padding-right: 0.5rem;
+    }
+  }
+}
+
+.walkthrough {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

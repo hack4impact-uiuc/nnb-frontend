@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Menu } from 'react-feather'
+import { Icon } from './'
 
 class NavBar extends PureComponent {
   render() {
     return (
       <Navbar>
         <div className="navbar-content">
-          <div
-            className="navbar-content__item eather-icon feather-icon--large"
+          <Icon
+            type="Menu"
+            size="large"
             onClick={this.props.toggleSidebar}
-          >
-            <Menu size={25} />
-          </div>
+            className="navbar-content__item"
+          />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
           {this.props.showEdit && (
             <div className="navbar-content__item" onClick={this.props.onEdit}>

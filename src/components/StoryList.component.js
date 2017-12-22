@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
-import { X, Trash2 as Trash, Edit2 as Edit } from 'react-feather'
+import { Icon } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
@@ -103,7 +103,7 @@ class StoryList extends Component {
               position: 'static'
             },
             sidebar: {
-              zIndex: 3
+              zIndex: 10
             }
           }}
         />
@@ -129,12 +129,12 @@ function SidebarContent({
     <div className="sidebar">
       <div className="sidebar__header">
         <h2 className="sidebar__title">Story List</h2>
-        <div
-          className="sidebar__exit feather-icon feather-icon--large"
+        <Icon
+          type="X"
+          size="large"
           onClick={props.toggleSidebar}
-        >
-          <X size={25} />
-        </div>
+          className="sidebar__exit"
+        />
       </div>
 
       <div className="divider" />
@@ -147,20 +147,18 @@ function SidebarContent({
             })}
           >
             <div className="story-item__name">{story.name}</div>
-
-            <div
-              className="feather-icon feather-icon--small story-item__icon"
+            <Icon
+              type="Edit"
+              size="small"
+              className="story-item__icon"
               onClick={() => onClickEdit(story.id)}
-            >
-              <Edit size={15} />
-            </div>
-
-            <div
-              className="feather-icon feather-icon--small story-item__icon"
+            />
+            <Icon
+              type="Trash"
+              size="small"
+              className="story-item__icon"
               onClick={() => onClickDelete(story.id)}
-            >
-              <Trash size={15} />
-            </div>
+            />
           </div>
 
           <div className="divider" />
@@ -169,7 +167,10 @@ function SidebarContent({
 
       {props.isEditing &&
         !addStorySelected && (
-          <button className="button button--wide" onClick={addStoryClicked}>
+          <button
+            className="button button--light button--full-width"
+            onClick={addStoryClicked}
+          >
             Add Story
           </button>
         )}
@@ -179,12 +180,12 @@ function SidebarContent({
           <div className="story-form">
             <div className="story-form__heading">
               <h4>Enter Story Name:</h4>
-              <div
-                className="story-form__exit feather-icon feather-icon--small"
+              <Icon
+                type="X"
+                size="small"
+                className="story-form__exit"
                 onClick={addStoryExit}
-              >
-                <X size={15} />
-              </div>
+              />
             </div>
 
             <div className="story-form__input">
@@ -196,7 +197,10 @@ function SidebarContent({
               />
             </div>
 
-            <button className="button button--wide" onClick={submitStoryName}>
+            <button
+              className="button button--light button--full-width"
+              onClick={submitStoryName}
+            >
               Submit
             </button>
           </div>
@@ -204,7 +208,7 @@ function SidebarContent({
 
       {props.isStorySelected && (
         <button
-          className="button button--wide sidebar__exit-story"
+          className="button button--light button--full-width sidebar__exit-story"
           onClick={exitStory}
         >
           Exit Story

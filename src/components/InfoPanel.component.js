@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Image, Button, Carousel } from 'react-bootstrap'
+import { Image, Carousel } from 'react-bootstrap'
+import { Icon } from './'
 import './../styles/App.css'
+import './../styles/infopanel.css'
 import { Api } from './../utils'
 
 class InfoPanel extends Component {
@@ -50,7 +52,9 @@ class InfoPanel extends Component {
     if (!selectedEvent) {
       return (
         <div className="info-panel">
-          <h1>No POI Selected</h1>
+          <h1>
+            {isRealTimePOI ? 'Preview Will Appear Here' : 'No POI Selected'}
+          </h1>
         </div>
       )
     }
@@ -84,71 +88,88 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel">
-        {isEditing &&
-          !isRealTimePOI && (
-            <div className="btn btn-primary a-btn-slide-text">
-              <span
-                className="glyphicon glyphicon-edit"
-                onClick={this.onClickEdit}
-              >
-                Edit
-              </span>
-            </div>
-          )}
-        {isEditing &&
-          !isRealTimePOI && (
-            <div className="btn btn-primary a-btn-slide-text">
-              <span
-                className="glyphicon glyphicon-remove"
-                onClick={this.onClickDelete}
-              >
-                Delete
-              </span>
-            </div>
-          )}
-        <h1>{selectedEvent.name}</h1>
-        <div>
-          <div>
-            {!!selectedEvent.content.length && carousel}
-            <hr />
-            <h3>Description:</h3>
-            <p>{selectedEvent.description}</p>
-            <hr />
-            {links &&
-              !!links.length && (
-                <div>
-                  <h3>Additional Links:</h3>
-                  <ul>
-                    {links.map(link => {
-                      const displayText = link.urlName ? link.urlName : link.url
-                      return (
-                        <li key={link.url}>
-                          <a href={link.url}>{displayText}</a>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
+        {!!selectedEvent.name && (
+          <div className="heading">
+            <h1 className="heading__name">{selectedEvent.name}</h1>
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Edit"
+                  size="large"
+                  className="story-item__icon"
+                  onClick={this.onClickEdit}
+                />
               )}
-            {isStorySelected && (
-              <h4>
-                POI: {curIndex + 1}/{activeEvents.length}
-              </h4>
-            )}
-            {isStorySelected &&
-              isShownPrev && (
-                <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                  Previous
-                </Button>
-              )}
-            {isStorySelected &&
-              isShownNext && (
-                <Button bsStyle="primary" onClick={this.onClickNext}>
-                  Next
-                </Button>
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Trash"
+                  size="large"
+                  className="story-item__icon"
+                  onClick={this.onClickDelete}
+                />
               )}
           </div>
-        </div>
+        )}
+
+        {!!selectedEvent.content.length && (
+          <div>
+            <hr />
+            <div>{!!selectedEvent.content.length && carousel}</div>
+          </div>
+        )}
+
+        {!!selectedEvent.description && (
+          <div>
+            <hr />
+            <div className="description">
+              <p className="description__text">{selectedEvent.description}</p>
+            </div>
+          </div>
+        )}
+
+        {links &&
+          !!links.length && (
+            <div>
+              <hr />
+              <div className="additional-links">
+                <h4>Additional Links:</h4>
+                <ul className="additional-links__ul">
+                  {links.map(link => {
+                    const displayText = link.urlName ? link.urlName : link.url
+                    return (
+                      <li key={link.url} className="additional-links__li">
+                        <a href={link.url}>{displayText}</a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
+
+        {isStorySelected && (
+          <div>
+            <hr />
+            <div className="walkthrough">
+              <Icon
+                type="ArrowLeft"
+                size="large"
+                onClick={this.onClickPrevious}
+                disabled={!isShownPrev}
+              />
+              <h4>
+                {curIndex + 1}/{activeEvents.length}
+              </h4>
+              <Icon
+                type="ArrowRight"
+                size="large"
+                onClick={this.onClickNext}
+                disabled={!isShownNext}
+              />
+            </div>
+          </div>
+        )}
       </div>
     )
   }
