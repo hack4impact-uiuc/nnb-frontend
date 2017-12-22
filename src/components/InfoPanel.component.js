@@ -139,7 +139,9 @@ class InfoPanel extends Component {
                     const displayText = link.urlName ? link.urlName : link.url
                     return (
                       <li key={link.url} className="additional-links__li">
-                        <a href={link.url}>{displayText}</a>
+                        <a href={link.url} target="new">
+                          {displayText}
+                        </a>
                       </li>
                     )
                   })}
