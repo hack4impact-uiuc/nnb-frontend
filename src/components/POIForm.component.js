@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
-import { FormControl, Form, PageHeader } from 'react-bootstrap'
+import {
+  FormControl,
+  Form,
+  PageHeader,
+  Grid,
+  Col,
+  ControlLabel
+} from 'react-bootstrap'
 import moment from 'moment'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
+import './../styles/poi-form.css'
+import './../styles/button.css'
 
 class POIForm extends Component {
   constructor(props) {
@@ -158,8 +167,8 @@ class POIForm extends Component {
     const { startDate, description, isUploadingMedia } = this.state
 
     return (
-      <Form horizontal>
-        <PageHeader>Create POI</PageHeader>
+      <Form horizontal className="poi-form">
+        <PageHeader className="form-header">Create POI</PageHeader>
 
         <FieldGroup
           controlID="name"
@@ -194,10 +203,17 @@ class POIForm extends Component {
         />
         {isUploadingMedia && <div>Uploading...</div>}
 
-        <OurTable
-          colNames={['Link URL', 'Display Name']}
-          setLinkData={this.handleFormInput.bind(this, 'links')}
-        />
+        <Col sm={2} componentClass={ControlLabel}>
+          <div className="links-label">Links</div>
+        </Col>
+        <Col sm={10} className="table-container">
+          <OurTable
+            colNames={['Link URL', 'Display Name']}
+            setLinkData={this.handleFormInput.bind(this, 'links')}
+          />
+        </Col>
+
+        <div className="jank-spacer" />
 
         <FieldGroup
           inputType="checklist"
@@ -208,19 +224,20 @@ class POIForm extends Component {
 
         <FormControl.Feedback />
 
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="Create"
-          onClick={this.onSubmit}
-        />
-
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="Cancel"
-          onClick={this.onCancel}
-        />
+        <div className="end-buttons">
+          <button
+            className="button button--dark end-button"
+            onClick={this.onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            className="button button--dark end-button"
+            onClick={this.onSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </Form>
     )
   }

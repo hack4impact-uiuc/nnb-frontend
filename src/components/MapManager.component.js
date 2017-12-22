@@ -103,7 +103,7 @@ class MapManager extends Component {
           </Modal.Header>
           <Modal.Body>
             {showInputFields && (
-              <Form inline>
+              <Form inline className="modal-form">
                 <FieldGroup
                   controlID="year"
                   label="Year"
@@ -113,6 +113,8 @@ class MapManager extends Component {
                   onChange={this.onChangeYear}
                 />
 
+                <div className="jank-spacer-map" />
+
                 <FieldGroup
                   controlID="chooseFile"
                   label="Upload Media"
@@ -121,6 +123,8 @@ class MapManager extends Component {
                   onChange={this.onImageUpload}
                 />
                 {isUploadingMedia && <div>Uploading...</div>}
+
+                <div className="jank-spacer-map" />
 
                 <FieldGroup
                   inputType="button"

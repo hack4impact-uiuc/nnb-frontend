@@ -96,3 +96,12 @@ $marker-diameter: 25px;
     background: #e4560b;
   }
 }
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.jank-spacer-map {
+  margin: 1rem
+}
