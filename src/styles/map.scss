@@ -20,7 +20,7 @@ $marker-diameter: 25px;
 
 .map-icon {
   background: #fafafacc;
-  color: #333;
+  color: #888;
   margin: 1rem 1rem 1rem 0;
   box-shadow: 0 0 5px #ddd;
   transition: all 0.2s ease-in-out;
@@ -49,6 +49,15 @@ $marker-diameter: 25px;
   transform: translate(-50%, 0);
   border-radius: 0 0 1rem 1rem;
   box-shadow: 0 5px 20px 0px $navbar-color;
+}
+
+.map-manager-icon {
+  align-self: center;
+  margin: 0 0 0 1rem;
+
+  &__icon {
+    color: #888;
+  }
 }
 
 .marker {

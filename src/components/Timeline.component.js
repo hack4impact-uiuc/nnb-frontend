@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Interval, Icon } from '../components'
+import { Interval } from '../components'
 import './../styles/timeline.css'
 
 class Timeline extends Component {

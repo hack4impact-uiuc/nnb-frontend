@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
-import { FieldGroup } from '../components'
+import { Form, Modal } from 'react-bootstrap'
+import { FieldGroup, Icon } from '../components'
 import { Api } from './../utils'
+import './../styles/map.css'
 
 class MapManager extends Component {
   state = {
@@ -88,8 +89,13 @@ class MapManager extends Component {
     const { showInputFields, inputYear, isUploadingMedia } = this.state
 
     return (
-      <div>
-        <Button onClick={this.toggleShowInputFields}>{'Add map'}</Button>
+      <div className="map-manager-icon">
+        <Icon
+          type={showInputFields ? 'X' : 'Plus'}
+          size="large"
+          onClick={this.toggleShowInputFields}
+          className="map-manager-icon__icon"
+        />
 
         <Modal show={showInputFields} onHide={this.toggleShowInputFields}>
           <Modal.Header closeButton>
@@ -126,10 +132,6 @@ class MapManager extends Component {
             )}
           </Modal.Body>
         </Modal>
-
-        {!showInputFields && (
-          <Button onClick={this.showConfirmDeleteMap}>Delete map</Button>
-        )}
       </div>
     )
   }
