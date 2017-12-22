@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Modal } from 'react-bootstrap'
 import { FieldGroup } from '../components'
 import { Api } from './../utils'
 
@@ -89,37 +89,44 @@ class MapManager extends Component {
 
     return (
       <div>
-        <Button onClick={this.toggleShowInputFields}>
-          {showInputFields ? 'Cancel' : 'Add map'}
-        </Button>
-        {showInputFields && (
-          <Form inline>
-            <FieldGroup
-              controlID="year"
-              label="Year"
-              inputType="text"
-              placeholder="Enter the map year here"
-              value={inputYear}
-              onChange={this.onChangeYear}
-            />
+        <Button onClick={this.toggleShowInputFields}>{'Add map'}</Button>
 
-            <FieldGroup
-              controlID="chooseFile"
-              label="Upload Media"
-              inputType="file"
-              placeholder="Upload your files here"
-              onChange={this.onImageUpload}
-            />
-            {isUploadingMedia && <div>Uploading...</div>}
+        <Modal show={showInputFields} onHide={this.toggleShowInputFields}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add a map</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {showInputFields && (
+              <Form inline>
+                <FieldGroup
+                  controlID="year"
+                  label="Year"
+                  inputType="text"
+                  placeholder="Enter the map year here"
+                  value={inputYear}
+                  onChange={this.onChangeYear}
+                />
 
-            <FieldGroup
-              inputType="button"
-              label=""
-              buttonText="Submit"
-              onClick={this.onSubmit}
-            />
-          </Form>
-        )}
+                <FieldGroup
+                  controlID="chooseFile"
+                  label="Upload Media"
+                  inputType="file"
+                  placeholder="Upload your files here"
+                  onChange={this.onImageUpload}
+                />
+                {isUploadingMedia && <div>Uploading...</div>}
+
+                <FieldGroup
+                  inputType="button"
+                  label=""
+                  buttonText="Submit"
+                  onClick={this.onSubmit}
+                />
+              </Form>
+            )}
+          </Modal.Body>
+        </Modal>
+
         {!showInputFields && (
           <Button onClick={this.showConfirmDeleteMap}>Delete map</Button>
         )}
