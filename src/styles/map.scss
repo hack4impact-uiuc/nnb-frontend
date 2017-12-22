@@ -1,10 +1,14 @@
-$marker-diameter: 20px;
+@import "variables.scss";
 
-.image-container {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  position: relative;
-  height:90%;
+$marker-diameter: 25px;
+
+.image-fill {
+  height: calc(100vh - #{$navbar-height} - #{$timeline-height});
+  object-fit: cover;
+}
+
+.map-image {
+  opacity: 0.85;
 }
 
 .marker {
@@ -17,5 +21,29 @@ $marker-diameter: 20px;
 
   &--selected {
     background: red;
+  }
+}
+
+.marker {
+  width: $marker-diameter;
+  height: $marker-diameter;
+  background: #0e9ab5;
+  border-radius: 50% 50% 0;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px 3px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, .25);
+    top: 25%;
+    left: 25%;
+    border-radius: 50%;
+  }
+
+  &--selected {
+    background: #e4560b;
   }
 }

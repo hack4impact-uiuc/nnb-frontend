@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
+import classnames from 'classnames'
 import './../styles/timeline.css'
 
 class Interval extends Component {
   render() {
+    const { ratio, isSelected, startYear, loadPOIsForYear } = this.props
+
+    // set the minimum width to be 5%
+    const width = ratio * 100 > 5 ? ratio * 100 : 5
+
     return (
       <div
-        className="interval"
-        onClick={() => this.props.loadPOIsForYear(this.props.startYear)}
-        style={{ width: this.props.ratio * 100 + '%' }}
+        className={classnames('interval', {
+          'interval--selected': isSelected
+        })}
+        onClick={() => loadPOIsForYear(startYear)}
+        style={{ width: `${width}%` }}
       >
         <div className="line" />
-        <div className="tick" />
-        {this.props.startYear}
+        <div className="year">{startYear}</div>
+        <div className="dot" />
       </div>
     )
   }

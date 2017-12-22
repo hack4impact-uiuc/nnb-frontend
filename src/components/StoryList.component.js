@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { Button, FormControl } from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import { Icon } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
+import './../styles/App.css'
+import './../styles/button.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
@@ -38,7 +41,7 @@ class StoryList extends Component {
   }
 
   onClickDelete(id) {
-    const { selectedEvent, loadStories, exitStory, selectedStory } = this.props
+    const { loadStories, exitStory, selectedStory } = this.props
     if (
       window.confirm(
         'Delete the current story? This will permanently remove the story from the story-list.'
@@ -100,7 +103,7 @@ class StoryList extends Component {
               position: 'static'
             },
             sidebar: {
-              zIndex: 3
+              zIndex: 10
             }
           }}
         />
@@ -124,66 +127,93 @@ function SidebarContent({
 }) {
   return (
     <div className="sidebar">
-      <div>
-        <h2 className="sidebar-title">Story List</h2>
-        <div className="exit" onClick={props.toggleSidebar}>
-          X
-        </div>
+      <div className="sidebar__header">
+        <h2 className="sidebar__title">Story List</h2>
+        <Icon
+          type="X"
+          size="large"
+          onClick={props.toggleSidebar}
+          className="sidebar__exit"
+        />
       </div>
+
       <div className="divider" />
 
       {stories.map(story => (
         <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
           <div
-            className={classnames('sidebar-link', {
-              'sidebar-link--selected': story.id === props.selectedStory
+            className={classnames('story-item', {
+              'story-item--selected': story.id === props.selectedStory
             })}
           >
-            {story.name}
-          </div>
-
-          <div
-            className="story-panel-button"
-            onClick={() => onClickEdit(story.id)}
-          >
-            Edit
-          </div>
-          <div
-            className="story-panel-button"
-            onClick={() => onClickDelete(story.id)}
-          >
-            Delete
+            <div className="story-item__name">{story.name}</div>
+            <Icon
+              type="Edit"
+              size="small"
+              className="story-item__icon"
+              onClick={() => onClickEdit(story.id)}
+            />
+            <Icon
+              type="Trash"
+              size="small"
+              className="story-item__icon"
+              onClick={() => onClickDelete(story.id)}
+            />
           </div>
 
           <div className="divider" />
         </div>
       ))}
 
-      {props.isStorySelected && <Button onClick={exitStory}>Exit Story</Button>}
-
       {props.isEditing &&
         !addStorySelected && (
-          <Button onClick={addStoryClicked}>Add Story</Button>
+          <button
+            className="button button--light button--full-width"
+            onClick={addStoryClicked}
+          >
+            Add Story
+          </button>
         )}
 
       {props.isEditing &&
         addStorySelected && (
-          <div>
-            <h3 className="sidebar-title">Enter Story Name:</h3>
-            <div className="exit" onClick={addStoryExit}>
-              X
+          <div className="story-form">
+            <div className="story-form__heading">
+              <h4>Enter Story Name:</h4>
+              <Icon
+                type="X"
+                size="small"
+                className="story-form__exit"
+                onClick={addStoryExit}
+              />
             </div>
 
-            <FormControl
-              type="text"
-              value={storyName}
-              placeholder="Enter text"
-              onChange={storyNameChange}
-            />
+            <div className="story-form__input">
+              <FormControl
+                type="text"
+                value={storyName}
+                placeholder="Enter text"
+                onChange={storyNameChange}
+              />
+            </div>
 
-            <Button onClick={submitStoryName}>Submit</Button>
+            <button
+              className="button button--light button--full-width"
+              onClick={submitStoryName}
+            >
+              Submit
+            </button>
           </div>
         )}
+
+      {props.isStorySelected && (
+        <button
+          className="button button--light button--full-width sidebar__exit-story"
+          onClick={exitStory}
+        >
+          Exit Story
+        </button>
+      )}
     </div>
   )
 }

@@ -164,7 +164,7 @@ class App extends Component {
     const { showPOIForm, isEditing } = this.state
 
     return (
-      <div>
+      <div className="app">
         <StoryList
           {...this.state}
           toggleSidebar={this.toggleSidebar}
