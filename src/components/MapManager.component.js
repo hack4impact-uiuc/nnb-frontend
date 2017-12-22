@@ -89,9 +89,7 @@ class MapManager extends Component {
 
     return (
       <div>
-        <Button onClick={this.toggleShowInputFields}>
-          {showInputFields ? 'Cancel' : 'Add map'}
-        </Button>
+        <Button onClick={this.toggleShowInputFields}>{'Add map'}</Button>
 
         <Modal show={showInputFields} onHide={this.toggleShowInputFields}>
           <Modal.Header closeButton>
