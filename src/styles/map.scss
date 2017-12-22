@@ -7,8 +7,48 @@ $marker-diameter: 25px;
   object-fit: cover;
 }
 
+.map-container {
+  position: relative;
+}
+
+.map-icons {
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  display: flex;
+}
+
+.map-icon {
+  background: #fafafacc;
+  color: #333;
+  margin: 1rem 1rem 1rem 0;
+  box-shadow: 0 0 5px #ddd;
+  transition: all 0.2s ease-in-out;
+  // padding: 1rem;
+  // height: 35px;
+
+  // &__box {
+  //   height: 35px;
+  // }
+
+  &:hover {
+    background: #fafafaff;
+  }
+}
+
 .map-image {
   opacity: 0.85;
+}
+
+.map-banner {
+  position: absolute;
+  background: #fafafa;
+  z-index: 2;
+  padding: 1rem 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 5px 20px 0px $navbar-color;
 }
 
 .marker {

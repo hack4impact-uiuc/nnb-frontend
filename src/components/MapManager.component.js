@@ -120,9 +120,6 @@ class MapManager extends Component {
             />
           </Form>
         )}
-        {!showInputFields && (
-          <Button onClick={this.showConfirmDeleteMap}>Delete map</Button>
-        )}
       </div>
     )
   }
