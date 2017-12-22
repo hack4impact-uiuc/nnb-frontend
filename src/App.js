@@ -110,6 +110,7 @@ class App extends Component {
           setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
           loadStories={this.loadStories}
+          toggleEditMode={this.toggleEditMode}
         />
         <Navbar inverse>
           <Grid>
