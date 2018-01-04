@@ -67,25 +67,30 @@ class POIForm extends Component {
     )
   }
 
-  // TODO: handle multiple file upload
+  // Multiple file upload is kinda jank since it sets
+  // this.state.isUploadingMedia to false when the first image is uploaded.
+  // A better approach would wrap each upload into a promise and use Promise.All
   onImageUpload(e) {
-    const image = e.target.files[0]
-    if (image) {
+    const imageFiles = e.target.files
+    if (imageFiles.length) {
       this.setState({ isUploadingMedia: true })
-      const reader = new FileReader()
-      reader.onload = e => {
-        const dataURL = e.target.result
-        Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState(
-            {
-              isUploadingMedia: false,
-              content: [...this.state.content, mediaUrl]
-            },
-            () => this.props.updatePOI(this.state)
-          )
-        })
-      }
-      reader.readAsDataURL(image)
+      const images = [...imageFiles]
+      images.forEach(image => {
+        const reader = new FileReader()
+        reader.onload = e => {
+          const dataURL = e.target.result
+          Api.uploadImage(dataURL).then(mediaUrl => {
+            this.setState(
+              {
+                isUploadingMedia: false,
+                content: [...this.state.content, mediaUrl]
+              },
+              () => this.props.updatePOI(this.state)
+            )
+          })
+        }
+        reader.readAsDataURL(image)
+      })
     }
   }
 
