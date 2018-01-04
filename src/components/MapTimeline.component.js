@@ -25,14 +25,14 @@ class MapTimeline extends Component {
               setClickedCoords={setClickedCoords}
             />
           </div>
-          {isEditing && (
-            <MapManager
-              {...this.props}
-              loadMaps={loadMaps}
-              deleteMap={deleteMap}
-            />
-          )}
           <div className="timeline-container">
+            {isEditing && (
+              <MapManager
+                {...this.props}
+                loadMaps={loadMaps}
+                deleteMap={deleteMap}
+              />
+            )}
             <Timeline {...this.props} loadPOIsForYear={loadPOIsForYear} />
           </div>
         </div>

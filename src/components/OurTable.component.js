@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
-import { FieldGroup } from '../components'
+import { Icon } from '../components'
 
 class OurTable extends Component {
   constructor(props) {
@@ -77,27 +77,29 @@ class OurTable extends Component {
                   .slice(0, this.props.colNames.length)
                   .map((_, col_index) => (
                     <th key={col_index}>
-                      <FieldGroup
-                        inputType="text" //editable textfield
+                      <input
+                        type="text"
                         value={this.state.data[row_index][col_index]}
                         onChange={e =>
-                          this.onChangeLink(row_index, col_index, e)} //set the value
+                          this.onChangeLink(row_index, col_index, e)}
                       />
                     </th>
                   ))}
                 <th>
-                  <div onClick={() => this.onDeleteRow(row_index)}>X</div>
+                  <Icon
+                    type="X"
+                    size="small"
+                    onClick={() => this.onDeleteRow(row_index)}
+                  />
                 </th>
               </tr>
             ))}
           </tbody>
         </Table>
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="+"
-          onClick={this.onAddRow}
-        />
+
+        <button className="button button--dark" onClick={this.onAddRow}>
+          + Add Link
+        </button>
       </div>
     )
   }

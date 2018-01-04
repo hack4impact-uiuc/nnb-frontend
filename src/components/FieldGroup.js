@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import './../styles/button.css'
 
 function FieldGroup({
   // indentifier
@@ -51,6 +52,7 @@ function FieldGroup({
       )
       break
     case 'file':
+      // TODO: style like a button
       fieldGroupModule = (
         <FormControl
           type="file"
@@ -64,9 +66,9 @@ function FieldGroup({
       break
     case 'button':
       fieldGroupModule = (
-        <Button bsStyle="primary" onClick={onClick}>
+        <button className="button button--dark" onClick={onClick}>
           {buttonText}
-        </Button>
+        </button>
       )
       break
     case 'checklist':
