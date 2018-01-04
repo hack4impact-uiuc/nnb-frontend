@@ -11,7 +11,8 @@ import classnames from 'classnames'
 class StoryList extends Component {
   state = {
     addStorySelected: false,
-    storyName: ''
+    storyName: '',
+    editStoryId: null
   }
 
   constructor(props) {
@@ -22,6 +23,7 @@ class StoryList extends Component {
     this.submitStoryName = this.submitStoryName.bind(this)
     this.onClickEdit = this.onClickEdit.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
+    this.editStoryName = this.editStoryName.bind(this)
   }
 
   addStoryClicked() {
@@ -36,8 +38,8 @@ class StoryList extends Component {
     this.setState({ storyName: e.target.value })
   }
 
-  onClickEdit(id) {
-    console.log('Edit Button #' + id)
+  onClickEdit(story) {
+    this.setState({ editStoryId: story.id, storyName: story.name })
   }
 
   onClickDelete(id) {
@@ -68,6 +70,16 @@ class StoryList extends Component {
       })
   }
 
+  editStoryName() {
+    const { editStoryId, storyName } = this.state
+    Api.editStory(editStoryId, storyName).then(() => {
+      this.setState({
+        storyName: '',
+        editStoryId: null
+      })
+    })
+  }
+
   render() {
     const stories = this.props.stories
 
@@ -84,6 +96,8 @@ class StoryList extends Component {
         exitStory={this.props.exitStory}
         onClickEdit={this.onClickEdit}
         onClickDelete={this.onClickDelete}
+        editStoryId={this.state.editStoryId}
+        editStoryName={this.editStoryName}
       />
     )
 
@@ -123,6 +137,8 @@ function SidebarContent({
   exitStory,
   onClickEdit,
   onClickDelete,
+  editStoryId,
+  editStoryName,
   ...props
 }) {
   return (
@@ -140,25 +156,57 @@ function SidebarContent({
       <div className="divider" />
 
       {stories.map(story => (
-        <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
+        <div key={story.id}>
           <div
             className={classnames('story-item', {
               'story-item--selected': story.id === props.selectedStory
             })}
           >
-            <div className="story-item__name">{story.name}</div>
-            <Icon
-              type="Edit"
-              size="small"
-              className="story-item__icon"
-              onClick={() => onClickEdit(story.id)}
-            />
-            <Icon
-              type="Trash"
-              size="small"
-              className="story-item__icon"
-              onClick={() => onClickDelete(story.id)}
-            />
+            {editStoryId !== story.id && (
+              <div
+                className="story-item__name"
+                onClick={() => props.setSelectedStory(story.id)}
+              >
+                {story.name}
+              </div>
+            )}
+            {props.isEditing &&
+              editStoryId !== story.id && (
+                <Icon
+                  type="Edit"
+                  size="small"
+                  className="story-item__icon"
+                  onClick={() => onClickEdit(story)}
+                />
+              )}
+            {props.isEditing &&
+              editStoryId !== story.id && (
+                <Icon
+                  type="Trash"
+                  size="small"
+                  className="story-item__icon"
+                  onClick={() => onClickDelete(story.id)}
+                />
+              )}
+            {props.isEditing &&
+              editStoryId === story.id && (
+                <div>
+                  <div className="story-form__input">
+                    <FormControl
+                      type="text"
+                      value={storyName}
+                      placeholder="Enter text"
+                      onChange={storyNameChange}
+                    />
+                  </div>
+                  <button
+                    className="button button--light button--full-width"
+                    onClick={editStoryName}
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
           </div>
 
           <div className="divider" />
