@@ -37,7 +37,14 @@ class StoryList extends Component {
   }
 
   onClickEdit(id) {
-    console.log('Edit Button #' + id)
+    const { loadStories, toggleEditMode, isEditing } = this.props
+    Api.toggleEditMode()
+      .then(() => {
+        if (isEditing === true) {
+          return toggleEditMode()
+        }
+      })
+      .then(() => loadStories())
   }
 
   onClickDelete(id) {

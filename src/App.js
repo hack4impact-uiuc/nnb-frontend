@@ -171,6 +171,7 @@ class App extends Component {
           setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
           loadStories={this.loadStories}
+          toggleEditMode={this.toggleEditMode}
         />
         {/*TODO: change to is logged in*/}
         <NavBar
