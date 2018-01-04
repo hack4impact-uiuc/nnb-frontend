@@ -26,6 +26,7 @@ class POIFormPanel extends Component {
             setShowPOIForm={setShowPOIForm}
             loadPOIsForYear={loadPOIsForYear}
             updatePOI={this.updatePOI}
+            selectedEvent={realTimePOI}
           />
         </div>
         <div className="info-panel-container">
@@ -34,6 +35,7 @@ class POIFormPanel extends Component {
             selectedEvent={realTimePOI}
             isRealTimePOI={true}
             updateMap={this.props.updateMap}
+            updatePOI={this.updatePOI}
           />
         </div>
       </div>

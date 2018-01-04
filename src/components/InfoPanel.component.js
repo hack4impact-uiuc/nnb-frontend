@@ -40,6 +40,15 @@ class InfoPanel extends Component {
     //<--TODO: Add functionality - deletes poi with message
   }
 
+  handleDeleteMedia(contentUrl) {
+    const { selectedEvent, updatePOI } = this.props
+    const updatedPOI = {
+      ...selectedEvent,
+      content: selectedEvent.content.filter(c => c !== contentUrl)
+    }
+    updatePOI(updatedPOI)
+  }
+
   render() {
     const {
       activeEvents,
@@ -62,7 +71,18 @@ class InfoPanel extends Component {
     const carousel = (
       <Carousel>
         {selectedEvent.content.map(content => (
-          <Carousel.Item key={isRealTimePOI ? content : content.contentUrl}>
+          <Carousel.Item
+            key={isRealTimePOI ? content : content.contentUrl}
+            className="carousel-item"
+          >
+            {isEditing && (
+              <Icon
+                type="Trash"
+                size="large"
+                className="carousel-item__delete-icon"
+                onClick={this.handleDeleteMedia.bind(this, content)}
+              />
+            )}
             <Image
               width={500}
               height={500}
