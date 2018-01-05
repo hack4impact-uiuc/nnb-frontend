@@ -157,7 +157,7 @@ function SidebarContent({
 
       <div className="divider" />
 
-      {stories.map(story => (
+      {[...stories].sort((a, b) => a.name.localeCompare(b.name)).map(story => (
         <div key={story.id}>
           <div
             className={classnames('story-item', {
