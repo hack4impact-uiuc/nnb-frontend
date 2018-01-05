@@ -58,6 +58,7 @@ function FieldGroup({
           type="file"
           placeholder={placeholder}
           onChange={onChange}
+          multiple
         />
       )
       break
