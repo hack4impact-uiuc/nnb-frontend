@@ -3,7 +3,6 @@ import {
   FormControl,
   Form,
   PageHeader,
-  Grid,
   Col,
   ControlLabel
 } from 'react-bootstrap'

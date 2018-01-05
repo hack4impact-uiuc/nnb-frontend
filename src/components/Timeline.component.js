@@ -15,20 +15,12 @@ class Timeline extends Component {
   }
 
   render() {
-    const { maps, loadPOIsForYear, selectedMap, isEditing } = this.props
+    const { maps, loadPOIsForYear, selectedMap } = this.props
     const currSelectedYear = !!selectedMap && selectedMap.year
     const years = maps.map(map => map.year)
     const ratios = [...this.calcRatio(years), 0.1] //TODO: change 0.1 to a predefined constant
     return (
       <div className="timeline" style={{ width: 100 + '%' }}>
-        {/*isEditing && (
-          <Icon
-            type="Plus"
-            size="large"
-            className="map-icon map-icon__box"
-            onClick={}
-          />
-        )*/}
         {maps.map((map, i) => (
           <Interval
             startYear={map.year}

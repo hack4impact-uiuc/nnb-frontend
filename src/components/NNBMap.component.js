@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Image, Button } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker, Icon } from '../components'
 
