@@ -72,12 +72,14 @@ class StoryList extends Component {
 
   editStoryName() {
     const { editStoryId, storyName } = this.state
-    Api.editStory(editStoryId, storyName).then(() => {
-      this.setState({
-        storyName: '',
-        editStoryId: null
+    Api.editStory(editStoryId, storyName)
+      .then(() => this.props.loadStories())
+      .then(() => {
+        this.setState({
+          storyName: '',
+          editStoryId: null
+        })
       })
-    })
   }
 
   render() {
