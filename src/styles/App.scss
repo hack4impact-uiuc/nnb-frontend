@@ -69,6 +69,8 @@ h1, h2, h3, h4, h5, h6 {
   height: $timeline-height;
   z-index: 3;
   box-shadow: -5px 0px 2px 0px #ddd;
+  // TODO: show scrollbar for osx, or cue user that there is more of the timeline
+  overflow-x: scroll;
 }
 
 .info-panel-container {
