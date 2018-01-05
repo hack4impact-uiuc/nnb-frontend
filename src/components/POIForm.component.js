@@ -18,7 +18,7 @@ import './../styles/button.css'
 class POIForm extends Component {
   constructor(props) {
     super(props)
-    this.state = {
+    const emptyState = {
       startDate: moment('1/1/' + this.props.selectedMap.year),
       name: '',
       description: '',
@@ -27,6 +27,17 @@ class POIForm extends Component {
       content: [],
       links: []
     }
+    const { content, description, links, name, date } = this.props.selectedEvent
+    const updatePOIState = {
+      content,
+      description,
+      links,
+      name,
+      startDate: moment(date)
+      // TODO: get stories that POI is in
+      // stories:
+    }
+    this.state = this.props.isUpdatingPOI ? updatePOIState : emptyState
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)

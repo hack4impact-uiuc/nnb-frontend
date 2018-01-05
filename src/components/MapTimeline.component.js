@@ -43,6 +43,7 @@ class MapTimeline extends Component {
             loadPOIsForYear={loadPOIsForYear}
             selectedEvent={selectedEvent}
             updateMap={this.props.updateMap}
+            setShowPOIForm={setShowPOIForm}
           />
         </div>
       </div>

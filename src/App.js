@@ -17,7 +17,8 @@ class App extends Component {
     showPOIForm: false,
     showSidebar: false,
     isEditing: false,
-    isLoggedIn: false
+    isLoggedIn: false,
+    isUpdatingPOI: false
   }
 
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends Component {
     this.setSelectedStory = this.setSelectedStory.bind(this)
     this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
+    this.setIsUpdatingPOI = this.setIsUpdatingPOI.bind(this)
   }
 
   toggleEditMode() {
@@ -160,6 +162,10 @@ class App extends Component {
     })
   }
 
+  setIsUpdatingPOI(isUpdatingPOI) {
+    this.setState({ isUpdatingPOI })
+  }
+
   render() {
     const { showPOIForm, isEditing } = this.state
 
@@ -191,6 +197,7 @@ class App extends Component {
               deleteMap={this.deleteMap}
               loadPOIsForYear={this.loadPOIsForYear}
               updateMap={this.updateMap}
+              setIsUpdatingPOI={this.setIsUpdatingPOI}
             />
           )}
           {showPOIForm && (
@@ -200,6 +207,7 @@ class App extends Component {
               setShowPOIForm={this.setShowPOIForm}
               loadPOIsForYear={this.loadPOIsForYear}
               updateMap={this.updateMap}
+              setIsUpdatingPOI={this.setIsUpdatingPOI}
             />
           )}
         </div>

@@ -28,6 +28,8 @@ class InfoPanel extends Component {
 
   onClickEdit() {
     //<--TODO: Add functionality - bring up add poi form
+    this.props.setIsUpdatingPOI(true)
+    this.props.setShowPOIForm(true)
   }
 
   onClickDelete() {
@@ -37,7 +39,6 @@ class InfoPanel extends Component {
         loadPOIsForYear(selectedMap.year)
       )
     }
-    //<--TODO: Add functionality - deletes poi with message
   }
 
   handleDeleteMedia(contentUrl) {
