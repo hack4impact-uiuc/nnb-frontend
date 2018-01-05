@@ -8,6 +8,7 @@ import {
   ControlLabel
 } from 'react-bootstrap'
 import moment from 'moment'
+import { isEqual } from 'lodash'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -31,6 +32,12 @@ class POIForm extends Component {
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
+      this.setState({ ...nextProps.selectedEvent })
+    }
   }
 
   handleFormInput(type, input) {

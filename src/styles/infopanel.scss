@@ -20,6 +20,24 @@
   }
 }
 
+.carousel-item {
+  position: relative;
+  &__delete-icon {
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    background: #fafafacc;
+    color: #888;
+    margin: 1rem;
+    box-shadow: 0 0 5px #ddd;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: #fafafaff;
+    }
+  }
+}
+
 .description {
   &__text {
     white-space: pre-wrap;
