@@ -18,21 +18,41 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "react-sidebar": "^2.3.2",
-    "superagent": "^3.8.1"
-  },
-  "scripts": {
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start": "npm-run-all -p watch-css start-js",
-    "build": "npm-run-all build-css build-js",
-    "start-js": "react-scripts start",
-    "build-js": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "superagent": "^3.8.1",
+    "history": "^4.6.3",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-first-router": "^1.8.5",
+    "redux-first-router-link": "^1.1.1",
+    "redux-saga": "^0.15.4",
+    "styled-components": "^2.1.1"
   },
   "devDependencies": {
     "prettier": "1.7.4"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src/ react-scripts start",
+    "build": "NODE_PATH=src/ react-scripts build",
+    "test": "NODE_PATH=src/ react-scripts test --env=jsdom",
+    "lint": "standard --fix || true",
+    "coverage": "yarn test -- --coverage",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "build-js": "react-scripts build",
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!node_modules/",
+      "!src/state/store.js",
+      "!src/state/sagas/*",
+      "!src/index.js",
+      "!src/registerServiceWorker.js"
+    ]
   },
   "prettier": {
     "semi": false,

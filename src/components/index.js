@@ -8,6 +8,7 @@ import MapManager from './MapManager.component'
 import FieldGroup from './FieldGroup'
 import OurTable from './OurTable.component'
 import NavBar from './NavBar'
+import Login from './Login'
 
 export {
   InfoPanel,
@@ -19,5 +20,6 @@ export {
   MapManager,
   FieldGroup,
   OurTable,
-  NavBar
+  NavBar,
+  Login
 }
