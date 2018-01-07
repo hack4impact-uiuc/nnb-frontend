@@ -54,12 +54,19 @@ function FieldGroup({
     case 'file':
       // TODO: style like a button
       fieldGroupModule = (
-        <FormControl
-          type="file"
-          placeholder={placeholder}
-          onChange={onChange}
-          multiple
-        />
+        <div>
+          <label className="button button--dark" htmlFor="file-upload">
+            File Upload
+          </label>
+          <FormControl
+            type="file"
+            id="file-upload"
+            className="button button--dark"
+            placeholder={placeholder}
+            onChange={onChange}
+            multiple
+          />
+        </div>
       )
       break
     case 'date':

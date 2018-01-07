@@ -3,7 +3,6 @@ import {
   FormControl,
   Form,
   PageHeader,
-  Grid,
   Col,
   ControlLabel
 } from 'react-bootstrap'
@@ -78,11 +77,11 @@ class POIForm extends Component {
   // this.state.isUploadingMedia to false when the first image is uploaded.
   // A better approach would wrap each upload into a promise and use Promise.All
   onImageUpload(e) {
-    const imageFiles = e.target.files
-    if (imageFiles.length) {
+    const uploadedFiles = e.target.files
+    if (uploadedFiles.length) {
       this.setState({ isUploadingMedia: true })
-      const images = [...imageFiles]
-      images.forEach(image => {
+      const files = [...uploadedFiles]
+      files.forEach(file => {
         const reader = new FileReader()
         reader.onload = e => {
           const dataURL = e.target.result
@@ -96,7 +95,7 @@ class POIForm extends Component {
             )
           })
         }
-        reader.readAsDataURL(image)
+        reader.readAsDataURL(file)
       })
     }
   }
