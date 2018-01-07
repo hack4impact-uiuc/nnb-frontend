@@ -161,7 +161,15 @@ class App extends Component {
   }
 
   render() {
-    const { showPOIForm, isEditing, selectedMap, maps } = this.state
+    const {
+      showPOIForm,
+      isEditing,
+      selectedMap,
+      maps,
+      isStorySelected,
+      stories,
+      selectedStory
+    } = this.state
     const startYearIndex =
       !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
     const endYearMap =
@@ -169,6 +177,9 @@ class App extends Component {
       startYearIndex !== false &&
       maps[startYearIndex + 1]
     const endYear = (!!endYearMap && endYearMap.year) || 'Present'
+    const selectedStoryName =
+      !!isStorySelected &&
+      stories.find(story => story.id === selectedStory).name
 
     return (
       <div className="app">
@@ -185,8 +196,10 @@ class App extends Component {
           onEdit={this.toggleEditMode}
           isEditing={isEditing}
           toggleSidebar={this.toggleSidebar}
+          isStorySelected={isStorySelected}
           startYear={!!selectedMap && selectedMap.year}
           endYear={!!selectedMap && endYear}
+          selectedStoryName={selectedStoryName}
         />
         {/* Comment out the components to leave only the one you need to work on */}
         <div>

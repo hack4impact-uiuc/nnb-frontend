@@ -5,7 +5,15 @@ import { Icon } from './'
 
 class NavBar extends PureComponent {
   render() {
-    const { startYear, endYear } = this.props
+    const {
+      isStorySelected,
+      selectedStoryName,
+      startYear,
+      endYear
+    } = this.props
+    const contextText = isStorySelected
+      ? selectedStoryName
+      : `${startYear} - ${endYear}`
     return (
       <Navbar>
         <div className="navbar-content">
@@ -17,7 +25,7 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
           <div className="navbar-content__item navbar-content__context ">
-            Now Viewing: {startYear} - {endYear}
+            Now Viewing: {contextText}
           </div>
           {this.props.showEdit && (
             <div className="navbar-content__item" onClick={this.props.onEdit}>
