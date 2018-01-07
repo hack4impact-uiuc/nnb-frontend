@@ -3,7 +3,6 @@ import {
   FormControl,
   Form,
   PageHeader,
-  Grid,
   Col,
   ControlLabel
 } from 'react-bootstrap'
@@ -26,7 +25,8 @@ class POIForm extends Component {
       stories: [],
       isUploadingMedia: false,
       content: [],
-      links: []
+      links: [],
+      shouldShowFormValidation: false
     }
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
@@ -123,13 +123,15 @@ class POIForm extends Component {
     const [coordinateX, coordinateY] = clickedCoords
 
     if (isUploadingMedia) {
-      alert('Wait for media to upload!')
+      alert('Media is currently uploading. Please wait.')
       return
     }
 
-    if (name === '' || description === '') {
-      console.warn('Warning: empty fields!')
+    if (name === '' || description === '' || !startDate) {
+      this.setState({ shouldShowFormValidation: true })
+      return
     }
+
     const poi = {
       name,
       mapByYear: selectedMap.year,
@@ -156,6 +158,9 @@ class POIForm extends Component {
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )
       .then(() => setShowPOIForm(false))
+      .catch(() => {
+        this.setState({ shouldShowFormValidation: true })
+      })
   }
 
   onCancel() {
@@ -176,7 +181,13 @@ class POIForm extends Component {
   }
 
   render() {
-    const { startDate, description, isUploadingMedia } = this.state
+    const {
+      startDate,
+      name,
+      description,
+      isUploadingMedia,
+      shouldShowFormValidation
+    } = this.state
 
     return (
       <Form horizontal className="poi-form">
@@ -188,6 +199,7 @@ class POIForm extends Component {
           inputType="text"
           placeholder="Enter your POI name here"
           onChange={this.handleFormInput.bind(this, 'name')}
+          validationState={shouldShowFormValidation && !name ? 'error' : null}
         />
 
         <FieldGroup
@@ -195,6 +207,9 @@ class POIForm extends Component {
           label="POI Date"
           selected={startDate}
           onChange={this.handleFormInput.bind(this, 'date')}
+          validationState={
+            shouldShowFormValidation && !startDate ? 'error' : null
+          }
         />
 
         <FieldGroup
@@ -204,6 +219,9 @@ class POIForm extends Component {
           placeholder="Enter your POI description here"
           value={description}
           onChange={this.handleFormInput.bind(this, 'description')}
+          validationState={
+            shouldShowFormValidation && !description ? 'error' : null
+          }
         />
 
         <FieldGroup
@@ -222,6 +240,7 @@ class POIForm extends Component {
           <OurTable
             colNames={['Link URL', 'Display Name']}
             setLinkData={this.handleFormInput.bind(this, 'links')}
+            shouldShowFormValidation={shouldShowFormValidation}
           />
         </Col>
 
