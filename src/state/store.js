@@ -20,7 +20,8 @@ const composeEnhancers =
 
 export const store = createStore(
   reducers,
-  composeEnhancers(routesEnhancer, composeMiddlewares)
+  compose(routesEnhancer, composeMiddlewares)
+  // composeEnhancers(routesEnhancer, composeMiddlewares)
 )
 
 sagasMiddleware.run(sagas)

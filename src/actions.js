@@ -6,3 +6,5 @@ import * as types from 'types'
 export const routeHome = createAction(types.ROUTE_HOME)
 export const routeAbout = createAction(types.ROUTE_ABOUT)
 export const routeLogin = createAction(types.ROUTE_LOGIN)
+
+export const loggingIn = createAction(types.LOGGING_IN)
