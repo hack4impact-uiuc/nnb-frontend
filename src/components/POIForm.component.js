@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-  FormControl,
-  Form,
-  PageHeader,
-  Col,
-  ControlLabel
-} from 'react-bootstrap'
+import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { isEqual } from 'lodash'
 import { FieldGroup, OurTable } from '../components'
@@ -191,20 +185,24 @@ class POIForm extends Component {
 
     return (
       <Form horizontal className="poi-form">
-        <PageHeader className="form-header">Create POI</PageHeader>
+        <PageHeader>Create POI</PageHeader>
 
         <FieldGroup
           controlID="name"
-          label="POI Name"
+          label="Name"
           inputType="text"
-          placeholder="Enter your POI name here"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          placeholder="Enter POI name here"
           onChange={this.handleFormInput.bind(this, 'name')}
           validationState={shouldShowFormValidation && !name ? 'error' : null}
         />
 
         <FieldGroup
           inputType="date"
-          label="POI Date"
+          label="Date"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
           selected={startDate}
           onChange={this.handleFormInput.bind(this, 'date')}
           validationState={
@@ -214,9 +212,11 @@ class POIForm extends Component {
 
         <FieldGroup
           controlID="description"
-          label="POI Description"
+          label="Description"
           inputType="textarea"
-          placeholder="Enter your POI description here"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          placeholder="Enter POI description here"
           value={description}
           onChange={this.handleFormInput.bind(this, 'description')}
           validationState={
@@ -226,28 +226,25 @@ class POIForm extends Component {
 
         <FieldGroup
           controlID="chooseFile"
-          label="Upload Media"
+          label="Upload Files"
           inputType="file"
-          placeholder="Upload your files here"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
           onChange={this.onImageUpload}
         />
         {isUploadingMedia && <div>Uploading...</div>}
 
-        <Col sm={2} componentClass={ControlLabel}>
-          <div className="links-label">Links</div>
-        </Col>
-        <Col sm={10} className="table-container">
-          <OurTable
-            colNames={['Link URL', 'Display Name']}
-            setLinkData={this.handleFormInput.bind(this, 'links')}
-            shouldShowFormValidation={shouldShowFormValidation}
-          />
-        </Col>
-
-        <div className="jank-spacer" />
+        <div className="poi-form__label">Links</div>
+        <OurTable
+          colNames={['Link URL', 'Display Name']}
+          setLinkData={this.handleFormInput.bind(this, 'links')}
+          shouldShowFormValidation={shouldShowFormValidation}
+        />
 
         <FieldGroup
           inputType="checklist"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
           options={this.props.stories}
           label="Stories"
           onClick={this.handleFormInput.bind(this, 'stories')}

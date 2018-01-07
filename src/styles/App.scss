@@ -1,11 +1,18 @@
 @import "variables.scss";
 
+.stub {}
+
 .app {
   font-family: $main-font;
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
+}
+
+// override default bootstrap style
+.form-group {
+  @extend .stub;
 }
 
 // override default bootstrap style
