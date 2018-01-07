@@ -79,6 +79,7 @@ class OurTable extends Component {
                     <th key={col_index}>
                       <input
                         type="text"
+                        className="form-control"
                         value={this.state.data[row_index][col_index]}
                         onChange={e =>
                           this.onChangeLink(row_index, col_index, e)}

@@ -63,7 +63,13 @@ function FieldGroup({
       )
       break
     case 'date':
-      fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
+      fieldGroupModule = (
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          className="form-control"
+        />
+      )
       break
     case 'button':
       fieldGroupModule = (
