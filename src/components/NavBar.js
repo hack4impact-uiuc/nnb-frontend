@@ -11,9 +11,7 @@ class NavBar extends PureComponent {
       startYear,
       endYear
     } = this.props
-    const contextText = isStorySelected
-      ? selectedStoryName
-      : `${startYear} - ${endYear}`
+    const contextYears = `${startYear} - ${endYear}`
     return (
       <Navbar>
         <div className="navbar-content">
@@ -24,8 +22,16 @@ class NavBar extends PureComponent {
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-          <div className="navbar-content__item navbar-content__context ">
-            Now Viewing: {contextText}
+          <div className="navbar-content__item-context navbar-content__context ">
+            Now Viewing:
+          </div>
+          {isStorySelected && (
+            <div className="navbar-content__item-context navbar-content__context-story-name ">
+              {selectedStoryName}:
+            </div>
+          )}
+          <div className="navbar-content__item-context navbar-content__context-years ">
+            {contextYears}
           </div>
           {this.props.showEdit && (
             <div className="navbar-content__item" onClick={this.props.onEdit}>
