@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
-import { Icon } from '../components'
+import { Icon, FieldGroup } from '../components'
 
 class OurTable extends Component {
   constructor(props) {
@@ -51,6 +51,8 @@ class OurTable extends Component {
   //languages.splice(1, 1, 'Python');  sfv
 
   render() {
+    const { colNames, shouldShowFormValidation } = this.props
+    const { data } = this.state
     return (
       <div>
         <Table striped bordered condensed hover>
@@ -59,7 +61,7 @@ class OurTable extends Component {
               //creates table header for each column name
             }
             <tr>
-              {this.props.colNames
+              {colNames
                 .concat(['Remove'])
                 .map(name => <th key={name}>{name}</th>)}
             </tr>
@@ -68,24 +70,25 @@ class OurTable extends Component {
             {
               //for every row in rowCount
             }
-            {this.state.data.map((_, row_index) => (
+            {data.map((_, row_index) => (
               <tr key={row_index}>
                 {
                   //create an editable textfield cell for each column name except for the last one
                 }
-                {this.props.colNames
-                  .slice(0, this.props.colNames.length)
-                  .map((_, col_index) => (
-                    <th key={col_index}>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={this.state.data[row_index][col_index]}
-                        onChange={e =>
-                          this.onChangeLink(row_index, col_index, e)}
-                      />
-                    </th>
-                  ))}
+                {colNames.slice(0, colNames.length).map((_, col_index) => (
+                  <th key={col_index}>
+                    <FieldGroup
+                      inputType="text"
+                      value={data[row_index][col_index]}
+                      onChange={e => this.onChangeLink(row_index, col_index, e)}
+                      validationState={
+                        shouldShowFormValidation && !data[row_index][col_index]
+                          ? 'error'
+                          : null
+                      }
+                    />
+                  </th>
+                ))}
                 <th>
                   <Icon
                     type="X"
