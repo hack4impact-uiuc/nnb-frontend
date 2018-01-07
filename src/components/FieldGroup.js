@@ -3,7 +3,6 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
-  Button,
   Checkbox,
   Col
 } from 'react-bootstrap'
@@ -26,7 +25,8 @@ function FieldGroup({
   options,
   buttonText,
   onStorySelect,
-  startYear
+  startYear,
+  validationState
 }) {
   let fieldGroupModule
 
@@ -70,7 +70,13 @@ function FieldGroup({
       )
       break
     case 'date':
-      fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
+      fieldGroupModule = (
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          className="form-control"
+        />
+      )
       break
     case 'button':
       fieldGroupModule = (
@@ -98,7 +104,7 @@ function FieldGroup({
   }
 
   return (
-    <FormGroup controlid={controlId}>
+    <FormGroup controlid={controlId} validationState={validationState}>
       <Col sm={2} componentClass={ControlLabel}>
         {label}
       </Col>

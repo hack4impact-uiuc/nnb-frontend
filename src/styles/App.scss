@@ -37,6 +37,20 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2rem;
   }
 
+  &__context {
+    font-size: 2rem;
+  }
+
+  &__context-years {
+    margin-right: auto;
+    font-size: 2rem;
+  }
+
+  &__context-story-name {
+    font-size: 2rem;
+    font-style: italic;
+  }
+
   &__item {
     color: #ddd;
     padding: 0 1rem;
@@ -47,6 +61,11 @@ h1, h2, h3, h4, h5, h6 {
       // TODO
       text-decoration: none;
     }
+  }
+
+  &__item-context {
+    color: #ddd;
+    padding: 0 0.5rem;
   }
 }
 
