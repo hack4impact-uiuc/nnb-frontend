@@ -5,6 +5,8 @@ import { withRouter } from 'react-router'
 import { Api } from '../utils'
 import { NavBar, FieldGroup } from '../components'
 
+import { login } from '../actions'
+
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -43,6 +45,7 @@ class Login extends Component {
           this.setState({ error })
         } else {
           console.log('LOGGED IN')
+          login()
           // this.setState({ logged_in: true })
           // this.props.history.push('/', { isEditing: true })
         }

@@ -50,6 +50,8 @@ export const HomePage = () => (
         <Link to={routeLogin()}>Login</Link>
       </Button>
 
+      <Button>Logout</Button>
+
       {/* <Button>
             EditMode  
           </Button> */}
