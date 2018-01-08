@@ -1,9 +1,63 @@
-$marker-diameter: 20px;
+@import "variables.scss";
 
-.image-container {
-  border: 1px solid #ddd;
-  padding: 1rem;
+$marker-diameter: 25px;
+
+.image-fill {
+  height: calc(100vh - #{$navbar-height} - #{$timeline-height});
+  object-fit: cover;
+}
+
+.map-container {
   position: relative;
+}
+
+.map-icons {
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  display: flex;
+}
+
+.map-icon {
+  background: #fafafacc;
+  color: #888;
+  margin: 1rem 1rem 1rem 0;
+  box-shadow: 0 0 5px #ddd;
+  transition: all 0.2s ease-in-out;
+  // padding: 1rem;
+  // height: 35px;
+
+  // &__box {
+  //   height: 35px;
+  // }
+
+  &:hover {
+    background: #fafafaff;
+  }
+}
+
+.map-image {
+  opacity: 0.85;
+}
+
+.map-banner {
+  position: absolute;
+  background: #fafafa;
+  z-index: 2;
+  padding: 1rem 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 0 0 1rem 1rem;
+  box-shadow: 0 5px 20px 0px $navbar-color;
+}
+
+.map-manager-icon {
+  align-self: center;
+  margin: 0 2rem;
+
+  &__icon {
+    color: #888;
+  }
 }
 
 .marker {
@@ -17,4 +71,37 @@ $marker-diameter: 20px;
   &--selected {
     background: red;
   }
+}
+
+.marker {
+  width: $marker-diameter;
+  height: $marker-diameter;
+  background: #0e9ab5;
+  border-radius: 50% 50% 0;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px 3px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0, 0, 0, .25);
+    top: 25%;
+    left: 25%;
+    border-radius: 50%;
+  }
+
+  &--selected {
+    background: #e4560b;
+  }
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.jank-spacer-map {
+  margin: 1rem
 }

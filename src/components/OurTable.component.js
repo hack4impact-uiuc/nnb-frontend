@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table, FormGroup, FormControl } from 'react-bootstrap'
-import { FieldGroup } from '../components'
+import { Table } from 'react-bootstrap'
+import { Icon, FieldGroup } from '../components'
 
 class OurTable extends Component {
   constructor(props) {
@@ -16,32 +16,43 @@ class OurTable extends Component {
   }
 
   onAddRow() {
-    this.setState({
-      data: this.state.data.concat([
-        new Array(this.props.colNames.length).fill('')
-      ])
-    })
+    this.setState(
+      {
+        data: this.state.data.concat([
+          new Array(this.props.colNames.length).fill('')
+        ])
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   onChangeLink(row, column, inputLink) {
     let temp = this.state.data.slice() //copies data
     temp[row].splice(column, 1, inputLink.target.value) //replace stuff at specified column with our target value
-    this.setState({
-      data: temp
-    })
+    this.setState(
+      {
+        data: temp
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   onDeleteRow(row) {
     let temp = this.state.data.slice()
     temp.splice(row, 1)
-    this.setState({
-      data: temp
-    })
+    this.setState(
+      {
+        data: temp
+      },
+      () => this.props.setLinkData(this.state.data)
+    )
   }
 
   //languages.splice(1, 1, 'Python');  sfv
 
   render() {
+    const { colNames, shouldShowFormValidation } = this.props
+    const { data } = this.state
     return (
       <div>
         <Table striped bordered condensed hover>
@@ -50,45 +61,49 @@ class OurTable extends Component {
               //creates table header for each column name
             }
             <tr>
-              {this.props.colNames
+              {colNames
                 .concat(['Remove'])
-                .map(name => <th>{name}</th>)}
+                .map(name => <th key={name}>{name}</th>)}
             </tr>
           </thead>
           <tbody>
             {
               //for every row in rowCount
             }
-            {this.state.data.map((_, row_index) => (
-              <tr>
+            {data.map((_, row_index) => (
+              <tr key={row_index}>
                 {
                   //create an editable textfield cell for each column name except for the last one
                 }
-                {this.props.colNames
-                  .slice(0, this.props.colNames.length)
-                  .map((_, col_index) => (
-                    <th>
-                      <FieldGroup
-                        inputType="text" //editable textfield
-                        value={this.state.data[row_index][col_index]}
-                        onChange={e =>
-                          this.onChangeLink(row_index, col_index, e)} //set the value
-                      />
-                    </th>
-                  ))}
+                {colNames.slice(0, colNames.length).map((_, col_index) => (
+                  <th key={col_index}>
+                    <FieldGroup
+                      inputType="text"
+                      value={data[row_index][col_index]}
+                      onChange={e => this.onChangeLink(row_index, col_index, e)}
+                      validationState={
+                        shouldShowFormValidation && !data[row_index][col_index]
+                          ? 'error'
+                          : null
+                      }
+                    />
+                  </th>
+                ))}
                 <th>
-                  <div onClick={() => this.onDeleteRow(row_index)}>X</div>
+                  <Icon
+                    type="X"
+                    size="small"
+                    onClick={() => this.onDeleteRow(row_index)}
+                  />
                 </th>
               </tr>
             ))}
           </tbody>
         </Table>
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="+"
-          onClick={this.onAddRow}
-        />
+
+        <button className="button button--dark" onClick={this.onAddRow}>
+          + Add Link
+        </button>
       </div>
     )
   }

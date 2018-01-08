@@ -1,9 +1,72 @@
+@import "variables.scss";
 
-$navbar-height: 50px;
+.app {
+  font-family: $main-font;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
 
 // override default bootstrap style
 .navbar {
   margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  background: $navbar-color;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 0px 5px $navbar-color;
+  z-index: 5;
+}
+
+// override default bootstrap style
+.carousel-control {
+  width: 0;
+  margin: 1rem;
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+
+  &__title {
+    margin-right: auto;
+    font-size: 2rem;
+  }
+
+  &__context {
+    font-size: 2rem;
+  }
+
+  &__context-years {
+    margin-right: auto;
+    font-size: 2rem;
+  }
+
+  &__context-story-name {
+    font-size: 2rem;
+    font-style: italic;
+  }
+
+  &__item {
+    color: #ddd;
+    padding: 0 1rem;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      // TODO
+      text-decoration: none;
+    }
+  }
+
+  &__item-context {
+    color: #ddd;
+    padding: 0 0.5rem;
+  }
 }
 
 .nnb-app {
@@ -11,24 +74,34 @@ $navbar-height: 50px;
 }
 
 .nnb-map-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   width: 70%;
   // alternative would be to use flexbox with nav and app inside it
   height: calc(100vh - #{$navbar-height});
 }
 
 .timeline-container {
-
+  display: flex;
+  position: relative;
+  height: $timeline-height;
+  z-index: 3;
+  box-shadow: -5px 0px 2px 0px #ddd;
+  // TODO: show scrollbar for osx, or cue user that there is more of the timeline
+  overflow-x: scroll;
 }
 
 .info-panel-container {
   width: 30%;
   height: calc(100vh - #{$navbar-height});
-  border: 1px solid #ddd;
-  padding: 1rem;
+  display: flex;
+  box-shadow: 0 0px 5px 0px #ddd;
+  z-index: 4;
 }
 
 .poi-form-container {
-
+  width: 70%;
 }
 
 .sidebar-menu{

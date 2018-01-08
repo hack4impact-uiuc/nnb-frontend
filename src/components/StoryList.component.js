@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
-import { Button, FormControl } from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
+import { Icon } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
+import './../styles/App.css'
+import './../styles/button.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
   state = {
     addStorySelected: false,
-    storyName: ''
+    storyName: '',
+    editStoryId: null
   }
 
   constructor(props) {
@@ -19,6 +23,7 @@ class StoryList extends Component {
     this.submitStoryName = this.submitStoryName.bind(this)
     this.onClickEdit = this.onClickEdit.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
+    this.editStoryName = this.editStoryName.bind(this)
   }
 
   addStoryClicked() {
@@ -33,13 +38,25 @@ class StoryList extends Component {
     this.setState({ storyName: e.target.value })
   }
 
-  onClickEdit(id) {
-    console.log('Edit Button #' + id)
+  onClickEdit(story) {
+    this.setState({ editStoryId: story.id, storyName: story.name })
   }
 
   onClickDelete(id) {
-    //<--TODO: Add delete message
-    console.log('Delete Button #' + id)
+    const { loadStories, exitStory, selectedStory } = this.props
+    if (
+      window.confirm(
+        'Delete the current story? This will permanently remove the story from the story-list.'
+      )
+    ) {
+      Api.deleteStory(id)
+        .then(() => {
+          if (id === selectedStory) {
+            return exitStory()
+          }
+        })
+        .then(() => loadStories())
+    }
   }
 
   submitStoryName() {
@@ -49,6 +66,18 @@ class StoryList extends Component {
         this.setState({
           addStorySelected: false,
           storyName: ''
+        })
+      })
+  }
+
+  editStoryName() {
+    const { editStoryId, storyName } = this.state
+    Api.editStory(editStoryId, storyName)
+      .then(() => this.props.loadStories())
+      .then(() => {
+        this.setState({
+          storyName: '',
+          editStoryId: null
         })
       })
   }
@@ -69,6 +98,8 @@ class StoryList extends Component {
         exitStory={this.props.exitStory}
         onClickEdit={this.onClickEdit}
         onClickDelete={this.onClickDelete}
+        editStoryId={this.state.editStoryId}
+        editStoryName={this.editStoryName}
       />
     )
 
@@ -88,7 +119,7 @@ class StoryList extends Component {
               position: 'static'
             },
             sidebar: {
-              zIndex: 3
+              zIndex: 10
             }
           }}
         />
@@ -108,70 +139,131 @@ function SidebarContent({
   exitStory,
   onClickEdit,
   onClickDelete,
+  editStoryId,
+  editStoryName,
   ...props
 }) {
   return (
     <div className="sidebar">
-      <div>
-        <h2 className="sidebar-title">Story List</h2>
-        <div className="exit" onClick={props.toggleSidebar}>
-          X
-        </div>
+      <div className="sidebar__header">
+        <h2 className="sidebar__title">Story List</h2>
+        <Icon
+          type="X"
+          size="large"
+          onClick={props.toggleSidebar}
+          className="sidebar__exit"
+        />
       </div>
+
       <div className="divider" />
 
-      {stories.map(story => (
-        <div onClick={() => props.setSelectedStory(story.id)} key={story.id}>
+      {[...stories].sort((a, b) => a.name.localeCompare(b.name)).map(story => (
+        <div key={story.id}>
           <div
-            className={classnames('sidebar-link', {
-              'sidebar-link--selected': story.id === props.selectedStory
+            className={classnames('story-item', {
+              'story-item--selected': story.id === props.selectedStory
             })}
           >
-            {story.name}
-          </div>
-
-          <div
-            className="story-panel-button"
-            onClick={() => onClickEdit(story.id)}
-          >
-            Edit
-          </div>
-          <div
-            className="story-panel-button"
-            onClick={() => onClickDelete(story.id)}
-          >
-            Delete
+            {editStoryId !== story.id && (
+              <div
+                className="story-item__name"
+                onClick={() => props.setSelectedStory(story.id)}
+              >
+                {story.name}
+              </div>
+            )}
+            {props.isEditing &&
+              editStoryId !== story.id && (
+                <Icon
+                  type="Edit"
+                  size="small"
+                  className="story-item__icon"
+                  onClick={() => onClickEdit(story)}
+                />
+              )}
+            {props.isEditing &&
+              editStoryId !== story.id && (
+                <Icon
+                  type="Trash"
+                  size="small"
+                  className="story-item__icon"
+                  onClick={() => onClickDelete(story.id)}
+                />
+              )}
+            {props.isEditing &&
+              editStoryId === story.id && (
+                <div>
+                  <div className="story-form__input">
+                    <FormControl
+                      type="text"
+                      value={storyName}
+                      placeholder="Enter text"
+                      onChange={storyNameChange}
+                    />
+                  </div>
+                  <button
+                    className="button button--light button--full-width"
+                    onClick={editStoryName}
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
           </div>
 
           <div className="divider" />
         </div>
       ))}
 
-      {props.isStorySelected && <Button onClick={exitStory}>Exit Story</Button>}
-
       {props.isEditing &&
         !addStorySelected && (
-          <Button onClick={addStoryClicked}>Add Story</Button>
+          <button
+            className="button button--light button--full-width"
+            onClick={addStoryClicked}
+          >
+            Add Story
+          </button>
         )}
 
       {props.isEditing &&
         addStorySelected && (
-          <div>
-            <h3 className="sidebar-title">Enter Story Name:</h3>
-            <div className="exit" onClick={addStoryExit}>
-              X
+          <div className="story-form">
+            <div className="story-form__heading">
+              <h4>Enter Story Name:</h4>
+              <Icon
+                type="X"
+                size="small"
+                className="story-form__exit"
+                onClick={addStoryExit}
+              />
             </div>
 
-            <FormControl
-              type="text"
-              value={storyName}
-              placeholder="Enter text"
-              onChange={storyNameChange}
-            />
+            <div className="story-form__input">
+              <FormControl
+                type="text"
+                value={storyName}
+                placeholder="Enter text"
+                onChange={storyNameChange}
+              />
+            </div>
 
-            <Button onClick={submitStoryName}>Submit</Button>
+            <button
+              className="button button--light button--full-width"
+              onClick={submitStoryName}
+            >
+              Submit
+            </button>
           </div>
         )}
+
+      {props.isStorySelected && (
+        <button
+          className="button button--light button--full-width sidebar__exit-story"
+          onClick={exitStory}
+        >
+          Exit Story
+        </button>
+      )}
     </div>
   )
 }

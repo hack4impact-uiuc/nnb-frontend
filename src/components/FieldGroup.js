@@ -3,25 +3,30 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
-  Button,
   Checkbox,
   Col
 } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import './../styles/button.css'
 
 function FieldGroup({
-  controlId, //indentifier
+  // indentifier
+  controlId,
   label,
-  inputType, //{text,textarea,file,date,button,checklist}
+  // { text, textarea, file, date, button, checklist }
+  inputType,
   placeholder,
   value,
   selected,
   onChange,
   onClick,
-  stories,
+  // expects an array containing objects of { id, name }. will be fed into checklists
+  options,
   buttonText,
-  onStorySelect
+  onStorySelect,
+  startYear,
+  validationState
 }) {
   let fieldGroupModule
 
@@ -47,30 +52,36 @@ function FieldGroup({
       )
       break
     case 'file':
+      // TODO: style like a button
       fieldGroupModule = (
         <FormControl
           type="file"
           placeholder={placeholder}
           onChange={onChange}
+          multiple
         />
       )
       break
     case 'date':
-      fieldGroupModule = <DatePicker selected={selected} onChange={onChange} />
+      fieldGroupModule = (
+        <DatePicker
+          selected={selected}
+          onChange={onChange}
+          className="form-control"
+        />
+      )
       break
     case 'button':
       fieldGroupModule = (
-        <Button bsStyle="primary" onClick={onClick}>
+        <button className="button button--dark" onClick={onClick}>
           {buttonText}
-        </Button>
+        </button>
       )
       break
     case 'checklist':
-      fieldGroupModule = stories.map(story => (
-        <div key={story.id}>
-          <Checkbox onClick={() => onStorySelect(story.id)}>
-            {story.name}
-          </Checkbox>
+      fieldGroupModule = options.map(option => (
+        <div key={option.id}>
+          <Checkbox onClick={() => onClick(option.id)}>{option.name}</Checkbox>
         </div>
       ))
       break
@@ -86,7 +97,7 @@ function FieldGroup({
   }
 
   return (
-    <FormGroup controlid={controlId}>
+    <FormGroup controlid={controlId} validationState={validationState}>
       <Col sm={2} componentClass={ControlLabel}>
         {label}
       </Col>

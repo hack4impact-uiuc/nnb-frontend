@@ -1,0 +1,23 @@
+// @import "variables.scss";
+
+// browser normally really wants to render a non square div,
+// so manually setting this.
+// Make sure it's aligned with icon size!
+$icon-size-small: 15px;
+$icon-size-large: 24px;
+
+.feather-icon {
+  cursor: pointer;
+
+  &--large {
+    height: $icon-size-large;
+  }
+
+  &--small {
+    height: $icon-size-small;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+}

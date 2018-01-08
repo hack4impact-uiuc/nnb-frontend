@@ -1,61 +1,104 @@
 import React, { Component } from 'react'
-import { FormControl, Form, Image, PageHeader } from 'react-bootstrap'
+import {
+  FormControl,
+  Form,
+  PageHeader,
+  Col,
+  ControlLabel
+} from 'react-bootstrap'
 import moment from 'moment'
+import { isEqual } from 'lodash'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
+import './../styles/App.css'
+import './../styles/poi-form.css'
+import './../styles/button.css'
 
 class POIForm extends Component {
   constructor(props) {
     super(props)
-    this.onDateSelected = this.onDateSelected.bind(this)
     this.state = {
-      startDate: moment(),
+      startDate: moment('1/1/' + this.props.selectedMap.year),
       name: '',
       description: '',
-      storiesToAdd: [],
-      isUploadingMedia: false
+      stories: [],
+      isUploadingMedia: false,
+      content: [],
+      links: [],
+      shouldShowFormValidation: false
     }
-    this.onChangeName = this.onChangeName.bind(this)
-    this.onChangeDescription = this.onChangeDescription.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
-    this.onStorySelect = this.onStorySelect.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
+    this.handleFormInput = this.handleFormInput.bind(this)
   }
 
-  // TODO: handle multiple file upload
-  onImageUpload(e) {
-    const image = e.target.files[0]
-    if (image) {
-      this.setState({ isUploadingMedia: true })
-      const reader = new FileReader()
-      reader.onload = e => {
-        const dataURL = e.target.result
-        Api.uploadImage(dataURL).then(mediaUrl => {
-          this.setState({ isUploadingMedia: false, mediaUrl })
-        })
-      }
-      reader.readAsDataURL(image)
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
+      this.setState({ ...nextProps.selectedEvent })
     }
   }
 
-  onDateSelected(date) {
-    this.setState({
-      startDate: date
-    })
+  handleFormInput(type, input) {
+    let newVal
+    switch (type) {
+      case 'name':
+      case 'description':
+        newVal = input.target.value
+        break
+      case 'stories':
+        newVal = this.handleStorySelect(input)
+        break
+      case 'links':
+        newVal = input
+        break
+      default:
+        newVal = input
+    }
+    this.setState({ [type]: newVal }, () => this.props.updatePOI(this.state))
   }
 
-  onChangeName(inputName) {
-    this.setState({
-      name: inputName.target.value
-    })
+  clearState() {
+    this.setState(
+      {
+        startDate: moment(),
+        name: '',
+        description: '',
+        stories: [],
+        links: [],
+        isUploadingMedia: false,
+        mediaUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
   }
 
-  onChangeDescription(inputDesription) {
-    this.setState({
-      description: inputDesription.target.value
-    })
+  // Multiple file upload is kinda jank since it sets
+  // this.state.isUploadingMedia to false when the first image is uploaded.
+  // A better approach would wrap each upload into a promise and use Promise.All
+  onImageUpload(e) {
+    const imageFiles = e.target.files
+    if (imageFiles.length) {
+      this.setState({ isUploadingMedia: true })
+      const images = [...imageFiles]
+      images.forEach(image => {
+        const reader = new FileReader()
+        reader.onload = e => {
+          const dataURL = e.target.result
+          Api.uploadImage(dataURL).then(mediaUrl => {
+            this.setState(
+              {
+                isUploadingMedia: false,
+                content: [...this.state.content, mediaUrl]
+              },
+              () => this.props.updatePOI(this.state)
+            )
+          })
+        }
+        reader.readAsDataURL(image)
+      })
+    }
   }
 
   onSubmit() {
@@ -66,71 +109,107 @@ class POIForm extends Component {
       setShowPOIForm,
       setSelectedPOI
     } = this.props
-    const { name, description, startDate } = this.state
+
+    const {
+      name,
+      description,
+      startDate,
+      isUploadingMedia,
+      content,
+      links,
+      stories
+    } = this.state
+
     const [coordinateX, coordinateY] = clickedCoords
 
-    if (name === '' || description === '') {
-      console.warn('Warning: empty fields!')
+    if (isUploadingMedia) {
+      alert('Media is currently uploading. Please wait.')
+      return
     }
+
+    if (name === '' || description === '' || !startDate) {
+      this.setState({ shouldShowFormValidation: true })
+      return
+    }
+
     const poi = {
-      title: name,
+      name,
       mapByYear: selectedMap.year,
       description,
       date: startDate,
       coordinateX,
       coordinateY,
-      links: ['google.com', 'purple.com']
+      links: links.map(linkTuple => ({
+        url: linkTuple[0],
+        urlName: linkTuple[1]
+      })),
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl,
+        caption: 'caption'
+      }))
     }
 
     Api.postPOI(poi)
+      .then(poi => {
+        Api.postPOIToStories(poi, stories)
+        return poi
+      })
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )
       .then(() => setShowPOIForm(false))
+      .catch(() => {
+        this.setState({ shouldShowFormValidation: true })
+      })
   }
 
   onCancel() {
-    this.setState({
-      startDate: '',
-      name: '',
-      description: '',
-      storiesToAdd: []
-    })
+    this.clearState()
     this.props.setShowPOIForm(false)
   }
 
-  onStorySelect(storyId) {
-    const storiesSet = new Set(this.state.storiesToAdd)
+  handleStorySelect(storyId) {
+    const storiesSet = new Set(this.state.stories)
 
     if (storiesSet.has(storyId)) {
       storiesSet.delete(storyId)
     } else {
       storiesSet.add(storyId)
     }
-    this.setState({
-      storiesToAdd: [...storiesSet]
-    })
+
+    return [...storiesSet]
   }
 
   render() {
+    const {
+      startDate,
+      name,
+      description,
+      isUploadingMedia,
+      shouldShowFormValidation
+    } = this.state
+
     return (
-      <Form horizontal>
-        <PageHeader>Create POI</PageHeader>
+      <Form horizontal className="poi-form">
+        <PageHeader className="form-header">Create POI</PageHeader>
 
         <FieldGroup
           controlID="name"
           label="POI Name"
           inputType="text"
           placeholder="Enter your POI name here"
-          value={this.state.name}
-          onChange={this.onChangeName}
+          onChange={this.handleFormInput.bind(this, 'name')}
+          validationState={shouldShowFormValidation && !name ? 'error' : null}
         />
 
         <FieldGroup
           inputType="date"
           label="POI Date"
-          selected={this.state.startDate}
-          onChange={this.onDateSelected}
+          selected={startDate}
+          onChange={this.handleFormInput.bind(this, 'date')}
+          validationState={
+            shouldShowFormValidation && !startDate ? 'error' : null
+          }
         />
 
         <FieldGroup
@@ -138,8 +217,11 @@ class POIForm extends Component {
           label="POI Description"
           inputType="textarea"
           placeholder="Enter your POI description here"
-          value={this.state.description}
-          onChange={this.onChangeDescription}
+          value={description}
+          onChange={this.handleFormInput.bind(this, 'description')}
+          validationState={
+            shouldShowFormValidation && !description ? 'error' : null
+          }
         />
 
         <FieldGroup
@@ -149,35 +231,44 @@ class POIForm extends Component {
           placeholder="Upload your files here"
           onChange={this.onImageUpload}
         />
-        {this.state.isUploadingMedia && <div>Uploading...</div>}
-        {this.state.mediaUrl && <Image src={this.state.mediaUrl} responsive />}
+        {isUploadingMedia && <div>Uploading...</div>}
 
-        <div>
-          <OurTable colNames={['Link URL', 'Display Name']} />
-        </div>
+        <Col sm={2} componentClass={ControlLabel}>
+          <div className="links-label">Links</div>
+        </Col>
+        <Col sm={10} className="table-container">
+          <OurTable
+            colNames={['Link URL', 'Display Name']}
+            setLinkData={this.handleFormInput.bind(this, 'links')}
+            shouldShowFormValidation={shouldShowFormValidation}
+          />
+        </Col>
+
+        <div className="jank-spacer" />
 
         <FieldGroup
           inputType="checklist"
-          stories={this.props.stories}
+          options={this.props.stories}
           label="Stories"
-          onStorySelect={this.onStorySelect}
+          onClick={this.handleFormInput.bind(this, 'stories')}
         />
 
         <FormControl.Feedback />
 
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="Create"
-          onClick={this.onSubmit}
-        />
-
-        <FieldGroup
-          inputType="button"
-          label=""
-          buttonText="Cancel"
-          onClick={this.onCancel}
-        />
+        <div className="end-buttons">
+          <button
+            className="button button--dark end-button"
+            onClick={this.onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            className="button button--dark end-button"
+            onClick={this.onSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </Form>
     )
   }

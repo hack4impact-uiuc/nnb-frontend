@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { FieldGroup } from '../components'
+import { Form, Modal } from 'react-bootstrap'
+import { FieldGroup, Icon } from '../components'
 import { Api } from './../utils'
+import './../styles/map.css'
 
 class MapManager extends Component {
   state = {
     showInputFields: false,
-    inputYear: '',
-    inputImageUrl: ''
+    inputYear: ''
   }
 
   constructor(props) {
     super(props)
     this.toggleShowInputFields = this.toggleShowInputFields.bind(this)
     this.onChangeYear = this.onChangeYear.bind(this)
-    this.onChangeImageUrl = this.onChangeImageUrl.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
+    this.onImageUpload = this.onImageUpload.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +29,7 @@ class MapManager extends Component {
     this.setState({
       showInputFields: !this.state.showInputFields,
       inputYear: '',
-      inputImageUrl: ''
+      imageUrl: ''
     })
   }
 
@@ -39,26 +39,22 @@ class MapManager extends Component {
     })
   }
 
-  onChangeImageUrl(inputImageUrl) {
-    this.setState({
-      inputImageUrl: inputImageUrl.target.value
-    })
-  }
-
   onSubmit() {
     const { loadMaps } = this.props
-    const { inputYear, inputImageUrl } = this.state
+    const { inputYear, imageUrl } = this.state
 
-    if (inputYear === '' || inputImageUrl === '') {
+    if (inputYear === '' || imageUrl === '') {
       console.warn('Warning: empty fields!')
       return
     }
     const map = {
-      imageUrl: inputImageUrl,
+      imageUrl,
       year: inputYear
     }
 
-    Api.postMap(map).then(() => loadMaps())
+    Api.postMap(map)
+      .then(() => loadMaps())
+      .then(() => this.toggleShowInputFields())
   }
 
   showConfirmDeleteMap() {
@@ -71,44 +67,75 @@ class MapManager extends Component {
     }
   }
 
+  onImageUpload(e) {
+    const image = e.target.files[0]
+    if (image) {
+      this.setState({ isUploadingMedia: true })
+      const reader = new FileReader()
+      reader.onload = e => {
+        const dataURL = e.target.result
+        Api.uploadImage(dataURL).then(imageUrl => {
+          this.setState({
+            isUploadingMedia: false,
+            imageUrl
+          })
+        })
+      }
+      reader.readAsDataURL(image)
+    }
+  }
+
   render() {
-    const { showInputFields, inputImageUrl, inputYear } = this.state
+    const { showInputFields, inputYear, isUploadingMedia } = this.state
 
     return (
-      <div>
-        <Button onClick={this.toggleShowInputFields}>
-          {showInputFields ? 'Cancel' : 'Add map'}
-        </Button>
-        {showInputFields && (
-          <Form inline>
-            <FieldGroup
-              controlID="year"
-              label="Year"
-              inputType="text"
-              placeholder="Enter the map year here"
-              value={inputYear}
-              onChange={this.onChangeYear}
-            />
-            <FieldGroup
-              controlID="url"
-              label="Image URL"
-              inputType="text"
-              placeholder="Enter map image URL here"
-              value={inputImageUrl}
-              onChange={this.onChangeImageUrl}
-            />
+      <div className="map-manager-icon">
+        <Icon
+          type={showInputFields ? 'X' : 'Plus'}
+          size="large"
+          onClick={this.toggleShowInputFields}
+          className="map-manager-icon__icon"
+        />
 
-            <FieldGroup
-              inputType="button"
-              label=""
-              buttonText="Submit"
-              onClick={this.onSubmit}
-            />
-          </Form>
-        )}
-        {!showInputFields && (
-          <Button onClick={this.showConfirmDeleteMap}>Delete map</Button>
-        )}
+        <Modal show={showInputFields} onHide={this.toggleShowInputFields}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add a map</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {showInputFields && (
+              <Form inline className="modal-form">
+                <FieldGroup
+                  controlID="year"
+                  label="Year"
+                  inputType="text"
+                  placeholder="Enter the map year here"
+                  value={inputYear}
+                  onChange={this.onChangeYear}
+                />
+
+                <div className="jank-spacer-map" />
+
+                <FieldGroup
+                  controlID="chooseFile"
+                  label="Upload Media"
+                  inputType="file"
+                  placeholder="Upload your files here"
+                  onChange={this.onImageUpload}
+                />
+                {isUploadingMedia && <div>Uploading...</div>}
+
+                <div className="jank-spacer-map" />
+
+                <FieldGroup
+                  inputType="button"
+                  label=""
+                  buttonText="Submit"
+                  onClick={this.onSubmit}
+                />
+              </Form>
+            )}
+          </Modal.Body>
+        </Modal>
       </div>
     )
   }

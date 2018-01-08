@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Image, Button, Carousel } from 'react-bootstrap'
+import { Image, Carousel } from 'react-bootstrap'
+import { Icon } from './'
 import './../styles/App.css'
+import './../styles/infopanel.css'
 import { Api } from './../utils'
 
 class InfoPanel extends Component {
@@ -29,111 +31,167 @@ class InfoPanel extends Component {
   }
 
   onClickDelete() {
-    const { selectedEvent, loadPOIsForYear, year } = this.props
-    if (year) {
-      Api.deletePOI(selectedEvent.id).then(() => loadPOIsForYear(year))
+    const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
+    if (selectedMap) {
+      Api.deletePOI(selectedEvent.id).then(() =>
+        loadPOIsForYear(selectedMap.year)
+      )
     }
     //<--TODO: Add functionality - deletes poi with message
+  }
+
+  handleDeleteMedia(contentUrl) {
+    const { selectedEvent, updatePOI } = this.props
+    const updatedPOI = {
+      ...selectedEvent,
+      content: selectedEvent.content.filter(c => c !== contentUrl)
+    }
+    updatePOI(updatedPOI)
   }
 
   render() {
     const {
       activeEvents,
       selectedEvent,
-      setSelectedPOI,
+      isEditing,
       isStorySelected,
-      isEditing
+      isRealTimePOI
     } = this.props
+
+    if (!selectedEvent) {
+      return (
+        <div className="info-panel">
+          <h1>
+            {isRealTimePOI ? 'Preview Will Appear Here' : 'No POI Selected'}
+          </h1>
+        </div>
+      )
+    }
 
     const carousel = (
       <Carousel>
-        {activeEvents.map(selectedEvent => (
-          <Carousel.Item>
+        {selectedEvent.content.map(content => (
+          <Carousel.Item
+            key={isRealTimePOI ? content : content.contentUrl}
+            className="carousel-item"
+          >
+            {isEditing && (
+              <Icon
+                type="Trash"
+                size="large"
+                className="carousel-item__delete-icon"
+                onClick={this.handleDeleteMedia.bind(this, content)}
+              />
+            )}
             <Image
               width={500}
               height={500}
-              alt={selectedEvent.caption}
-              src={selectedEvent.content_url}
+              alt={isRealTimePOI ? content : content.caption}
+              src={isRealTimePOI ? content : content.contentUrl}
             />
           </Carousel.Item>
         ))}
       </Carousel>
     )
 
-    if (!selectedEvent) {
-      return (
-        <div className="info-panel">
-          <h1>No POI Selected</h1>
-        </div>
-      )
-    }
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     const isShownNext = curIndex < activeEvents.length - 1
     const isShownPrev = curIndex > 0
 
+    let links = selectedEvent.links
+    if (links && isRealTimePOI) {
+      links = selectedEvent.links.map(linkPair => ({
+        url: linkPair[0],
+        urlName: linkPair[1]
+      }))
+    }
+
     return (
       <div className="info-panel">
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-edit"
-              onClick={this.onClickEdit}
-            >
-              Edit
-            </span>
+        {!!selectedEvent.name && (
+          <div className="heading">
+            <h1 className="heading__name">{selectedEvent.name}</h1>
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Edit"
+                  size="large"
+                  className="story-item__icon"
+                  onClick={this.onClickEdit}
+                />
+              )}
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Trash"
+                  size="large"
+                  className="story-item__icon"
+                  onClick={this.onClickDelete}
+                />
+              )}
           </div>
         )}
-        {isEditing && (
-          <div className="btn btn-primary a-btn-slide-text">
-            <span
-              className="glyphicon glyphicon-remove"
-              onClick={this.onClickDelete}
-            >
-              Delete
-            </span>
-          </div>
-        )}
-        <h1>
-          <u>
-            <b>{selectedEvent.title} </b>
-          </u>
-        </h1>
-        <div>
+
+        {!!selectedEvent.content.length && (
           <div>
-            <Image
-              src={selectedEvent.image}
-              alt={selectedEvent.title}
-              responsive
-            />
             <hr />
-            {carousel}
-            <hr />
-            <h3>Description:</h3>
-            <p>{selectedEvent.description}</p>
-            <hr />
-            <h3>Additional Links:</h3>
-            <ul>
-              {selectedEvent.links.map(link => (
-                <li key={link}>
-                  <a href={link}>{link}</a>
-                </li>
-              ))}
-            </ul>
-            <h4>
-              POI: {curIndex + 1}/{activeEvents.length}
-            </h4>
-            {isShownPrev && (
-              <Button bsStyle="primary" onClick={this.onClickPrevious}>
-                Previous
-              </Button>
-            )}
-            {isShownNext && (
-              <Button bsStyle="primary" onClick={this.onClickNext}>
-                Next
-              </Button>
-            )}
+            <div>{!!selectedEvent.content.length && carousel}</div>
           </div>
-        </div>
+        )}
+
+        {!!selectedEvent.description && (
+          <div>
+            <hr />
+            <div className="description">
+              <p className="description__text">{selectedEvent.description}</p>
+            </div>
+          </div>
+        )}
+
+        {links &&
+          !!links.length && (
+            <div>
+              <hr />
+              <div className="additional-links">
+                <h4>Additional Links:</h4>
+                <ul className="additional-links__ul">
+                  {links.map(link => {
+                    const displayText = link.urlName ? link.urlName : link.url
+                    return (
+                      <li key={link.url} className="additional-links__li">
+                        <a href={link.url} target="new">
+                          {displayText}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
+
+        {isStorySelected && (
+          <div className="walkthrough-container">
+            <hr />
+            <div className="walkthrough">
+              <Icon
+                type="ArrowLeft"
+                size="large"
+                onClick={this.onClickPrevious}
+                disabled={!isShownPrev}
+              />
+              <h4 className="walkthrough__page-counter">
+                {curIndex + 1} / {activeEvents.length}
+              </h4>
+              <Icon
+                type="ArrowRight"
+                size="large"
+                onClick={this.onClickNext}
+                disabled={!isShownNext}
+              />
+            </div>
+          </div>
+        )}
       </div>
     )
   }
