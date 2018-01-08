@@ -16,7 +16,7 @@ class Login extends Component {
 
   render() {
     let { username, password } = this.state
-    let { isLoginPending, isLoginSuccess, loginError } = this.props
+    let { isLoginSuccess } = this.props
     return (
       <div>
         <NavBar showEdit={false} />
@@ -54,9 +54,9 @@ class Login extends Component {
           />
 
           <div className="message">
-            {isLoginPending && <div>Please wait...</div>}
+            {/* {isLoginPending && <div>Please wait...</div>} */}
             {isLoginSuccess && <div>Success.</div>}
-            {loginError && <div>{loginError.message}</div>}
+            {/* {loginError && <div>{loginError.message}</div>} */}
           </div>
         </Form>
       </div>
@@ -96,9 +96,9 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoginPending: state.isLoginPending,
-    isLoginSuccess: state.isLoginSuccess,
-    loginError: state.loginError
+    // isLoginPending: state.isLoginPending,
+    isLoginSuccess: state.isLoginSuccess
+    // loginError: state.loginError
   }
 }
 

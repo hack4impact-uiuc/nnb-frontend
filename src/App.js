@@ -12,7 +12,7 @@ import {
 import { Api } from './utils'
 import './styles/App.css'
 import { connect } from 'react-redux'
-import { login } from 'redux/reducer'
+import { logout } from 'redux/reducer'
 
 class App extends Component {
   // using dummy data until BE api is done
@@ -138,8 +138,6 @@ class App extends Component {
 
   render() {
     const { showPOIForm, isEditing } = this.state
-    console.log('YOOOO')
-    console.log(this.props)
     return (
       <div>
         <StoryList
@@ -217,12 +215,14 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoginPending: state.isLoginPending,
-    isLoginSuccess: state.isLoginSuccess,
-    loginError: state.loginError
+    isLoginSuccess: state.isLoginSuccess
   }
 }
 
-const mapDispatchToProps = dispatch => {}
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(logout())
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
