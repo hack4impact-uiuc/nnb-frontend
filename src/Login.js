@@ -17,10 +17,9 @@ class Login extends Component {
   render() {
     let { username, password } = this.state
     let { isLoginPending, isLoginSuccess, loginError } = this.props
-    console.log(isLoginSuccess)
     return (
       <div>
-        <NavBar showEdit={this.props.isLoginSuccess} />
+        <NavBar showEdit={false} />
         <Form horizontal className="container" onSubmit={this.onSubmit}>
           <div className="form-group-collection">
             <FieldGroup

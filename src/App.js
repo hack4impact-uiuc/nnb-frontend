@@ -11,6 +11,8 @@ import {
 } from './components'
 import { Api } from './utils'
 import './styles/App.css'
+import { connect } from 'react-redux'
+import { login } from 'redux/reducer'
 
 class App extends Component {
   // using dummy data until BE api is done
@@ -136,7 +138,8 @@ class App extends Component {
 
   render() {
     const { showPOIForm, isEditing } = this.state
-
+    console.log('YOOOO')
+    console.log(this.props)
     return (
       <div>
         <StoryList
@@ -148,7 +151,7 @@ class App extends Component {
         />
         {/*TODO: change to is logged in*/}
         <NavBar
-          showEdit={true}
+          showEdit={this.props.isLoginSuccess}
           onEdit={this.toggleEditMode}
           isEditing={isEditing}
         />
@@ -212,4 +215,14 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    isLoginPending: state.isLoginPending,
+    isLoginSuccess: state.isLoginSuccess,
+    loginError: state.loginError
+  }
+}
+
+const mapDispatchToProps = dispatch => {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
