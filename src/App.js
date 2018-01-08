@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import { StoryList, POIFormPanel, MapTimeline, NavBar } from './components'
 import { Api } from './utils'
 import './styles/App.css'
-import moment from 'moment'
+// <<<<<<< redux-2
+import { connect } from 'react-redux'
+import { login } from 'redux/reducer'
+// =======
+// import moment from 'moment'
+// >>>>>>> master
 
 class App extends Component {
   // using dummy data until BE api is done
@@ -161,26 +166,32 @@ class App extends Component {
   }
 
   render() {
-    const {
-      showPOIForm,
-      isEditing,
-      selectedMap,
-      maps,
-      isStorySelected,
-      stories,
-      selectedStory
-    } = this.state
-    const startYearIndex =
-      !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
-    const endYearMap =
-      startYearIndex !== undefined &&
-      startYearIndex !== false &&
-      maps[startYearIndex + 1]
-    const endYear = (!!endYearMap && endYearMap.year) || 'Present'
-    const selectedStoryName =
-      !!isStorySelected &&
-      stories.find(story => story.id === selectedStory).name
+// <<<<<<< redux-2
+    const { showPOIForm, isEditing } = this.state
+    console.log('YOOOO')
+    console.log(this.props)
+// =======
+//     const {
+//       showPOIForm,
+//       isEditing,
+//       selectedMap,
+//       maps,
+//       isStorySelected,
+//       stories,
+//       selectedStory
+//     } = this.state
+//     const startYearIndex =
+//       !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
+//     const endYearMap =
+//       startYearIndex !== undefined &&
+//       startYearIndex !== false &&
+//       maps[startYearIndex + 1]
+//     const endYear = (!!endYearMap && endYearMap.year) || 'Present'
+//     const selectedStoryName =
+//       !!isStorySelected &&
+//       stories.find(story => story.id === selectedStory).name
 
+// >>>>>>> master
     return (
       <div className="app">
         <StoryList
@@ -192,7 +203,7 @@ class App extends Component {
         />
         {/*TODO: change to is logged in*/}
         <NavBar
-          showEdit={true}
+          showEdit={this.props.isLoginSuccess}
           onEdit={this.toggleEditMode}
           isEditing={isEditing}
           toggleSidebar={this.toggleSidebar}
@@ -230,8 +241,22 @@ class App extends Component {
   }
 }
 
-function compareYear(a, b) {
-  return moment(a.date).isAfter(moment(b.date))
+// <<<<<<< redux-2
+const mapStateToProps = state => {
+  return {
+    isLoginPending: state.isLoginPending,
+    isLoginSuccess: state.isLoginSuccess,
+    loginError: state.loginError
+  }
 }
 
-export default App
+const mapDispatchToProps = dispatch => {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+// =======
+// function compareYear(a, b) {
+//   return moment(a.date).isAfter(moment(b.date))
+// }
+
+// export default App
+// >>>>>>> master
