@@ -14,8 +14,8 @@ class NavBar extends PureComponent {
         <Navbar.Header>
           <Navbar.Brand>
             <div className="sidebar-menu" onClick={this.toggleSidebar} />
-            NNB
-            {/* <Link to="/">NNB</Link> */}
+            {/* NNB */}
+            <Link to="/">NNB</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -25,10 +25,9 @@ class NavBar extends PureComponent {
           onChange={this.props.onEdit}
         >
           {this.props.showEdit && <ToggleButton value={1}>Edit</ToggleButton>}
-          {/* <Link to="/login">
+          <Link to="/login">
             <Button>Login</Button>
-          </Link> */}
-          <Button>Login</Button>
+          </Link>
         </ToggleButtonGroup>
       </Navbar>
     )

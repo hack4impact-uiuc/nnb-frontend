@@ -37,16 +37,19 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import Login from './Login'
 import registerServiceWorker from './registerServiceWorker'
-
+import store from './redux/store'
 import { HashRouter as Router, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
-  <Router>
-    <div>
-      <Route exact path="/" component={App} />
-      <Route path="/login" component={Login} />
-    </div>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <div>
+        <Route exact path="/" component={App} />
+        <Route path="/login" component={Login} />
+      </div>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 )
 registerServiceWorker()
