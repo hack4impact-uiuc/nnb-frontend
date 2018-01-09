@@ -82,7 +82,10 @@ class OurTable extends Component {
                       value={data[row_index][col_index]}
                       onChange={e => this.onChangeLink(row_index, col_index, e)}
                       validationState={
-                        shouldShowFormValidation && !data[row_index][col_index]
+                        shouldShowFormValidation &&
+                        (col_index === 0 &&
+                          (!data[row_index][col_index] ||
+                            !data[row_index][col_index].startsWith('http://')))
                           ? 'error'
                           : null
                       }

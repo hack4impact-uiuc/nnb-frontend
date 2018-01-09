@@ -1,3 +1,7 @@
+input[type="file"] {
+  display: none;
+}
+
 .button {
   display: block;
   border: none;
@@ -12,6 +16,14 @@
 
   &--full-width {
     width: 100%
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
+  &--file-upload {
+    display: inline-block;
   }
 
   &--dark {

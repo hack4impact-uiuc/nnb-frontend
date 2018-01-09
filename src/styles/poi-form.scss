@@ -4,10 +4,22 @@
 
 .poi-form {
   margin: 4rem;
-}
 
-.links-label {
-  padding: 0 2.5rem 0 0;
+  &__field-group {
+    &.specifier {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__label {
+    margin-bottom: 1rem;
+    font-size: 1.25em;
+    font-style: italic;
+  }
+
+  &__our-table-container {
+    margin: 2rem 0;
+  }
 }
 
 .table-container {
@@ -21,9 +33,4 @@
 
 .end-button {
   margin-left: 1rem;
-}
-
-.jank-spacer {
-  height: 100px;
-  margin: 2.25rem
 }

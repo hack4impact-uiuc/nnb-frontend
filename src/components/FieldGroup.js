@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  Checkbox,
-  Col
-} from 'react-bootstrap'
+import { FormGroup, FormControl, Checkbox } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/button.css'
@@ -26,7 +20,9 @@ function FieldGroup({
   buttonText,
   onStorySelect,
   startYear,
-  validationState
+  validationState,
+  className,
+  labelClassName
 }) {
   let fieldGroupModule
 
@@ -54,12 +50,20 @@ function FieldGroup({
     case 'file':
       // TODO: style like a button
       fieldGroupModule = (
-        <FormControl
-          type="file"
-          placeholder={placeholder}
-          onChange={onChange}
-          multiple
-        />
+        <div>
+          <label
+            className="button button--dark button--file-upload"
+            htmlFor="file-upload"
+          >
+            Upload Files
+          </label>
+          <FormControl
+            type="file"
+            id="file-upload"
+            onChange={onChange}
+            multiple
+          />
+        </div>
       )
       break
     case 'date':
@@ -97,11 +101,13 @@ function FieldGroup({
   }
 
   return (
-    <FormGroup controlid={controlId} validationState={validationState}>
-      <Col sm={2} componentClass={ControlLabel}>
-        {label}
-      </Col>
-      <Col sm={10}>{fieldGroupModule}</Col>
+    <FormGroup
+      controlid={controlId}
+      validationState={validationState}
+      className={className}
+    >
+      <div className={labelClassName}>{label}</div>
+      <div>{fieldGroupModule}</div>
     </FormGroup>
   )
 }
