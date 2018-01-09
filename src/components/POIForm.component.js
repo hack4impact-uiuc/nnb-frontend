@@ -184,7 +184,7 @@ class POIForm extends Component {
     } = this.state
 
     return (
-      <Form horizontal className="poi-form">
+      <Form className="poi-form">
         <PageHeader>Create POI</PageHeader>
 
         <FieldGroup
