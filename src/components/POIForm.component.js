@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import moment from 'moment'
 import { isEqual } from 'lodash'
+import classnames from 'classnames'
 import { FieldGroup, OurTable } from '../components'
 import { Api } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -198,7 +199,7 @@ class POIForm extends Component {
   }
 
   fileUpload() {
-    const { isUploadingMedia } = this.state
+    const { isUploadingMedia, youtubeUrl } = this.state
     return (
       <div>
         <FieldGroup
@@ -217,10 +218,19 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           placeholder="Enter Youtube video url here"
-          value={this.state.youtubeUrl}
+          value={youtubeUrl}
           onChange={this.handleYoutubeInput}
+          validationState={
+            !!youtubeUrl && !parseYoutubeUrl(youtubeUrl) ? 'error' : null
+          }
         />
-        <button className="button button--dark" onClick={this.addYoutube}>
+        <button
+          className={classnames('button', 'button--dark', {
+            'button--disabled': !parseYoutubeUrl(youtubeUrl)
+          })}
+          onClick={this.addYoutube}
+          disabled={!parseYoutubeUrl(youtubeUrl)}
+        >
           Add Youtube Video
         </button>
       </div>
@@ -292,7 +302,7 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           options={this.props.stories}
-          label="Stories"
+          label="Add To Stories"
           onClick={this.handleFormInput.bind(this, 'stories')}
         />
 
@@ -321,6 +331,7 @@ export default POIForm
 
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 function parseYoutubeUrl(url) {
+  if (!url) return false
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/
   const match = url.match(regExp)
   return match && match[7].length === 11 ? match[7] : false

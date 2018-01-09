@@ -18,6 +18,10 @@ input[type="file"] {
     width: 100%
   }
 
+  &--disabled {
+    cursor: not-allowed;
+  }
+
   &--dark {
     background: #333;
     color: #fafafa;
