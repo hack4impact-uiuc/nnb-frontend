@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Carousel } from 'react-bootstrap'
+import YoutubePlayer from 'react-youtube'
 import { Icon } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
@@ -70,27 +71,42 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel>
-        {selectedEvent.content.map(content => (
-          <Carousel.Item
-            key={isRealTimePOI ? content : content.contentUrl}
-            className="carousel-item"
-          >
-            {isEditing && (
-              <Icon
-                type="Trash"
-                size="large"
-                className="carousel-item__delete-icon"
-                onClick={this.handleDeleteMedia.bind(this, content)}
-              />
-            )}
+        {selectedEvent.content.map(content => {
+          const url = isRealTimePOI ? content : content.contentUrl
+          const image = (
             <Image
               width={500}
               height={500}
               alt={isRealTimePOI ? content : content.caption}
-              src={isRealTimePOI ? content : content.contentUrl}
+              src={url}
             />
-          </Carousel.Item>
-        ))}
+          )
+          const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
+          const youtubePlayer = (
+            <YoutubePlayer
+              videoId={url}
+              opts={{
+                [!!width && 'width']: width
+              }}
+            />
+          )
+          const displayContent = url.includes('cloudinary')
+            ? image
+            : youtubePlayer
+          return (
+            <Carousel.Item key={url} className="carousel-item">
+              {isEditing && (
+                <Icon
+                  type="Trash"
+                  size="large"
+                  className="carousel-item__delete-icon"
+                  onClick={this.handleDeleteMedia.bind(this, content)}
+                />
+              )}
+              {displayContent}
+            </Carousel.Item>
+          )
+        })}
       </Carousel>
     )
 
@@ -107,7 +123,7 @@ class InfoPanel extends Component {
     }
 
     return (
-      <div className="info-panel">
+      <div className="info-panel" ref={r => (this.infoPanelDiv = r)}>
         {!!selectedEvent.name && (
           <div className="heading">
             <h1 className="heading__name">{selectedEvent.name}</h1>

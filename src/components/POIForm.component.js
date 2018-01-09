@@ -26,6 +26,8 @@ class POIForm extends Component {
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
+    this.handleYoutubeInput = this.handleYoutubeInput.bind(this)
+    this.addYoutube = this.addYoutube.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,6 +95,27 @@ class POIForm extends Component {
         reader.readAsDataURL(file)
       })
     }
+  }
+
+  handleYoutubeInput(e) {
+    const url = e.target.value
+    this.setState(
+      {
+        youtubeUrl: url
+      },
+      () => this.props.updatePOI(this.state)
+    )
+  }
+
+  addYoutube() {
+    const youtubeVideoId = parseYoutubeUrl(this.state.youtubeUrl)
+    this.setState(
+      {
+        content: [...this.state.content, youtubeVideoId],
+        youtubeUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
   }
 
   onSubmit() {
@@ -174,12 +197,41 @@ class POIForm extends Component {
     return [...storiesSet]
   }
 
+  fileUpload() {
+    const { isUploadingMedia } = this.state
+    return (
+      <div>
+        <FieldGroup
+          controlID="chooseFile"
+          label="Upload Files"
+          inputType="file"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          onChange={this.onImageUpload}
+        />
+        {isUploadingMedia && <div>Uploading...</div>}
+        <FieldGroup
+          controlID="youtube"
+          label="Youtube"
+          inputType="text"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          placeholder="Youtube"
+          value={this.state.youtubeUrl}
+          onChange={this.handleYoutubeInput}
+        />
+        <button className="button button--dark" onClick={this.addYoutube}>
+          Add Youtube Video
+        </button>
+      </div>
+    )
+  }
+
   render() {
     const {
       startDate,
       name,
       description,
-      isUploadingMedia,
       shouldShowFormValidation
     } = this.state
 
@@ -224,15 +276,7 @@ class POIForm extends Component {
           }
         />
 
-        <FieldGroup
-          controlID="chooseFile"
-          label="Upload Files"
-          inputType="file"
-          className="poi-form__field-group specifier"
-          labelClassName="poi-form__label"
-          onChange={this.onImageUpload}
-        />
-        {isUploadingMedia && <div>Uploading...</div>}
+        {this.fileUpload()}
 
         <div className="poi-form__label">Links</div>
         <OurTable
@@ -272,3 +316,10 @@ class POIForm extends Component {
 }
 
 export default POIForm
+
+// https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
+function parseYoutubeUrl(url) {
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/
+  const match = url.match(regExp)
+  return match && match[7].length === 11 ? match[7] : false
+}
