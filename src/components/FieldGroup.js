@@ -51,7 +51,10 @@ function FieldGroup({
       // TODO: style like a button
       fieldGroupModule = (
         <div>
-          <label className="button button--dark" htmlFor="file-upload">
+          <label
+            className="button button--dark button--file-upload"
+            htmlFor="file-upload"
+          >
             Upload Files
           </label>
           <FormControl
