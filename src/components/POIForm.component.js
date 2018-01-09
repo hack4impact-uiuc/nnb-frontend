@@ -216,7 +216,7 @@ class POIForm extends Component {
           inputType="text"
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
-          placeholder="Youtube"
+          placeholder="Enter Youtube video url here"
           value={this.state.youtubeUrl}
           onChange={this.handleYoutubeInput}
         />
@@ -278,12 +278,14 @@ class POIForm extends Component {
 
         {this.fileUpload()}
 
-        <div className="poi-form__label">Links</div>
-        <OurTable
-          colNames={['Link URL', 'Display Name']}
-          setLinkData={this.handleFormInput.bind(this, 'links')}
-          shouldShowFormValidation={shouldShowFormValidation}
-        />
+        <div className="poi-form__our-table-container">
+          <div className="poi-form__label">Links</div>
+          <OurTable
+            colNames={['Link URL', 'Display Name']}
+            setLinkData={this.handleFormInput.bind(this, 'links')}
+            shouldShowFormValidation={shouldShowFormValidation}
+          />
+        </div>
 
         <FieldGroup
           inputType="checklist"
