@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
-import { withRouter } from 'react-router'
+import { Api } from './../utils'
+import { FieldGroup } from './'
+import './../styles/login.css'
 
-import { Api } from './utils'
-import { NavBar, FieldGroup } from './components'
-
-class Login extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,13 +36,14 @@ class Login extends Component {
       username,
       password
     }
+
     Api.postLogin(data)
       .then(({ message: error, status }) => {
         if (status === 'failed') {
           this.setState({ error })
         } else {
-          // this.setState({ logged_in: true })
-          this.props.history.push('/', { isEditing: true })
+          this.props.setLogin(true)
+          this.props.setShowLogin(false)
         }
       })
       .catch(err => {
@@ -55,14 +55,18 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <NavBar isEditing={false} />
-        <Form horizontal className="container">
+      <div className="container login-container">
+        <Form className="login">
+          <div className="header">
+            <h1>Login</h1>
+          </div>
           <FieldGroup
             controlID="username"
             label="username"
             inputType="text"
             placeholder="Enter your username here"
+            className="login__field-group specifier"
+            labelClassName="login__label"
             value={this.state.username}
             onChange={this.onChangeUsername}
           />
@@ -71,6 +75,8 @@ class Login extends Component {
             label="password"
             inputType="text"
             placeholder="Enter your password here"
+            className="login__field-group specifier"
+            labelClassName="login__label"
             value={this.state.password}
             onChange={this.onChangePassword}
           />
@@ -82,7 +88,7 @@ class Login extends Component {
             <div>
               <FieldGroup
                 inputType="button"
-                buttonText="Login"
+                buttonText="Submit"
                 onClick={this.onSubmit}
               />
             </div>
@@ -92,5 +98,3 @@ class Login extends Component {
     )
   }
 }
-
-export default withRouter(Login)

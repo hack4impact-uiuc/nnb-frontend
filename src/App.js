@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { StoryList, POIFormPanel, MapTimeline, NavBar } from './components'
+import {
+  StoryList,
+  POIFormPanel,
+  MapTimeline,
+  NavBar,
+  Login
+} from './components'
 import { Api } from './utils'
 import './styles/App.css'
 import moment from 'moment'
@@ -17,7 +23,8 @@ class App extends Component {
     showPOIForm: false,
     showSidebar: false,
     isEditing: false,
-    isLoggedIn: false
+    isLoggedIn: false,
+    showLogin: false
   }
 
   constructor(props) {
@@ -35,6 +42,8 @@ class App extends Component {
     this.setSelectedStory = this.setSelectedStory.bind(this)
     this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
+    this.setShowLogin = this.setShowLogin.bind(this)
+    this.setLogin = this.setLogin.bind(this)
   }
 
   toggleEditMode() {
@@ -160,6 +169,18 @@ class App extends Component {
     })
   }
 
+  setShowLogin(val) {
+    this.setState({
+      showLogin: val
+    })
+  }
+
+  setLogin(val) {
+    this.setState({
+      isLoggedIn: val
+    })
+  }
+
   render() {
     const {
       showPOIForm,
@@ -168,7 +189,9 @@ class App extends Component {
       maps,
       isStorySelected,
       stories,
-      selectedStory
+      selectedStory,
+      isLoggedIn,
+      showLogin
     } = this.state
     const startYearIndex =
       !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
@@ -200,30 +223,38 @@ class App extends Component {
           startYear={!!selectedMap && selectedMap.year}
           endYear={!!selectedMap && endYear}
           selectedStoryName={selectedStoryName}
+          isLoggedIn={isLoggedIn}
+          showLogin={showLogin}
+          setShowLogin={this.setShowLogin}
+          setLogin={this.setLogin}
         />
-        {/* Comment out the components to leave only the one you need to work on */}
+        {showLogin && (
+          <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
+        )}
         <div>
-          {!showPOIForm && (
-            <MapTimeline
-              {...this.state}
-              setSelectedPOI={this.setSelectedPOI}
-              setShowPOIForm={this.setShowPOIForm}
-              setClickedCoords={this.setClickedCoords}
-              loadMaps={this.loadMaps}
-              deleteMap={this.deleteMap}
-              loadPOIsForYear={this.loadPOIsForYear}
-              updateMap={this.updateMap}
-            />
-          )}
-          {showPOIForm && (
-            <POIFormPanel
-              {...this.state}
-              setSelectedPOI={this.setSelectedPOI}
-              setShowPOIForm={this.setShowPOIForm}
-              loadPOIsForYear={this.loadPOIsForYear}
-              updateMap={this.updateMap}
-            />
-          )}
+          {!showPOIForm &&
+            !showLogin && (
+              <MapTimeline
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                setClickedCoords={this.setClickedCoords}
+                loadMaps={this.loadMaps}
+                deleteMap={this.deleteMap}
+                loadPOIsForYear={this.loadPOIsForYear}
+                updateMap={this.updateMap}
+              />
+            )}
+          {showPOIForm &&
+            !showLogin && (
+              <POIFormPanel
+                {...this.state}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                loadPOIsForYear={this.loadPOIsForYear}
+                updateMap={this.updateMap}
+              />
+            )}
         </div>
       </div>
     )

@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - #{$navbar-height});
+}
+
+.login {
+  width: 500px;
+  background: #eee;
+  padding: 3rem;
+
+  &__field-group {
+    &.specifier {
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__label {
+    margin-bottom: 1rem;
+    font-size: 1.25em;
+    font-style: italic;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
