@@ -77,7 +77,7 @@ function FieldGroup({
       break
     case 'button':
       fieldGroupModule = (
-        <button className="button button--dark" onClick={onClick}>
+        <button className="button button--dark" onClick={onClick} type="button">
           {buttonText}
         </button>
       )

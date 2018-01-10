@@ -54,6 +54,8 @@ export default class Login extends Component {
   }
 
   render() {
+    const { username, password, error } = this.state
+
     return (
       <div className="container login-container">
         <Form className="login">
@@ -67,7 +69,7 @@ export default class Login extends Component {
             placeholder="Enter your username here"
             className="login__field-group specifier"
             labelClassName="login__label"
-            value={this.state.username}
+            value={username}
             onChange={this.onChangeUsername}
           />
           <FieldGroup
@@ -77,22 +79,18 @@ export default class Login extends Component {
             placeholder="Enter your password here"
             className="login__field-group specifier"
             labelClassName="login__label"
-            value={this.state.password}
+            value={password}
             onChange={this.onChangePassword}
           />
-          {this.state.error && (
-            <Alert bsStyle="danger">{this.state.error}</Alert>
-          )}
+          {error && <Alert bsStyle="danger">{error}</Alert>}
 
-          {!this.state.loggedIn && (
-            <div>
-              <FieldGroup
-                inputType="button"
-                buttonText="Submit"
-                onClick={this.onSubmit}
-              />
-            </div>
-          )}
+          <div>
+            <FieldGroup
+              inputType="button"
+              buttonText="Submit"
+              onClick={this.onSubmit}
+            />
+          </div>
         </Form>
       </div>
     )

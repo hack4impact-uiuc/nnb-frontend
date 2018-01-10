@@ -9,7 +9,13 @@ class NavBar extends PureComponent {
       selectedStoryName,
       startYear,
       endYear,
-      isLoggedIn
+      isLoggedIn,
+      toggleSidebar,
+      showLogin,
+      onEdit,
+      setShowLogin,
+      setLogin,
+      isEditing
     } = this.props
     const contextYears = `${startYear} - ${endYear}`
     return (
@@ -18,57 +24,57 @@ class NavBar extends PureComponent {
           <Icon
             type="Menu"
             size="large"
-            onClick={this.props.toggleSidebar}
+            onClick={toggleSidebar}
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          {!this.props.showLogin && (
+          {!showLogin && (
             <div className="navbar-content__item-context navbar-content__context ">
               Now Viewing:
             </div>
           )}
 
           {isStorySelected &&
-            !this.props.showLogin && (
+            !showLogin && (
               <div className="navbar-content__item-context navbar-content__context-story-name ">
                 {selectedStoryName}:
               </div>
             )}
 
-          {!this.props.showLogin && (
+          {!showLogin && (
             <div className="navbar-content__item-context navbar-content__context-years ">
               {contextYears}
             </div>
           )}
 
-          {this.props.isLoggedIn && (
-            <div className="navbar-content__item" onClick={this.props.onEdit}>
-              {this.props.isEditing ? 'Disable Editing' : 'Enable Editing'}
+          {isLoggedIn && (
+            <div className="navbar-content__item" onClick={onEdit}>
+              {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}
-          {!this.props.isLoggedIn &&
-            !this.props.showLogin && (
+          {!isLoggedIn &&
+            !showLogin && (
               <div
                 className="navbar-content__item"
-                onClick={() => this.props.setShowLogin(true)}
+                onClick={() => setShowLogin(true)}
               >
                 Login
               </div>
             )}
-          {!this.props.isLoggedIn &&
-            !!this.props.showLogin && (
+          {!isLoggedIn &&
+            !!showLogin && (
               <div
                 className="navbar-content__item"
-                onClick={() => this.props.setShowLogin(false)}
+                onClick={() => setShowLogin(false)}
               >
                 Home
               </div>
             )}
-          {!!this.props.isLoggedIn && (
+          {!!isLoggedIn && (
             <div
               className="navbar-content__item"
-              onClick={() => this.props.setLogin(false)}
+              onClick={() => setLogin(false)}
             >
               Logout
             </div>
@@ -78,11 +84,5 @@ class NavBar extends PureComponent {
     )
   }
 }
-
-/*
-<Link to="/login">
-  <div className="navbar-content__item">Login</div>
-</Link>
-*/
 
 export default NavBar
