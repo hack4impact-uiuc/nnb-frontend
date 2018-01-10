@@ -177,7 +177,8 @@ class App extends Component {
 
   setLogin(val) {
     this.setState({
-      isLoggedIn: val
+      isLoggedIn: val,
+      [!val && 'isEditing']: false
     })
   }
 
