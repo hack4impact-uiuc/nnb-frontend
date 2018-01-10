@@ -2,31 +2,52 @@ import React, { Component } from 'react'
 import { Interval } from '../components'
 import './../styles/timeline.css'
 
+const MIN_INTERVAL_WIDTH = 50
+const TIMELINE_PADDING = 40
+
 class Timeline extends Component {
   constructor(props) {
     super(props)
-    this.calcRatio = this.calcRatio.bind(this)
+    this.calcIntervalWidth = this.calcIntervalWidth.bind(this)
   }
 
-  calcRatio(mapYears) {
+  // calculates the pixel width for each interval
+  calcIntervalWidth(mapYears) {
     const ratios = mapYears.slice(1).map((n, i) => n - mapYears[i])
-    const total = ratios.reduce((a, b) => a + b, 0)
-    return ratios.map(ratio => ratio / total * 0.9) //TODO: change 0.9 to a predefined constant
+    const minRatio = Math.min(...ratios)
+    const intervalWidthMultiplier = MIN_INTERVAL_WIDTH / minRatio
+    const intervalWidths = ratios.map(ratio => ratio * intervalWidthMultiplier)
+
+    // used for buffer for last interval - gets assigned MIN_INTERVAL_WIDTH
+    let adjustedIntervalWidths = [...intervalWidths, MIN_INTERVAL_WIDTH]
+
+    if (this.props.timelineContainer) {
+      const timelineWidth =
+        this.props.timelineContainer.offsetWidth - TIMELINE_PADDING
+      const intervalSum = adjustedIntervalWidths.reduce((a, b) => a + b, 0)
+      if (intervalSum < timelineWidth) {
+        const ratio = timelineWidth / intervalSum
+        adjustedIntervalWidths = adjustedIntervalWidths.map(
+          width => width * ratio
+        )
+      }
+    }
+    return adjustedIntervalWidths
   }
 
   render() {
     const { maps, loadPOIsForYear, selectedMap } = this.props
     const currSelectedYear = !!selectedMap && selectedMap.year
     const years = maps.map(map => map.year)
-    const ratios = [...this.calcRatio(years), 0.1] //TODO: change 0.1 to a predefined constant
+    const ratios = this.calcIntervalWidth(years)
     return (
-      <div className="timeline" style={{ width: 100 + '%' }}>
+      <div className="timeline" ref={t => (this.timeline = t)}>
         {maps.map((map, i) => (
           <Interval
             startYear={map.year}
             loadPOIsForYear={loadPOIsForYear}
             numMaps={maps.length}
-            ratio={ratios[i]}
+            width={ratios[i]}
             key={map.year}
             isSelected={currSelectedYear === map.year}
           />

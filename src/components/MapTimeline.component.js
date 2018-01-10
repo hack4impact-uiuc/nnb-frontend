@@ -25,7 +25,10 @@ class MapTimeline extends Component {
               setClickedCoords={setClickedCoords}
             />
           </div>
-          <div className="timeline-container">
+          <div
+            className="timeline-container"
+            ref={t => (this.timelineContainer = t)}
+          >
             {isEditing && (
               <MapManager
                 {...this.props}
@@ -33,7 +36,11 @@ class MapTimeline extends Component {
                 deleteMap={deleteMap}
               />
             )}
-            <Timeline {...this.props} loadPOIsForYear={loadPOIsForYear} />
+            <Timeline
+              {...this.props}
+              loadPOIsForYear={loadPOIsForYear}
+              timelineContainer={this.timelineContainer}
+            />
           </div>
         </div>
         <div className="info-panel-container">

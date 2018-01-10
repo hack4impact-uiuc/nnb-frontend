@@ -139,6 +139,13 @@ function deleteStory(storyId) {
 }
 
 /**
+ * Auth
+ */
+function postLogin(loginInfo) {
+  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
+}
+
+/**
  * Cloudinary
  */
 function uploadImage(imageDataURL) {
@@ -146,10 +153,6 @@ function uploadImage(imageDataURL) {
     .upload(imageDataURL)
     .then(res => res.secure_url)
     .catch(err => console.error(err))
-}
-
-function postLogin(loginInfo) {
-  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
 }
 
 export default {
