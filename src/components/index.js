@@ -12,6 +12,7 @@ import POIFormPanel from './POIFormPanel.component'
 import NavBar from './NavBar'
 import Interval from './Interval.component'
 import Icon from './Icon.component'
+import Login from './Login.component'
 
 export {
   InfoPanel,
@@ -27,5 +28,6 @@ export {
   POIFormPanel,
   NavBar,
   Interval,
-  Icon
+  Icon,
+  Login
 }
