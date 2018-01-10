@@ -13,7 +13,7 @@ import './../styles/button.css'
 class POIForm extends Component {
   constructor(props) {
     super(props)
-    const emptyState = {
+    this.state = {
       startDate: moment('1/1/' + this.props.selectedMap.year),
       name: '',
       description: '',
@@ -23,17 +23,23 @@ class POIForm extends Component {
       links: [],
       shouldShowFormValidation: false
     }
-    const { content, description, links, name, date } = this.props.selectedEvent
-    const updatePOIState = {
-      content,
-      description,
-      links,
-      name,
-      startDate: moment(date)
-      // TODO: get stories that POI is in
-      // stories:
-    }
-    this.state = this.props.isUpdatingPOI ? updatePOIState : emptyState
+
+    // let updatePOIState = {}
+    // if (this.props.selectedEvent) {
+    //   const { content, description, links, name, date } = this.props.selectedEvent
+    //   updatePOIState = {
+    //     content,
+    //     description,
+    //     links,
+    //     name,
+    //     startDate: moment(date)
+    //     // TODO: get stories that POI is in
+    //     // stories:
+    //   }
+    // }
+
+    // this.state = this.props.isUpdatingPOI ? updatePOIState : emptyState
+
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
@@ -45,6 +51,24 @@ class POIForm extends Component {
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
       this.setState({ ...nextProps.selectedEvent })
+    }
+  }
+
+  componentDidMount() {
+    const { isUpdatingPOI, selectedEvent } = this.props
+    if (isUpdatingPOI && selectedEvent) {
+      const requests = [
+        Api.getPOI(selectedEvent.id),
+        Api.getStoriesByPOI(selectedEvent.id)
+      ]
+      Promise.all(requests).then(responses => {
+        const [poi, stories] = responses
+        this.setState({
+          ...poi,
+          date: moment(poi.date),
+          stories
+        })
+      })
     }
   }
 
@@ -267,6 +291,7 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           placeholder="Enter POI name here"
+          value={name}
           onChange={this.handleFormInput.bind(this, 'name')}
           validationState={shouldShowFormValidation && !name ? 'error' : null}
         />

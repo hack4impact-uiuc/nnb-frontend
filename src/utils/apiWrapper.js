@@ -56,11 +56,17 @@ function getPOIs() {
     .then(res => res.map(r => r.data).map(adapters.convertFromApiPOI))
 }
 
+function getPOI(id) {
+  return createRequest(REQUEST_METHODS.GET, `pois/${id}`)
+    .then(res => res.data)
+    .then(res => res.map(adapters.convertFromApiPOI)[0])
+}
+
 function getPOIsByYear(year) {
   return createRequest(REQUEST_METHODS.GET, `maps/years/${year}`).then(res => {
     const pois = res.data.pois.map(adapters.convertFromApiPOI)
     const map = adapters.convertFromApiMap(res.data.map[0])
-    return { map: map, pois: pois }
+    return { map, pois }
   })
 }
 
@@ -107,6 +113,12 @@ function getStories() {
   return createRequest(REQUEST_METHODS.GET, 'stories')
     .then(res => res.data)
     .then(res => res.map(adapters.convertFromApiStory))
+}
+
+function getStoriesByPOI(poiId) {
+  return createRequest(REQUEST_METHODS.GET, `getstories/${poiId}`).then(
+    res => res.story_ids
+  )
 }
 
 // TODO: api should take in story id, not name
@@ -160,6 +172,7 @@ export default {
   postMap,
   deleteMap,
   getPOIs,
+  getPOI,
   getPOIsByYear,
   getPOIsByStory,
   postPOIToStories,
@@ -167,6 +180,7 @@ export default {
   editPOI,
   deletePOI,
   getStories,
+  getStoriesByPOI,
   getStory,
   postStory,
   postLogin,
