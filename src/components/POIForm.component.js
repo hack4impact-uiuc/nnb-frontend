@@ -390,6 +390,7 @@ class POIForm extends Component {
           options={this.props.stories}
           label="Add To Stories"
           onClick={this.handleFormInput.bind(this, 'stories')}
+          checkedOptionIds={this.state.stories}
         />
 
         <FormControl.Feedback />

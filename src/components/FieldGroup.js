@@ -22,7 +22,8 @@ function FieldGroup({
   startYear,
   validationState,
   className,
-  labelClassName
+  labelClassName,
+  checkedOptionIds
 }) {
   let fieldGroupModule
 
@@ -85,7 +86,12 @@ function FieldGroup({
     case 'checklist':
       fieldGroupModule = options.map(option => (
         <div key={option.id}>
-          <Checkbox onClick={() => onClick(option.id)}>{option.name}</Checkbox>
+          <Checkbox
+            onClick={() => onClick(option.id)}
+            checked={checkedOptionIds.includes(option.id)}
+          >
+            {option.name}
+          </Checkbox>
         </div>
       ))
       break
