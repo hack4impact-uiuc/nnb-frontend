@@ -24,6 +24,7 @@ class StoryList extends Component {
     this.onClickEdit = this.onClickEdit.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
     this.editStoryName = this.editStoryName.bind(this)
+    this.promptAndExitEditMode = this.promptAndExitEditMode.bind(this)
   }
 
   addStoryClicked() {
@@ -82,24 +83,36 @@ class StoryList extends Component {
       })
   }
 
+  promptAndExitEditMode(storyId) {
+    if (
+      window.confirm(
+        'Exit edit mode? Cannot be in edit mode while viewing a story.'
+      )
+    ) {
+      this.props.toggleEditMode()
+      this.props.setSelectedStory(storyId)
+    }
+  }
+
   render() {
     const stories = this.props.stories
 
     const sidebarContent = (
       <SidebarContent
         {...this.props}
-        addStorySelected={this.state.addStorySelected}
-        storyName={this.state.storyName}
-        stories={stories}
         addStoryClicked={this.addStoryClicked}
         addStoryExit={this.addStoryExit}
-        storyNameChange={this.storyNameChange}
-        submitStoryName={this.submitStoryName}
-        exitStory={this.props.exitStory}
-        onClickEdit={this.onClickEdit}
-        onClickDelete={this.onClickDelete}
+        addStorySelected={this.state.addStorySelected}
         editStoryId={this.state.editStoryId}
         editStoryName={this.editStoryName}
+        exitStory={this.props.exitStory}
+        onClickDelete={this.onClickDelete}
+        onClickEdit={this.onClickEdit}
+        promptAndExitEditMode={this.promptAndExitEditMode}
+        stories={stories}
+        storyName={this.state.storyName}
+        storyNameChange={this.storyNameChange}
+        submitStoryName={this.submitStoryName}
       />
     )
 
@@ -129,18 +142,19 @@ class StoryList extends Component {
 }
 
 function SidebarContent({
-  addStorySelected,
-  storyName,
-  stories,
   addStoryClicked,
   addStoryExit,
-  storyNameChange,
-  submitStoryName,
-  exitStory,
-  onClickEdit,
-  onClickDelete,
+  addStorySelected,
   editStoryId,
   editStoryName,
+  exitStory,
+  onClickDelete,
+  onClickEdit,
+  promptAndExitEditMode,
+  stories,
+  storyName,
+  storyNameChange,
+  submitStoryName,
   ...props
 }) {
   return (
@@ -167,7 +181,10 @@ function SidebarContent({
             {editStoryId !== story.id && (
               <div
                 className="story-item__name"
-                onClick={() => props.setSelectedStory(story.id)}
+                onClick={() =>
+                  props.isEditing
+                    ? promptAndExitEditMode(story.id)
+                    : props.setSelectedStory(story.id)}
               >
                 {story.name}
               </div>

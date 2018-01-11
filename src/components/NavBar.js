@@ -3,6 +3,17 @@ import { Navbar } from 'react-bootstrap'
 import { Icon } from './'
 
 class NavBar extends PureComponent {
+  promptAndExitStory = () => {
+    if (
+      window.confirm(
+        'Exit story? Cannot be in edit mode while viewing a story.'
+      )
+    ) {
+      this.props.exitStory()
+      this.props.onEdit()
+    }
+  }
+
   render() {
     const {
       endYear,
@@ -53,7 +64,10 @@ class NavBar extends PureComponent {
             )}
 
           {isLoggedIn && (
-            <div className="navbar-content__item" onClick={onEdit}>
+            <div
+              className="navbar-content__item"
+              onClick={isStorySelected ? this.promptAndExitStory : onEdit}
+            >
               {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}

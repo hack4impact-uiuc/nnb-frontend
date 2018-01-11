@@ -53,7 +53,7 @@ class Timeline extends Component {
         })}
         ref={t => (this.timeline = t)}
         style={{ [!maps.length && 'width']: '100%' }}
-        onClickCapture={isStorySelected && this.stubClick}
+        onClickCapture={isStorySelected ? this.stubClick : undefined}
       >
         {maps.map((map, i) => (
           <Interval

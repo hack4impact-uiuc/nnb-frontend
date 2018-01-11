@@ -29,21 +29,21 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+    this.deleteMap = this.deleteMap.bind(this)
+    this.exitStory = this.exitStory.bind(this)
+    this.loadMaps = this.loadMaps.bind(this)
     this.loadPOIs = this.loadPOIs.bind(this)
     this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
-    this.loadMaps = this.loadMaps.bind(this)
-    this.deleteMap = this.deleteMap.bind(this)
-    this.toggleEditMode = this.toggleEditMode.bind(this)
-    this.setSelectedPOI = this.setSelectedPOI.bind(this)
-    this.toggleSidebar = this.toggleSidebar.bind(this)
-    this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
-    this.setSelectedStory = this.setSelectedStory.bind(this)
-    this.updateMap = this.updateMap.bind(this)
-    this.exitStory = this.exitStory.bind(this)
-    this.setShowLogin = this.setShowLogin.bind(this)
     this.setLogin = this.setLogin.bind(this)
+    this.setSelectedPOI = this.setSelectedPOI.bind(this)
+    this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.setShowLogin = this.setShowLogin.bind(this)
+    this.setShowPOIForm = this.setShowPOIForm.bind(this)
+    this.toggleEditMode = this.toggleEditMode.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
+    this.updateMap = this.updateMap.bind(this)
   }
 
   toggleEditMode() {
@@ -220,11 +220,13 @@ class App extends Component {
           exitStory={this.exitStory}
           loadStories={this.loadStories}
           setSelectedStory={this.setSelectedStory}
+          toggleEditMode={this.toggleEditMode}
           toggleSidebar={this.toggleSidebar}
         />
         {/*TODO: change to is logged in*/}
         <NavBar
           endYear={!!selectedMap && endYear}
+          exitStory={this.exitStory}
           isEditing={isEditing}
           isLoggedIn={isLoggedIn}
           isStorySelected={isStorySelected}
