@@ -17,6 +17,7 @@ class MapManager extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
+    this.isFormValid = this.isFormValid.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,6 +86,11 @@ class MapManager extends Component {
     }
   }
 
+  isFormValid() {
+    const { inputYear } = this.state
+    return Number.isInteger(+inputYear) && +inputYear >= 0
+  }
+
   render() {
     const { showInputFields, inputYear, isUploadingMedia, error } = this.state
 
@@ -113,6 +119,7 @@ class MapManager extends Component {
                   onChange={this.onChangeYear}
                   className="modal-form__field-group specifier"
                   labelClassName="modal-form__label"
+                  validationState={this.isFormValid() ? null : 'error'}
                 />
 
                 <FieldGroup
