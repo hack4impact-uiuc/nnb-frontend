@@ -267,7 +267,7 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           selected={startDate}
-          onChange={this.handleFormInput.bind(this, 'date')}
+          onChange={this.handleFormInput.bind(this, 'startDate')}
           validationState={
             shouldShowFormValidation && !startDate ? 'error' : null
           }
