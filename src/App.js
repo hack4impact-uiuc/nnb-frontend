@@ -6,7 +6,7 @@ import {
   NavBar,
   Login
 } from './components'
-import { Api } from './utils'
+import { Api, storage } from './utils'
 import './styles/App.css'
 import moment from 'moment'
 
@@ -46,16 +46,19 @@ class App extends Component {
     this.updateMap = this.updateMap.bind(this)
   }
 
-  toggleEditMode() {
-    this.setState({
-      isEditing: !this.state.isEditing
-    })
-  }
-
   componentDidMount() {
     // example of how to use api requests
     this.loadStories()
     this.loadMaps()
+    if (storage.get('auth')) {
+      this.setLogin(true)
+    }
+  }
+
+  toggleEditMode() {
+    this.setState({
+      isEditing: !this.state.isEditing
+    })
   }
 
   loadPOIs() {
@@ -188,6 +191,11 @@ class App extends Component {
       isLoggedIn: val,
       [!val && 'isEditing']: false
     })
+    if (val) {
+      storage.set('auth', true)
+    } else {
+      storage.set('auth', false)
+    }
   }
 
   render() {
