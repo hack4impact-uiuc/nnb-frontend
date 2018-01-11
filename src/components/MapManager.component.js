@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Modal } from 'react-bootstrap'
+import { Alert, Form, Modal } from 'react-bootstrap'
 import { FieldGroup, Icon } from '../components'
 import { Api } from './../utils'
 import './../styles/map.css'
@@ -17,6 +17,8 @@ class MapManager extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
+    this.isFormValid = this.isFormValid.bind(this)
+    this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,9 +35,14 @@ class MapManager extends Component {
     })
   }
 
-  onChangeYear(inputYear) {
+  onChangeYear(e) {
+    const mapYears = this.props.maps.map(map => map.year)
+    const inputYear = e.target.value
+    const inputYearExists = mapYears.includes(+inputYear)
     this.setState({
-      inputYear: inputYear.target.value
+      inputYear,
+      [inputYearExists && 'error']: `Map already exists for ${inputYear}`,
+      [!inputYearExists && 'error']: null
     })
   }
 
@@ -85,8 +92,26 @@ class MapManager extends Component {
     }
   }
 
+  isFormValid() {
+    const mapYears = this.props.maps.map(map => map.year)
+    const inputYear = +this.state.inputYear
+    const inputYearExists = mapYears.includes(inputYear)
+    return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
+  }
+
+  shouldDisableSubmit() {
+    const { inputYear, imageUrl } = this.state
+    return !inputYear || !imageUrl || !this.isFormValid()
+  }
+
   render() {
-    const { showInputFields, inputYear, isUploadingMedia } = this.state
+    const {
+      showInputFields,
+      inputYear,
+      isUploadingMedia,
+      imageUrl,
+      error
+    } = this.state
 
     return (
       <div className="map-manager-icon">
@@ -111,26 +136,34 @@ class MapManager extends Component {
                   placeholder="Enter the map year here"
                   value={inputYear}
                   onChange={this.onChangeYear}
+                  className="modal-form__field-group specifier"
+                  labelClassName="modal-form__label"
+                  validationState={this.isFormValid() ? null : 'error'}
                 />
-
-                <div className="jank-spacer-map" />
 
                 <FieldGroup
                   controlID="chooseFile"
-                  label="Upload Media"
+                  label="Upload Map Image"
                   inputType="file"
-                  placeholder="Upload your files here"
                   onChange={this.onImageUpload}
+                  className="modal-form__field-group specifier"
+                  labelClassName="modal-form__label"
                 />
-                {isUploadingMedia && <div>Uploading...</div>}
 
-                <div className="jank-spacer-map" />
+                <div className="modal-form__field-group specifier modal-form__status">
+                  {!isUploadingMedia &&
+                    !imageUrl && <div>Please upload map image</div>}
+                  {!!imageUrl && <div>Image uploaded</div>}
+                  {isUploadingMedia && <div>Uploading...</div>}
+                </div>
+
+                {error && <Alert bsStyle="danger">{error}</Alert>}
 
                 <FieldGroup
                   inputType="button"
-                  label=""
                   buttonText="Submit"
                   onClick={this.onSubmit}
+                  disabled={this.shouldDisableSubmit()}
                 />
               </Form>
             )}

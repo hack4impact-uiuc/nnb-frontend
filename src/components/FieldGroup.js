@@ -22,7 +22,9 @@ function FieldGroup({
   startYear,
   validationState,
   className,
-  labelClassName
+  labelClassName,
+  multipleFileUpload,
+  disabled
 }) {
   let fieldGroupModule
 
@@ -55,13 +57,13 @@ function FieldGroup({
             className="button button--dark button--file-upload"
             htmlFor="file-upload"
           >
-            Upload Files
+            Upload
           </label>
           <FormControl
             type="file"
             id="file-upload"
             onChange={onChange}
-            multiple
+            multiple={multipleFileUpload}
           />
         </div>
       )
@@ -77,7 +79,12 @@ function FieldGroup({
       break
     case 'button':
       fieldGroupModule = (
-        <button className="button button--dark" onClick={onClick} type="button">
+        <button
+          className="button button--dark"
+          onClick={onClick}
+          type="button"
+          disabled={disabled}
+        >
           {buttonText}
         </button>
       )

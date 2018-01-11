@@ -209,6 +209,7 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           onChange={this.onImageUpload}
+          multipleFileUpload={true}
         />
         {isUploadingMedia && <div>Uploading...</div>}
         <FieldGroup
