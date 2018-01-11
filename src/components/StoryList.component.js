@@ -281,6 +281,8 @@ function SidebarContent({
           Exit Story
         </button>
       )}
+
+      <div className="footer" />
     </div>
   )
 }

@@ -6,6 +6,7 @@
   color: #fafafa;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   &__header {
     display: flex;
@@ -73,3 +74,13 @@
   background-color: #888;
 }
 
+.footer {
+  margin-top: auto;
+  align-self: center;
+  padding: 1rem;
+  color: #888;
+
+  &::after {
+    content: "Made with ♥ by Hack4Impact UIUC"
+  }
+}
