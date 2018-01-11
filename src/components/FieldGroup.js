@@ -22,7 +22,8 @@ function FieldGroup({
   startYear,
   validationState,
   className,
-  labelClassName
+  labelClassName,
+  multipleFileUpload
 }) {
   let fieldGroupModule
 
@@ -55,13 +56,13 @@ function FieldGroup({
             className="button button--dark button--file-upload"
             htmlFor="file-upload"
           >
-            Upload Files
+            Upload
           </label>
           <FormControl
             type="file"
             id="file-upload"
             onChange={onChange}
-            multiple
+            multiple={multipleFileUpload}
           />
         </div>
       )

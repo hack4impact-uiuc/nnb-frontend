@@ -131,13 +131,13 @@ class MapManager extends Component {
 
                 <FieldGroup
                   controlID="chooseFile"
-                  label="Upload Media"
+                  label="Upload Map Image"
                   inputType="file"
-                  placeholder="Upload your files here"
                   onChange={this.onImageUpload}
                   className="modal-form__field-group specifier"
                   labelClassName="modal-form__label"
                 />
+
                 {isUploadingMedia && <div>Uploading...</div>}
 
                 {error && <Alert bsStyle="danger">{error}</Alert>}
