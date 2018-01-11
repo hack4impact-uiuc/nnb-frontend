@@ -34,9 +34,14 @@ class MapManager extends Component {
     })
   }
 
-  onChangeYear(inputYear) {
+  onChangeYear(e) {
+    const mapYears = this.props.maps.map(map => map.year)
+    const inputYear = e.target.value
+    const inputYearExists = mapYears.includes(+inputYear)
     this.setState({
-      inputYear: inputYear.target.value
+      inputYear,
+      [inputYearExists && 'error']: `Map already exists for ${inputYear}`,
+      [!inputYearExists && 'error']: null
     })
   }
 
@@ -87,8 +92,10 @@ class MapManager extends Component {
   }
 
   isFormValid() {
-    const { inputYear } = this.state
-    return Number.isInteger(+inputYear) && +inputYear >= 0
+    const mapYears = this.props.maps.map(map => map.year)
+    const inputYear = +this.state.inputYear
+    const inputYearExists = mapYears.includes(inputYear)
+    return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 
   render() {
