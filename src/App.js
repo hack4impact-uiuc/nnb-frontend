@@ -49,12 +49,6 @@ class App extends Component {
     this.setIsUpdatingPOI = this.setIsUpdatingPOI.bind(this)
   }
 
-  toggleEditMode() {
-    this.setState({
-      isEditing: !this.state.isEditing
-    })
-  }
-
   componentDidMount() {
     // example of how to use api requests
     this.loadStories()
