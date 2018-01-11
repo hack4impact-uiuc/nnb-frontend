@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Modal } from 'react-bootstrap'
+import { Alert, Form, Modal } from 'react-bootstrap'
 import { FieldGroup, Icon } from '../components'
 import { Api } from './../utils'
 import './../styles/map.css'
@@ -86,7 +86,7 @@ class MapManager extends Component {
   }
 
   render() {
-    const { showInputFields, inputYear, isUploadingMedia } = this.state
+    const { showInputFields, inputYear, isUploadingMedia, error } = this.state
 
     return (
       <div className="map-manager-icon">
@@ -111,9 +111,9 @@ class MapManager extends Component {
                   placeholder="Enter the map year here"
                   value={inputYear}
                   onChange={this.onChangeYear}
+                  className="modal-form__field-group specifier"
+                  labelClassName="modal-form__label"
                 />
-
-                <div className="jank-spacer-map" />
 
                 <FieldGroup
                   controlID="chooseFile"
@@ -121,14 +121,15 @@ class MapManager extends Component {
                   inputType="file"
                   placeholder="Upload your files here"
                   onChange={this.onImageUpload}
+                  className="modal-form__field-group specifier"
+                  labelClassName="modal-form__label"
                 />
                 {isUploadingMedia && <div>Uploading...</div>}
 
-                <div className="jank-spacer-map" />
+                {error && <Alert bsStyle="danger">{error}</Alert>}
 
                 <FieldGroup
                   inputType="button"
-                  label=""
                   buttonText="Submit"
                   onClick={this.onSubmit}
                 />

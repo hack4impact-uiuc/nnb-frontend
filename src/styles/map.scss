@@ -24,12 +24,6 @@ $marker-diameter: 25px;
   margin: 1rem 1rem 1rem 0;
   box-shadow: 0 0 5px #ddd;
   transition: all 0.2s ease-in-out;
-  // padding: 1rem;
-  // height: 35px;
-
-  // &__box {
-  //   height: 35px;
-  // }
 
   &:hover {
     background: #fafafaff;
@@ -100,6 +94,24 @@ $marker-diameter: 25px;
 .modal-form {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
+
+  &__field-group {
+    &.specifier {
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__label {
+    margin-bottom: 1rem;
+    font-size: 1.25em;
+    font-style: italic;
+  }
+}
+
+// override default bootstrap style
+.form-control {
+  width: 100% !important;
 }
 
 .jank-spacer-map {
