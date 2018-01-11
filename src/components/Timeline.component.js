@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classnames from 'classnames'
 import { Interval } from '../components'
 import './../styles/timeline.css'
 
@@ -9,6 +10,7 @@ class Timeline extends Component {
   constructor(props) {
     super(props)
     this.calcIntervalWidth = this.calcIntervalWidth.bind(this)
+    this.stubClick = this.stubClick.bind(this)
   }
 
   // calculates the pixel width for each interval
@@ -35,16 +37,23 @@ class Timeline extends Component {
     return adjustedIntervalWidths
   }
 
+  stubClick(e) {
+    e.stopPropagation()
+  }
+
   render() {
-    const { maps, loadPOIsForYear, selectedMap } = this.props
+    const { maps, loadPOIsForYear, selectedMap, isStorySelected } = this.props
     const currSelectedYear = !!selectedMap && selectedMap.year
     const years = maps.map(map => map.year)
     const ratios = this.calcIntervalWidth(years)
     return (
       <div
-        className="timeline"
+        className={classnames('timeline', {
+          'timeline--disabled': isStorySelected
+        })}
         ref={t => (this.timeline = t)}
         style={{ [!maps.length && 'width']: '100%' }}
+        onClickCapture={isStorySelected && this.stubClick}
       >
         {maps.map((map, i) => (
           <Interval
