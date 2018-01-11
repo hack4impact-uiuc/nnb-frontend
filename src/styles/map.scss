@@ -55,24 +55,13 @@ $marker-diameter: 25px;
 }
 
 .marker {
-  cursor: pointer;
   position: absolute;
-  border-radius: 100%;
-  width: $marker-diameter;
-  height: $marker-diameter;
-  background: blue;
-
-  &--selected {
-    background: red;
-  }
-}
-
-.marker {
+  cursor: pointer;
   width: $marker-diameter;
   height: $marker-diameter;
   background: #0e9ab5;
   border-radius: 50% 50% 0;
-  transform: rotate(45deg);
+  transform: rotate(45deg) translate(-3.1rem, -1.3rem);
   box-shadow: 3px 3px 3px;
 
   &::after {
