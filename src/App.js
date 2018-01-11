@@ -79,13 +79,15 @@ class App extends Component {
     return Api.getMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
-      this.loadPOIsForYear(data[0].year)
+      if (data[0]) {
+        this.loadPOIsForYear(data[0].year)
+      }
     })
   }
 
   deleteMap(mapId) {
     return Api.deleteMap(mapId).then(() => {
-      this.loadMaps()
+      this.setState({ selectedMap: null }, () => this.loadMaps())
     })
   }
 
@@ -143,12 +145,18 @@ class App extends Component {
   }
 
   exitStory() {
-    this.loadPOIsForYear(this.state.selectedMap.year).then(() => {
+    const cb = () => {
       this.setState({
         selectedStory: null,
         isStorySelected: false
       })
-    })
+    }
+    const { selectedMap } = this.state
+    if (selectedMap) {
+      this.loadPOIsForYear(selectedMap.year).then(cb)
+    } else {
+      cb()
+    }
   }
 
   toggleSidebar() {
@@ -184,15 +192,15 @@ class App extends Component {
 
   render() {
     const {
-      showPOIForm,
       isEditing,
-      selectedMap,
-      maps,
-      isStorySelected,
-      stories,
-      selectedStory,
       isLoggedIn,
-      showLogin
+      isStorySelected,
+      maps,
+      selectedMap,
+      selectedStory,
+      showLogin,
+      showPOIForm,
+      stories
     } = this.state
     const startYearIndex =
       !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
@@ -209,25 +217,26 @@ class App extends Component {
       <div className="app">
         <StoryList
           {...this.state}
-          toggleSidebar={this.toggleSidebar}
-          setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
           loadStories={this.loadStories}
+          setSelectedStory={this.setSelectedStory}
+          toggleSidebar={this.toggleSidebar}
         />
         {/*TODO: change to is logged in*/}
         <NavBar
-          showEdit={true}
-          onEdit={this.toggleEditMode}
-          isEditing={isEditing}
-          toggleSidebar={this.toggleSidebar}
-          isStorySelected={isStorySelected}
-          startYear={!!selectedMap && selectedMap.year}
           endYear={!!selectedMap && endYear}
-          selectedStoryName={selectedStoryName}
+          isEditing={isEditing}
           isLoggedIn={isLoggedIn}
-          showLogin={showLogin}
-          setShowLogin={this.setShowLogin}
+          isStorySelected={isStorySelected}
+          onEdit={this.toggleEditMode}
+          selectedMap={selectedMap}
+          selectedStoryName={selectedStoryName}
           setLogin={this.setLogin}
+          setShowLogin={this.setShowLogin}
+          showEdit={true}
+          showLogin={showLogin}
+          startYear={!!selectedMap && selectedMap.year}
+          toggleSidebar={this.toggleSidebar}
         />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
@@ -237,12 +246,12 @@ class App extends Component {
             !showLogin && (
               <MapTimeline
                 {...this.state}
+                deleteMap={this.deleteMap}
+                loadMaps={this.loadMaps}
+                loadPOIsForYear={this.loadPOIsForYear}
+                setClickedCoords={this.setClickedCoords}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
-                setClickedCoords={this.setClickedCoords}
-                loadMaps={this.loadMaps}
-                deleteMap={this.deleteMap}
-                loadPOIsForYear={this.loadPOIsForYear}
                 updateMap={this.updateMap}
               />
             )}
@@ -250,9 +259,9 @@ class App extends Component {
             !showLogin && (
               <POIFormPanel
                 {...this.state}
+                loadPOIsForYear={this.loadPOIsForYear}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
-                loadPOIsForYear={this.loadPOIsForYear}
                 updateMap={this.updateMap}
               />
             )}

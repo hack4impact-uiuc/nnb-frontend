@@ -41,7 +41,11 @@ class Timeline extends Component {
     const years = maps.map(map => map.year)
     const ratios = this.calcIntervalWidth(years)
     return (
-      <div className="timeline" ref={t => (this.timeline = t)}>
+      <div
+        className="timeline"
+        ref={t => (this.timeline = t)}
+        style={{ [!maps.length && 'width']: '100%' }}
+      >
         {maps.map((map, i) => (
           <Interval
             startYear={map.year}
