@@ -3,6 +3,12 @@ import { NNBMap, MapManager, Timeline, InfoPanel } from './'
 import './../styles/App.css'
 
 class MapTimeline extends Component {
+  componentDidMount() {
+    // Timeline component needs the timelineContainer ref for correct styling.
+    // This ensures it receives the ref
+    this.forceUpdate()
+  }
+
   render() {
     const {
       selectedEvent,
