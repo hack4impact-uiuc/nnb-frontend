@@ -192,8 +192,9 @@ class POIForm extends Component {
     }
 
     Api.editPOI(id, poi)
-      .then(poi => {
-        Api.postPOIToStories(poi, stories)
+      .then(() => {
+        // TODO: edit stories poi is in
+        // Api.postPOIToStories(poi, stories)
         return poi
       })
       .then(poi =>
