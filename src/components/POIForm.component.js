@@ -150,12 +150,15 @@ class POIForm extends Component {
     } = this.props
 
     const {
-      name,
-      description,
-      startDate,
-      isUploadingMedia,
       content,
+      coordinateX,
+      coordinateY,
+      description,
+      id,
+      isUploadingMedia,
       links,
+      name,
+      startDate,
       stories
     } = this.state
 
@@ -170,21 +173,25 @@ class POIForm extends Component {
     }
 
     const poi = {
-      name,
-      mapByYear: selectedMap.year,
-      description,
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl.contentUrl ? contentUrl.contentUrl : contentUrl,
+        caption: 'caption'
+      })),
+      coordinateX,
+      coordinateY,
       date: startDate,
+      description,
+      // id,
       links: links.map(linkTuple => ({
         url: linkTuple[0],
         urlName: linkTuple[1]
       })),
-      content: content.map(contentUrl => ({
-        contentUrl: contentUrl,
-        caption: 'caption'
-      }))
+      mapByYear: selectedMap.year,
+      name,
+      stories
     }
 
-    Api.editPOI(this.props.selectedEvent.id, poi)
+    Api.editPOI(id, poi)
       .then(poi => {
         Api.postPOIToStories(poi, stories)
         return poi
@@ -247,7 +254,7 @@ class POIForm extends Component {
       }))
     }
 
-    Api.editPOI(poi.id, poi)
+    Api.postPOI(poi)
       .then(poi => {
         Api.postPOIToStories(poi, stories)
         return poi
@@ -406,7 +413,7 @@ class POIForm extends Component {
           <button
             className="button button--dark end-button"
             onClick={
-              this.props.isUpdatingPOI ? this.onPOIEditSubmit : this.subsub
+              this.props.isUpdatingPOI ? this.onPOIEditSubmit : this.onSubmit
             }
             type="button"
           >
