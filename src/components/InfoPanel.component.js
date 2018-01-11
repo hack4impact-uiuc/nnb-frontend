@@ -32,13 +32,14 @@ class InfoPanel extends Component {
   }
 
   onClickDelete() {
-    const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
-    if (selectedMap) {
-      Api.deletePOI(selectedEvent.id).then(() =>
-        loadPOIsForYear(selectedMap.year)
-      )
+    if (window.confirm('Delete POI?')) {
+      const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
+      if (selectedMap) {
+        Api.deletePOI(selectedEvent.id).then(() =>
+          loadPOIsForYear(selectedMap.year)
+        )
+      }
     }
-    //<--TODO: Add functionality - deletes poi with message
   }
 
   handleDeleteMedia(contentUrl) {
