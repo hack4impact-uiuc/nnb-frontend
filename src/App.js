@@ -145,12 +145,18 @@ class App extends Component {
   }
 
   exitStory() {
-    this.loadPOIsForYear(this.state.selectedMap.year).then(() => {
+    const cb = () => {
       this.setState({
         selectedStory: null,
         isStorySelected: false
       })
-    })
+    }
+    const { selectedMap } = this.state
+    if (selectedMap) {
+      this.loadPOIsForYear(selectedMap.year).then(cb)
+    } else {
+      cb()
+    }
   }
 
   toggleSidebar() {

@@ -73,11 +73,13 @@ class NNBMap extends Component {
 
   updateMapImageDimensions() {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
-    this.setState({
-      mapImageLoaded: true,
-      mapImageWidth: mapImageElement.width,
-      mapImageHeight: mapImageElement.height
-    })
+    if (this.image) {
+      this.setState({
+        mapImageLoaded: true,
+        mapImageWidth: mapImageElement.width,
+        mapImageHeight: mapImageElement.height
+      })
+    }
   }
 
   startAddPOIFlow() {
@@ -114,6 +116,7 @@ class NNBMap extends Component {
 
     return (
       <div>
+        {!selectedMap && <h1 style={{ padding: '3rem' }}>No Map Selected</h1>}
         {selectedMap && (
           <div className="map-container">
             {isEditing && (
