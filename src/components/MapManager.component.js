@@ -99,7 +99,13 @@ class MapManager extends Component {
   }
 
   render() {
-    const { showInputFields, inputYear, isUploadingMedia, error } = this.state
+    const {
+      showInputFields,
+      inputYear,
+      isUploadingMedia,
+      imageUrl,
+      error
+    } = this.state
 
     return (
       <div className="map-manager-icon">
@@ -138,7 +144,12 @@ class MapManager extends Component {
                   labelClassName="modal-form__label"
                 />
 
-                {isUploadingMedia && <div>Uploading...</div>}
+                <div className="modal-form__field-group specifier modal-form__status">
+                  {!isUploadingMedia &&
+                    !imageUrl && <div>Please upload map image</div>}
+                  {!!imageUrl && <div>Image uploaded</div>}
+                  {isUploadingMedia && <div>Uploading...</div>}
+                </div>
 
                 {error && <Alert bsStyle="danger">{error}</Alert>}
 
