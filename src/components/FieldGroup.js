@@ -23,7 +23,8 @@ function FieldGroup({
   validationState,
   className,
   labelClassName,
-  multipleFileUpload
+  multipleFileUpload,
+  disabled
 }) {
   let fieldGroupModule
 
@@ -78,7 +79,12 @@ function FieldGroup({
       break
     case 'button':
       fieldGroupModule = (
-        <button className="button button--dark" onClick={onClick} type="button">
+        <button
+          className="button button--dark"
+          onClick={onClick}
+          type="button"
+          disabled={disabled}
+        >
           {buttonText}
         </button>
       )

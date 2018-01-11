@@ -18,6 +18,7 @@ class MapManager extends Component {
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
+    this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,6 +99,11 @@ class MapManager extends Component {
     return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 
+  shouldDisableSubmit() {
+    const { inputYear, imageUrl } = this.state
+    return !inputYear || !imageUrl || !this.isFormValid()
+  }
+
   render() {
     const {
       showInputFields,
@@ -157,6 +163,7 @@ class MapManager extends Component {
                   inputType="button"
                   buttonText="Submit"
                   onClick={this.onSubmit}
+                  disabled={this.shouldDisableSubmit()}
                 />
               </Form>
             )}
