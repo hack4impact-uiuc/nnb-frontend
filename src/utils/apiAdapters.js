@@ -42,6 +42,13 @@ function convertToApiStoriesMultiple(poi, selectedStories) {
   }
 }
 
+function convertToApiEditStoriesMultiple(poiId, selectedStories) {
+  return {
+    poi_id: poiId,
+    stories: selectedStories
+  }
+}
+
 /**
  * convert from api
  */
@@ -85,6 +92,7 @@ export default {
   convertToApiPOI,
   convertToApiStory,
   convertToApiStoriesMultiple,
+  convertToApiEditStoriesMultiple,
   convertFromApiMap,
   convertFromApiPOI,
   convertFromApiStory

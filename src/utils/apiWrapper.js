@@ -84,6 +84,14 @@ function postPOIToStories(poi, selectedStories) {
   )
 }
 
+function editPOIStories(poiId, selectedStories) {
+  return createRequest(
+    REQUEST_METHODS.POST,
+    'stories/edit/multiple',
+    adapters.convertToApiEditStoriesMultiple(poiId, selectedStories)
+  )
+}
+
 function postPOI(poi) {
   return createRequest(
     REQUEST_METHODS.POST,
@@ -176,6 +184,7 @@ export default {
   getPOIsByYear,
   getPOIsByStory,
   postPOIToStories,
+  editPOIStories,
   postPOI,
   editPOI,
   deletePOI,
