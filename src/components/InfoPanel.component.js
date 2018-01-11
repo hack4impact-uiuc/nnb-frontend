@@ -34,11 +34,13 @@ class InfoPanel extends Component {
   }
 
   onClickDelete() {
-    const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
-    if (selectedMap) {
-      Api.deletePOI(selectedEvent.id).then(() =>
-        loadPOIsForYear(selectedMap.year)
-      )
+    if (window.confirm('Delete POI?')) {
+      const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
+      if (selectedMap) {
+        Api.deletePOI(selectedEvent.id).then(() =>
+          loadPOIsForYear(selectedMap.year)
+        )
+      }
     }
   }
 
@@ -57,7 +59,8 @@ class InfoPanel extends Component {
       selectedEvent,
       isEditing,
       isStorySelected,
-      isRealTimePOI
+      isRealTimePOI,
+      showPOIForm
     } = this.props
 
     if (!selectedEvent) {
@@ -96,14 +99,15 @@ class InfoPanel extends Component {
             : youtubePlayer
           return (
             <Carousel.Item key={url} className="carousel-item">
-              {isEditing && (
-                <Icon
-                  type="Trash"
-                  size="large"
-                  className="carousel-item__delete-icon"
-                  onClick={this.handleDeleteMedia.bind(this, content)}
-                />
-              )}
+              {isEditing &&
+                showPOIForm && (
+                  <Icon
+                    type="Trash"
+                    size="large"
+                    className="carousel-item__delete-icon"
+                    onClick={this.handleDeleteMedia.bind(this, content)}
+                  />
+                )}
               {displayContent}
             </Carousel.Item>
           )

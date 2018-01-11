@@ -1,15 +1,33 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import { Icon } from './'
 
 class NavBar extends PureComponent {
+  promptAndExitStory = () => {
+    if (
+      window.confirm(
+        'Exit story? Cannot be in edit mode while viewing a story.'
+      )
+    ) {
+      this.props.exitStory()
+      this.props.onEdit()
+    }
+  }
+
   render() {
     const {
+      endYear,
+      isEditing,
+      isLoggedIn,
       isStorySelected,
+      onEdit,
+      selectedMap,
       selectedStoryName,
+      setLogin,
+      setShowLogin,
+      showLogin,
       startYear,
-      endYear
+      toggleSidebar
     } = this.props
     const contextYears = `${startYear} - ${endYear}`
     return (
@@ -18,29 +36,67 @@ class NavBar extends PureComponent {
           <Icon
             type="Menu"
             size="large"
-            onClick={this.props.toggleSidebar}
+            onClick={toggleSidebar}
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-          <div className="navbar-content__item-context navbar-content__context ">
-            Now Viewing:
-          </div>
-          {isStorySelected && (
-            <div className="navbar-content__item-context navbar-content__context-story-name ">
-              {selectedStoryName}:
+
+          {!showLogin &&
+            !!selectedMap && (
+              <div className="navbar-content__item-context navbar-content__context ">
+                Now Viewing:
+              </div>
+            )}
+
+          {isStorySelected &&
+            !!selectedMap &&
+            !showLogin && (
+              <div className="navbar-content__item-context navbar-content__context-story-name ">
+                {selectedStoryName}:
+              </div>
+            )}
+
+          {!showLogin &&
+            !!selectedMap && (
+              <div className="navbar-content__item-context navbar-content__context-years ">
+                {contextYears}
+              </div>
+            )}
+
+          {isLoggedIn && (
+            <div
+              className="navbar-content__item"
+              onClick={isStorySelected ? this.promptAndExitStory : onEdit}
+            >
+              {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}
-          <div className="navbar-content__item-context navbar-content__context-years ">
-            {contextYears}
-          </div>
-          {this.props.showEdit && (
-            <div className="navbar-content__item" onClick={this.props.onEdit}>
-              {this.props.isEditing ? 'Disable Editing' : 'Enable Editing'}
+          {!isLoggedIn &&
+            !showLogin && (
+              <div
+                className="navbar-content__item"
+                onClick={() => setShowLogin(true)}
+              >
+                Login
+              </div>
+            )}
+          {!isLoggedIn &&
+            !!showLogin && (
+              <div
+                className="navbar-content__item"
+                onClick={() => setShowLogin(false)}
+              >
+                Home
+              </div>
+            )}
+          {!!isLoggedIn && (
+            <div
+              className="navbar-content__item"
+              onClick={() => setLogin(false)}
+            >
+              Logout
             </div>
           )}
-          <Link to="/login">
-            <div className="navbar-content__item">Login</div>
-          </Link>
         </div>
       </Navbar>
     )

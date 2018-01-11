@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { StoryList, POIFormPanel, MapTimeline, NavBar } from './components'
-import { Api } from './utils'
+import {
+  StoryList,
+  POIFormPanel,
+  MapTimeline,
+  NavBar,
+  Login
+} from './components'
+import { Api, storage } from './utils'
 import './styles/App.css'
 import moment from 'moment'
 
@@ -18,22 +24,26 @@ class App extends Component {
     showSidebar: false,
     isEditing: false,
     isLoggedIn: false,
-    isUpdatingPOI: false
+    isUpdatingPOI: false,
+    showLogin: false
   }
 
   constructor(props) {
     super(props)
+    this.deleteMap = this.deleteMap.bind(this)
+    this.exitStory = this.exitStory.bind(this)
+    this.loadMaps = this.loadMaps.bind(this)
     this.loadPOIs = this.loadPOIs.bind(this)
     this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
-    this.loadMaps = this.loadMaps.bind(this)
-    this.deleteMap = this.deleteMap.bind(this)
-    this.toggleEditMode = this.toggleEditMode.bind(this)
-    this.setSelectedPOI = this.setSelectedPOI.bind(this)
-    this.toggleSidebar = this.toggleSidebar.bind(this)
-    this.setShowPOIForm = this.setShowPOIForm.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
+    this.setLogin = this.setLogin.bind(this)
+    this.setSelectedPOI = this.setSelectedPOI.bind(this)
     this.setSelectedStory = this.setSelectedStory.bind(this)
+    this.setShowLogin = this.setShowLogin.bind(this)
+    this.setShowPOIForm = this.setShowPOIForm.bind(this)
+    this.toggleEditMode = this.toggleEditMode.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
     this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
     this.setIsUpdatingPOI = this.setIsUpdatingPOI.bind(this)
@@ -49,6 +59,15 @@ class App extends Component {
     // example of how to use api requests
     this.loadStories()
     this.loadMaps()
+    if (storage.get('auth')) {
+      this.setLogin(true)
+    }
+  }
+
+  toggleEditMode() {
+    this.setState({
+      isEditing: !this.state.isEditing
+    })
   }
 
   loadPOIs() {
@@ -72,13 +91,15 @@ class App extends Component {
     return Api.getMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
-      this.loadPOIsForYear(data[0].year)
+      if (data[0]) {
+        this.loadPOIsForYear(data[0].year)
+      }
     })
   }
 
   deleteMap(mapId) {
     return Api.deleteMap(mapId).then(() => {
-      this.loadMaps()
+      this.setState({ selectedMap: null }, () => this.loadMaps())
     })
   }
 
@@ -136,12 +157,18 @@ class App extends Component {
   }
 
   exitStory() {
-    this.loadPOIsForYear(this.state.selectedMap.year).then(() => {
+    const cb = () => {
       this.setState({
         selectedStory: null,
         isStorySelected: false
       })
-    })
+    }
+    const { selectedMap } = this.state
+    if (selectedMap) {
+      this.loadPOIsForYear(selectedMap.year).then(cb)
+    } else {
+      cb()
+    }
   }
 
   toggleSidebar() {
@@ -166,15 +193,35 @@ class App extends Component {
     this.setState({ isUpdatingPOI })
   }
 
+  setShowLogin(val) {
+    this.setState({
+      showLogin: val
+    })
+  }
+
+  setLogin(val) {
+    this.setState({
+      isLoggedIn: val,
+      [!val && 'isEditing']: false
+    })
+    if (val) {
+      storage.set('auth', true)
+    } else {
+      storage.set('auth', false)
+    }
+  }
+
   render() {
     const {
-      showPOIForm,
       isEditing,
-      selectedMap,
-      maps,
+      isLoggedIn,
       isStorySelected,
-      stories,
-      selectedStory
+      maps,
+      selectedMap,
+      selectedStory,
+      showLogin,
+      showPOIForm,
+      stories
     } = this.state
     const startYearIndex =
       !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
@@ -191,47 +238,58 @@ class App extends Component {
       <div className="app">
         <StoryList
           {...this.state}
-          toggleSidebar={this.toggleSidebar}
-          setSelectedStory={this.setSelectedStory}
           exitStory={this.exitStory}
           loadStories={this.loadStories}
+          setSelectedStory={this.setSelectedStory}
+          toggleEditMode={this.toggleEditMode}
+          toggleSidebar={this.toggleSidebar}
         />
         {/*TODO: change to is logged in*/}
         <NavBar
-          showEdit={true}
-          onEdit={this.toggleEditMode}
-          isEditing={isEditing}
-          toggleSidebar={this.toggleSidebar}
-          isStorySelected={isStorySelected}
-          startYear={!!selectedMap && selectedMap.year}
           endYear={!!selectedMap && endYear}
+          exitStory={this.exitStory}
+          isEditing={isEditing}
+          isLoggedIn={isLoggedIn}
+          isStorySelected={isStorySelected}
+          onEdit={this.toggleEditMode}
+          selectedMap={selectedMap}
           selectedStoryName={selectedStoryName}
+          setLogin={this.setLogin}
+          setShowLogin={this.setShowLogin}
+          showEdit={true}
+          showLogin={showLogin}
+          startYear={!!selectedMap && selectedMap.year}
+          toggleSidebar={this.toggleSidebar}
         />
-        {/* Comment out the components to leave only the one you need to work on */}
+        {showLogin && (
+          <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
+        )}
         <div>
-          {!showPOIForm && (
-            <MapTimeline
-              {...this.state}
-              setSelectedPOI={this.setSelectedPOI}
-              setShowPOIForm={this.setShowPOIForm}
-              setClickedCoords={this.setClickedCoords}
-              loadMaps={this.loadMaps}
-              deleteMap={this.deleteMap}
-              loadPOIsForYear={this.loadPOIsForYear}
-              updateMap={this.updateMap}
-              setIsUpdatingPOI={this.setIsUpdatingPOI}
-            />
-          )}
-          {showPOIForm && (
-            <POIFormPanel
-              {...this.state}
-              setSelectedPOI={this.setSelectedPOI}
-              setShowPOIForm={this.setShowPOIForm}
-              loadPOIsForYear={this.loadPOIsForYear}
-              updateMap={this.updateMap}
-              setIsUpdatingPOI={this.setIsUpdatingPOI}
-            />
-          )}
+          {!showPOIForm &&
+            !showLogin && (
+              <MapTimeline
+                {...this.state}
+                deleteMap={this.deleteMap}
+                loadMaps={this.loadMaps}
+                loadPOIsForYear={this.loadPOIsForYear}
+                setClickedCoords={this.setClickedCoords}
+                setIsUpdatingPOI={this.setIsUpdatingPOI}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                updateMap={this.updateMap}
+              />
+            )}
+          {showPOIForm &&
+            !showLogin && (
+              <POIFormPanel
+                {...this.state}
+                loadPOIsForYear={this.loadPOIsForYear}
+                setIsUpdatingPOI={this.setIsUpdatingPOI}
+                setSelectedPOI={this.setSelectedPOI}
+                setShowPOIForm={this.setShowPOIForm}
+                updateMap={this.updateMap}
+              />
+            )}
         </div>
       </div>
     )

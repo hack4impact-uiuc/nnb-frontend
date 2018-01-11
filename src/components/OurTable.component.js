@@ -109,7 +109,11 @@ class OurTable extends Component {
           </tbody>
         </Table>
 
-        <button className="button button--dark" onClick={this.onAddRow}>
+        <button
+          className="button button--dark"
+          onClick={this.onAddRow}
+          type="button"
+        >
           + Add Link
         </button>
       </div>
