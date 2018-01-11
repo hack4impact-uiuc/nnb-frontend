@@ -5,17 +5,18 @@ import { Icon } from './'
 class NavBar extends PureComponent {
   render() {
     const {
-      isStorySelected,
-      selectedStoryName,
-      startYear,
       endYear,
+      isEditing,
       isLoggedIn,
-      toggleSidebar,
-      showLogin,
+      isStorySelected,
       onEdit,
-      setShowLogin,
+      selectedMap,
+      selectedStoryName,
       setLogin,
-      isEditing
+      setShowLogin,
+      showLogin,
+      startYear,
+      toggleSidebar
     } = this.props
     const contextYears = `${startYear} - ${endYear}`
     return (
@@ -29,24 +30,27 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          {!showLogin && (
-            <div className="navbar-content__item-context navbar-content__context ">
-              Now Viewing:
-            </div>
-          )}
+          {!showLogin &&
+            !!selectedMap && (
+              <div className="navbar-content__item-context navbar-content__context ">
+                Now Viewing:
+              </div>
+            )}
 
           {isStorySelected &&
+            !!selectedMap &&
             !showLogin && (
               <div className="navbar-content__item-context navbar-content__context-story-name ">
                 {selectedStoryName}:
               </div>
             )}
 
-          {!showLogin && (
-            <div className="navbar-content__item-context navbar-content__context-years ">
-              {contextYears}
-            </div>
-          )}
+          {!showLogin &&
+            !!selectedMap && (
+              <div className="navbar-content__item-context navbar-content__context-years ">
+                {contextYears}
+              </div>
+            )}
 
           {isLoggedIn && (
             <div className="navbar-content__item" onClick={onEdit}>

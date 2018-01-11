@@ -312,12 +312,14 @@ class POIForm extends Component {
           <button
             className="button button--dark end-button"
             onClick={this.onCancel}
+            type="button"
           >
             Cancel
           </button>
           <button
             className="button button--dark end-button"
             onClick={this.onSubmit}
+            type="button"
           >
             Submit
           </button>
