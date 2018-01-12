@@ -31,6 +31,7 @@ class POIForm extends Component {
     this.handleYoutubeInput = this.handleYoutubeInput.bind(this)
     this.addYoutube = this.addYoutube.bind(this)
     this.onPOIEditSubmit = this.onPOIEditSubmit.bind(this)
+    this.enableFormValidation = this.enableFormValidation.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -285,6 +286,12 @@ class POIForm extends Component {
     return [...storiesSet]
   }
 
+  enableFormValidation(shouldShowFormValidation) {
+    this.setState({
+      shouldShowFormValidation
+    })
+  }
+
   fileUpload() {
     const { isUploadingMedia, youtubeUrl } = this.state
     return (
@@ -386,6 +393,7 @@ class POIForm extends Component {
             shouldShowFormValidation={shouldShowFormValidation}
             data={links}
             isUpdatingPOI={isUpdatingPOI}
+            enableFormValidation={this.enableFormValidation}
           />
         </div>
 

@@ -21,14 +21,19 @@ class OurTable extends Component {
   }
 
   onAddRow() {
-    this.setState(
-      {
-        data: this.state.data.concat([
-          new Array(this.props.colNames.length).fill('')
-        ])
-      },
-      () => this.props.setLinkData(this.state.data)
-    )
+    const { data } = this.state
+    if (data && data.slice(-1) && data.slice(-1)[0] && data.slice(-1)[0][0]) {
+      this.setState(
+        {
+          data: this.state.data.concat([
+            new Array(this.props.colNames.length).fill('')
+          ])
+        },
+        () => this.props.setLinkData(this.state.data)
+      )
+    } else {
+      this.props.enableFormValidation(true)
+    }
   }
 
   onChangeLink(row, column, inputLink) {
