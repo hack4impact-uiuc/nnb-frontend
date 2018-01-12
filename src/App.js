@@ -196,7 +196,9 @@ class App extends Component {
   setLogin(val) {
     this.setState({
       isLoggedIn: val,
-      [!val && 'isEditing']: false
+      [!val && 'isEditing']: false,
+      [!val && 'showPOIForm']: false,
+      [!val && 'isUpdatingPOI']: false
     })
     if (val) {
       storage.set('auth', true)
