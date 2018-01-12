@@ -145,7 +145,8 @@ class POIForm extends Component {
       selectedMap,
       loadPOIsForYear,
       setShowPOIForm,
-      setSelectedPOI
+      setSelectedPOI,
+      setIsUpdatingPOI
     } = this.props
 
     const {
@@ -198,6 +199,7 @@ class POIForm extends Component {
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )
+      .then(() => setIsUpdatingPOI(false))
       .then(() => setShowPOIForm(false))
       .catch(() => {
         this.setState({ shouldShowFormValidation: true })
@@ -268,6 +270,7 @@ class POIForm extends Component {
 
   onCancel() {
     this.clearState()
+    this.props.setIsUpdatingPOI(false)
     this.props.setShowPOIForm(false)
   }
 
