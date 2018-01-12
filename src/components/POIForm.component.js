@@ -14,7 +14,7 @@ class POIForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: moment('1/1/' + this.props.selectedMap.year),
+      date: moment('1/1/' + this.props.selectedMap.year).utc(),
       name: '',
       description: '',
       stories: [],
@@ -51,7 +51,7 @@ class POIForm extends Component {
         this.setState({
           ...poi,
           links: poi.links.map(link => [link.url, link.urlName]),
-          date: moment(poi.date),
+          date: moment(poi.date).utc(),
           stories
         })
       })
@@ -80,7 +80,7 @@ class POIForm extends Component {
   clearState() {
     this.setState(
       {
-        startDate: moment(),
+        date: moment().utc(),
         name: '',
         description: '',
         stories: [],
@@ -158,7 +158,7 @@ class POIForm extends Component {
       isUploadingMedia,
       links,
       name,
-      startDate,
+      date,
       stories
     } = this.state
 
@@ -167,7 +167,7 @@ class POIForm extends Component {
       return
     }
 
-    if (name === '' || description === '' || !startDate) {
+    if (name === '' || description === '' || !date) {
       this.setState({ shouldShowFormValidation: true })
       return
     }
@@ -179,7 +179,7 @@ class POIForm extends Component {
       })),
       coordinateX,
       coordinateY,
-      date: startDate,
+      date,
       description,
       // id,
       links: links.map(linkTuple => ({
@@ -217,7 +217,7 @@ class POIForm extends Component {
     const {
       name,
       description,
-      startDate,
+      date,
       isUploadingMedia,
       content,
       links,
@@ -231,7 +231,7 @@ class POIForm extends Component {
       return
     }
 
-    if (name === '' || description === '' || !startDate) {
+    if (name === '' || description === '' || !date) {
       this.setState({ shouldShowFormValidation: true })
       return
     }
@@ -240,7 +240,7 @@ class POIForm extends Component {
       name,
       mapByYear: selectedMap.year,
       description,
-      date: startDate,
+      date,
       coordinateX,
       coordinateY,
       links: links.map(linkTuple => ({
@@ -329,7 +329,7 @@ class POIForm extends Component {
   render() {
     const { isUpdatingPOI } = this.props
     const {
-      startDate,
+      date,
       name,
       description,
       links,
@@ -357,11 +357,9 @@ class POIForm extends Component {
           label="Date"
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
-          selected={startDate}
-          onChange={this.handleFormInput.bind(this, 'startDate')}
-          validationState={
-            shouldShowFormValidation && !startDate ? 'error' : null
-          }
+          selected={date}
+          onChange={this.handleFormInput.bind(this, 'date')}
+          validationState={shouldShowFormValidation && !date ? 'error' : null}
         />
 
         <FieldGroup
