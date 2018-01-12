@@ -29,6 +29,8 @@ class InfoPanel extends Component {
 
   onClickEdit() {
     //<--TODO: Add functionality - bring up add poi form
+    this.props.setIsUpdatingPOI(true)
+    this.props.setShowPOIForm(true)
   }
 
   onClickDelete() {
@@ -74,7 +76,7 @@ class InfoPanel extends Component {
     const carousel = (
       <Carousel>
         {selectedEvent.content.map(content => {
-          const url = isRealTimePOI ? content : content.contentUrl
+          const url = content.contentUrl ? content.contentUrl : content
           const image = (
             <Image
               width={500}

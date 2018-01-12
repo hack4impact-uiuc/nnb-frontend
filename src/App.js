@@ -24,6 +24,7 @@ class App extends Component {
     showSidebar: false,
     isEditing: false,
     isLoggedIn: false,
+    isUpdatingPOI: false,
     showLogin: false
   }
 
@@ -44,6 +45,8 @@ class App extends Component {
     this.toggleEditMode = this.toggleEditMode.bind(this)
     this.toggleSidebar = this.toggleSidebar.bind(this)
     this.updateMap = this.updateMap.bind(this)
+    this.exitStory = this.exitStory.bind(this)
+    this.setIsUpdatingPOI = this.setIsUpdatingPOI.bind(this)
   }
 
   componentDidMount() {
@@ -180,6 +183,10 @@ class App extends Component {
     })
   }
 
+  setIsUpdatingPOI(isUpdatingPOI) {
+    this.setState({ isUpdatingPOI })
+  }
+
   setShowLogin(val) {
     this.setState({
       showLogin: val
@@ -189,7 +196,9 @@ class App extends Component {
   setLogin(val) {
     this.setState({
       isLoggedIn: val,
-      [!val && 'isEditing']: false
+      [!val && 'isEditing']: false,
+      [!val && 'showPOIForm']: false,
+      [!val && 'isUpdatingPOI']: false
     })
     if (val) {
       storage.set('auth', true)
@@ -260,6 +269,7 @@ class App extends Component {
                 loadMaps={this.loadMaps}
                 loadPOIsForYear={this.loadPOIsForYear}
                 setClickedCoords={this.setClickedCoords}
+                setIsUpdatingPOI={this.setIsUpdatingPOI}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
                 updateMap={this.updateMap}
@@ -270,6 +280,7 @@ class App extends Component {
               <POIFormPanel
                 {...this.state}
                 loadPOIsForYear={this.loadPOIsForYear}
+                setIsUpdatingPOI={this.setIsUpdatingPOI}
                 setSelectedPOI={this.setSelectedPOI}
                 setShowPOIForm={this.setShowPOIForm}
                 updateMap={this.updateMap}

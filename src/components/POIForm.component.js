@@ -14,7 +14,7 @@ class POIForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      startDate: moment('1/1/' + this.props.selectedMap.year),
+      date: moment('1/1/' + this.props.selectedMap.year).utc(),
       name: '',
       description: '',
       stories: [],
@@ -23,17 +23,38 @@ class POIForm extends Component {
       links: [],
       shouldShowFormValidation: false
     }
+
     this.onSubmit = this.onSubmit.bind(this)
     this.onCancel = this.onCancel.bind(this)
     this.onImageUpload = this.onImageUpload.bind(this)
     this.handleFormInput = this.handleFormInput.bind(this)
     this.handleYoutubeInput = this.handleYoutubeInput.bind(this)
     this.addYoutube = this.addYoutube.bind(this)
+    this.onPOIEditSubmit = this.onPOIEditSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
       this.setState({ ...nextProps.selectedEvent })
+    }
+  }
+
+  componentDidMount() {
+    const { isUpdatingPOI, selectedEvent } = this.props
+    if (isUpdatingPOI && selectedEvent) {
+      const requests = [
+        Api.getPOI(selectedEvent.id),
+        Api.getStoriesByPOI(selectedEvent.id)
+      ]
+      Promise.all(requests).then(responses => {
+        const [poi, stories] = responses
+        this.setState({
+          ...poi,
+          links: poi.links.map(link => [link.url, link.urlName]),
+          date: moment(poi.date).utc(),
+          stories
+        })
+      })
     }
   }
 
@@ -59,7 +80,7 @@ class POIForm extends Component {
   clearState() {
     this.setState(
       {
-        startDate: moment(),
+        date: moment().utc(),
         name: '',
         description: '',
         stories: [],
@@ -119,6 +140,71 @@ class POIForm extends Component {
     )
   }
 
+  onPOIEditSubmit() {
+    const {
+      selectedMap,
+      loadPOIsForYear,
+      setShowPOIForm,
+      setSelectedPOI,
+      setIsUpdatingPOI
+    } = this.props
+
+    const {
+      content,
+      coordinateX,
+      coordinateY,
+      description,
+      id,
+      isUploadingMedia,
+      links,
+      name,
+      date,
+      stories
+    } = this.state
+
+    if (isUploadingMedia) {
+      alert('Media is currently uploading. Please wait.')
+      return
+    }
+
+    if (name === '' || description === '' || !date) {
+      this.setState({ shouldShowFormValidation: true })
+      return
+    }
+
+    const poi = {
+      content: content.map(contentUrl => ({
+        contentUrl: contentUrl.contentUrl ? contentUrl.contentUrl : contentUrl,
+        caption: 'caption'
+      })),
+      coordinateX,
+      coordinateY,
+      date,
+      description,
+      // id,
+      links: links.map(linkTuple => ({
+        url: linkTuple[0],
+        urlName: linkTuple[1]
+      })),
+      mapByYear: selectedMap.year,
+      name,
+      stories
+    }
+
+    Api.editPOI(id, poi)
+      .then(() => {
+        Api.editPOIStories(id, stories)
+      })
+      .then(() =>
+        loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
+      )
+      .then(() => setIsUpdatingPOI(false))
+      .then(() => setShowPOIForm(false))
+      .catch(() => {
+        this.setState({ shouldShowFormValidation: true })
+      })
+  }
+
   onSubmit() {
     const {
       selectedMap,
@@ -131,7 +217,7 @@ class POIForm extends Component {
     const {
       name,
       description,
-      startDate,
+      date,
       isUploadingMedia,
       content,
       links,
@@ -145,7 +231,7 @@ class POIForm extends Component {
       return
     }
 
-    if (name === '' || description === '' || !startDate) {
+    if (name === '' || description === '' || !date) {
       this.setState({ shouldShowFormValidation: true })
       return
     }
@@ -154,7 +240,7 @@ class POIForm extends Component {
       name,
       mapByYear: selectedMap.year,
       description,
-      date: startDate,
+      date,
       coordinateX,
       coordinateY,
       links: links.map(linkTuple => ({
@@ -183,6 +269,7 @@ class POIForm extends Component {
 
   onCancel() {
     this.clearState()
+    this.props.setIsUpdatingPOI(false)
     this.props.setShowPOIForm(false)
   }
 
@@ -231,6 +318,7 @@ class POIForm extends Component {
           })}
           onClick={this.addYoutube}
           disabled={!parseYoutubeUrl(youtubeUrl)}
+          type="button"
         >
           Add Youtube Video
         </button>
@@ -239,16 +327,18 @@ class POIForm extends Component {
   }
 
   render() {
+    const { isUpdatingPOI } = this.props
     const {
-      startDate,
+      date,
       name,
       description,
+      links,
       shouldShowFormValidation
     } = this.state
 
     return (
       <Form className="poi-form">
-        <PageHeader>Create POI</PageHeader>
+        <PageHeader>{isUpdatingPOI ? 'Edit' : 'Create'} POI</PageHeader>
 
         <FieldGroup
           controlID="name"
@@ -257,6 +347,7 @@ class POIForm extends Component {
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
           placeholder="Enter POI name here"
+          value={name}
           onChange={this.handleFormInput.bind(this, 'name')}
           validationState={shouldShowFormValidation && !name ? 'error' : null}
         />
@@ -266,11 +357,9 @@ class POIForm extends Component {
           label="Date"
           className="poi-form__field-group specifier"
           labelClassName="poi-form__label"
-          selected={startDate}
-          onChange={this.handleFormInput.bind(this, 'startDate')}
-          validationState={
-            shouldShowFormValidation && !startDate ? 'error' : null
-          }
+          selected={date}
+          onChange={this.handleFormInput.bind(this, 'date')}
+          validationState={shouldShowFormValidation && !date ? 'error' : null}
         />
 
         <FieldGroup
@@ -295,6 +384,8 @@ class POIForm extends Component {
             colNames={['Link URL', 'Display Name']}
             setLinkData={this.handleFormInput.bind(this, 'links')}
             shouldShowFormValidation={shouldShowFormValidation}
+            data={links}
+            isUpdatingPOI={isUpdatingPOI}
           />
         </div>
 
@@ -305,6 +396,7 @@ class POIForm extends Component {
           options={this.props.stories}
           label="Add To Stories"
           onClick={this.handleFormInput.bind(this, 'stories')}
+          checkedOptionIds={this.state.stories}
         />
 
         <FormControl.Feedback />
@@ -319,7 +411,9 @@ class POIForm extends Component {
           </button>
           <button
             className="button button--dark end-button"
-            onClick={this.onSubmit}
+            onClick={
+              this.props.isUpdatingPOI ? this.onPOIEditSubmit : this.onSubmit
+            }
             type="button"
           >
             Submit
@@ -335,7 +429,7 @@ export default POIForm
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 function parseYoutubeUrl(url) {
   if (!url) return false
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
   const match = url.match(regExp)
   return match && match[7].length === 11 ? match[7] : false
 }

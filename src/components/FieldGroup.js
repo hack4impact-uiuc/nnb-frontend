@@ -23,6 +23,7 @@ function FieldGroup({
   validationState,
   className,
   labelClassName,
+  checkedOptionIds,
   multipleFileUpload,
   disabled
 }) {
@@ -92,7 +93,12 @@ function FieldGroup({
     case 'checklist':
       fieldGroupModule = options.map(option => (
         <div key={option.id}>
-          <Checkbox onClick={() => onClick(option.id)}>{option.name}</Checkbox>
+          <Checkbox
+            onClick={() => onClick(option.id)}
+            checked={checkedOptionIds.includes(option.id)}
+          >
+            {option.name}
+          </Checkbox>
         </div>
       ))
       break

@@ -3,16 +3,21 @@ import { Table } from 'react-bootstrap'
 import { Icon, FieldGroup } from '../components'
 
 class OurTable extends Component {
+  state = {
+    data: this.props.isUpdatingPOI
+      ? this.props.data
+      : [new Array(this.props.colNames.length).fill('')]
+  }
+
   constructor(props) {
     super(props)
-    //colNames
-
-    this.state = {
-      data: [new Array(props.colNames.length).fill('')]
-    }
     this.onAddRow = this.onAddRow.bind(this)
     this.onChangeLink = this.onChangeLink.bind(this)
     this.onDeleteRow = this.onDeleteRow.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.data })
   }
 
   onAddRow() {

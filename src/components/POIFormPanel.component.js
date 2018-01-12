@@ -4,8 +4,14 @@ import './../styles/App.css'
 
 class POIFormPanel extends Component {
   state = {
-    realTimePOI: null
+    realTimePOI: this.props.isUpdatingPOI ? this.props.selectedEvent : null
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.isUpdatingPOI) {
+  //     this.setState({ realTimePOI: nextProps.selectedEvent })
+  //   }
+  // }
 
   updatePOI = poi => {
     this.setState({
