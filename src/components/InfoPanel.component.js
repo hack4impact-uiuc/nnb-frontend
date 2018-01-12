@@ -4,7 +4,7 @@ import YoutubePlayer from 'react-youtube'
 import { Icon } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
-import { Api } from './../utils'
+import { Api, utils } from './../utils'
 
 class InfoPanel extends Component {
   constructor(props) {
@@ -120,7 +120,7 @@ class InfoPanel extends Component {
     const isShownPrev = curIndex > 0
 
     let links = selectedEvent.links
-    if (links && isRealTimePOI) {
+    if (links && isRealTimePOI && Array.isArray(links[0])) {
       links = selectedEvent.links.map(linkPair => ({
         url: linkPair[0],
         urlName: linkPair[1]
@@ -176,11 +176,12 @@ class InfoPanel extends Component {
               <div className="additional-links">
                 <h4>Additional Links:</h4>
                 <ul className="additional-links__ul">
-                  {links.map(link => {
+                  {links.map((link, i) => {
                     const displayText = link.urlName ? link.urlName : link.url
+                    const validatedLink = utils.validateLink(link.url)
                     return (
-                      <li key={link.url} className="additional-links__li">
-                        <a href={link.url} target="new">
+                      <li key={link.url + i} className="additional-links__li">
+                        <a href={validatedLink} target="new">
                           {displayText}
                         </a>
                       </li>

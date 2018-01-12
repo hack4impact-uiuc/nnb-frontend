@@ -4,7 +4,7 @@ import moment from 'moment'
 import { isEqual } from 'lodash'
 import classnames from 'classnames'
 import { FieldGroup, OurTable } from '../components'
-import { Api } from './../utils'
+import { Api, utils } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
 import './../styles/poi-form.css'
@@ -31,11 +31,17 @@ class POIForm extends Component {
     this.handleYoutubeInput = this.handleYoutubeInput.bind(this)
     this.addYoutube = this.addYoutube.bind(this)
     this.onPOIEditSubmit = this.onPOIEditSubmit.bind(this)
+    this.enableFormValidation = this.enableFormValidation.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
-      this.setState({ ...nextProps.selectedEvent })
+      this.setState({
+        ...nextProps.selectedEvent,
+        [!!nextProps.selectedEvent && 'date']: moment(
+          nextProps.selectedEvent ? nextProps.selectedEvent.date : undefined
+        ).utc()
+      })
     }
   }
 
@@ -48,12 +54,15 @@ class POIForm extends Component {
       ]
       Promise.all(requests).then(responses => {
         const [poi, stories] = responses
-        this.setState({
-          ...poi,
-          links: poi.links.map(link => [link.url, link.urlName]),
-          date: moment(poi.date).utc(),
-          stories
-        })
+        this.setState(
+          {
+            ...poi,
+            links: poi.links.map(link => [link.url, link.urlName]),
+            date: moment(poi.date).utc(),
+            stories
+          },
+          () => this.props.updatePOI(this.state)
+        )
       })
     }
   }
@@ -130,7 +139,7 @@ class POIForm extends Component {
   }
 
   addYoutube() {
-    const youtubeVideoId = parseYoutubeUrl(this.state.youtubeUrl)
+    const youtubeVideoId = utils.parseYoutubeUrl(this.state.youtubeUrl)
     this.setState(
       {
         content: [...this.state.content, youtubeVideoId],
@@ -183,7 +192,7 @@ class POIForm extends Component {
       description,
       // id,
       links: links.map(linkTuple => ({
-        url: linkTuple[0],
+        url: utils.validateLink(linkTuple[0]),
         urlName: linkTuple[1]
       })),
       mapByYear: selectedMap.year,
@@ -244,7 +253,7 @@ class POIForm extends Component {
       coordinateX,
       coordinateY,
       links: links.map(linkTuple => ({
-        url: linkTuple[0],
+        url: utils.validateLink(linkTuple[0]),
         urlName: linkTuple[1]
       })),
       content: content.map(contentUrl => ({
@@ -285,6 +294,12 @@ class POIForm extends Component {
     return [...storiesSet]
   }
 
+  enableFormValidation(shouldShowFormValidation) {
+    this.setState({
+      shouldShowFormValidation
+    })
+  }
+
   fileUpload() {
     const { isUploadingMedia, youtubeUrl } = this.state
     return (
@@ -309,15 +324,15 @@ class POIForm extends Component {
           value={youtubeUrl}
           onChange={this.handleYoutubeInput}
           validationState={
-            !!youtubeUrl && !parseYoutubeUrl(youtubeUrl) ? 'error' : null
+            !!youtubeUrl && !utils.parseYoutubeUrl(youtubeUrl) ? 'error' : null
           }
         />
         <button
           className={classnames('button', 'button--dark', {
-            'button--disabled': !parseYoutubeUrl(youtubeUrl)
+            'button--disabled': !utils.parseYoutubeUrl(youtubeUrl)
           })}
           onClick={this.addYoutube}
-          disabled={!parseYoutubeUrl(youtubeUrl)}
+          disabled={!utils.parseYoutubeUrl(youtubeUrl)}
           type="button"
         >
           Add Youtube Video
@@ -386,6 +401,7 @@ class POIForm extends Component {
             shouldShowFormValidation={shouldShowFormValidation}
             data={links}
             isUpdatingPOI={isUpdatingPOI}
+            enableFormValidation={this.enableFormValidation}
           />
         </div>
 
@@ -425,11 +441,3 @@ class POIForm extends Component {
 }
 
 export default POIForm
-
-// https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
-function parseYoutubeUrl(url) {
-  if (!url) return false
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  const match = url.match(regExp)
-  return match && match[7].length === 11 ? match[7] : false
-}
