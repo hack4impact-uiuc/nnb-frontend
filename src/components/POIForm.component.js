@@ -194,10 +194,9 @@ class POIForm extends Component {
     Api.editPOI(id, poi)
       .then(() => {
         Api.editPOIStories(id, stories)
-        return poi
       })
-      .then(poi =>
-        loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
+      .then(() =>
+        loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
       )
       .then(() => setIsUpdatingPOI(false))
       .then(() => setShowPOIForm(false))
