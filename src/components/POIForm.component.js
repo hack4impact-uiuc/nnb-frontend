@@ -36,7 +36,12 @@ class POIForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.selectedEvent, this.props.selectedEvent)) {
-      this.setState({ ...nextProps.selectedEvent })
+      this.setState({
+        ...nextProps.selectedEvent,
+        [!!nextProps.selectedEvent && 'date']: moment(
+          nextProps.selectedEvent ? nextProps.selectedEvent.date : undefined
+        ).utc()
+      })
     }
   }
 
@@ -49,12 +54,15 @@ class POIForm extends Component {
       ]
       Promise.all(requests).then(responses => {
         const [poi, stories] = responses
-        this.setState({
-          ...poi,
-          links: poi.links.map(link => [link.url, link.urlName]),
-          date: moment(poi.date).utc(),
-          stories
-        })
+        this.setState(
+          {
+            ...poi,
+            links: poi.links.map(link => [link.url, link.urlName]),
+            date: moment(poi.date).utc(),
+            stories
+          },
+          () => this.props.updatePOI(this.state)
+        )
       })
     }
   }

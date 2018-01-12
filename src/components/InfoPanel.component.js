@@ -120,7 +120,7 @@ class InfoPanel extends Component {
     const isShownPrev = curIndex > 0
 
     let links = selectedEvent.links
-    if (links && isRealTimePOI) {
+    if (links && isRealTimePOI && Array.isArray(links[0])) {
       links = selectedEvent.links.map(linkPair => ({
         url: linkPair[0],
         urlName: linkPair[1]

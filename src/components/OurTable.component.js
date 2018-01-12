@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
+import { isEqual } from 'lodash'
 import { Icon, FieldGroup } from '../components'
 
 class OurTable extends Component {
@@ -16,13 +17,22 @@ class OurTable extends Component {
     this.onDeleteRow = this.onDeleteRow.bind(this)
   }
 
+  componentDidMount() {
+    this.props.setLinkData(this.state.data)
+  }
+
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.data })
+    if (!isEqual(nextProps.data, this.state.data)) {
+      this.setState({ data: nextProps.data })
+    }
   }
 
   onAddRow() {
     const { data } = this.state
-    if (data && data.slice(-1) && data.slice(-1)[0] && data.slice(-1)[0][0]) {
+    if (
+      (data && data.slice(-1) && data.slice(-1)[0] && data.slice(-1)[0][0]) ||
+      (!!data && !data.length)
+    ) {
       this.setState(
         {
           data: this.state.data.concat([
@@ -80,22 +90,22 @@ class OurTable extends Component {
             {
               //for every row in rowCount
             }
-            {data.map((_, row_index) => (
-              <tr key={row_index}>
+            {data.map((_, rowIndex) => (
+              <tr key={rowIndex}>
                 {
                   //create an editable textfield cell for each column name except for the last one
                 }
-                {colNames.slice(0, colNames.length).map((_, col_index) => (
-                  <th key={col_index}>
+                {colNames.slice(0, colNames.length).map((_, colIndex) => (
+                  <th key={colIndex}>
                     <FieldGroup
                       inputType="text"
-                      value={data[row_index][col_index]}
-                      onChange={e => this.onChangeLink(row_index, col_index, e)}
+                      value={data[rowIndex][colIndex]}
+                      onChange={e => this.onChangeLink(rowIndex, colIndex, e)}
                       validationState={
                         shouldShowFormValidation &&
-                        (col_index === 0 &&
-                          (!data[row_index][col_index] ||
-                            !data[row_index][col_index].startsWith('http://')))
+                        (colIndex === 0 &&
+                          (!data[rowIndex][colIndex] ||
+                            !data[rowIndex][colIndex].startsWith('http://')))
                           ? 'error'
                           : null
                       }
@@ -106,7 +116,7 @@ class OurTable extends Component {
                   <Icon
                     type="X"
                     size="small"
-                    onClick={() => this.onDeleteRow(row_index)}
+                    onClick={() => this.onDeleteRow(rowIndex)}
                   />
                 </th>
               </tr>
