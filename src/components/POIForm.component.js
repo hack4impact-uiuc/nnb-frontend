@@ -4,7 +4,7 @@ import moment from 'moment'
 import { isEqual } from 'lodash'
 import classnames from 'classnames'
 import { FieldGroup, OurTable } from '../components'
-import { Api } from './../utils'
+import { Api, utils } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
 import './../styles/poi-form.css'
@@ -139,7 +139,7 @@ class POIForm extends Component {
   }
 
   addYoutube() {
-    const youtubeVideoId = parseYoutubeUrl(this.state.youtubeUrl)
+    const youtubeVideoId = utils.parseYoutubeUrl(this.state.youtubeUrl)
     this.setState(
       {
         content: [...this.state.content, youtubeVideoId],
@@ -192,7 +192,7 @@ class POIForm extends Component {
       description,
       // id,
       links: links.map(linkTuple => ({
-        url: linkTuple[0],
+        url: utils.validateLink(linkTuple[0]),
         urlName: linkTuple[1]
       })),
       mapByYear: selectedMap.year,
@@ -253,7 +253,7 @@ class POIForm extends Component {
       coordinateX,
       coordinateY,
       links: links.map(linkTuple => ({
-        url: linkTuple[0],
+        url: utils.validateLink(linkTuple[0]),
         urlName: linkTuple[1]
       })),
       content: content.map(contentUrl => ({
@@ -324,15 +324,15 @@ class POIForm extends Component {
           value={youtubeUrl}
           onChange={this.handleYoutubeInput}
           validationState={
-            !!youtubeUrl && !parseYoutubeUrl(youtubeUrl) ? 'error' : null
+            !!youtubeUrl && !utils.parseYoutubeUrl(youtubeUrl) ? 'error' : null
           }
         />
         <button
           className={classnames('button', 'button--dark', {
-            'button--disabled': !parseYoutubeUrl(youtubeUrl)
+            'button--disabled': !utils.parseYoutubeUrl(youtubeUrl)
           })}
           onClick={this.addYoutube}
-          disabled={!parseYoutubeUrl(youtubeUrl)}
+          disabled={!utils.parseYoutubeUrl(youtubeUrl)}
           type="button"
         >
           Add Youtube Video
@@ -441,11 +441,3 @@ class POIForm extends Component {
 }
 
 export default POIForm
-
-// https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
-function parseYoutubeUrl(url) {
-  if (!url) return false
-  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  const match = url.match(regExp)
-  return match && match[7].length === 11 ? match[7] : false
-}
