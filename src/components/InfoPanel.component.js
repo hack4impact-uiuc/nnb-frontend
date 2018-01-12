@@ -176,10 +176,10 @@ class InfoPanel extends Component {
               <div className="additional-links">
                 <h4>Additional Links:</h4>
                 <ul className="additional-links__ul">
-                  {links.map(link => {
+                  {links.map((link, i) => {
                     const displayText = link.urlName ? link.urlName : link.url
                     return (
-                      <li key={link.url} className="additional-links__li">
+                      <li key={link.url + i} className="additional-links__li">
                         <a href={link.url} target="new">
                           {displayText}
                         </a>
