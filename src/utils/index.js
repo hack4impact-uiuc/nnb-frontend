@@ -4,7 +4,7 @@ import storage from './webStorage'
 
 function validateLink(link) {
   let validatedLink = link
-  if (!link.startsWith('http://')) {
+  if (!(link.startsWith('http://') || link.startsWith('https://'))) {
     validatedLink = `http://${link}`
   }
   return validatedLink
