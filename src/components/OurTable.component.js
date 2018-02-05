@@ -47,8 +47,10 @@ class OurTable extends Component {
   }
 
   onChangeLink(row, column, inputLink) {
-    let temp = this.state.data.slice() //copies data
-    temp[row].splice(column, 1, inputLink.target.value) //replace stuff at specified column with our target value
+    const temp = [...this.state.data]
+
+    // replace stuff at specified column with our target value
+    temp[row].splice(column, 1, inputLink.target.value)
     this.setState(
       {
         data: temp
@@ -67,8 +69,6 @@ class OurTable extends Component {
       () => this.props.setLinkData(this.state.data)
     )
   }
-
-  //languages.splice(1, 1, 'Python');  sfv
 
   render() {
     const { colNames, shouldShowFormValidation } = this.props
