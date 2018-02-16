@@ -14,6 +14,15 @@ This project was bootstrapped using [Create React App](https://github.com/facebo
 
 ## Setup
 
+#### Environment Variables
+Check the pinned messages in the nnb-frontend Slack channel for the proper environment variables. These should be a set of export commands that you can copy and paste into your terminal. To get these environment variables to load in each time you open the terminal, add the commands to your .bashrc file. This can be done by opening up your .bashrc file in vim:
+```
+$ cd ~
+$ vim .bashrc
+```
+
+Press `i` to go into insert mode, then right click to paste the commands to your text cursor location. Press `Esc` and then type `:wq` to write to the file and exit.
+
 #### `npm install`
 Installs dependencies. Should only be required during initial setup or when new dependencies are added.
 
