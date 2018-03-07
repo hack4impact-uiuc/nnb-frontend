@@ -1,3 +1,4 @@
+import App from './App'
 import InfoPanel from './InfoPanel.component'
 import NNBMap from './NNBMap.component'
 import POIForm from './POIForm.component'
@@ -16,6 +17,7 @@ import Login from './Login.component'
 import StuffList from './StuffList.container'
 
 export {
+  App,
   InfoPanel,
   NNBMap,
   POIForm,
