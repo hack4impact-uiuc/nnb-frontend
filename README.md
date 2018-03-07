@@ -9,6 +9,8 @@ This project was bootstrapped using [Create React App](https://github.com/facebo
 - [scss](#adding-a-css-preprocessor-sass-less-etc)
 - [react bootstrap](#adding-bootstrap)
 - [prettier + precommit hook](#formatting-code-automatically)
+- [Redux](https://redux.js.org/)
+- [React Router](https://github.com/ReactTraining/react-router)
 
 # Contributing
 

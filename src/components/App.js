@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import {
   StoryList,
   POIFormPanel,
@@ -6,10 +7,9 @@ import {
   NavBar,
   Login,
   StuffList
-} from './components'
-import { Api, storage } from './utils'
-import './styles/App.css'
-import moment from 'moment'
+} from './'
+import { Api, storage } from './../utils'
+import './../styles/App.css'
 
 class App extends Component {
   // using dummy data until BE api is done
