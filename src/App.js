@@ -4,7 +4,8 @@ import {
   POIFormPanel,
   MapTimeline,
   NavBar,
-  Login
+  Login,
+  StuffList
 } from './components'
 import { Api, storage } from './utils'
 import './styles/App.css'
@@ -257,6 +258,7 @@ class App extends Component {
           startYear={!!selectedMap && selectedMap.year}
           toggleSidebar={this.toggleSidebar}
         />
+        <StuffList />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}

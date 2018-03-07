@@ -13,6 +13,7 @@ import NavBar from './NavBar'
 import Interval from './Interval.component'
 import Icon from './Icon.component'
 import Login from './Login.component'
+import StuffList from './StuffList.container'
 
 export {
   InfoPanel,
@@ -29,5 +30,6 @@ export {
   NavBar,
   Interval,
   Icon,
-  Login
+  Login,
+  StuffList
 }
