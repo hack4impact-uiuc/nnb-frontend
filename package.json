@@ -17,9 +17,12 @@
     "react-datepicker": "^0.60.2",
     "react-dom": "^16.0.0",
     "react-feather": "^1.0.8",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.0.14",
     "react-sidebar": "^2.3.2",
     "react-youtube": "^7.5.0",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "superagent": "^3.8.1"
   },
   "scripts": {
