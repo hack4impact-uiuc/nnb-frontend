@@ -6,7 +6,8 @@ import {
   MapTimeline,
   NavBar,
   Login,
-  StuffList
+  StuffList,
+  Edit
 } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
@@ -259,6 +260,7 @@ class App extends Component {
           toggleSidebar={this.toggleSidebar}
         />
         <StuffList />
+        <Edit />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}
