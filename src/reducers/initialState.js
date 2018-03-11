@@ -1,5 +1,8 @@
 const initialState = {
-  stuff: []
+  stuff: [],
+  edit: {
+    isEditing: false
+  }
 }
 
 export default initialState

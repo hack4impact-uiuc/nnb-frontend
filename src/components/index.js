@@ -15,6 +15,7 @@ import Interval from './Interval.component'
 import Icon from './Icon.component'
 import Login from './Login.component'
 import StuffList from './StuffList.container'
+import Edit from './Edit.container'
 
 export {
   App,
@@ -33,5 +34,6 @@ export {
   Interval,
   Icon,
   Login,
-  StuffList
+  StuffList,
+  Edit
 }

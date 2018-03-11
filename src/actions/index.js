@@ -1,3 +1,4 @@
 import { fetchStuff } from './stuff.action'
+import { enableEditMode, disableEditMode } from './edit.action'
 
-export { fetchStuff }
+export { fetchStuff, enableEditMode, disableEditMode }
