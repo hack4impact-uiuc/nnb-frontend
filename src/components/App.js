@@ -259,8 +259,6 @@ class App extends Component {
           startYear={!!selectedMap && selectedMap.year}
           toggleSidebar={this.toggleSidebar}
         />
-        <StuffList />
-        <Edit />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}
