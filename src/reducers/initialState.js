@@ -3,7 +3,22 @@ const initialState = {
   edit: {
     isEditing: false
   },
-  pois: { asdf: 1 }
+  pois: {
+    activePOIs: [],
+    selectedPOIId: 1
+  },
+  poiForm: {
+    name: '',
+    date: '',
+    description: '',
+    storyIds: [],
+    media: [],
+    links: [],
+    meta: {
+      isUploadingMedia: false,
+      shouldShowFormValidation: false
+    }
+  }
 }
 
 export default initialState

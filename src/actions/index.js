@@ -4,8 +4,21 @@ import {
   getPois,
   getPoiById,
   getPoiByMapYear,
-  getPoiByStoryId
+  getPoiByStoryId,
+  postPoi,
+  putPoi,
+  deletePoi
 } from './getPOI.action'
 
-export { fetchStuff, enableEditMode, disableEditMode }
-export { getPois, getPoiById, getPoiByMapYear, getPoiByStoryId }
+export {
+  fetchStuff,
+  enableEditMode,
+  disableEditMode,
+  getPois,
+  getPoiById,
+  getPoiByMapYear,
+  getPoiByStoryId,
+  postPoi,
+  putPoi,
+  deletePoi
+}

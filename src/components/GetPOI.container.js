@@ -4,13 +4,16 @@ import {
   getPois,
   getPoiById,
   getPoiByMapYear,
-  getPoiByStoryId
+  getPoiByStoryId,
+  postPoi,
+  putPoi,
+  deletePoi
 } from './../actions'
 import GetPOI from './GetPOI.component'
 
 function mapStateToProps(state) {
   return {
-    pois: state.getPoi.pois
+    pois: state.getPoi
   }
 }
 
@@ -20,7 +23,10 @@ function mapDispatchToProps(dispatch) {
       getPois,
       getPoiById,
       getPoiByMapYear,
-      getPoiByStoryId
+      getPoiByStoryId,
+      postPoi,
+      putPoi,
+      deletePoi
     },
     dispatch
   )

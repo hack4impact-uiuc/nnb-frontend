@@ -4,9 +4,11 @@ import { Button } from 'react-bootstrap'
 
 export default class GetPOI extends Component {
   state = { getPoiBy: '' }
+
+  // Make sure that only numbers can be entered into the text box
   handleTextChange = event => {
     event.target.value.match(/^\d+(\.\d+)?$/) || event.target.value === ''
-      ? this.setState({ getPoiBy: event.target.value })
+      ? this.setState({ getPoiBy: Number(event.target.value) })
       : null
   }
   render() {
@@ -15,8 +17,21 @@ export default class GetPOI extends Component {
       getPois,
       getPoiById,
       getPoiByMapYear,
-      getPoiByStoryId
+      getPoiByStoryId,
+      postPoi,
+      putPoi,
+      deletePoi
     } = this.props
+    const dummyPoi = {
+      name: 'Rick Astley',
+      description: 'Never Gonna Give You Up',
+      date: '1987-07-27',
+      mapByYear: 1987,
+      coordinateX: 7,
+      coordinateY: 27,
+      links: [],
+      content: []
+    }
     return (
       <div>
         <FieldGroup
@@ -36,9 +51,21 @@ export default class GetPOI extends Component {
         <Button onClick={() => getPoiByStoryId(this.state.getPoiBy)}>
           Get POI by Story ID
         </Button>
+        <Button onClick={() => postPoi(dummyPoi)}>Add POI (dummy)</Button>
+        <Button onClick={() => putPoi(this.state.getPoiBy, dummyPoi)}>
+          Edit POI (dummy)
+        </Button>
+        <Button onClick={() => deletePoi(this.state.getPoiBy)}>
+          Delete POI by ID
+        </Button>
         <br />
         <br />
-        {JSON.stringify(pois)}
+        {console.log(pois)}
+        {pois.activePOIs.map(poi => (
+          <li>
+            ID {poi.id}: {poi.name}
+          </li>
+        ))}
       </div>
     )
   }

@@ -1,32 +1,50 @@
 import initialState from './initialState'
 import {
-  LOAD_POIS,
-  LOAD_POI_ID,
-  LOAD_POI_MAP_YEAR,
-  LOAD_POI_STORY_ID
+  POIS_LOADED,
+  POI_BY_ID_LOADED,
+  POI_BY_MAP_YEAR_LOADED,
+  POI_BY_STORY_ID_LOADED,
+  POI_CREATED,
+  POI_EDITED,
+  POI_DELETED
 } from './../actions/actionTypes'
 
-export default function getPoi(state = initialState, action) {
+export default function getPoi(state = initialState.pois, action) {
   switch (action.type) {
-    case LOAD_POIS:
+    case POIS_LOADED:
       return {
         ...state,
-        pois: action.payload
+        activePOIs: action.payload
       }
-    case LOAD_POI_ID:
+    case POI_BY_ID_LOADED:
       return {
         ...state,
-        pois: action.payload
+        activePOIs: action.payload
       }
-    case LOAD_POI_MAP_YEAR:
+    case POI_BY_MAP_YEAR_LOADED:
       return {
         ...state,
-        pois: action.payload
+        activePOIs: action.payload
       }
-    case LOAD_POI_STORY_ID:
+    case POI_BY_STORY_ID_LOADED:
       return {
         ...state,
-        pois: action.payload
+        activePOIs: action.payload
+      }
+    case POI_CREATED:
+      return {
+        ...state,
+        activePOIs: action.payload
+      }
+    case POI_EDITED:
+      return {
+        ...state,
+        activePOIs: action.payload
+      }
+    case POI_DELETED:
+      return {
+        ...state,
+        activePOIs: []
       }
     default:
       return state
