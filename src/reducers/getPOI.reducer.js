@@ -7,7 +7,6 @@ import {
 } from './../actions/actionTypes'
 
 export default function getPoi(state = initialState, action) {
-  console.log(state)
   switch (action.type) {
     case LOAD_POIS:
       return {

@@ -19,7 +19,6 @@ export default class GetPOI extends Component {
     } = this.props
     return (
       <div>
-        {pois}
         <FieldGroup
           controlId="getPoiBy"
           label="Enter POI ID, map year, or story ID"
@@ -37,6 +36,9 @@ export default class GetPOI extends Component {
         <Button onClick={() => getPoiByStoryId(this.state.getPoiBy)}>
           Get POI by Story ID
         </Button>
+        <br />
+        <br />
+        {JSON.stringify(pois)}
       </div>
     )
   }
