@@ -51,9 +51,9 @@ function deleteMap(mapId) {
  * POI
  */
 function getPOIs() {
-  return createRequest(REQUEST_METHODS.GET, 'pois')
-    .then(res => res.data)
-    .then(res => res.map(r => r.data).map(adapters.convertFromApiPOI))
+  return createRequest(REQUEST_METHODS.GET, 'pois').then(res =>
+    res.data.map(adapters.convertFromApiPOI)
+  )
 }
 
 function getPOI(id) {
