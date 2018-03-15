@@ -105,7 +105,7 @@ function editPOI(poiId, poi) {
     REQUEST_METHODS.PUT,
     `pois/${poiId}`,
     adapters.convertToApiPOI(poi)
-  ).then(res => res.data)
+  )
 }
 
 function deletePOI(poiId) {

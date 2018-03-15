@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { FieldGroup } from '../components'
 import { Button } from 'react-bootstrap'
+import moment from 'moment'
 
 export default class GetPOI extends Component {
   state = { getPoiBy: '' }
@@ -27,7 +28,7 @@ export default class GetPOI extends Component {
     const dummyPoi = {
       name: 'Rick Astley',
       description: 'Never Gonna Give You Up',
-      date: Date('1987-07-27'),
+      date: moment('1987-07-27'),
       mapByYear: 1987,
       coordinateX: 7,
       coordinateY: 27,
@@ -72,6 +73,7 @@ export default class GetPOI extends Component {
         </Button>
         <br />
         <br />
+        {/* {console.log(pois)} */}
         {pois.activePOIs.map(poi => (
           <li>
             ID {poi.id}: {poi.name}

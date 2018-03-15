@@ -8,7 +8,7 @@ import {
   postPoi,
   putPoi,
   deletePoi
-} from './getPOI.action'
+} from './pois.action'
 
 export {
   fetchStuff,

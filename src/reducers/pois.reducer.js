@@ -9,7 +9,7 @@ import {
   POI_DELETED
 } from './../actions/actionTypes'
 
-export default function getPoi(state = initialState.pois, action) {
+export default function pois(state = initialState.pois, action) {
   switch (action.type) {
     case POIS_LOADED:
       return {

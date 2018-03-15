@@ -13,7 +13,7 @@ import GetPOI from './GetPOI.component'
 
 function mapStateToProps(state) {
   return {
-    pois: state.getPoi
+    pois: state.pois
   }
 }
 
