@@ -7,9 +7,11 @@ export default class GetPOI extends Component {
 
   // Make sure that only numbers can be entered into the text box
   handleTextChange = event => {
-    event.target.value.match(/^\d+(\.\d+)?$/) || event.target.value === ''
+    event.target.value.match(/^\d+(\.\d+)?$/)
       ? this.setState({ getPoiBy: Number(event.target.value) })
-      : null
+      : event.target.value === ''
+        ? this.setState({ getPoiBy: event.target.value })
+        : null
   }
   render() {
     const {
@@ -25,12 +27,22 @@ export default class GetPOI extends Component {
     const dummyPoi = {
       name: 'Rick Astley',
       description: 'Never Gonna Give You Up',
-      date: '1987-07-27',
+      date: Date('1987-07-27'),
       mapByYear: 1987,
       coordinateX: 7,
       coordinateY: 27,
-      links: [],
-      content: []
+      links: [
+        {
+          url: 'https://www.youtube.com/watch?v=ghGoI7xVtSI',
+          urlName: 'Greatest Hits Live'
+        }
+      ],
+      content: [
+        {
+          contentUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          caption: 'Greatest Hits'
+        }
+      ]
     }
     return (
       <div>
@@ -60,7 +72,6 @@ export default class GetPOI extends Component {
         </Button>
         <br />
         <br />
-        {console.log(pois)}
         {pois.activePOIs.map(poi => (
           <li>
             ID {poi.id}: {poi.name}
