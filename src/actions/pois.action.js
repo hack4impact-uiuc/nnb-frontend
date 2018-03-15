@@ -5,24 +5,12 @@ function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
 }
 
-function poiByIdLoaded(poi) {
-  return { type: actionTypes.POI_BY_ID_LOADED, payload: poi }
+function poiCreated(id, poi) {
+  return { type: actionTypes.POI_CREATED, payload: { id, poi } }
 }
 
-function poiByMapYearLoaded(pois) {
-  return { type: actionTypes.POI_BY_MAP_YEAR_LOADED, payload: pois }
-}
-
-function poiByStoryIdLoaded(poi) {
-  return { type: actionTypes.POI_BY_STORY_ID_LOADED, payload: poi }
-}
-
-function poiCreated(poi) {
-  return { type: actionTypes.POI_CREATED, payload: poi }
-}
-
-function poiEdited(poi) {
-  return { type: actionTypes.POI_EDITED, payload: poi }
+function poiEdited(id, poi) {
+  return { type: actionTypes.POI_EDITED, payload: { id, poi } }
 }
 
 function poiDeleted(id) {
@@ -37,35 +25,33 @@ export function getPois() {
 
 export function getPoiById(id) {
   return dispatch => {
-    return Api.getPOI(id).then(poi => dispatch(poiByIdLoaded([poi])))
+    return Api.getPOI(id).then(poi => dispatch(poisLoaded([poi])))
   }
 }
 
-export function getPoiByMapYear(mapYear) {
+export function getPoisByMapYear(mapYear) {
   return dispatch => {
     return Api.getPOIsByYear(mapYear).then(res =>
-      dispatch(poiByMapYearLoaded(res.pois))
+      dispatch(poisLoaded(res.pois))
     )
   }
 }
 
-export function getPoiByStoryId(storyId) {
+export function getPoisByStoryId(storyId) {
   return dispatch => {
-    return Api.getPOIsByStory(storyId).then(poi =>
-      dispatch(poiByStoryIdLoaded([poi]))
-    )
+    return Api.getPOIsByStory(storyId).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
 export function postPoi(poi) {
   return dispatch => {
-    return Api.postPOI(poi).then(poi => dispatch(poiCreated([poi])))
+    return Api.postPOI(poi).then(res => dispatch(poiCreated(res.id, poi)))
   }
 }
 
 export function putPoi(id, poi) {
   return dispatch => {
-    return Api.editPOI(id, poi).then(poi => dispatch(poiEdited([poi])))
+    return Api.editPOI(id, poi).then(dispatch(poiEdited(id, poi)))
   }
 }
 

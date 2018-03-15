@@ -3,8 +3,8 @@ import { enableEditMode, disableEditMode } from './edit.action'
 import {
   getPois,
   getPoiById,
-  getPoiByMapYear,
-  getPoiByStoryId,
+  getPoisByMapYear,
+  getPoisByStoryId,
   postPoi,
   putPoi,
   deletePoi
@@ -16,8 +16,8 @@ export {
   disableEditMode,
   getPois,
   getPoiById,
-  getPoiByMapYear,
-  getPoiByStoryId,
+  getPoisByMapYear,
+  getPoisByStoryId,
   postPoi,
   putPoi,
   deletePoi

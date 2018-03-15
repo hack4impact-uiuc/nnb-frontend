@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 import {
   getPois,
   getPoiById,
-  getPoiByMapYear,
-  getPoiByStoryId,
+  getPoisByMapYear,
+  getPoisByStoryId,
   postPoi,
   putPoi,
   deletePoi
@@ -22,8 +22,8 @@ function mapDispatchToProps(dispatch) {
     {
       getPois,
       getPoiById,
-      getPoiByMapYear,
-      getPoiByStoryId,
+      getPoisByMapYear,
+      getPoisByStoryId,
       postPoi,
       putPoi,
       deletePoi

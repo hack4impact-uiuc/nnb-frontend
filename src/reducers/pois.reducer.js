@@ -1,9 +1,6 @@
 import initialState from './initialState'
 import {
   POIS_LOADED,
-  POI_BY_ID_LOADED,
-  POI_BY_MAP_YEAR_LOADED,
-  POI_BY_STORY_ID_LOADED,
   POI_CREATED,
   POI_EDITED,
   POI_DELETED
@@ -16,35 +13,30 @@ export default function pois(state = initialState.pois, action) {
         ...state,
         activePOIs: action.payload
       }
-    case POI_BY_ID_LOADED:
-      return {
-        ...state,
-        activePOIs: action.payload
-      }
-    case POI_BY_MAP_YEAR_LOADED:
-      return {
-        ...state,
-        activePOIs: action.payload
-      }
-    case POI_BY_STORY_ID_LOADED:
-      return {
-        ...state,
-        activePOIs: action.payload
-      }
     case POI_CREATED:
       return {
         ...state,
-        activePOIs: action.payload
+        activePOIs: [
+          ...state.activePOIs,
+          { ...action.payload.poi, id: action.payload.id }
+        ]
       }
     case POI_EDITED:
       return {
         ...state,
-        activePOIs: action.payload
+        activePOIs: [...state.activePOIs].map(
+          poi =>
+            poi.id === action.payload.id
+              ? { ...action.payload.poi, id: action.payload.id }
+              : poi
+        )
       }
     case POI_DELETED:
       return {
         ...state,
-        activePOIs: []
+        activePOIs: [...state.activePOIs].filter(
+          poi => poi.id != action.payload
+        )
       }
     default:
       return state

@@ -19,8 +19,8 @@ export default class GetPOI extends Component {
       pois,
       getPois,
       getPoiById,
-      getPoiByMapYear,
-      getPoiByStoryId,
+      getPoisByMapYear,
+      getPoisByStoryId,
       postPoi,
       putPoi,
       deletePoi
@@ -58,10 +58,10 @@ export default class GetPOI extends Component {
         <Button onClick={() => getPoiById(this.state.getPoiBy)}>
           Get POI by ID
         </Button>
-        <Button onClick={() => getPoiByMapYear(this.state.getPoiBy)}>
+        <Button onClick={() => getPoisByMapYear(this.state.getPoiBy)}>
           Get POI by Map Year
         </Button>
-        <Button onClick={() => getPoiByStoryId(this.state.getPoiBy)}>
+        <Button onClick={() => getPoisByStoryId(this.state.getPoiBy)}>
           Get POI by Story ID
         </Button>
         <Button onClick={() => postPoi(dummyPoi)}>Add POI (dummy)</Button>
