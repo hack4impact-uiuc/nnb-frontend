@@ -35,7 +35,7 @@ export default function pois(state = initialState.pois, action) {
       return {
         ...state,
         activePOIs: [...state.activePOIs].filter(
-          poi => poi.id != action.payload
+          poi => poi.id !== action.payload
         )
       }
     default:

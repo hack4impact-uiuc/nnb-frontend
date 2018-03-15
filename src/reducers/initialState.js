@@ -5,7 +5,7 @@ const initialState = {
   },
   pois: {
     activePOIs: [],
-    selectedPOIId: 1
+    selectedPOIId: null
   }
 }
 
