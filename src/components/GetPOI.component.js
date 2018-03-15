@@ -73,7 +73,6 @@ export default class GetPOI extends Component {
         </Button>
         <br />
         <br />
-        {/* {console.log(pois)} */}
         {pois.activePOIs.map(poi => (
           <li>
             ID {poi.id}: {poi.name}
