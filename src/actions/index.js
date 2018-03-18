@@ -2,7 +2,8 @@ import { fetchStuff } from './stuff.action'
 import { enableEditMode, disableEditMode } from './edit.action'
 import {
   getStories,
-  getStoriesById,
+  getStoriesByPOI,
+  getStory,
   postStory,
   editStory,
   deleteStory
@@ -12,7 +13,8 @@ export {
   enableEditMode,
   disableEditMode,
   getStories,
-  getStoriesById,
+  getStoriesByPOI,
+  getStory,
   postStory,
   editStory,
   deleteStory
