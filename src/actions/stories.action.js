@@ -25,8 +25,8 @@ export function getStories() {
 
 export function getStoriesByPOI(poiId) {
   return dispatch => {
-    return Api.getStoriesByPOI(poiId).then(storyIDs =>
-      dispatch(storiesLoaded(storyIDs))
+    return Api.getStoriesByPOI(poiId).then(storyIds =>
+      dispatch(storiesLoaded(storyIds))
     )
   }
 }

@@ -42,11 +42,11 @@ export default class GetStories extends Component {
         <Button onClick={() => getStory(this.state.getStoryBy)}>
           Get Story by Story ID
         </Button>
-        <Button onClick={() => postStory(storyDummy.storyName)}>
+        <Button onClick={() => postStory(storyDummy.name)}>
           Add Story (dummy)
         </Button>
         <Button
-          onClick={() => editStory(this.state.getStoryBy, storyDummy.storyName)}
+          onClick={() => editStory(this.state.getStoryBy, storyDummy.name)}
         >
           Edit Story (dummy)
         </Button>
