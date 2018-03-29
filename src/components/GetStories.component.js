@@ -28,13 +28,6 @@ export default class GetStories extends Component {
     }
     return (
       <div>
-        <FieldGroup
-          controlId="getStoryBy"
-          label="Enter POI ID or Story ID"
-          inputType="text"
-          value={this.state.getStoryBy}
-          onChange={this.handleTextChange}
-        />
         <Button onClick={getStories}>Get Stories</Button>
         <br />
         {stories.stories.map(story => (

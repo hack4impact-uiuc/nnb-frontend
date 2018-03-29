@@ -6,15 +6,21 @@ function storiesLoaded(stories) {
 }
 
 function storyCreated(storyId, storyName) {
-  return { type: actionTypes.STORY_CREATED, payload: { storyId, storyName } }
+  return {
+    type: actionTypes.STORY_CREATED,
+    payload: { id: storyId, name: storyName }
+  }
 }
 
 function storyEdited(storyId, storyName) {
-  return { type: actionTypes.STORY_EDITED, payload: { storyId, storyName } }
+  return {
+    type: actionTypes.STORY_EDITED,
+    payload: { id: storyId, name: storyName }
+  }
 }
 
 function storyDeleted(storyId) {
-  return { type: actionTypes.STORY_DELETED, payload: storyId }
+  return { type: actionTypes.STORY_DELETED, payload: { id: storyId } }
 }
 
 export function getStories() {
