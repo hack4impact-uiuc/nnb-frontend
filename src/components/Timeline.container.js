@@ -1,20 +1,20 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { enableShowMapsMode, disableShowMapsMode } from './../actions'
+import { enableShowMap, disableShowMap } from './../actions'
 import Timeline from './Timeline.component'
 
 function mapStateToProps(state) {
   return {
-    isShowing: state.show.isShowing
+    showingMap: state.showMap.showingMap
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      enableShowMapsMode,
-      disableShowMapsMode
+      enableShowMap,
+      disableShowMap
     },
     dispatch
   )

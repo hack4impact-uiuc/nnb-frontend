@@ -3,8 +3,8 @@ const initialState = {
   edit: {
     isEditing: false
   },
-  map_show: {
-    show_maps: false
+  showMap: {
+    showingMap: false
   }
 }
 
