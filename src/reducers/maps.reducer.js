@@ -1,13 +1,22 @@
 import initialState from './initialState'
-import { SHOW_MAP_ENABLED, SHOW_MAP_DISABLED } from '../actions/actionTypes'
+import { MAPS_LOADED, MAP_REMOVED, MAP_CREATED } from '../actions/actionTypes'
 
-export default function showMap(state = initialState.showMap, action) {
+export default function maps(state = initialState.timeline, action) {
   switch (action.type) {
-    case SHOW_MAP_ENABLED:
-    case SHOW_MAP_DISABLED:
+    case MAPS_LOADED:
       return {
         ...state,
-        showingMap: action.payload
+        maps: action.payload
+      }
+    case MAP_REMOVED:
+      return {
+        ...state,
+        maps: [...state.maps].filter(map => map != action.payload)
+      }
+    case MAP_CREATED:
+      return {
+        ...state,
+        maps: [...state.maps, action.payload]
       }
     default:
       return state

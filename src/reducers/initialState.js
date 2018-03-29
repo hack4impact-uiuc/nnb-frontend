@@ -3,8 +3,9 @@ const initialState = {
   edit: {
     isEditing: false
   },
-  showMap: {
-    showingMap: false
+  timeline: {
+    maps: [],
+    selectedMapId: null
   }
 }
 

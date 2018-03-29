@@ -6,5 +6,6 @@ export const EDIT_MODE_ENABLED = 'EDIT_MODE_ENABLED'
 export const EDIT_MODE_DISABLED = 'EDIT_MODE_DISABLED'
 
 // map_show
-export const SHOW_MAP_ENABLED = 'SHOW_MAP_ENABLED'
-export const SHOW_MAP_DISABLED = 'SHOW_MAP_DISABLED'
+export const MAPS_LOADED = 'MAPS_LOADED'
+export const MAP_CREATED = 'MAP_CREATED'
+export const MAP_REMOVED = 'MAP_REMOVED'

@@ -16,6 +16,7 @@ import Icon from './Icon.component'
 import Login from './Login.component'
 import StuffList from './StuffList.container'
 import Edit from './Edit.container'
+import GetMaps from './GetMaps.container'
 
 export {
   App,
@@ -35,5 +36,6 @@ export {
   Icon,
   Login,
   StuffList,
-  Edit
+  Edit,
+  GetMaps
 }
