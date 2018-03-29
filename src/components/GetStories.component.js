@@ -36,27 +36,13 @@ export default class GetStories extends Component {
           onChange={this.handleTextChange}
         />
         <Button onClick={getStories}>Get Stories</Button>
-        <Button onClick={() => getStoriesByPOI(this.state.getStoryBy)}>
-          Get Story by POI
-        </Button>
-        <Button onClick={() => getStory(this.state.getStoryBy)}>
-          Get Story by Story ID
-        </Button>
-        <Button onClick={() => postStory(storyDummy.name)}>
-          Add Story (dummy)
-        </Button>
-        <Button
-          onClick={() => editStory(this.state.getStoryBy, storyDummy.name)}
-        >
-          Edit Story (dummy)
-        </Button>
-        <br />
         <br />
         {stories.stories.map(story => (
           <li>
             Story ID: {story.id}, Name: {story.name}
           </li>
         ))}
+        <br />
       </div>
     )
   }
