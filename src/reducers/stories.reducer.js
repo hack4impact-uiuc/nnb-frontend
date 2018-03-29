@@ -16,27 +16,20 @@ export default function stories(state = initialState.stories, action) {
     case STORY_CREATED:
       return {
         ...state,
-        stories: [
-          state.stories,
-          { ...action.payload.storyName, storyId: action.payload.storyId }
-        ]
+        stories: [...state.stories, { ...action.payload }]
       }
     case STORY_EDITED:
       return {
         ...state,
         stories: [...state.stories].map(
           story =>
-            story.storyId === action.payload.storyId
-              ? { ...action.payload.storyName, storyId: action.payload.storyId }
-              : story
+            story.id === action.payload.id ? { ...action.payload } : story
         )
       }
     case STORY_DELETED:
       return {
         ...state,
-        stories: [...state.stories].filter(
-          story => story.storyId !== action.payload
-        )
+        stories: [...state.stories].filter(story => story.id !== action.payload)
       }
     default:
       return state

@@ -7,7 +7,8 @@ import {
   NavBar,
   Login,
   StuffList,
-  Edit
+  Edit,
+  GetStories
 } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
@@ -259,6 +260,7 @@ class App extends Component {
           startYear={!!selectedMap && selectedMap.year}
           toggleSidebar={this.toggleSidebar}
         />
+        <GetStories />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}

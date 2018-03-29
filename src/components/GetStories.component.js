@@ -20,6 +20,7 @@ export default class GetStories extends Component {
       getStoriesByPOI,
       getStory,
       postStory,
+      editStory,
       deleteStory
     } = this.props
     const storyDummy = {
@@ -53,7 +54,7 @@ export default class GetStories extends Component {
         <br />
         {stories.stories.map(story => (
           <li>
-            Story ID {story.storyId}: {story.storyName}
+            Story ID: {story.id}, Name: {story.name}
           </li>
         ))}
       </div>

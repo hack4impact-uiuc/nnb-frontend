@@ -125,7 +125,7 @@ function getStories() {
 
 function getStoriesByPOI(poiId) {
   return createRequest(REQUEST_METHODS.GET, `getstories/${poiId}`).then(
-    res => res.story_ids
+    res => res.storyIDs
   )
 }
 
