@@ -13,7 +13,7 @@ export default function stories(state = initialState.stories, action) {
         ...state,
         stories: action.payload
       }
-    case STORIES_CREATED:
+    case STORY_CREATED:
       return {
         ...state,
         stories: [
