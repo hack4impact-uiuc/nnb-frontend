@@ -4,38 +4,41 @@
 function convertToApiMap(map) {
   return {
     image_url: map.imageUrl,
-    year: map.year
+    map_year: map.year
   }
 }
 
 function convertToApiPOI(poi) {
   return {
     name: poi.name,
-    map_by_year: poi.mapByYear,
-    year: poi.date.format('YYYY'),
-    month: poi.date.format('MM'),
-    day: poi.date.format('DD'),
-    info: poi.description,
-    x_coor: poi.coordinateX,
-    y_coor: poi.coordinateY,
-    additional_links: poi.links.filter(link => !!link.url).map(link => ({
-      url: link.url,
-      url_name: link.urlName
+    map_year: poi.mapByYear,
+    date: `${poi.date.format('YYYY')} - ${poi.date.format(
+      'MM'
+    )} - ${poi.date.format('DD')}`,
+    description: poi.description,
+    x_coord: poi.coordinateX,
+    y_coord: poi.coordinateY,
+    links: poi.links.filter(link => !!link.url).map(link => ({
+      link_url: link.url,
+      display_name: link.urlName
     })),
-    content: poi.content.map(content => ({
+    media: poi.content.map(content => ({
       content_url: content.contentUrl,
       caption: content.caption
-    }))
+    })),
+    story_ids: poi.storyIds // not sure on how to do this one
   }
 }
 
 function convertToApiStory(storyName) {
   return {
     story_name: storyName
+    // poi_ids: array of poi ids
   }
 }
 
 function convertToApiStoriesMultiple(poi, selectedStories) {
+  // what is this for
   return {
     input_story_name_id: selectedStories,
     input_poi_id: poi.id
@@ -43,6 +46,7 @@ function convertToApiStoriesMultiple(poi, selectedStories) {
 }
 
 function convertToApiEditStoriesMultiple(poiId, selectedStories) {
+  // what is this for
   return {
     poi_id: poiId,
     stories: selectedStories
@@ -55,34 +59,35 @@ function convertToApiEditStoriesMultiple(poiId, selectedStories) {
 function convertFromApiMap(map) {
   return {
     imageUrl: map.image_url,
-    year: map.year,
-    id: map.id
+    year: map.map_year,
+    id: map._id
   }
 }
 
 function convertFromApiPOI(poi) {
   return {
-    id: poi.id,
+    id: poi._id,
     name: poi.name,
     date: poi.date,
-    description: poi.event_info,
+    description: poi.description,
     coordinateX: poi.x_coord,
     coordinateY: poi.y_coord,
-    mapByYear: poi.map_by_year,
-    links: poi.additional_links.map(link => ({
-      url: link.url,
-      urlName: link.url_name
+    mapByYear: poi.map_year,
+    links: poi.links.map(link => ({
+      url: link.link_url,
+      urlName: link.display_name
     })),
-    content: poi.content.map(image => ({
-      contentUrl: image.content_url,
-      caption: image.caption
-    }))
+    content: poi.media.map(content => ({
+      contentUrl: content.content_url,
+      caption: content.caption
+    })),
+    stories: poi.stories.map(convertFromApiStory)
   }
 }
 
 function convertFromApiStory(story) {
   return {
-    id: story.id,
+    id: story._id,
     name: story.story_name
   }
 }
