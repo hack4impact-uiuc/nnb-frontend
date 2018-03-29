@@ -5,6 +5,7 @@ import {
   getStoriesByPOI,
   getStory,
   postStory,
+  editStory,
   deleteStory
 } from './../actions'
 import GetStories from './GetStories.component'

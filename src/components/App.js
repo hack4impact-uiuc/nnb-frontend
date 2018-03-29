@@ -7,7 +7,8 @@ import {
   NavBar,
   Login,
   StuffList,
-  Edit
+  Edit,
+  GetStories
 } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
