@@ -36,21 +36,28 @@ export default class Login extends Component {
       username,
       password
     }
-
-    Api.postLogin(data)
-      .then(({ message: error, status }) => {
-        if (status === 'failed') {
-          this.setState({ error })
-        } else {
-          this.props.setLogin(true)
-          this.props.setShowLogin(false)
-        }
-      })
-      .catch(err => {
-        //TODO: Handle any error from request
-        console.error(err)
-        this.setState({ error: 'An unknown error occured' })
-      })
+    // RIPerino
+    if (username === 'admin' && password === 'admin') {
+      this.props.setLogin(true)
+      this.props.setShowLogin(false)
+    } else {
+      this.setState({ error: 'incorrect credentials dawg' })
+    }
+    // intentionally leaving this commented here until we fix auth
+    // Api.postLogin(data)
+    //   .then(({ message: error, status }) => {
+    //     if (status === 'failed') {
+    //       this.setState({ error })
+    //     } else {
+    //       this.props.setLogin(true)
+    //       this.props.setShowLogin(false)
+    //     }
+    //   })
+    //   .catch(err => {
+    //     //TODO: Handle any error from request
+    //     console.error(err)
+    //     this.setState({ error: 'An unknown error occured' })
+    //   })
   }
 
   render() {
@@ -75,7 +82,7 @@ export default class Login extends Component {
           <FieldGroup
             controlID="password"
             label="password"
-            inputType="text"
+            inputType="password"
             placeholder="Enter your password here"
             className="login__field-group specifier"
             labelClassName="login__label"
