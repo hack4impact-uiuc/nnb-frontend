@@ -120,7 +120,7 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    Api.getPOIs({ storyId: storyId }).then(storyPOIs => {
+    Api.getPOIs({ storyId }).then(storyPOIs => {
       storyPOIs.sort(compareYear)
       this.setState(
         {

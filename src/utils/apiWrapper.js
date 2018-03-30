@@ -29,7 +29,7 @@ function createRequest(method, endpoint, options) {
 }
 
 /**
- * New POIs
+ * POIs
  */
 
 function getPOIs(params) {
@@ -75,7 +75,7 @@ function deletePOI(poiId) {
 }
 
 /**
- * New Maps
+ * Maps
  */
 
 function getMaps() {
@@ -101,7 +101,7 @@ function deleteMap(mapId) {
 }
 
 /**
- * New Stories
+ * Stories
  */
 
 function getStories(poiId) {
