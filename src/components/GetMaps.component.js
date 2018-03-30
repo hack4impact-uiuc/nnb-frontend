@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class GetMaps extends Component {
   render() {
-    const { maps, selectedMapId, loadMaps, createMap, removeMap } = this.props
+    const { maps, loadMaps } = this.props
     return (
       <div>
         <button onClick={loadMaps}>

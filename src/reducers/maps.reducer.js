@@ -11,7 +11,7 @@ export default function maps(state = initialState.timeline, action) {
     case MAP_REMOVED:
       return {
         ...state,
-        maps: [...state.maps].filter(map => map != action.payload)
+        maps: [...state.maps].filter(map => map.id !== action.payload.id)
       }
     case MAP_CREATED:
       return {

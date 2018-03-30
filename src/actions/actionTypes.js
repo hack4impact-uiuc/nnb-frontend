@@ -8,4 +8,4 @@ export const EDIT_MODE_DISABLED = 'EDIT_MODE_DISABLED'
 // map_show
 export const MAPS_LOADED = 'MAPS_LOADED'
 export const MAP_CREATED = 'MAP_CREATED'
-export const MAP_REMOVED = 'MAP_REMOVED'
+export const MAP_DELETED = 'MAP_DELETED'
