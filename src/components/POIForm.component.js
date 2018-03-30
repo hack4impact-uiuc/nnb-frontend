@@ -50,7 +50,7 @@ class POIForm extends Component {
     if (isUpdatingPOI && selectedEvent) {
       const requests = [
         Api.getPOI(selectedEvent.id),
-        Api.getStoriesByPOI(selectedEvent.id)
+        Api.loadStoriesByPOIId(selectedEvent.id)
       ]
       Promise.all(requests).then(responses => {
         const [poi, stories] = responses

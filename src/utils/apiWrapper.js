@@ -117,13 +117,13 @@ function deletePOI(poiId) {
 /**
  * Story
  */
-function getStories() {
+function loadStories() {
   return createRequest(REQUEST_METHODS.GET, 'stories')
     .then(res => res.data)
     .then(res => res.map(adapters.convertFromApiStory))
 }
 
-function getStoriesByPOI(poiId) {
+function loadStoriesByPOIId(poiId) {
   return createRequest(REQUEST_METHODS.GET, `getstories/${poiId}`).then(
     res => res.storyIds
   )
@@ -144,7 +144,7 @@ function postStory(storyName) {
   ).then(res => res.data)
 }
 
-function editStory(storyId, storyName) {
+function updateStory(storyId, storyName) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `stories/${storyId}`,
@@ -188,12 +188,11 @@ export default {
   postPOI,
   editPOI,
   deletePOI,
-  getStories,
-  getStoriesByPOI,
-  getStory,
+  loadStories,
+  loadStoriesByPOIId,
   postStory,
   postLogin,
-  editStory,
+  updateStory,
   deleteStory,
   uploadImage
 }
