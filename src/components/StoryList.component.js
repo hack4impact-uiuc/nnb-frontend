@@ -61,7 +61,7 @@ class StoryList extends Component {
   }
 
   submitStoryName() {
-    Api.postStory(this.state.storyName)
+    Api.postStory({ name: this.state.storyName })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
@@ -73,7 +73,7 @@ class StoryList extends Component {
 
   editStoryName() {
     const { editStoryId, storyName } = this.state
-    Api.editStory(editStoryId, storyName)
+    Api.editStory({ name: storyName }, editStoryId)
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({

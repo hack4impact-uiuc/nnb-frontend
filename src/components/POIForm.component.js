@@ -50,7 +50,7 @@ class POIForm extends Component {
     if (isUpdatingPOI && selectedEvent) {
       const requests = [
         Api.getPOI(selectedEvent.id),
-        Api.getStoriesByPOI(selectedEvent.id)
+        Api.getStories(selectedEvent.id)
       ]
       Promise.all(requests).then(responses => {
         const [poi, stories] = responses
@@ -200,10 +200,10 @@ class POIForm extends Component {
       stories
     }
 
-    Api.editPOI(id, poi)
-      .then(() => {
-        Api.editPOIStories(id, stories)
-      })
+    Api.editPOI(poi, id)
+      // .then(() => {
+      //   Api.editPOIStories(id, stories)
+      // })
       .then(() =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
       )
@@ -259,14 +259,15 @@ class POIForm extends Component {
       content: content.map(contentUrl => ({
         contentUrl: contentUrl,
         caption: 'caption'
-      }))
+      })),
+      stories
     }
 
     Api.postPOI(poi)
-      .then(poi => {
-        Api.postPOIToStories(poi, stories)
-        return poi
-      })
+      // .then(poi => {
+      //   Api.postPOIToStories(poi, stories)
+      //   return poi
+      // })
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )

@@ -67,13 +67,14 @@ class App extends Component {
   }
 
   loadPOIs() {
+    // how to deal with this; is this even used?
     return Api.getPOIs().then(data =>
       this.setState({ activeEvents: data, selectedEvent: null })
     )
   }
 
   loadPOIsForYear(year) {
-    return Api.getPOIsByYear(year).then(data => {
+    return Api.getPOIs({ mapYear: year }).then(data => {
       this.setState({ activeEvents: data.pois, selectedEvent: null })
       this.setState({ selectedMap: data.map })
     })
@@ -124,7 +125,7 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    Api.getPOIsByStory(storyId).then(storyPOIs => {
+    Api.getPOIs({ storyId: storyId }).then(storyPOIs => {
       storyPOIs.sort(compareYear)
       this.setState(
         {
