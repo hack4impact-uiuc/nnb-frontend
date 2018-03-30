@@ -36,12 +36,14 @@ export default class Login extends Component {
       username,
       password
     }
+    // RIPerino
     if (username === 'admin' && password === 'admin') {
       this.props.setLogin(true)
       this.props.setShowLogin(false)
     } else {
       this.setState({ error: 'incorrect credentials dawg' })
     }
+    // intentionally leaving this commented here until we fix auth
     // Api.postLogin(data)
     //   .then(({ message: error, status }) => {
     //     if (status === 'failed') {

@@ -201,9 +201,6 @@ class POIForm extends Component {
     }
 
     Api.editPOI(poi, id)
-      // .then(() => {
-      //   Api.editPOIStories(id, stories)
-      // })
       .then(() =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
       )
@@ -264,10 +261,6 @@ class POIForm extends Component {
     }
 
     Api.postPOI(poi)
-      // .then(poi => {
-      //   Api.postPOIToStories(poi, stories)
-      //   return poi
-      // })
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )

@@ -35,7 +35,6 @@ class App extends Component {
     this.deleteMap = this.deleteMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
     this.loadMaps = this.loadMaps.bind(this)
-    this.loadPOIs = this.loadPOIs.bind(this)
     this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
@@ -64,13 +63,6 @@ class App extends Component {
     this.setState({
       isEditing: !this.state.isEditing
     })
-  }
-
-  loadPOIs() {
-    // how to deal with this; is this even used?
-    return Api.getPOIs().then(data =>
-      this.setState({ activeEvents: data, selectedEvent: null })
-    )
   }
 
   loadPOIsForYear(year) {
