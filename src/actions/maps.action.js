@@ -9,8 +9,8 @@ function mapCreated(map) {
   return { type: actionTypes.MAP_CREATED, payload: map }
 }
 
-function mapRemoved(map) {
-  return { type: actionTypes.MAP_REMOVED, payload: map }
+function mapDeleted(map) {
+  return { type: actionTypes.MAP_DELETED, payload: map }
 }
 
 export function loadMaps() {
@@ -21,6 +21,6 @@ export function createMap(map) {
   return dispatch => Api.postMap(map).then(map => dispatch(mapCreated(map)))
 }
 
-export function removeMap(mapId) {
-  return dispatch => Api.deleteMap(mapId).then(map => dispatch(mapRemoved(map)))
+export function deleteMap(mapId) {
+  return dispatch => Api.deleteMap(mapId).then(map => dispatch(mapDeleted(map)))
 }

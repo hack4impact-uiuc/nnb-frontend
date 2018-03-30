@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { loadMaps, createMap, removeMap } from './../actions/maps.action'
+import { loadMaps, createMap, deleteMap } from './../actions/maps.action'
 import GetMaps from './GetMaps.component'
 
 function mapStateToProps(state) {
@@ -16,7 +16,7 @@ function mapDispatchToProps(dispatch) {
     {
       loadMaps,
       createMap,
-      removeMap
+      deleteMap
     },
     dispatch
   )
