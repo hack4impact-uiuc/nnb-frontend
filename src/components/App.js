@@ -75,8 +75,11 @@ class App extends Component {
 
   loadPOIsForYear(year) {
     return Api.getPOIs({ mapYear: year }).then(data => {
-      this.setState({ activeEvents: data.pois, selectedEvent: null })
-      this.setState({ selectedMap: data.map })
+      this.setState({
+        activeEvents: data,
+        selectedEvent: null,
+        selectedMap: this.state.maps.find(m => m.year === year)
+      })
     })
   }
 

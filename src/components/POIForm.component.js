@@ -59,7 +59,7 @@ class POIForm extends Component {
             ...poi,
             links: poi.links.map(link => [link.url, link.urlName]),
             date: moment(poi.date).utc(),
-            stories
+            stories: stories.map(s => s.id)
           },
           () => this.props.updatePOI(this.state)
         )
