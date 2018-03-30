@@ -4,7 +4,9 @@ $marker-diameter: 25px;
 
 .image-fill {
   height: calc(100vh - #{$navbar-height} - #{$timeline-height});
-  object-fit: cover;
+  // this makes the picture look nicer but it makes the POI position wrong
+  // this should be implemented correctly with map pan/zoom
+  // object-fit: cover;
 }
 
 .map-container {
