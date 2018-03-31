@@ -41,7 +41,7 @@ export default class Login extends Component {
       this.props.setLogin(true)
       this.props.setShowLogin(false)
     } else {
-      this.setState({ error: 'incorrect credentials dawg' })
+      this.setState({ error: 'incorrect credentials' })
     }
     // intentionally leaving this commented here until we fix auth
     // Api.postLogin(data)
