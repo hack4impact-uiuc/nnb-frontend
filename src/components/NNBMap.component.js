@@ -186,6 +186,7 @@ class NNBMap extends Component {
                           ref={el => (this.image = el)}
                           onClick={event => this.onImageClick(event, scale)}
                           onLoad={this.updateMapImageDimensions}
+                          draggable="false"
                         />
                       }
                       {mapImageLoaded && (
