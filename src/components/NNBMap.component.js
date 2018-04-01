@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import './../styles/map.css'
 import { POIMarker, Icon } from '../components'
+import { MapInteractionCSS, MapInteraction } from 'react-map-interaction'
 
 class NNBMap extends Component {
   state = {
@@ -44,11 +45,14 @@ class NNBMap extends Component {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
-  onImageClick(event) {
+  onImageClick(event, scale) {
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
       const domRect = element.getBoundingClientRect()
-      const imageDisplayedResolution = [element.width, element.height]
+      const imageDisplayedResolution = [
+        element.width * scale,
+        element.height * scale
+      ]
       const mouseClickCoords = [
         event.clientX - domRect.left,
         event.clientY - domRect.top
@@ -151,20 +155,53 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <Image
-              src={selectedMap.imageUrl}
-              className="image-fill map-image"
-              responsive
-              ref={el => (this.image = el)}
-              onClick={this.onImageClick}
-              onLoad={this.updateMapImageDimensions}
-            />
-            {mapImageLoaded && (
-              <POIMarkers
-                {...this.props}
-                {...{ mapImageWidth, mapImageHeight }}
-              />
-            )}
+            <MapInteraction minScale={1} maxScale={2}>
+              {({ translation, scale }) => {
+                const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+                return (
+                  <div
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      position: 'relative', // for absolutely positioned children
+                      overflow: 'hidden',
+                      touchAction: 'none', // Not supported in Safari :(
+                      msTouchAction: 'none',
+                      cursor: 'all-scroll',
+                      WebkitUserSelect: 'none',
+                      MozUserSelect: 'none',
+                      msUserSelect: 'none'
+                    }}
+                  >
+                    <div
+                      style={{
+                        transform: transform,
+                        transformOrigin: '0 0 '
+                      }}
+                    >
+                      {
+                        <Image
+                          src={selectedMap.imageUrl}
+                          className="image-fill map-image"
+                          ref={el => (this.image = el)}
+                          onClick={event => this.onImageClick(event, scale)}
+                          onLoad={this.updateMapImageDimensions}
+                        />
+                      }
+                      {mapImageLoaded && (
+                        <POIMarkers
+                          {...this.props}
+                          {...{
+                            mapImageWidth: mapImageWidth,
+                            mapImageHeight: mapImageHeight
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )
+              }}
+            </MapInteraction>
           </div>
         )}
       </div>
