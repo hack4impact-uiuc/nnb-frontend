@@ -13,7 +13,7 @@ export const MAP_DELETED = 'MAP_DELETED'
 // stories
 export const STORIES_LOADED = 'STORIES_LOADED'
 export const STORY_CREATED = 'STORY_CREATED'
-export const STORY_EDITED = 'STORY_EDITED'
+export const STORY_UPDATED = 'STORY_UPDATED'
 export const STORY_DELETED = 'STORY_DELETED'
 
 // pois

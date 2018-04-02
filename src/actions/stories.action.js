@@ -12,9 +12,9 @@ function storyCreated(storyId, storyName) {
   }
 }
 
-function storyEdited(storyId, storyName) {
+function storyUpdated(storyId, storyName) {
   return {
-    type: actionTypes.STORY_EDITED,
+    type: actionTypes.STORY_UPDATED,
     payload: { id: storyId, name: storyName }
   }
 }
@@ -49,7 +49,7 @@ export function createStory(storyName) {
 export function updateStory(storyId, storyName) {
   return dispatch => {
     return Api.updateStory(storyId, storyName).then(
-      dispatch(storyEdited(storyId, storyName))
+      dispatch(storyUpdated(storyId, storyName))
     )
   }
 }
