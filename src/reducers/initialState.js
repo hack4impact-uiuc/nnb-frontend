@@ -3,6 +3,10 @@ const initialState = {
   edit: {
     isEditing: false
   },
+  timeline: {
+    maps: [],
+    selectedMapId: null
+  },
   stories: {
     stories: [],
     selectedStoryId: 1

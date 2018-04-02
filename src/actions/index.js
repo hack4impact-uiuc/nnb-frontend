@@ -1,5 +1,6 @@
 import { fetchStuff } from './stuff.action'
 import { enableEditMode, disableEditMode } from './edit.action'
+import { loadMaps, createMap, removeMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
@@ -21,6 +22,9 @@ export {
   fetchStuff,
   enableEditMode,
   disableEditMode,
+  loadMaps,
+  createMap,
+  removeMap,
   loadStories,
   loadStoriesByPOIId,
   postStory,

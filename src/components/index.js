@@ -16,6 +16,7 @@ import Icon from './Icon.component'
 import Login from './Login.component'
 import StuffList from './StuffList.container'
 import Edit from './Edit.container'
+import GetMaps from './GetMaps.container'
 import GetStories from './GetStories.container'
 import GetPOI from './GetPOI.container'
 
@@ -38,6 +39,7 @@ export {
   Login,
   StuffList,
   Edit,
+  GetMaps,
   GetStories,
   GetPOI
 }

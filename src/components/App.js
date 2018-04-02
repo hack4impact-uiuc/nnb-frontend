@@ -8,6 +8,7 @@ import {
   Login,
   StuffList,
   Edit,
+  GetMaps,
   GetStories
 } from './'
 import { Api, storage } from './../utils'
@@ -256,6 +257,7 @@ class App extends Component {
           startYear={!!selectedMap && selectedMap.year}
           toggleSidebar={this.toggleSidebar}
         />
+        <GetMaps />
         <GetStories />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
