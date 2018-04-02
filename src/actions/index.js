@@ -7,6 +7,16 @@ import {
   updateStory,
   deleteStory
 } from './stories.action'
+import {
+  getPois,
+  getPoiById,
+  getPoisByMapYear,
+  getPoisByStoryId,
+  postPoi,
+  putPoi,
+  deletePoi
+} from './pois.action'
+
 export {
   fetchStuff,
   enableEditMode,
@@ -15,5 +25,12 @@ export {
   loadStoriesByPOIId,
   postStory,
   updateStory,
-  deleteStory
+  deleteStory,
+  getPois,
+  getPoiById,
+  getPoisByMapYear,
+  getPoisByStoryId,
+  postPoi,
+  putPoi,
+  deletePoi
 }

@@ -6,6 +6,10 @@ const initialState = {
   stories: {
     stories: [],
     selectedStoryId: 1
+  },
+  pois: {
+    activePOIs: [],
+    selectedPOIId: null
   }
 }
 

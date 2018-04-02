@@ -36,7 +36,6 @@ class App extends Component {
     this.deleteMap = this.deleteMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
     this.loadMaps = this.loadMaps.bind(this)
-    this.loadPOIs = this.loadPOIs.bind(this)
     this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
@@ -67,16 +66,13 @@ class App extends Component {
     })
   }
 
-  loadPOIs() {
-    return Api.getPOIs().then(data =>
-      this.setState({ activeEvents: data, selectedEvent: null })
-    )
-  }
-
   loadPOIsForYear(year) {
-    return Api.getPOIsByYear(year).then(data => {
-      this.setState({ activeEvents: data.pois, selectedEvent: null })
-      this.setState({ selectedMap: data.map })
+    return Api.getPOIs({ mapYear: year }).then(data => {
+      this.setState({
+        activeEvents: data,
+        selectedEvent: null,
+        selectedMap: this.state.maps.find(m => m.year === year)
+      })
     })
   }
 
@@ -125,7 +121,7 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    Api.getPOIsByStory(storyId).then(storyPOIs => {
+    Api.getPOIs({ storyId }).then(storyPOIs => {
       storyPOIs.sort(compareYear)
       this.setState(
         {
