@@ -3,6 +3,10 @@ const initialState = {
   edit: {
     isEditing: false
   },
+  stories: {
+    stories: [],
+    selectedStoryId: 1
+  },
   pois: {
     activePOIs: [],
     selectedPOIId: null
