@@ -17,41 +17,41 @@ function poiDeleted(id) {
   return { type: actionTypes.POI_DELETED, payload: id }
 }
 
-export function getPois() {
+export function loadPOIs() {
   return dispatch => {
-    return Api.getPOIs().then(poi => dispatch(poisLoaded(poi)))
+    return Api.loadPOIs().then(poi => dispatch(poisLoaded(poi)))
   }
 }
 
 export function getPoiById(id) {
   return dispatch => {
-    return Api.getPOI(id).then(poi => dispatch(poisLoaded([poi])))
+    return Api.loadPOI(id).then(poi => dispatch(poisLoaded([poi])))
   }
 }
 
-export function getPoisByMapYear(mapYear) {
+export function loadPOIsByMapYear(mapYear) {
   return dispatch => {
-    return Api.getPOIsByYear(mapYear).then(res =>
+    return Api.loadPOIsByYear(mapYear).then(res =>
       dispatch(poisLoaded(res.pois))
     )
   }
 }
 
-export function getPoisByStoryId(storyId) {
+export function loadPOIsByStoryId(storyId) {
   return dispatch => {
-    return Api.getPOIsByStory(storyId).then(pois => dispatch(poisLoaded(pois)))
+    return Api.loadPOIsByStory(storyId).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
 export function postPoi(poi) {
   return dispatch => {
-    return Api.postPOI(poi).then(res => dispatch(poiCreated(res.id, poi)))
+    return Api.createPOI(poi).then(res => dispatch(poiCreated(res.id, poi)))
   }
 }
 
 export function putPoi(id, poi) {
   return dispatch => {
-    return Api.editPOI(id, poi).then(dispatch(poiEdited(id, poi)))
+    return Api.updatePOI(id, poi).then(dispatch(poiEdited(id, poi)))
   }
 }
 

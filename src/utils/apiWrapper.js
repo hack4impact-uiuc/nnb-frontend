@@ -32,7 +32,7 @@ function createRequest(method, endpoint, options) {
  * POIs
  */
 
-function getPOIs(params) {
+function loadPOIs(params) {
   return createRequest(
     REQUEST_METHODS.GET,
     POIS_URL,
@@ -42,13 +42,13 @@ function getPOIs(params) {
     .then(res => res.map(adapters.convertFromApiPOI))
 }
 
-function getPOI(poiId) {
+function loadPOI(poiId) {
   return createRequest(REQUEST_METHODS.GET, `${POIS_URL}/${poiId}`)
     .then(res => res.result.poi)
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function postPOI(poi) {
+function createPOI(poi) {
   return createRequest(
     REQUEST_METHODS.POST,
     POIS_URL,
@@ -58,7 +58,7 @@ function postPOI(poi) {
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function editPOI(poi, poiId) {
+function updatePOI(poi, poiId) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `${POIS_URL}/${poiId}`,
@@ -78,13 +78,13 @@ function deletePOI(poiId) {
  * Maps
  */
 
-function getMaps() {
+function loadMaps() {
   return createRequest(REQUEST_METHODS.GET, MAPS_URL)
     .then(res => res.result.maps)
     .then(res => res.map(adapters.convertFromApiMap))
 }
 
-function postMap(map) {
+function createMap(map) {
   return createRequest(
     REQUEST_METHODS.POST,
     MAPS_URL,
@@ -104,7 +104,7 @@ function deleteMap(mapId) {
  * Stories
  */
 
-function getStories(poiId) {
+function loadStories(poiId) {
   return createRequest(
     REQUEST_METHODS.GET,
     STORIES_URL,
@@ -114,7 +114,7 @@ function getStories(poiId) {
     .then(res => res.map(adapters.convertFromApiStory))
 }
 
-function postStory(story) {
+function createStory(story) {
   return createRequest(
     REQUEST_METHODS.POST,
     STORIES_URL,
@@ -124,7 +124,7 @@ function postStory(story) {
     .then(res => adapters.convertFromApiStory(res))
 }
 
-function editStory(story, storyId) {
+function updateStory(story, storyId) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `${STORIES_URL}/${storyId}`,
@@ -153,17 +153,17 @@ function uploadImage(imageDataURL) {
 }
 
 export default {
-  getPOIs,
-  getPOI,
-  postPOI,
-  editPOI,
+  loadPOIs,
+  loadPOI,
+  createPOI,
+  updatePOI,
   deletePOI,
-  getMaps,
-  postMap,
+  loadMaps,
+  createMap,
   deleteMap,
-  getStories,
-  postStory,
-  editStory,
+  loadStories,
+  createStory,
+  updateStory,
   deleteStory,
   uploadImage
 }

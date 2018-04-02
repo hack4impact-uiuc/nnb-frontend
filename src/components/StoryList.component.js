@@ -12,7 +12,7 @@ class StoryList extends Component {
   state = {
     addStorySelected: false,
     storyName: '',
-    editStoryId: null
+    updateStoryId: null
   }
 
   constructor(props) {
@@ -23,7 +23,7 @@ class StoryList extends Component {
     this.submitStoryName = this.submitStoryName.bind(this)
     this.onClickEdit = this.onClickEdit.bind(this)
     this.onClickDelete = this.onClickDelete.bind(this)
-    this.editStoryName = this.editStoryName.bind(this)
+    this.updateStoryName = this.updateStoryName.bind(this)
     this.promptAndExitEditMode = this.promptAndExitEditMode.bind(this)
   }
 
@@ -40,7 +40,7 @@ class StoryList extends Component {
   }
 
   onClickEdit(story) {
-    this.setState({ editStoryId: story.id, storyName: story.name })
+    this.setState({ updateStoryId: story.id, storyName: story.name })
   }
 
   onClickDelete(id) {
@@ -61,7 +61,7 @@ class StoryList extends Component {
   }
 
   submitStoryName() {
-    Api.postStory({ name: this.state.storyName })
+    Api.createStory({ name: this.state.storyName })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
@@ -71,14 +71,14 @@ class StoryList extends Component {
       })
   }
 
-  editStoryName() {
-    const { editStoryId, storyName } = this.state
-    Api.editStory({ name: storyName }, editStoryId)
+  updateStoryName() {
+    const { updateStoryId, storyName } = this.state
+    Api.updateStory({ name: storyName }, updateStoryId)
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
           storyName: '',
-          editStoryId: null
+          updateStoryId: null
         })
       })
   }
@@ -103,8 +103,8 @@ class StoryList extends Component {
         addStoryClicked={this.addStoryClicked}
         addStoryExit={this.addStoryExit}
         addStorySelected={this.state.addStorySelected}
-        editStoryId={this.state.editStoryId}
-        editStoryName={this.editStoryName}
+        updateStoryId={this.state.updateStoryId}
+        updateStoryName={this.updateStoryName}
         exitStory={this.props.exitStory}
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
@@ -145,8 +145,8 @@ function SidebarContent({
   addStoryClicked,
   addStoryExit,
   addStorySelected,
-  editStoryId,
-  editStoryName,
+  updateStoryId,
+  updateStoryName,
   exitStory,
   onClickDelete,
   onClickEdit,
@@ -178,7 +178,7 @@ function SidebarContent({
               'story-item--selected': story.id === props.selectedStory
             })}
           >
-            {editStoryId !== story.id && (
+            {updateStoryId !== story.id && (
               <div
                 className="story-item__name"
                 onClick={() =>
@@ -190,7 +190,7 @@ function SidebarContent({
               </div>
             )}
             {props.isEditing &&
-              editStoryId !== story.id && (
+              updateStoryId !== story.id && (
                 <Icon
                   type="Edit"
                   size="small"
@@ -199,7 +199,7 @@ function SidebarContent({
                 />
               )}
             {props.isEditing &&
-              editStoryId !== story.id && (
+              updateStoryId !== story.id && (
                 <Icon
                   type="Trash"
                   size="small"
@@ -208,7 +208,7 @@ function SidebarContent({
                 />
               )}
             {props.isEditing &&
-              editStoryId === story.id && (
+              updateStoryId === story.id && (
                 <div>
                   <div className="story-form__input">
                     <FormControl
@@ -220,7 +220,7 @@ function SidebarContent({
                   </div>
                   <button
                     className="button button--light button--full-width"
-                    onClick={editStoryName}
+                    onClick={updateStoryName}
                   >
                     Submit
                   </button>

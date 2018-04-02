@@ -59,7 +59,7 @@ class MapManager extends Component {
       year: inputYear
     }
 
-    Api.postMap(map)
+    Api.createMap(map)
       .then(() => loadMaps())
       .then(() => this.toggleShowInputFields())
   }

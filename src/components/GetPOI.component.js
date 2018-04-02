@@ -17,10 +17,10 @@ export default class GetPOI extends Component {
   render() {
     const {
       pois,
-      getPois,
+      loadPOIs,
       getPoiById,
-      getPoisByMapYear,
-      getPoisByStoryId,
+      loadPOIsByMapYear,
+      loadPOIsByStoryId,
       postPoi,
       putPoi,
       deletePoi
@@ -54,14 +54,14 @@ export default class GetPOI extends Component {
           value={this.state.getPoiBy}
           onChange={this.handleTextChange}
         />
-        <Button onClick={getPois}>Get POIs</Button>
+        <Button onClick={loadPOIs}>Get POIs</Button>
         <Button onClick={() => getPoiById(this.state.getPoiBy)}>
           Get POI by ID
         </Button>
-        <Button onClick={() => getPoisByMapYear(this.state.getPoiBy)}>
+        <Button onClick={() => loadPOIsByMapYear(this.state.getPoiBy)}>
           Get POI by Map Year
         </Button>
-        <Button onClick={() => getPoisByStoryId(this.state.getPoiBy)}>
+        <Button onClick={() => loadPOIsByStoryId(this.state.getPoiBy)}>
           Get POI by Story ID
         </Button>
         <Button onClick={() => postPoi(dummyPoi)}>Add POI (dummy)</Button>
