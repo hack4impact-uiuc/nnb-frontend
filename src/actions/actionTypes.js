@@ -19,5 +19,5 @@ export const STORY_DELETED = 'STORY_DELETED'
 // pois
 export const POIS_LOADED = 'POIS_LOADED'
 export const POI_CREATED = 'POI_CREATED'
-export const POI_EDITED = 'POI_EDITED'
+export const POI_UPDATED = 'POI_UPDATED'
 export const POI_DELETED = 'POI_DELETED'

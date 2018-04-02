@@ -2,7 +2,7 @@ import initialState from './initialState'
 import {
   POIS_LOADED,
   POI_CREATED,
-  POI_EDITED,
+  POI_UPDATED,
   POI_DELETED
 } from './../actions/actionTypes'
 
@@ -21,7 +21,7 @@ export default function pois(state = initialState.pois, action) {
           { ...action.payload.poi, id: action.payload.id }
         ]
       }
-    case POI_EDITED:
+    case POI_UPDATED:
       return {
         ...state,
         activePOIs: [...state.activePOIs].map(

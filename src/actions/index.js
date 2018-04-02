@@ -10,12 +10,12 @@ import {
 } from './stories.action'
 import {
   loadPOIs,
-  getPoiById,
+  loadPOIById,
   loadPOIsByMapYear,
   loadPOIsByStoryId,
-  postPoi,
-  putPoi,
-  deletePoi
+  createPOI,
+  updatePOI,
+  deletePOI
 } from './pois.action'
 
 export {
@@ -31,10 +31,10 @@ export {
   updateStory,
   deleteStory,
   loadPOIs,
-  getPoiById,
+  loadPOIById,
   loadPOIsByMapYear,
   loadPOIsByStoryId,
-  postPoi,
-  putPoi,
-  deletePoi
+  createPOI,
+  updatePOI,
+  deletePOI
 }

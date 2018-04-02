@@ -9,8 +9,8 @@ function poiCreated(id, poi) {
   return { type: actionTypes.POI_CREATED, payload: { id, poi } }
 }
 
-function poiEdited(id, poi) {
-  return { type: actionTypes.POI_EDITED, payload: { id, poi } }
+function poiUpdated(id, poi) {
+  return { type: actionTypes.POI_UPDATED, payload: { id, poi } }
 }
 
 function poiDeleted(id) {
@@ -23,7 +23,7 @@ export function loadPOIs() {
   }
 }
 
-export function getPoiById(id) {
+export function loadPOIById(id) {
   return dispatch => {
     return Api.loadPOI(id).then(poi => dispatch(poisLoaded([poi])))
   }
@@ -43,19 +43,19 @@ export function loadPOIsByStoryId(storyId) {
   }
 }
 
-export function postPoi(poi) {
+export function createPOI(poi) {
   return dispatch => {
     return Api.createPOI(poi).then(res => dispatch(poiCreated(res.id, poi)))
   }
 }
 
-export function putPoi(id, poi) {
+export function updatePOI(id, poi) {
   return dispatch => {
-    return Api.updatePOI(id, poi).then(dispatch(poiEdited(id, poi)))
+    return Api.updatePOI(id, poi).then(dispatch(poiUpdated(id, poi)))
   }
 }
 
-export function deletePoi(id) {
+export function deletePOI(id) {
   return dispatch => {
     return Api.deletePOI(id).then(res => dispatch(poiDeleted(id)))
   }
