@@ -25,13 +25,13 @@ function storyDeleted(storyId) {
 
 export function loadStories() {
   return dispatch => {
-    return Api.loadStories().then(stories => dispatch(storiesLoaded(stories)))
+    return Api.getStories().then(stories => dispatch(storiesLoaded(stories)))
   }
 }
 
 export function loadStoriesByPOIId(poiId) {
   return dispatch => {
-    return Api.loadStoriesByPOIId(poiId).then(storyIds =>
+    return Api.getStoriesByPOIId(poiId).then(storyIds =>
       dispatch(storiesLoaded(storyIds))
     )
     // TODO: send an array of stories to storiesLoaded? depends on v2 endpoints
@@ -48,7 +48,7 @@ export function postStory(storyName) {
 
 export function updateStory(storyId, storyName) {
   return dispatch => {
-    return Api.updateStory(storyId, storyName).then(
+    return Api.editStory(storyId, storyName).then(
       dispatch(storyEdited(storyId, storyName))
     )
   }

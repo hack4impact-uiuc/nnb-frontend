@@ -81,7 +81,7 @@ class App extends Component {
   }
 
   loadStories() {
-    return Api.loadStories().then(data => this.setState({ stories: data }))
+    return Api.getStories().then(data => this.setState({ stories: data }))
   }
 
   loadMaps() {

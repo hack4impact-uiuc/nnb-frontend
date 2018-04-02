@@ -117,22 +117,15 @@ function deletePOI(poiId) {
 /**
  * Story
  */
-function loadStories() {
+function getStories() {
   return createRequest(REQUEST_METHODS.GET, 'stories')
     .then(res => res.data)
     .then(res => res.map(adapters.convertFromApiStory))
 }
 
-function loadStoriesByPOIId(poiId) {
+function getStoriesByPOIId(poiId) {
   return createRequest(REQUEST_METHODS.GET, `getstories/${poiId}`).then(
     res => res.storyIds
-  )
-}
-
-// TODO: api should take in story id, not name
-function getStory(name) {
-  return createRequest(REQUEST_METHODS.GET, `stories/${name}`).then(
-    res => res.data
   )
 }
 
@@ -144,7 +137,7 @@ function postStory(storyName) {
   ).then(res => res.data)
 }
 
-function updateStory(storyId, storyName) {
+function editStory(storyId, storyName) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `stories/${storyId}`,
@@ -188,11 +181,11 @@ export default {
   postPOI,
   editPOI,
   deletePOI,
-  loadStories,
-  loadStoriesByPOIId,
+  getStories,
+  getStoriesByPOIId,
   postStory,
   postLogin,
-  updateStory,
+  editStory,
   deleteStory,
   uploadImage
 }
