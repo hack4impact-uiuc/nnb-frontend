@@ -6,6 +6,14 @@ const initialState = {
   timeline: {
     maps: [],
     selectedMapId: null
+  },
+  stories: {
+    stories: [],
+    selectedStoryId: 1
+  },
+  pois: {
+    activePOIs: [],
+    selectedPOIId: null
   }
 }
 
