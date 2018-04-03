@@ -58,7 +58,7 @@ function createPOI(poi) {
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function updatePOI(poi, poiId) {
+function updatePOI(poiId, poi) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `${POIS_URL}/${poiId}`,

@@ -200,7 +200,7 @@ class POIForm extends Component {
       stories
     }
 
-    Api.updatePOI(poi, id)
+    Api.updatePOI(id, poi)
       .then(() =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
       )
