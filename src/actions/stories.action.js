@@ -31,7 +31,7 @@ export function loadStories() {
 
 export function loadStoriesByPOIId(poiId) {
   return dispatch => {
-    return Api.loadStoriesByPOIId(poiId).then(stories =>
+    return Api.loadStories({ poiId }).then(stories =>
       dispatch(storiesLoaded(stories))
     )
   }

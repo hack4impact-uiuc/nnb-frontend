@@ -38,9 +38,9 @@ function convertToApiMap(map) {
   }
 }
 
-function convertToApiGetStories(poiId) {
+function convertToApiGetStories(params) {
   return {
-    poi_id: poiId
+    poi_id: params.poiId
   }
 }
 

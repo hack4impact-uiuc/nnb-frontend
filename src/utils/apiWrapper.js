@@ -104,11 +104,11 @@ function deleteMap(mapId) {
  * Stories
  */
 
-function loadStories(poiId) {
+function loadStories(params) {
   return createRequest(
     REQUEST_METHODS.GET,
     STORIES_URL,
-    adapters.convertToApiGetStories(poiId)
+    adapters.convertToApiGetStories(params)
   )
     .then(res => res.result.stories)
     .then(res => res.map(adapters.convertFromApiStory))
