@@ -73,7 +73,7 @@ class StoryList extends Component {
 
   updateStoryName() {
     const { updateStoryId, storyName } = this.state
-    Api.updateStory({ name: storyName }, updateStoryId)
+    Api.updateStory(updateStoryId, { name: storyName })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({

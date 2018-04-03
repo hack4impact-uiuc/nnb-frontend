@@ -5,17 +5,17 @@ function storiesLoaded(stories) {
   return { type: actionTypes.STORIES_LOADED, payload: stories }
 }
 
-function storyCreated(storyId, storyName) {
+function storyCreated(story) {
   return {
     type: actionTypes.STORY_CREATED,
-    payload: { id: storyId, name: storyName }
+    payload: story
   }
 }
 
-function storyUpdated(storyId, storyName) {
+function storyUpdated(story) {
   return {
     type: actionTypes.STORY_UPDATED,
-    payload: { id: storyId, name: storyName }
+    payload: story
   }
 }
 
@@ -31,31 +31,28 @@ export function loadStories() {
 
 export function loadStoriesByPOIId(poiId) {
   return dispatch => {
-    return Api.loadStoriesByPOIId(poiId).then(storyIds =>
-      dispatch(storiesLoaded(storyIds))
-    )
-    // TODO: send an array of stories to storiesLoaded? depends on v2 endpoints
-  }
-}
-
-export function createStory(storyName) {
-  return dispatch => {
-    return Api.createStory(storyName).then(res =>
-      dispatch(storyCreated(res.id, storyName))
+    return Api.loadStoriesByPOIId(poiId).then(stories =>
+      dispatch(storiesLoaded(stories))
     )
   }
 }
 
-export function updateStory(storyId, storyName) {
+export function createStory(story) {
   return dispatch => {
-    return Api.updateStory(storyId, storyName).then(
-      dispatch(storyUpdated(storyId, storyName))
+    return Api.createStory(story).then(story => dispatch(storyCreated(story)))
+  }
+}
+
+export function updateStory(storyId, story) {
+  return dispatch => {
+    return Api.updateStory(storyId, story).then(story =>
+      dispatch(storyUpdated(story))
     )
   }
 }
 
 export function deleteStory(storyId) {
   return dispatch => {
-    return Api.deleteStory(storyId).then(dispatch(storyDeleted(storyId)))
+    return Api.deleteStory(storyId).then(() => dispatch(storyDeleted(storyId)))
   }
 }

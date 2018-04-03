@@ -124,7 +124,7 @@ function createStory(story) {
     .then(res => adapters.convertFromApiStory(res))
 }
 
-function updateStory(story, storyId) {
+function updateStory(storyId, story) {
   return createRequest(
     REQUEST_METHODS.PUT,
     `${STORIES_URL}/${storyId}`,
