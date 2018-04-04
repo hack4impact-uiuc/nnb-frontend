@@ -14,6 +14,18 @@ const initialState = {
   pois: {
     activePOIs: [],
     selectedPOIId: null
+  },
+  poiForm: {
+    name: '',
+    date: '',
+    description: '',
+    storyIds: [],
+    media: [],
+    links: [],
+    meta: {
+      isUploadingMedia: false,
+      shouldShowFormValidation: false
+    }
   }
 }
 
