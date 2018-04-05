@@ -17,6 +17,14 @@ function poiDeleted(poiId) {
   return { type: actionTypes.POI_DELETED, payload: { id: poiId } }
 }
 
+function poiCopied(poi) {
+  return { type: actionTypes.POI_COPIED, payload: poi }
+}
+
+function poiPasted(poi) {
+  return { type: actionTypes.POI_LOADED, payload: poi }
+}
+
 export function loadPOIs() {
   return dispatch => {
     return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
@@ -61,4 +69,12 @@ export function deletePOI(poiId) {
   return dispatch => {
     return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
   }
+}
+
+export function copyPOI(poi) {
+  return dispatch => dispatch(poiCopied(poi))
+}
+
+export function pastePOI(poi) {
+  return dispatch => dispatch(poiPasted(poi))
 }
