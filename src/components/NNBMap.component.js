@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
-import './../styles/map.css'
+import { MapInteraction } from 'react-map-interaction'
+import Zoom from 'react-reveal/Zoom'
 import { POIMarker, Icon } from '../components'
-import { MapInteractionCSS, MapInteraction } from 'react-map-interaction'
+import './../styles/map.css'
 
 class NNBMap extends Component {
   state = {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
-    isChoosingNewPOICoords: false
+    isChoosingNewPOICoords: false,
+    scale: 1.0
   }
 
   constructor(props) {
     super(props)
+    this.onImageScroll = this.onImageScroll.bind(this)
     this.onImageClick = this.onImageClick.bind(this)
     this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
     this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
@@ -45,14 +48,22 @@ class NNBMap extends Component {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
+  onImageScroll = scale => {
+    this.setState({
+      scale
+    })
+  }
+
   onImageClick(event, scale) {
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
       const domRect = element.getBoundingClientRect()
+
       const imageDisplayedResolution = [
         element.width * scale,
         element.height * scale
       ]
+
       const mouseClickCoords = [
         event.clientX - domRect.left,
         event.clientY - domRect.top
@@ -129,6 +140,25 @@ class NNBMap extends Component {
         {!selectedMap && <h1 style={{ padding: '3rem' }}>No Map Selected</h1>}
         {selectedMap && (
           <div className="map-container">
+            <Zoom>
+              <div
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '10px',
+                  zIndex: '1',
+                  width: '50px',
+                  height: '25px',
+                  border: '5px solid DodgerBlue',
+                  // padding: '10px',
+                  margin: '5px'
+                }}
+              >
+                <div class="center-div">
+                  {Math.floor(this.state.scale * 100)}%
+                </div>
+              </div>
+            </Zoom>
             {isEditing && (
               <div className="map-icons">
                 {!isChoosingNewPOICoords && (
@@ -166,6 +196,8 @@ class NNBMap extends Component {
                 let translationX = translation.x
                 let translationY = translation.y
                 if (this.containerNode) {
+                  // translationX =
+                  //   (this.state.boundingWidth + Math.abs(translation.x)) /
                   translationX =
                     (this.state.boundingWidth + Math.abs(translation.x)) /
                       scale >
@@ -214,6 +246,7 @@ class NNBMap extends Component {
                           onClick={event => this.onImageClick(event, scale)}
                           onLoad={() =>
                             this.updateMapImageDimensions(this.containerNode)}
+                          onWheel={event => this.onImageScroll(scale)}
                           draggable="false"
                         />
                       }
