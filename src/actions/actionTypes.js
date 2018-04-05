@@ -21,3 +21,8 @@ export const POIS_LOADED = 'POIS_LOADED'
 export const POI_CREATED = 'POI_CREATED'
 export const POI_UPDATED = 'POI_UPDATED'
 export const POI_DELETED = 'POI_DELETED'
+
+// copy-paste
+export const POI_COPIED = 'POI_COPIED'
+export const POI_PASTED = 'POI_PASTED'
+export const MAX_CLIPBOARD_LENGTH = 5

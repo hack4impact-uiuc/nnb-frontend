@@ -15,7 +15,9 @@ import {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  copyPOI,
+  pastePOI
 } from './pois.action'
 
 export {
@@ -36,5 +38,7 @@ export {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  copyPOI,
+  pastePOI
 }

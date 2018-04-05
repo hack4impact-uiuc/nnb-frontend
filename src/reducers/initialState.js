@@ -13,7 +13,8 @@ const initialState = {
   },
   pois: {
     activePOIs: [],
-    selectedPOIId: null
+    selectedPOIId: null,
+    clipboard: []
   }
 }
 
