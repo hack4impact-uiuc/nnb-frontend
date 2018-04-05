@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import {
   loadStories,
   loadStoriesByPOIId,
-  postStory,
+  createStory,
   updateStory,
   deleteStory
 } from './../actions'
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
     {
       loadStories,
       loadStoriesByPOIId,
-      postStory,
+      createStory,
       updateStory,
       deleteStory
     },

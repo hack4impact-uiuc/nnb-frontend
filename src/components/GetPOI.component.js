@@ -4,26 +4,26 @@ import { Button } from 'react-bootstrap'
 import moment from 'moment'
 
 export default class GetPOI extends Component {
-  state = { getPoiBy: '' }
+  state = { loadPOIBy: '' }
 
   // Make sure that only numbers can be entered into the text box
   handleTextChange = event => {
     event.target.value.match(/^\d+(\.\d+)?$/)
-      ? this.setState({ getPoiBy: Number(event.target.value) })
+      ? this.setState({ loadPOIBy: Number(event.target.value) })
       : event.target.value === ''
-        ? this.setState({ getPoiBy: event.target.value })
+        ? this.setState({ loadPOIBy: event.target.value })
         : null
   }
   render() {
     const {
       pois,
-      getPois,
-      getPoiById,
-      getPoisByMapYear,
-      getPoisByStoryId,
-      postPoi,
-      putPoi,
-      deletePoi
+      loadPOIs,
+      loadPOIById,
+      loadPOIsByMapYear,
+      loadPOIsByStoryId,
+      createPOI,
+      updatePOI,
+      deletePOI
     } = this.props
     const dummyPoi = {
       name: 'Rick Astley',
@@ -48,27 +48,27 @@ export default class GetPOI extends Component {
     return (
       <div>
         <FieldGroup
-          controlId="getPoiBy"
+          controlId="loadPOIBy"
           label="Enter POI ID, map year, or story ID"
           inputType="text"
-          value={this.state.getPoiBy}
+          value={this.state.loadPOIBy}
           onChange={this.handleTextChange}
         />
-        <Button onClick={getPois}>Get POIs</Button>
-        <Button onClick={() => getPoiById(this.state.getPoiBy)}>
+        <Button onClick={loadPOIs}>Get POIs</Button>
+        <Button onClick={() => loadPOIById(this.state.loadPOIBy)}>
           Get POI by ID
         </Button>
-        <Button onClick={() => getPoisByMapYear(this.state.getPoiBy)}>
+        <Button onClick={() => loadPOIsByMapYear(this.state.loadPOIBy)}>
           Get POI by Map Year
         </Button>
-        <Button onClick={() => getPoisByStoryId(this.state.getPoiBy)}>
+        <Button onClick={() => loadPOIsByStoryId(this.state.loadPOIBy)}>
           Get POI by Story ID
         </Button>
-        <Button onClick={() => postPoi(dummyPoi)}>Add POI (dummy)</Button>
-        <Button onClick={() => putPoi(this.state.getPoiBy, dummyPoi)}>
+        <Button onClick={() => createPOI(dummyPoi)}>Add POI (dummy)</Button>
+        <Button onClick={() => updatePOI(this.state.loadPOIBy, dummyPoi)}>
           Edit POI (dummy)
         </Button>
-        <Button onClick={() => deletePoi(this.state.getPoiBy)}>
+        <Button onClick={() => deletePOI(this.state.loadPOIBy)}>
           Delete POI by ID
         </Button>
         <br />

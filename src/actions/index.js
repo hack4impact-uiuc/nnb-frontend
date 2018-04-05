@@ -4,18 +4,18 @@ import { loadMaps, createMap, removeMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
-  postStory,
+  createStory,
   updateStory,
   deleteStory
 } from './stories.action'
 import {
-  getPois,
-  getPoiById,
-  getPoisByMapYear,
-  getPoisByStoryId,
-  postPoi,
-  putPoi,
-  deletePoi
+  loadPOIs,
+  loadPOIById,
+  loadPOIsByMapYear,
+  loadPOIsByStoryId,
+  createPOI,
+  updatePOI,
+  deletePOI
 } from './pois.action'
 
 export {
@@ -27,14 +27,14 @@ export {
   removeMap,
   loadStories,
   loadStoriesByPOIId,
-  postStory,
+  createStory,
   updateStory,
   deleteStory,
-  getPois,
-  getPoiById,
-  getPoisByMapYear,
-  getPoisByStoryId,
-  postPoi,
-  putPoi,
-  deletePoi
+  loadPOIs,
+  loadPOIById,
+  loadPOIsByMapYear,
+  loadPOIsByStoryId,
+  createPOI,
+  updatePOI,
+  deletePOI
 }

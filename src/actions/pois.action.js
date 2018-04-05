@@ -5,58 +5,60 @@ function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
 }
 
-function poiCreated(id, poi) {
-  return { type: actionTypes.POI_CREATED, payload: { id, poi } }
+function poiCreated(poi) {
+  return { type: actionTypes.POI_CREATED, payload: poi }
 }
 
-function poiEdited(id, poi) {
-  return { type: actionTypes.POI_EDITED, payload: { id, poi } }
+function poiUpdated(poi) {
+  return { type: actionTypes.POI_UPDATED, payload: poi }
 }
 
-function poiDeleted(id) {
-  return { type: actionTypes.POI_DELETED, payload: id }
+function poiDeleted(poiId) {
+  return { type: actionTypes.POI_DELETED, payload: { id: poiId } }
 }
 
-export function getPois() {
+export function loadPOIs() {
   return dispatch => {
-    return Api.getPOIs().then(poi => dispatch(poisLoaded(poi)))
+    return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
-export function getPoiById(id) {
+export function loadPOIsByMapYear(mapYear) {
   return dispatch => {
-    return Api.getPOI(id).then(poi => dispatch(poisLoaded([poi])))
+    return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
-export function getPoisByMapYear(mapYear) {
+export function loadPOIsByStoryId(storyId) {
   return dispatch => {
-    return Api.getPOIsByYear(mapYear).then(res =>
-      dispatch(poisLoaded(res.pois))
-    )
+    return Api.loadPOIs({ storyId }).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
-export function getPoisByStoryId(storyId) {
+export function loadPOIById(poiId) {
   return dispatch => {
-    return Api.getPOIsByStory(storyId).then(pois => dispatch(poisLoaded(pois)))
+    // TODO: this will set the activePOIs to just this poi
+    //       is that what we want to do?
+    //       or should we push to activePOIs and set this as the selectedPOI?
+    //       in which case we would need a different action type
+    return Api.loadPOI(poiId).then(poi => dispatch(poisLoaded([poi])))
   }
 }
 
-export function postPoi(poi) {
+export function createPOI(poi) {
   return dispatch => {
-    return Api.postPOI(poi).then(res => dispatch(poiCreated(res.id, poi)))
+    return Api.createPOI(poi).then(poi => dispatch(poiCreated(poi)))
   }
 }
 
-export function putPoi(id, poi) {
+export function updatePOI(poiId, poi) {
   return dispatch => {
-    return Api.editPOI(id, poi).then(dispatch(poiEdited(id, poi)))
+    return Api.updatePOI(poiId, poi).then(poi => dispatch(poiUpdated(poi)))
   }
 }
 
-export function deletePoi(id) {
+export function deletePOI(poiId) {
   return dispatch => {
-    return Api.deletePOI(id).then(res => dispatch(poiDeleted(id)))
+    return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
   }
 }

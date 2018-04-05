@@ -14,11 +14,11 @@ function mapDeleted(map) {
 }
 
 export function loadMaps() {
-  return dispatch => Api.getMaps().then(maps => dispatch(mapsLoaded(maps)))
+  return dispatch => Api.loadMaps().then(maps => dispatch(mapsLoaded(maps)))
 }
 
 export function createMap(map) {
-  return dispatch => Api.postMap(map).then(map => dispatch(mapCreated(map)))
+  return dispatch => Api.createMap(map).then(map => dispatch(mapCreated(map)))
 }
 
 export function deleteMap(mapId) {

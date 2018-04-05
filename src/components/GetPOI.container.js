@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  getPois,
-  getPoiById,
-  getPoisByMapYear,
-  getPoisByStoryId,
-  postPoi,
-  putPoi,
-  deletePoi
+  loadPOIs,
+  loadPOIById,
+  loadPOIsByMapYear,
+  loadPOIsByStoryId,
+  createPOI,
+  updatePOI,
+  deletePOI
 } from './../actions'
 import GetPOI from './GetPOI.component'
 
@@ -20,13 +20,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      getPois,
-      getPoiById,
-      getPoisByMapYear,
-      getPoisByStoryId,
-      postPoi,
-      putPoi,
-      deletePoi
+      loadPOIs,
+      loadPOIById,
+      loadPOIsByMapYear,
+      loadPOIsByStoryId,
+      createPOI,
+      updatePOI,
+      deletePOI
     },
     dispatch
   )
