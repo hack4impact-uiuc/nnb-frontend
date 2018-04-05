@@ -75,13 +75,19 @@ class NNBMap extends Component {
     this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions() {
+  updateMapImageDimensions(containerNode) {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     if (this.image) {
       this.setState({
         mapImageLoaded: true,
         mapImageWidth: mapImageElement.width,
         mapImageHeight: mapImageElement.height
+      })
+    }
+    if (containerNode) {
+      this.setState({
+        boundingWidth: containerNode.clientWidth,
+        boundingHeight: containerNode.clientHeight
       })
     }
   }
@@ -155,11 +161,32 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction minScale={1} maxScale={2}>
+            <MapInteraction minScale={1} maxScale={2} initialX={0} initialY={0}>
               {({ translation, scale }) => {
-                const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+                let translationX = translation.x
+                let translationY = translation.y
+                if (this.containerNode) {
+                  translationX =
+                    (this.state.boundingWidth + Math.abs(translation.x)) /
+                      scale >
+                    this.state.mapImageWidth
+                      ? (this.state.mapImageWidth * scale -
+                          this.state.boundingWidth) *
+                        -1
+                      : translation.x > 0 ? 0 : translation.x
+                  translationY =
+                    (this.state.boundingHeight + Math.abs(translation.y)) /
+                      scale >
+                    this.state.mapImageHeight
+                      ? (this.state.mapImageHeight * scale -
+                          this.state.boundingHeight) *
+                        -1
+                      : translation.y > 0 ? 0 : translation.y
+                }
+                const transform = `translate(${translationX}px, ${translationY}px) scale(${scale})`
                 return (
                   <div
+                    ref={node => (this.containerNode = node)}
                     style={{
                       height: '100%',
                       width: '100%',
@@ -185,7 +212,8 @@ class NNBMap extends Component {
                           className="image-fill map-image"
                           ref={el => (this.image = el)}
                           onClick={event => this.onImageClick(event, scale)}
-                          onLoad={this.updateMapImageDimensions}
+                          onLoad={() =>
+                            this.updateMapImageDimensions(this.containerNode)}
                           draggable="false"
                         />
                       }
