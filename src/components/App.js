@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import {
   StoryList,
   POIFormPanel,
   MapTimeline,
   NavBar,
   Login,
-  StuffList,
-  Edit,
   GetMaps,
   GetStories,
   POIFormNew
@@ -260,7 +259,7 @@ class App extends Component {
         />
         <GetMaps />
         <GetStories />
-        <POIFormNew />
+        <Link to="form">poi form</Link>
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}

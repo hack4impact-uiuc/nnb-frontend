@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
-import { App } from './components'
+import { App, POIFormNew } from './components'
 import registerServiceWorker from './registerServiceWorker'
 
 const store = configureStore()
@@ -18,6 +18,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <Route exact path="/" component={App} />
+        <Route exact path="/form" component={POIFormNew} />
       </div>
     </ConnectedRouter>
   </Provider>,
