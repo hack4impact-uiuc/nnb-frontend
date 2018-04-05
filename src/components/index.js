@@ -19,6 +19,7 @@ import Edit from './Edit.container'
 import GetMaps from './GetMaps.container'
 import GetStories from './GetStories.container'
 import GetPOI from './GetPOI.container'
+import POIFormNew from './POIForm.container'
 
 export {
   App,
@@ -41,5 +42,6 @@ export {
   Edit,
   GetMaps,
   GetStories,
-  GetPOI
+  GetPOI,
+  POIFormNew
 }

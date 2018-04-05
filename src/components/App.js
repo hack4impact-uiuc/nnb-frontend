@@ -9,7 +9,8 @@ import {
   StuffList,
   Edit,
   GetMaps,
-  GetStories
+  GetStories,
+  POIFormNew
 } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
@@ -259,6 +260,7 @@ class App extends Component {
         />
         <GetMaps />
         <GetStories />
+        <POIFormNew />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}
