@@ -8,15 +8,15 @@ export default function maps(state = initialState.timeline, action) {
         ...state,
         maps: action.payload
       }
-    case MAP_DELETED:
-      return {
-        ...state,
-        maps: [...state.maps].filter(map => map.id !== action.payload.id)
-      }
     case MAP_CREATED:
       return {
         ...state,
         maps: [...state.maps, action.payload]
+      }
+    case MAP_DELETED:
+      return {
+        ...state,
+        maps: [...state.maps].filter(map => map.id !== action.payload.id)
       }
     default:
       return state

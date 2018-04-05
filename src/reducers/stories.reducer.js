@@ -2,7 +2,7 @@ import initialState from './initialState'
 import {
   STORIES_LOADED,
   STORY_CREATED,
-  STORY_EDITED,
+  STORY_UPDATED,
   STORY_DELETED
 } from './../actions/actionTypes'
 
@@ -16,20 +16,21 @@ export default function stories(state = initialState.stories, action) {
     case STORY_CREATED:
       return {
         ...state,
-        stories: [...state.stories, { ...action.payload }]
+        stories: [...state.stories, action.payload]
       }
-    case STORY_EDITED:
+    case STORY_UPDATED:
       return {
         ...state,
         stories: [...state.stories].map(
-          story =>
-            story.id === action.payload.id ? { ...action.payload } : story
+          story => (story.id === action.payload.id ? action.payload : story)
         )
       }
     case STORY_DELETED:
       return {
         ...state,
-        stories: [...state.stories].filter(story => story.id !== action.payload)
+        stories: [...state.stories].filter(
+          story => story.id !== action.payload.id
+        )
       }
     default:
       return state
