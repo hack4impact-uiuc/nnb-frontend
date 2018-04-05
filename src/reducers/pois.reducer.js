@@ -3,7 +3,10 @@ import {
   POIS_LOADED,
   POI_CREATED,
   POI_UPDATED,
-  POI_DELETED
+  POI_DELETED,
+  POI_COPIED,
+  POI_PASTED,
+  MAX_CLIPBOARD_LENGTH
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -32,6 +35,19 @@ export default function pois(state = initialState.pois, action) {
           poi => poi.id !== action.payload.id
         )
       }
+    // temp start
+    case POI_COPIED:
+    case POI_PASTED:
+      var newClipboard = [...state.clipboard].filter(
+        poi => poi.id !== action.payload.id
+      )
+      if (newClipboard.length === MAX_CLIPBOARD_LENGTH) newClipboard.pop()
+      newClipboard.unshift(action.payload)
+      return {
+        ...state,
+        clipboard: newClipboard
+      }
+    // temp end
     default:
       return state
   }
