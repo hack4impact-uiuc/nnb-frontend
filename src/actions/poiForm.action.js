@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes'
 
+const EMPTY_LINK = { url: '', urlName: '' }
+
 function poiFormInputChanged(field, value) {
   return {
     type: actionTypes.POI_FORM_INPUT_CHANGED,
@@ -14,17 +16,24 @@ function poiFormStoryIdToggled(storyId) {
   }
 }
 
-function poiFormLinkAdded(link) {
+function poiFormLinkAdded() {
   return {
     type: actionTypes.POI_FORM_LINK_ADDED,
-    payload: link
+    payload: EMPTY_LINK
   }
 }
 
-function poiFormLinkRemoved(link) {
+function poiFormLinkRemoved(index) {
   return {
     type: actionTypes.POI_FORM_LINK_REMOVED,
-    payload: link
+    payload: { index }
+  }
+}
+
+function poiFormLinkModified(index, field, value) {
+  return {
+    type: actionTypes.POI_FORM_LINK_MODIFIED,
+    payload: { index, field, value }
   }
 }
 
@@ -56,6 +65,10 @@ export function addPOIFormLink(link) {
 
 export function removePOIFormLink(link) {
   return dispatch => dispatch(poiFormLinkRemoved(link))
+}
+
+export function modifyPOIFormLink(index, field, value) {
+  return dispatch => dispatch(poiFormLinkModified(index, field, value))
 }
 
 export function addPOIFormMedia(media) {

@@ -22,6 +22,7 @@ import {
   togglePOIFormStoryId,
   addPOIFormLink,
   removePOIFormLink,
+  modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia
 } from './poiForm.action'
@@ -49,6 +50,7 @@ export {
   togglePOIFormStoryId,
   addPOIFormLink,
   removePOIFormLink,
+  modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia
 }

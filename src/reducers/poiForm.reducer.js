@@ -4,6 +4,7 @@ import {
   POI_FORM_STORY_ID_TOGGLED,
   POI_FORM_LINK_ADDED,
   POI_FORM_LINK_REMOVED,
+  POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED
 } from '../actions/actionTypes'
@@ -25,12 +26,23 @@ export default function poiForm(state = initialState.poiForm, action) {
     case POI_FORM_LINK_ADDED:
       return {
         ...state,
-        links: [...state.links, action.payload]
+        links: [...state.links, { ...action.payload }]
       }
     case POI_FORM_LINK_REMOVED:
       return {
         ...state,
-        links: [...state.links].filter(link => link.id !== action.payload.id)
+        links: [
+          ...state.links.slice(0, action.payload.index),
+          ...state.links.slice(action.payload.index + 1)
+        ]
+      }
+    case POI_FORM_LINK_MODIFIED:
+      const { index, field, value } = action.payload
+      const newLinks = [...state.links]
+      newLinks[index][field] = value
+      return {
+        ...state,
+        links: newLinks
       }
     case POI_FORM_MEDIA_ADDED:
       return {

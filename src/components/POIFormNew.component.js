@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FieldGroup } from './'
+import { FieldGroup, LinkTable } from './'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
 import './../styles/poi-form.css'
@@ -53,6 +53,7 @@ export default class POIForm extends Component {
             value={description}
             onChange={e => updatePOIFormInput('description', e.target.value)}
           />
+          <LinkTable />
           <FieldGroup
             inputType="checklist"
             className="poi-form__field-group specifier"
