@@ -58,6 +58,7 @@ export default function poiForm(state = initialState.poiForm, action) {
         ...state,
         media: [...state.media].filter(media => media.id !== action.payload.id)
       }
+<<<<<<< fe189c0b4ea96d83be990b2def928fad0dbb37be
     case POI_COPIED:
       const copyClipboard = [...state.clipboard].filter(
         poi => poi.id !== action.payload.id
@@ -83,6 +84,18 @@ export default function poiForm(state = initialState.poiForm, action) {
         storyIds: action.payload.stories.map(story => story.id)
         // media: action.payload.media,
         // links: action.payload.links
+=======
+    case POI_FORM_POI_COPIED:
+    case POI_FORM_POI_PASTED:
+      var newClipboard = [...state.clipboard].filter(
+        poi => poi.id !== action.payload.id
+      )
+      if (newClipboard.length === MAX_CLIPBOARD_LENGTH) newClipboard.pop()
+      newClipboard.unshift(action.payload)
+      return {
+        ...state,
+        clipboard: newClipboard
+>>>>>>> moved copy-paste to POI form. need to move copy to infopanel
       }
     default:
       return state

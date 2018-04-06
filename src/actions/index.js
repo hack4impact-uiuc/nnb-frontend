@@ -15,9 +15,7 @@ import {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI,
-  copyPOI,
-  pastePOI
+  deletePOI
 } from './pois.action'
 import {
   updatePOIFormInput,
