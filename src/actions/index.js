@@ -15,9 +15,7 @@ import {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI,
-  copyPOI,
-  pastePOI
+  deletePOI
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -26,7 +24,9 @@ import {
   removePOIFormLink,
   modifyPOIFormLink,
   addPOIFormMedia,
-  removePOIFormMedia
+  removePOIFormMedia,
+  copyPOIFormPOI,
+  pastePOIFormPOI
 } from './poiForm.action'
 
 export {
@@ -55,6 +55,6 @@ export {
   createPOI,
   updatePOI,
   deletePOI,
-  copyPOI,
-  pastePOI
+  copyPOIFormPOI,
+  pastePOIFormPOI
 }
