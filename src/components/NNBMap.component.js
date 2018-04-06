@@ -10,12 +10,12 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    scale: 1.0
+    scale: 1.0,
+    minScale: 1.0
   }
 
   constructor(props) {
     super(props)
-    this.onImageScroll = this.onImageScroll.bind(this)
     this.onImageClick = this.onImageClick.bind(this)
     this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
     this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
@@ -95,11 +95,25 @@ class NNBMap extends Component {
       })
     }
     if (containerNode) {
+      const scaleX =
+        containerNode.clientWidth > mapImageElement.width
+          ? containerNode.clientWidth / mapImageElement.width
+          : 1
+      const scaleY =
+        containerNode.clientHeight > mapImageElement.height
+          ? containerNode.clientHeight / mapImageElement.height
+          : 1
+      console.log(scaleX, scaleY)
       this.setState({
         boundingWidth: containerNode.clientWidth,
-        boundingHeight: containerNode.clientHeight
+        boundingHeight: containerNode.clientHeight,
+        minScale: Math.max(scaleX, scaleY)
       })
     }
+  }
+
+  updateScale = scale => {
+    this.state.scale !== scale ? this.setState({ scale }) : null
   }
 
   startAddPOIFlow() {
@@ -142,7 +156,7 @@ class NNBMap extends Component {
             <div
               style={{
                 position: 'absolute',
-                right: '10px',
+                left: '10px',
                 top: '10px',
                 zIndex: '1',
                 width: '50px',
@@ -188,14 +202,15 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction minScale={1} maxScale={2} initialX={0} initialY={0}>
+            <MapInteraction
+              minScale={this.state.minScale}
+              maxScale={2}
+              initialX={0}
+              initialY={0}
+            >
               {({ translation, scale }) => {
-                let translationX = translation.x
-                let translationY = translation.y
                 if (this.containerNode) {
-                  // translationX =
-                  //   (this.state.boundingWidth + Math.abs(translation.x)) /
-                  translationX =
+                  translation.x =
                     (this.state.boundingWidth + Math.abs(translation.x)) /
                       scale >
                     this.state.mapImageWidth
@@ -203,7 +218,7 @@ class NNBMap extends Component {
                           this.state.boundingWidth) *
                         -1
                       : translation.x > 0 ? 0 : translation.x
-                  translationY =
+                  translation.y =
                     (this.state.boundingHeight + Math.abs(translation.y)) /
                       scale >
                     this.state.mapImageHeight
@@ -212,7 +227,8 @@ class NNBMap extends Component {
                         -1
                       : translation.y > 0 ? 0 : translation.y
                 }
-                const transform = `translate(${translationX}px, ${translationY}px) scale(${scale})`
+
+                const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                 return (
                   <div
                     ref={node => (this.containerNode = node)}
@@ -243,7 +259,6 @@ class NNBMap extends Component {
                           onClick={event => this.onImageClick(event, scale)}
                           onLoad={() =>
                             this.updateMapImageDimensions(this.containerNode)}
-                          onWheel={event => this.onImageScroll(scale)}
                           draggable="false"
                         />
                       }
@@ -256,6 +271,7 @@ class NNBMap extends Component {
                           }}
                         />
                       )}
+                      {this.updateScale(scale)}
                     </div>
                   </div>
                 )
