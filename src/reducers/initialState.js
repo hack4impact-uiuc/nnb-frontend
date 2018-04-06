@@ -25,7 +25,8 @@ const initialState = {
     meta: {
       isUploadingMedia: false,
       shouldShowFormValidation: false
-    }
+    },
+    clipboard: []
   }
 }
 
