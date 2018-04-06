@@ -5,7 +5,6 @@ import { Api, storage } from './../utils'
 import './../styles/App.css'
 
 class App extends Component {
-  // using dummy data until BE api is done
   state = {
     maps: [],
     selectedMap: null,
@@ -43,12 +42,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // example of how to use api requests
     this.loadStories()
     this.loadMaps()
     if (storage.get('auth')) {
       this.setLogin(true)
     }
+
+    const { loadMaps, loadPOIsByMapYear, loadStories } = this.props
+    loadMaps().then(action => {
+      loadPOIsByMapYear(action.payload[0].year)
+    })
+    loadStories()
   }
 
   toggleEditMode() {
