@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { loadMaps, loadPOIsByMapYear, loadStories } from './../actions'
+import { loadMaps, loadPOIsByMapYear, loadStories, copyPOI } from './../actions'
 import InfoPanel from './InfoPanel.component'
 
 function mapStateToProps(state, ownProps) {
   return {
     pois: state.pois,
     stories: state.stories,
-    ...ownProps
+    ...ownProps,
+    clipboard: state.poiForm.clipboard
   }
 }
 
@@ -16,7 +17,8 @@ function mapDispatchToProps(dispatch) {
     {
       loadMaps,
       loadPOIsByMapYear,
-      loadStories
+      loadStories,
+      copyPOI
     },
     dispatch
   )

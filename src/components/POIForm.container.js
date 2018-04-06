@@ -9,7 +9,8 @@ import {
   removePOIFormMedia,
   loadMaps,
   loadPOIsByMapYear,
-  loadStories
+  loadStories,
+  pastePOIFormPOI
 } from './../actions'
 import POIForm from './POIFormNew.component'
 
