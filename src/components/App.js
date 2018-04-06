@@ -50,7 +50,9 @@ class App extends Component {
 
     const { loadMaps, loadPOIsByMapYear, loadStories } = this.props
     loadMaps().then(action => {
-      loadPOIsByMapYear(action.payload[0].year)
+      const maps = action.payload
+      maps.sort((a, b) => a.year - b.year)
+      loadPOIsByMapYear(maps[0].year)
     })
     loadStories()
   }
