@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import { MapInteraction } from 'react-map-interaction'
-import Zoom from 'react-reveal/Zoom'
 import { POIMarker, Icon } from '../components'
 import './../styles/map.css'
 
@@ -140,25 +139,23 @@ class NNBMap extends Component {
         {!selectedMap && <h1 style={{ padding: '3rem' }}>No Map Selected</h1>}
         {selectedMap && (
           <div className="map-container">
-            <Zoom>
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '10px',
-                  zIndex: '1',
-                  width: '50px',
-                  height: '25px',
-                  border: '5px solid DodgerBlue',
-                  // padding: '10px',
-                  margin: '5px'
-                }}
-              >
-                <div class="center-div">
-                  {Math.floor(this.state.scale * 100)}%
-                </div>
+            <div
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '10px',
+                zIndex: '1',
+                width: '50px',
+                height: '25px',
+                border: '5px solid DodgerBlue',
+                // padding: '10px',
+                margin: '5px'
+              }}
+            >
+              <div class="center-div">
+                {Math.floor(this.state.scale * 100)}%
               </div>
-            </Zoom>
+            </div>
             {isEditing && (
               <div className="map-icons">
                 {!isChoosingNewPOICoords && (
