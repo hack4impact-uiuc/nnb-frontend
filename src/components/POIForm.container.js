@@ -31,7 +31,8 @@ function mapDispatchToProps(dispatch) {
       removePOIFormMedia,
       loadMaps,
       loadPOIsByMapYear,
-      loadStories
+      loadStories,
+      pastePOIFormPOI
     },
     dispatch
   )

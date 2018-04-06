@@ -6,7 +6,10 @@ import {
   POI_FORM_LINK_REMOVED,
   POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
-  POI_FORM_MEDIA_REMOVED
+  POI_FORM_MEDIA_REMOVED,
+  POI_FORM_POI_COPIED,
+  POI_FORM_POI_PASTED,
+  POI_FORM_MAX_CLIPBOARD_LENGTH
 } from '../actions/actionTypes'
 
 export default function poiForm(state = initialState.poiForm, action) {
@@ -53,6 +56,17 @@ export default function poiForm(state = initialState.poiForm, action) {
       return {
         ...state,
         media: [...state.media].filter(media => media.id !== action.payload.id)
+      }
+    case POI_FORM_POI_COPIED:
+    case POI_FORM_POI_PASTED:
+      var newClipboard = [...state.clipboard].filter(
+        poi => poi.id !== action.payload.id
+      )
+      if (newClipboard.length === MAX_CLIPBOARD_LENGTH) newClipboard.pop()
+      newClipboard.unshift(action.payload)
+      return {
+        ...state,
+        clipboard: newClipboard
       }
     default:
       return state
