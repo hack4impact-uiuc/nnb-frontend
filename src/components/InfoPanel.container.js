@@ -7,7 +7,8 @@ function mapStateToProps(state, ownProps) {
   return {
     pois: state.pois,
     stories: state.stories,
-    ...ownProps
+    ...ownProps,
+    clipboard: state.poiForm.clipboard
   }
 }
 
