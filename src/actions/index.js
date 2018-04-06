@@ -25,7 +25,7 @@ import {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
-  copyPOIFormPOI,
+  copyPOI,
   pastePOIFormPOI
 } from './poiForm.action'
 
@@ -55,6 +55,6 @@ export {
   createPOI,
   updatePOI,
   deletePOI,
-  copyPOIFormPOI,
+  copyPOI,
   pastePOIFormPOI
 }
