@@ -16,13 +16,15 @@ class InfoPanel extends Component {
   }
 
   onClickPrevious() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const { pois, selectedEvent, setSelectedPOI } = this.props
+    const activeEvents = pois.activePOIs
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     setSelectedPOI(activeEvents[curIndex - 1].id)
   }
 
   onClickNext() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
+    const { pois, selectedEvent, setSelectedPOI } = this.props
+    const activeEvents = pois.activePOIs
     const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
     setSelectedPOI(activeEvents[curIndex + 1].id)
   }
@@ -55,13 +57,14 @@ class InfoPanel extends Component {
 
   render() {
     const {
-      activeEvents,
+      pois,
       selectedEvent,
       isEditing,
       isStorySelected,
       isRealTimePOI,
       showPOIForm
     } = this.props
+    const activeEvents = pois.activePOIs
 
     if (!selectedEvent) {
       return (
