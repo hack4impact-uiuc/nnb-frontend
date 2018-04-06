@@ -17,6 +17,15 @@ import {
   updatePOI,
   deletePOI
 } from './pois.action'
+import {
+  updatePOIFormInput,
+  togglePOIFormStoryId,
+  addPOIFormLink,
+  removePOIFormLink,
+  modifyPOIFormLink,
+  addPOIFormMedia,
+  removePOIFormMedia
+} from './poiForm.action'
 
 export {
   fetchStuff,
@@ -30,6 +39,13 @@ export {
   createStory,
   updateStory,
   deleteStory,
+  updatePOIFormInput,
+  togglePOIFormStoryId,
+  addPOIFormLink,
+  removePOIFormLink,
+  modifyPOIFormLink,
+  addPOIFormMedia,
+  removePOIFormMedia,
   loadPOIs,
   loadPOIById,
   loadPOIsByMapYear,
