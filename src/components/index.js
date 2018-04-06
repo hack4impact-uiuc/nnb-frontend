@@ -1,5 +1,5 @@
 import App from './App.container'
-import InfoPanel from './InfoPanel.component'
+import InfoPanel from './InfoPanel.container'
 import NNBMap from './NNBMap.component'
 import POIForm from './POIForm.component'
 import POIMarker from './POIMarker.component'
