@@ -42,11 +42,7 @@ class MapTimeline extends Component {
                 deleteMap={deleteMap}
               />
             )}
-            <Timeline
-              {...this.props}
-              loadPOIsForYear={loadPOIsForYear}
-              timelineContainer={this.timelineContainer}
-            />
+            <Timeline timelineContainer={this.timelineContainer} />
           </div>
         </div>
         <div className="info-panel-container">

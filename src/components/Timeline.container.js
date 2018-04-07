@@ -6,7 +6,8 @@ import Timeline from './Timeline.component'
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    maps: state.timeline.maps
+    maps: state.timeline.maps,
+    isStorySelected: !!state.stories.selectedStoryId
   }
 }
 

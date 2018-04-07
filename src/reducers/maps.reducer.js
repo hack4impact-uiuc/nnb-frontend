@@ -11,7 +11,7 @@ export default function maps(state = initialState.timeline, action) {
     case MAPS_LOADED:
       return {
         ...state,
-        maps: action.payload
+        maps: action.payload.sort((a, b) => a.year - b.year)
       }
     case MAP_CREATED:
       return {
