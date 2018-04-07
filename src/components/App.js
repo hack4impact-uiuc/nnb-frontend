@@ -48,11 +48,17 @@ class App extends Component {
       this.setLogin(true)
     }
 
-    const { loadMaps, loadPOIsByMapYear, loadStories } = this.props
+    const {
+      loadMaps,
+      loadPOIsByMapYear,
+      loadStories,
+      setSelectedMap
+    } = this.props
     loadMaps().then(action => {
       const maps = action.payload
       maps.sort((a, b) => a.year - b.year)
       loadPOIsByMapYear(maps[0].year)
+      setSelectedMap(maps[0])
     })
     loadStories()
   }

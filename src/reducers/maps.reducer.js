@@ -1,5 +1,10 @@
 import initialState from './initialState'
-import { MAPS_LOADED, MAP_DELETED, MAP_CREATED } from '../actions/actionTypes'
+import {
+  MAPS_LOADED,
+  MAP_DELETED,
+  MAP_CREATED,
+  MAP_SELECTED
+} from '../actions/actionTypes'
 
 export default function maps(state = initialState.timeline, action) {
   switch (action.type) {
@@ -17,6 +22,11 @@ export default function maps(state = initialState.timeline, action) {
       return {
         ...state,
         maps: [...state.maps].filter(map => map.id !== action.payload.id)
+      }
+    case MAP_SELECTED:
+      return {
+        ...state,
+        selectedMapId: action.payload
       }
     default:
       return state
