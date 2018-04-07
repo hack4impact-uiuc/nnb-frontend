@@ -1,9 +1,6 @@
 import App from './App.container'
 import Edit from './Edit.container'
 import FieldGroup from './FieldGroup'
-import GetMaps from './GetMaps.container'
-import GetPOI from './GetPOI.container'
-import GetStories from './GetStories.container'
 import Icon from './Icon.component'
 import InfoPanel from './InfoPanel.container'
 import Interval from './Interval.container'
@@ -26,9 +23,6 @@ export {
   App,
   Edit,
   FieldGroup,
-  GetMaps,
-  GetPOI,
-  GetStories,
   Icon,
   InfoPanel,
   Interval,

@@ -23,6 +23,10 @@ function storyDeleted(storyId) {
   return { type: actionTypes.STORY_DELETED, payload: { id: storyId } }
 }
 
+function storySelected(storyId) {
+  return { type: actionTypes.STORY_SELECTED, payload: storyId }
+}
+
 export function loadStories() {
   return dispatch => {
     return Api.loadStories().then(stories => dispatch(storiesLoaded(stories)))
@@ -55,4 +59,8 @@ export function deleteStory(storyId) {
   return dispatch => {
     return Api.deleteStory(storyId).then(() => dispatch(storyDeleted(storyId)))
   }
+}
+
+export function setSelectedStory(storyId) {
+  return dispatch => dispatch(storySelected(storyId))
 }

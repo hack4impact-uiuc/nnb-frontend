@@ -6,17 +6,18 @@ import {
   loadStoriesByPOIId,
   createStory,
   updateStory,
-  deleteStory
+  deleteStory,
+  setSelectedStory
 } from './stories.action'
 import {
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
   deletePOI,
-  setSelectedPOI
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -41,6 +42,7 @@ export {
   createStory,
   updateStory,
   deleteStory,
+  setSelectedStory,
   updatePOIFormInput,
   togglePOIFormStoryId,
   addPOIFormLink,
@@ -50,10 +52,10 @@ export {
   removePOIFormMedia,
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
   deletePOI,
-  setSelectedPOI
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory
 }

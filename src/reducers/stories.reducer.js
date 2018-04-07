@@ -3,7 +3,8 @@ import {
   STORIES_LOADED,
   STORY_CREATED,
   STORY_UPDATED,
-  STORY_DELETED
+  STORY_DELETED,
+  STORY_SELECTED
 } from './../actions/actionTypes'
 
 export default function stories(state = initialState.stories, action) {
@@ -31,6 +32,11 @@ export default function stories(state = initialState.stories, action) {
         stories: [...state.stories].filter(
           story => story.id !== action.payload.id
         )
+      }
+    case STORY_SELECTED:
+      return {
+        ...state,
+        selectedStoryId: action.payload.id
       }
     default:
       return state
