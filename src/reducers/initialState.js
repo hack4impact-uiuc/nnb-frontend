@@ -1,7 +1,8 @@
 const initialState = {
   stuff: [],
   edit: {
-    isEditing: false
+    isEditing: false,
+    shouldShowRealTimePOI: false
   },
   timeline: {
     maps: [],

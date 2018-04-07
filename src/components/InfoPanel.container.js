@@ -1,13 +1,38 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { loadMaps, loadPOIsByMapYear, loadStories } from './../actions'
+import {
+  loadMaps,
+  loadPOIsByMapYear,
+  loadStories,
+  setSelectedPOI,
+  loadPOIs,
+  deletePOI,
+  enableEditMode,
+  removePOIFormMedia
+} from './../actions'
 import InfoPanel from './InfoPanel.component'
 
 function mapStateToProps(state, ownProps) {
+  const { timeline, pois, stories, edit } = state
+  const { maps, selectedMapId } = timeline
+  const { activePOIs, selectedPOIId } = pois
+  const { selectedStoryId } = stories
+
+  const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
+  const isStorySelected = !!selectedStoryId
+
   return {
-    pois: state.pois,
-    stories: state.stories,
-    ...ownProps
+    ...state.pois,
+    ...state.stories,
+    ...ownProps,
+    selectedPOIIndex,
+    selectedPOI: activePOIs[selectedPOIIndex],
+    selectedMap: maps.find(map => map.id === selectedMapId),
+    isStorySelected,
+    isFirstInStory: isStorySelected && selectedPOIIndex === 0,
+    isLastInStory:
+      isStorySelected && selectedPOIIndex === activePOIs.length - 1,
+    ...edit
   }
 }
 
@@ -16,7 +41,12 @@ function mapDispatchToProps(dispatch) {
     {
       loadMaps,
       loadPOIsByMapYear,
-      loadStories
+      loadStories,
+      setSelectedPOI,
+      loadPOIs,
+      deletePOI,
+      enableEditMode,
+      removePOIFormMedia
     },
     dispatch
   )

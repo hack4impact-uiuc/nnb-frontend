@@ -22,8 +22,18 @@ function poiSelected(poi) {
 }
 
 export function loadPOIs() {
-  return dispatch => {
-    return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
+  return (dispatch, getState) => {
+    const store = getState()
+    const { selectedStoryId } = store.stories
+    const { selectedMapId } = store.timeline
+    if (!!selectedStoryId) {
+      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois =>
+        dispatch(poisLoaded(pois))
+      )
+    }
+    return Api.loadPOIs({ mapYear: selectedMapId }).then(pois =>
+      dispatch(poisLoaded(pois))
+    )
   }
 }
 
