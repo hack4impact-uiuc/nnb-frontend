@@ -11,7 +11,8 @@ class NNBMap extends Component {
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
     scale: 1.0,
-    minScale: 1.0
+    startScale: 1.0,
+    mapSetStartPosition: false
   }
 
   constructor(props) {
@@ -87,27 +88,31 @@ class NNBMap extends Component {
 
   updateMapImageDimensions(containerNode) {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
+    const imageWidth = mapImageElement.width
+    const imageHeight = mapImageElement.height
     if (this.image) {
       this.setState({
         mapImageLoaded: true,
-        mapImageWidth: mapImageElement.width,
-        mapImageHeight: mapImageElement.height
+        mapImageWidth: imageWidth,
+        mapImageHeight: imageHeight,
+        mapSetStartPosition: false
       })
     }
     if (containerNode) {
-      const scaleX =
-        containerNode.clientWidth > mapImageElement.width
-          ? containerNode.clientWidth / mapImageElement.width
-          : 1
+      const boundingWidth = containerNode.clientWidth
+      const boundingHeight = containerNode.clientHeight
+      const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
       const scaleY =
-        containerNode.clientHeight > mapImageElement.height
-          ? containerNode.clientHeight / mapImageElement.height
-          : 1
-      console.log(scaleX, scaleY)
+        boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
+      const startScale = Math.max(scaleX, scaleY)
+      const startX = (boundingWidth - imageWidth * startScale) / 2
+      const startY = (boundingHeight - imageHeight * startScale) / 2
       this.setState({
-        boundingWidth: containerNode.clientWidth,
-        boundingHeight: containerNode.clientHeight,
-        minScale: Math.max(scaleX, scaleY)
+        boundingWidth,
+        boundingHeight,
+        startScale,
+        startX,
+        startY
       })
     }
   }
@@ -143,6 +148,12 @@ class NNBMap extends Component {
       mapImageLoaded,
       mapImageWidth,
       mapImageHeight,
+      mapSetStartPosition,
+      boundingWidth,
+      boundingHeight,
+      startX,
+      startY,
+      startScale,
       isChoosingNewPOICoords
     } = this.state
 
@@ -202,81 +213,166 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction
-              minScale={this.state.minScale}
-              maxScale={2}
-              initialX={0}
-              initialY={0}
-            >
-              {({ translation, scale }) => {
-                if (this.containerNode) {
-                  translation.x =
-                    (this.state.boundingWidth + Math.abs(translation.x)) /
-                      scale >
-                    this.state.mapImageWidth
-                      ? (this.state.mapImageWidth * scale -
-                          this.state.boundingWidth) *
-                        -1
-                      : translation.x > 0 ? 0 : translation.x
-                  translation.y =
-                    (this.state.boundingHeight + Math.abs(translation.y)) /
-                      scale >
-                    this.state.mapImageHeight
-                      ? (this.state.mapImageHeight * scale -
-                          this.state.boundingHeight) *
-                        -1
-                      : translation.y > 0 ? 0 : translation.y
-                }
-
-                const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
-                return (
-                  <div
-                    ref={node => (this.containerNode = node)}
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      position: 'relative', // for absolutely positioned children
-                      overflow: 'hidden',
-                      touchAction: 'none', // Not supported in Safari :(
-                      msTouchAction: 'none',
-                      cursor: 'all-scroll',
-                      WebkitUserSelect: 'none',
-                      MozUserSelect: 'none',
-                      msUserSelect: 'none'
-                    }}
-                  >
+            {!mapImageLoaded && (
+              <MapInteraction
+                minScale={startScale}
+                maxScale={2}
+                scale={startScale}
+                initialX={startX}
+                initialY={startY}
+              >
+                {({ translation, scale }) => {
+                  if (this.containerNode) {
+                    translation.x =
+                      translation.x > 0
+                        ? 0
+                        : (boundingWidth + Math.abs(translation.x)) / scale >
+                          mapImageWidth
+                          ? (mapImageWidth * scale - boundingWidth) * -1
+                          : translation.x
+                    translation.y =
+                      translation.y > 0
+                        ? 0
+                        : (boundingHeight + Math.abs(translation.y)) / scale >
+                          mapImageHeight
+                          ? (mapImageHeight * scale - boundingHeight) * -1
+                          : translation.y
+                  }
+                  if (mapImageLoaded && !mapSetStartPosition) {
+                    translation.x = startX
+                    translation.y = startY
+                    this.setState({ mapSetStartPosition: true })
+                  }
+                  const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+                  return (
                     <div
+                      ref={node => (this.containerNode = node)}
                       style={{
-                        transform: transform,
-                        transformOrigin: '0 0 '
+                        height: '100%',
+                        width: '100%',
+                        position: 'relative', // for absolutely positioned children
+                        overflow: 'hidden',
+                        touchAction: 'none', // Not supported in Safari :(
+                        msTouchAction: 'none',
+                        cursor: 'all-scroll',
+                        WebkitUserSelect: 'none',
+                        MozUserSelect: 'none',
+                        msUserSelect: 'none'
                       }}
                     >
-                      {
-                        <Image
-                          src={selectedMap.imageUrl}
-                          className="image-fill map-image"
-                          ref={el => (this.image = el)}
-                          onClick={event => this.onImageClick(event, scale)}
-                          onLoad={() =>
-                            this.updateMapImageDimensions(this.containerNode)}
-                          draggable="false"
-                        />
-                      }
-                      {mapImageLoaded && (
-                        <POIMarkers
-                          {...this.props}
-                          {...{
-                            mapImageWidth: mapImageWidth,
-                            mapImageHeight: mapImageHeight
-                          }}
-                        />
-                      )}
-                      {this.updateScale(scale)}
+                      <div
+                        style={{
+                          transform: transform,
+                          transformOrigin: '0 0 '
+                        }}
+                      >
+                        {
+                          <Image
+                            src={selectedMap.imageUrl}
+                            className="image-fill map-image"
+                            ref={el => (this.image = el)}
+                            onClick={event => this.onImageClick(event, scale)}
+                            onLoad={() =>
+                              this.updateMapImageDimensions(this.containerNode)}
+                            draggable="false"
+                          />
+                        }
+                        {mapImageLoaded && (
+                          <POIMarkers
+                            {...this.props}
+                            {...{
+                              mapImageWidth: mapImageWidth,
+                              mapImageHeight: mapImageHeight
+                            }}
+                          />
+                        )}
+                        {/* {this.updateScale(scale)} */}
+                      </div>
                     </div>
-                  </div>
-                )
-              }}
-            </MapInteraction>
+                  )
+                }}
+              </MapInteraction>
+            )}
+            {mapImageLoaded && (
+              <MapInteraction
+                minScale={startScale}
+                maxScale={2}
+                scale={startScale}
+                initialX={startX}
+                initialY={startY}
+              >
+                {({ translation, scale }) => {
+                  if (this.containerNode) {
+                    translation.x =
+                      translation.x > 0
+                        ? 0
+                        : (boundingWidth + Math.abs(translation.x)) / scale >
+                          mapImageWidth
+                          ? (mapImageWidth * scale - boundingWidth) * -1
+                          : translation.x
+                    translation.y =
+                      translation.y > 0
+                        ? 0
+                        : (boundingHeight + Math.abs(translation.y)) / scale >
+                          mapImageHeight
+                          ? (mapImageHeight * scale - boundingHeight) * -1
+                          : translation.y
+                  }
+                  if (mapImageLoaded && !mapSetStartPosition) {
+                    translation.x = startX
+                    translation.y = startY
+                    this.setState({ mapSetStartPosition: true })
+                  }
+                  const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+                  return (
+                    <div
+                      ref={node => (this.containerNode = node)}
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        position: 'relative', // for absolutely positioned children
+                        overflow: 'hidden',
+                        touchAction: 'none', // Not supported in Safari :(
+                        msTouchAction: 'none',
+                        cursor: 'all-scroll',
+                        WebkitUserSelect: 'none',
+                        MozUserSelect: 'none',
+                        msUserSelect: 'none'
+                      }}
+                    >
+                      <div
+                        style={{
+                          transform: transform,
+                          transformOrigin: '0 0 '
+                        }}
+                      >
+                        {
+                          <Image
+                            src={selectedMap.imageUrl}
+                            className="image-fill map-image"
+                            ref={el => (this.image = el)}
+                            onClick={event => this.onImageClick(event, scale)}
+                            onLoad={() =>
+                              this.updateMapImageDimensions(this.containerNode)}
+                            draggable="false"
+                          />
+                        }
+                        {mapImageLoaded && (
+                          <POIMarkers
+                            {...this.props}
+                            {...{
+                              mapImageWidth: mapImageWidth,
+                              mapImageHeight: mapImageHeight
+                            }}
+                          />
+                        )}
+                        {this.updateScale(scale)}
+                      </div>
+                    </div>
+                  )
+                }}
+              </MapInteraction>
+            )}
           </div>
         )}
       </div>
