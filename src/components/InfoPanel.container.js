@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   loadMaps,
-  loadPOIsByMapYear,
   loadStories,
   setSelectedPOI,
   loadPOIs,
@@ -40,7 +39,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       loadMaps,
-      loadPOIsByMapYear,
       loadStories,
       setSelectedPOI,
       loadPOIs,
