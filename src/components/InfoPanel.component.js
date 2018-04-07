@@ -7,20 +7,6 @@ import './../styles/infopanel.css'
 import { utils } from './../utils'
 
 class InfoPanel extends Component {
-  // TODO: do this with redux?
-  onClickPrevious = () => {
-    const { activePOIs, selectedPOI, setSelectedPOI } = this.props
-    const curIndex = activePOIs.findIndex(poi => poi.id === selectedPOI.id)
-    setSelectedPOI(activePOIs[curIndex - 1])
-  }
-
-  // TODO: do this with redux?
-  onClickNext = () => {
-    const { activePOIs, selectedPOI, setSelectedPOI } = this.props
-    const curIndex = activePOIs.findIndex(poi => poi.id === selectedPOI.id)
-    setSelectedPOI(activePOIs[curIndex + 1])
-  }
-
   onClickEdit = () => {
     this.props.enableEditMode()
   }
@@ -44,7 +30,9 @@ class InfoPanel extends Component {
       selectedPOI,
       isEditing,
       shouldShowRealTimePOI,
-      removePOIFormMedia
+      removePOIFormMedia,
+      setNextPOIInStory,
+      setPreviousPOIInStory
     } = this.props
 
     if (!selectedPOI) {
@@ -174,7 +162,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowLeft"
                 size="large"
-                onClick={this.onClickPrevious}
+                onClick={setNextPOIInStory}
                 disabled={isFirstInStory}
               />
               <h4 className="walkthrough__page-counter">
@@ -183,7 +171,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowRight"
                 size="large"
-                onClick={this.onClickNext}
+                onClick={setPreviousPOIInStory}
                 disabled={isLastInStory}
               />
             </div>

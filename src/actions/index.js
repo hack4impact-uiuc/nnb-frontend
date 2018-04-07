@@ -6,7 +6,8 @@ import {
   loadStoriesByPOIId,
   createStory,
   updateStory,
-  deleteStory
+  deleteStory,
+  setSelectedStory
 } from './stories.action'
 import {
   loadPOIs,
@@ -14,7 +15,9 @@ import {
   createPOI,
   updatePOI,
   deletePOI,
-  setSelectedPOI
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -39,6 +42,7 @@ export {
   createStory,
   updateStory,
   deleteStory,
+  setSelectedStory,
   updatePOIFormInput,
   togglePOIFormStoryId,
   addPOIFormLink,
@@ -51,5 +55,7 @@ export {
   createPOI,
   updatePOI,
   deletePOI,
-  setSelectedPOI
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory
 }

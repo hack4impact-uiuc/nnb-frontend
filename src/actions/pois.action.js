@@ -21,6 +21,14 @@ function poiSelected(poi) {
   return { type: actionTypes.POI_SELECTED, payload: poi }
 }
 
+function nextPOIInStorySet() {
+  return { type: actionTypes.NEXT_POI_IN_STORY_SET }
+}
+
+function previousPOIInStorySet() {
+  return { type: actionTypes.PREVIOUS_POI_IN_STORY_SET }
+}
+
 export function loadPOIs() {
   return (dispatch, getState) => {
     const store = getState()
@@ -66,4 +74,12 @@ export function deletePOI(poiId) {
 
 export function setSelectedPOI(poi) {
   return dispatch => dispatch(poiSelected(poi))
+}
+
+export function setNextPOIInStory() {
+  return dispatch => dispatch(nextPOIInStorySet())
+}
+
+export function setPreviousPOIInStory() {
+  return dispatch => dispatch(previousPOIInStorySet())
 }

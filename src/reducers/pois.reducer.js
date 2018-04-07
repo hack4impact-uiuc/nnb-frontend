@@ -4,10 +4,14 @@ import {
   POI_CREATED,
   POI_UPDATED,
   POI_DELETED,
-  POI_SELECTED
+  POI_SELECTED,
+  NEXT_POI_IN_STORY_SET,
+  PREVIOUS_POI_IN_STORY_SET
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
+  const { activePOIs, selectedPOIId } = state
+  const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   switch (action.type) {
     case POIS_LOADED:
       return {
@@ -37,6 +41,16 @@ export default function pois(state = initialState.pois, action) {
       return {
         ...state,
         selectedPOIId: action.payload.id
+      }
+    case NEXT_POI_IN_STORY_SET:
+      return {
+        ...state,
+        selectedPOIId: selectedPOIIndex + 1
+      }
+    case PREVIOUS_POI_IN_STORY_SET:
+      return {
+        ...state,
+        selectedPOIId: selectedPOIIndex - 1
       }
     default:
       return state
