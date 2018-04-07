@@ -22,9 +22,6 @@ class InfoPanel extends Component {
   }
 
   onClickEdit = () => {
-    this.props.setIsUpdatingPOI(true)
-    this.props.setShowPOIForm(true)
-
     this.props.enableEditMode()
   }
 
@@ -47,9 +44,7 @@ class InfoPanel extends Component {
       selectedPOI,
       isEditing,
       shouldShowRealTimePOI,
-      removePOIFormMedia,
-
-      showPOIForm
+      removePOIFormMedia
     } = this.props
 
     if (!selectedPOI) {
@@ -91,7 +86,7 @@ class InfoPanel extends Component {
           return (
             <Carousel.Item key={url} className="carousel-item">
               {isEditing &&
-                showPOIForm && (
+                !shouldShowRealTimePOI && (
                   <Icon
                     type="Trash"
                     size="large"

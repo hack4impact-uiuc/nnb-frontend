@@ -11,7 +11,7 @@ import {
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const { timeline, pois, stories, edit } = state
   const { maps, selectedMapId } = timeline
   const { activePOIs, selectedPOIId } = pois
@@ -23,15 +23,13 @@ function mapStateToProps(state, ownProps) {
   return {
     ...state.pois,
     ...state.stories,
-    ...ownProps,
+    ...edit,
     selectedPOIIndex,
     selectedPOI: activePOIs[selectedPOIIndex],
     selectedMap: maps.find(map => map.id === selectedMapId),
     isStorySelected,
     isFirstInStory: isStorySelected && selectedPOIIndex === 0,
-    isLastInStory:
-      isStorySelected && selectedPOIIndex === activePOIs.length - 1,
-    ...edit
+    isLastInStory: isStorySelected && selectedPOIIndex === activePOIs.length - 1
   }
 }
 
