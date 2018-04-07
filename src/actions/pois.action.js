@@ -17,6 +17,10 @@ function poiDeleted(poiId) {
   return { type: actionTypes.POI_DELETED, payload: { id: poiId } }
 }
 
+function poiSelected(poi) {
+  return { type: actionTypes.POI_SELECTED, payload: poi }
+}
+
 export function loadPOIs() {
   return dispatch => {
     return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
@@ -61,4 +65,8 @@ export function deletePOI(poiId) {
   return dispatch => {
     return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
   }
+}
+
+export function setSelectedPOI(poi) {
+  return dispatch => dispatch(poiSelected(poi))
 }

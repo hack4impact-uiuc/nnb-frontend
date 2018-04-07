@@ -112,7 +112,13 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
-    const { selectedMap, isEditing } = this.props
+    const {
+      selectedMap,
+      isEditing,
+      selectedPOIId,
+      setSelectedPOI,
+      activePOIs
+    } = this.props
 
     return (
       <div>
@@ -161,8 +167,13 @@ class NNBMap extends Component {
             />
             {mapImageLoaded && (
               <POIMarkers
-                {...this.props}
-                {...{ mapImageWidth, mapImageHeight }}
+                {...{
+                  activePOIs,
+                  selectedPOIId,
+                  setSelectedPOI,
+                  mapImageWidth,
+                  mapImageHeight
+                }}
               />
             )}
           </div>
@@ -173,23 +184,19 @@ class NNBMap extends Component {
 }
 
 function POIMarkers({
-  activeEvents,
-  selectedEvent,
+  activePOIs,
   setSelectedPOI,
-  selectedMap,
   mapImageWidth,
-  mapImageHeight
+  mapImageHeight,
+  selectedPOIId
 }) {
-  const displayEvents = activeEvents.filter(
-    poi => poi.mapByYear === selectedMap.year
-  )
-
-  return displayEvents.map(poi => (
+  return activePOIs.map(poi => (
     <POIMarker
-      {...poi}
-      isSelected={selectedEvent && poi.id === selectedEvent.id}
       key={poi.id}
-      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
+      isSelected={poi.id === selectedPOIId}
+      absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
+      absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
+      setAsActivePOI={() => setSelectedPOI(poi)}
     />
   ))
 }
