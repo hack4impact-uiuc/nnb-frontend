@@ -9,6 +9,7 @@ export const EDIT_MODE_DISABLED = 'EDIT_MODE_DISABLED'
 export const MAPS_LOADED = 'MAPS_LOADED'
 export const MAP_CREATED = 'MAP_CREATED'
 export const MAP_DELETED = 'MAP_DELETED'
+export const MAP_SELECTED = 'MAP_SELECTED'
 
 // stories
 export const STORIES_LOADED = 'STORIES_LOADED'

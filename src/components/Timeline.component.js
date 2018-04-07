@@ -42,8 +42,7 @@ class Timeline extends Component {
   }
 
   render() {
-    const { maps, loadPOIsForYear, selectedMap, isStorySelected } = this.props
-    const currSelectedYear = !!selectedMap && selectedMap.year
+    const { maps, isStorySelected } = this.props
     const years = maps.map(map => map.year)
     const ratios = this.calcIntervalWidth(years)
     return (
@@ -56,14 +55,7 @@ class Timeline extends Component {
         onClickCapture={isStorySelected ? this.stubClick : undefined}
       >
         {maps.map((map, i) => (
-          <Interval
-            startYear={map.year}
-            loadPOIsForYear={loadPOIsForYear}
-            numMaps={maps.length}
-            width={ratios[i]}
-            key={map.year}
-            isSelected={currSelectedYear === map.year}
-          />
+          <Interval width={ratios[i]} key={map.year} map={map} />
         ))}
       </div>
     )

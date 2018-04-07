@@ -9,7 +9,7 @@ const initialState = {
   },
   stories: {
     stories: [],
-    selectedStoryId: 1
+    selectedStoryId: null
   },
   pois: {
     activePOIs: [],

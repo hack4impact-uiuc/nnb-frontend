@@ -4,18 +4,18 @@ import './../styles/timeline.css'
 
 class Interval extends Component {
   render() {
-    const { width, isSelected, startYear, loadPOIsForYear } = this.props
+    const { width, map, setSelectedMap, selectedMapId } = this.props
 
     return (
       <div
         className={classnames('interval', {
-          'interval--selected': isSelected
+          'interval--selected': selectedMapId === map.id
         })}
-        onClick={() => loadPOIsForYear(startYear)}
+        onClick={() => setSelectedMap(map)}
         style={{ width: `${width}px` }}
       >
         <div className="line" />
-        <div className="year">{startYear}</div>
+        <div className="year">{map.year}</div>
         <div className="dot" />
       </div>
     )
