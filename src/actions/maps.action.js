@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import { loadPOIsByMapYear } from './'
+import { loadPOIs } from './'
 import { Api } from './../utils'
 
 function mapsLoaded(maps) {
@@ -31,11 +31,8 @@ export function deleteMap(mapId) {
 }
 
 export function setSelectedMap(map) {
-  return (dispatch, getState) => {
-    const store = getState()
+  return dispatch => {
     dispatch(mapSelected(map.id))
-    if (!store.stories.selectedStoryId) {
-      dispatch(loadPOIsByMapYear(map.year))
-    }
+    dispatch(loadPOIs())
   }
 }

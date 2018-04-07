@@ -11,8 +11,6 @@ import {
 import {
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
   deletePOI,
@@ -50,8 +48,6 @@ export {
   removePOIFormMedia,
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
   deletePOI,

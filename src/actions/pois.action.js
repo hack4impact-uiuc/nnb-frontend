@@ -25,27 +25,14 @@ export function loadPOIs() {
   return (dispatch, getState) => {
     const store = getState()
     const { selectedStoryId } = store.stories
-    const { selectedMapId } = store.timeline
+    const { selectedMapId, maps } = store.timeline
     if (!!selectedStoryId) {
       return Api.loadPOIs({ storyId: selectedStoryId }).then(pois =>
         dispatch(poisLoaded(pois))
       )
     }
-    return Api.loadPOIs({ mapYear: selectedMapId }).then(pois =>
-      dispatch(poisLoaded(pois))
-    )
-  }
-}
-
-export function loadPOIsByMapYear(mapYear) {
-  return dispatch => {
+    const mapYear = maps.find(map => map.id === selectedMapId).year
     return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
-  }
-}
-
-export function loadPOIsByStoryId(storyId) {
-  return dispatch => {
-    return Api.loadPOIs({ storyId }).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
