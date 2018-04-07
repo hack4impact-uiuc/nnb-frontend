@@ -15,7 +15,8 @@ import {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  setSelectedPOI
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -53,5 +54,6 @@ export {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  setSelectedPOI
 }

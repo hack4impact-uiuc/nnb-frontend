@@ -3,7 +3,8 @@ import {
   POIS_LOADED,
   POI_CREATED,
   POI_UPDATED,
-  POI_DELETED
+  POI_DELETED,
+  POI_SELECTED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -31,6 +32,11 @@ export default function pois(state = initialState.pois, action) {
         activePOIs: [...state.activePOIs].filter(
           poi => poi.id !== action.payload.id
         )
+      }
+    case POI_SELECTED:
+      return {
+        ...state,
+        selectedPOIId: action.payload.id
       }
     default:
       return state
