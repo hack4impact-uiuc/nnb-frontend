@@ -13,6 +13,7 @@ const REQUEST_METHODS = {
 const POIS_URL = 'pois'
 const MAPS_URL = 'maps'
 const STORIES_URL = 'stories'
+const SEARCH_POIS_URL = 'search/pois'
 
 cloudinary.config(cloudinaryConfig)
 
@@ -139,6 +140,19 @@ function deleteStory(storyId) {
     REQUEST_METHODS.DELETE,
     `${STORIES_URL}/${storyId}`
   ).then(res => res.success)
+}
+
+/**
+ * Search
+ */
+function loadSearchPois(params) {
+  return createRequest(
+    REQUEST_METHODS.GET,
+    SEARCH_POIS_URL,
+    adapters.convertToApiSearchPois(params)
+  )
+    .then(res => res.result.stories) //TODO??
+    .then(res => res.map(adapters.convertFromApiStory)) //??
 }
 
 /**

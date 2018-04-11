@@ -51,6 +51,14 @@ function convertToApiStory(story) {
   }
 }
 
+function convertToApiSearchPois(params) {
+  return {
+    q: params.query,
+    name: params.name,
+    description: params.description
+  }
+}
+
 /**
  * Convert from api
  */
