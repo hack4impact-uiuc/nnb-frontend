@@ -8,7 +8,8 @@ class StoryForm extends Component {
       inputStoryName,
       editingStoryId,
       createStory,
-      updateStory
+      updateStory,
+      hideStoryForm
     } = this.props
 
     const story = { name: inputStoryName }
@@ -18,6 +19,8 @@ class StoryForm extends Component {
     } else {
       createStory(story)
     }
+
+    hideStoryForm()
   }
 
   render() {

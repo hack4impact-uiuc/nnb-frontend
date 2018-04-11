@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
-import { Icon } from './'
+import { Icon, StoryForm } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
@@ -29,6 +29,7 @@ class StoryList extends Component {
 
   addStoryClicked() {
     this.setState({ addStorySelected: true })
+    this.props.showStoryForm()
   }
 
   addStoryExit() {
@@ -159,6 +160,9 @@ function SidebarContent({
   selectedStoryId,
   setSelectedStory,
   toggleSidebar,
+  shouldShowStoryForm,
+  showStoryForm,
+  isEditing,
   ...props
 }) {
   const sortedStories = [...stories].sort((a, b) =>
@@ -189,14 +193,14 @@ function SidebarContent({
               <div
                 className="story-item__name"
                 onClick={() =>
-                  props.isEditing
+                  isEditing
                     ? promptAndExitEditMode(story.id)
                     : setSelectedStory(story.id)}
               >
                 {story.name}
               </div>
             )}
-            {props.isEditing &&
+            {isEditing &&
               updateStoryId !== story.id && (
                 <Icon
                   type="Edit"
@@ -205,7 +209,7 @@ function SidebarContent({
                   onClick={() => onClickEdit(story)}
                 />
               )}
-            {props.isEditing &&
+            {isEditing &&
               updateStoryId !== story.id && (
                 <Icon
                   type="Trash"
@@ -214,7 +218,7 @@ function SidebarContent({
                   onClick={() => onClickDelete(story.id)}
                 />
               )}
-            {props.isEditing &&
+            {isEditing &&
               updateStoryId === story.id && (
                 <div>
                   <div className="story-form__input">
@@ -239,46 +243,17 @@ function SidebarContent({
         </div>
       ))}
 
-      {props.isEditing &&
-        !addStorySelected && (
+      {isEditing &&
+        !shouldShowStoryForm && (
           <button
             className="button button--light button--full-width"
-            onClick={addStoryClicked}
+            onClick={showStoryForm}
           >
             Add Story
           </button>
         )}
 
-      {props.isEditing &&
-        addStorySelected && (
-          <div className="story-form">
-            <div className="story-form__heading">
-              <h4>Enter Story Name:</h4>
-              <Icon
-                type="X"
-                size="small"
-                className="story-form__exit"
-                onClick={addStoryExit}
-              />
-            </div>
-
-            <div className="story-form__input">
-              <FormControl
-                type="text"
-                value={storyName}
-                placeholder="Enter text"
-                onChange={storyNameChange}
-              />
-            </div>
-
-            <button
-              className="button button--light button--full-width"
-              onClick={submitStoryName}
-            >
-              Submit
-            </button>
-          </div>
-        )}
+      {isEditing && shouldShowStoryForm && <StoryForm />}
 
       {!!selectedStoryId && (
         <button

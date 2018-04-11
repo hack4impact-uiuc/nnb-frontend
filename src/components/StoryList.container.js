@@ -15,6 +15,7 @@ import StoryList from './StoryList.component'
 
 function mapStateToProps(state, ownProps) {
   return {
+    isEditing: state.edit.isEditing,
     ...state.stories,
     ...state.sidebar,
     ...ownProps
