@@ -3,20 +3,16 @@ import { bindActionCreators } from 'redux'
 import {
   createStory,
   updateStory,
-  deleteStory,
-  setSelectedStory,
-  toggleSidebar,
-  showStoryForm,
   hideStoryForm,
-  setEditingStoryId,
   updateStoryNameInput
 } from './../actions'
 import StoryForm from './StoryForm.component'
 
 function mapStateToProps(state) {
   return {
-    ...state.stories,
-    ...state.sidebar
+    stories: state.stories.stories,
+    editingStoryId: state.sidebar.editingStoryId,
+    inputStoryName: state.sidebar.inputStoryName
   }
 }
 
@@ -25,12 +21,7 @@ function mapDispatchToProps(dispatch) {
     {
       createStory,
       updateStory,
-      deleteStory,
-      setSelectedStory,
-      toggleSidebar,
-      showStoryForm,
       hideStoryForm,
-      setEditingStoryId,
       updateStoryNameInput
     },
     dispatch

@@ -5,10 +5,10 @@ import { Icon } from './'
 class StoryForm extends Component {
   onSubmit = () => {
     const {
+      inputStoryName,
       editingStoryId,
-      updateStory,
       createStory,
-      inputStoryName
+      updateStory
     } = this.props
 
     const story = { name: inputStoryName }
@@ -21,7 +21,8 @@ class StoryForm extends Component {
   }
 
   render() {
-    const { story, hideStoryForm, updateStoryNameInput } = this.props
+    const { inputStoryName, hideStoryForm, updateStoryNameInput } = this.props
+
     return (
       <div className="story-form">
         <div className="story-form__heading">
@@ -37,7 +38,7 @@ class StoryForm extends Component {
         <div className="story-form__input">
           <FormControl
             type="text"
-            value={story.name}
+            value={inputStoryName}
             placeholder="Enter text"
             onChange={e => updateStoryNameInput(e.target.value)}
           />
