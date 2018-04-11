@@ -28,6 +28,7 @@ import {
   addPOIFormMedia,
   removePOIFormMedia
 } from './poiForm.action'
+import { toggleSidebar } from './sidebar.action'
 
 export {
   fetchStuff,
@@ -57,5 +58,6 @@ export {
   deletePOI,
   setSelectedPOI,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  toggleSidebar
 }

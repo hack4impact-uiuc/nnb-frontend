@@ -120,9 +120,8 @@ class StoryList extends Component {
       <div>
         <Sidebar
           sidebar={sidebarContent}
-          open={this.props.showSidebar}
+          open={this.props.shouldShowSidebar}
           sidebarClassName="sidebar"
-          children=""
           touchHandleWidth={0}
           styles={{
             root: {

@@ -27,6 +27,9 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  sidebar: {
+    shouldShowSidebar: false
   }
 }
 
