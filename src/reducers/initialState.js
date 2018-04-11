@@ -29,7 +29,10 @@ const initialState = {
     }
   },
   sidebar: {
-    shouldShowSidebar: false
+    shouldShowSidebar: false,
+    shouldShowStoryForm: false,
+    editingStoryId: null,
+    inputStoryName: ''
   }
 }
 

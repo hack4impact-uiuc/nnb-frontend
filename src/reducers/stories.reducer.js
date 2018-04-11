@@ -36,7 +36,7 @@ export default function stories(state = initialState.stories, action) {
     case STORY_SELECTED:
       return {
         ...state,
-        selectedStoryId: action.payload.id
+        selectedStoryId: action.payload
       }
     default:
       return state

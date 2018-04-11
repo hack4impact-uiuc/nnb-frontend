@@ -11,13 +11,12 @@ import {
   setEditingStoryId,
   updateStoryNameInput
 } from './../actions'
-import StoryList from './StoryList.component'
+import StoryForm from './StoryForm.component'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     ...state.stories,
-    ...state.sidebar,
-    ...ownProps
+    ...state.sidebar
   }
 }
 
@@ -38,4 +37,4 @@ function mapDispatchToProps(dispatch) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StoryList)
+export default connect(mapStateToProps, mapDispatchToProps)(StoryForm)

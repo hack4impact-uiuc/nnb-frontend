@@ -95,7 +95,7 @@ class StoryList extends Component {
   }
 
   render() {
-    const stories = this.props.stories
+    const { stories, shouldShowSidebar } = this.props
 
     const sidebarContent = (
       <SidebarContent
@@ -109,10 +109,10 @@ class StoryList extends Component {
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
         promptAndExitEditMode={this.promptAndExitEditMode}
-        stories={stories}
         storyName={this.state.storyName}
         storyNameChange={this.storyNameChange}
         submitStoryName={this.submitStoryName}
+        stories={stories}
       />
     )
 
@@ -120,7 +120,8 @@ class StoryList extends Component {
       <div>
         <Sidebar
           sidebar={sidebarContent}
-          open={this.props.shouldShowSidebar}
+          open={shouldShowSidebar}
+          children=""
           sidebarClassName="sidebar"
           touchHandleWidth={0}
           styles={{
@@ -150,12 +151,19 @@ function SidebarContent({
   onClickDelete,
   onClickEdit,
   promptAndExitEditMode,
-  stories,
   storyName,
   storyNameChange,
   submitStoryName,
+
+  stories,
+  selectedStoryId,
+  setSelectedStory,
+  toggleSidebar,
   ...props
 }) {
+  const sortedStories = [...stories].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  )
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -163,18 +171,18 @@ function SidebarContent({
         <Icon
           type="X"
           size="large"
-          onClick={props.toggleSidebar}
+          onClick={toggleSidebar}
           className="sidebar__exit"
         />
       </div>
 
       <div className="divider" />
 
-      {[...stories].sort((a, b) => a.name.localeCompare(b.name)).map(story => (
+      {sortedStories.map(story => (
         <div key={story.id}>
           <div
             className={classnames('story-item', {
-              'story-item--selected': story.id === props.selectedStory
+              'story-item--selected': story.id === selectedStoryId
             })}
           >
             {updateStoryId !== story.id && (
@@ -183,7 +191,7 @@ function SidebarContent({
                 onClick={() =>
                   props.isEditing
                     ? promptAndExitEditMode(story.id)
-                    : props.setSelectedStory(story.id)}
+                    : setSelectedStory(story.id)}
               >
                 {story.name}
               </div>
@@ -272,10 +280,10 @@ function SidebarContent({
           </div>
         )}
 
-      {props.isStorySelected && (
+      {!!selectedStoryId && (
         <button
           className="button button--light button--full-width sidebar__exit-story"
-          onClick={exitStory}
+          onClick={() => setSelectedStory(null)}
         >
           Exit Story
         </button>

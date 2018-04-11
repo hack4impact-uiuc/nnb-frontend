@@ -15,6 +15,7 @@ import POIForm from './POIForm.component'
 import POIFormNew from './POIForm.container'
 import POIFormPanel from './POIFormPanel.component'
 import POIMarker from './POIMarker.component'
+import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
@@ -37,6 +38,7 @@ export {
   POIFormNew,
   POIFormPanel,
   POIMarker,
+  StoryForm,
   StoryList,
   StuffList,
   Timeline
