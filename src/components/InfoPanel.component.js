@@ -74,18 +74,18 @@ class InfoPanel extends Component {
     }
 
     const carousel = (
-      <Carousel>
+      <Carousel interval={null}>
         {selectedEvent.content.map(content => {
           const url = content.contentUrl ? content.contentUrl : content
+          const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
+          const caption = <p align="center">{content.caption}</p>
           const image = (
             <Image
-              width={500}
-              height={500}
-              alt={isRealTimePOI ? content : content.caption}
+              width={1000}
+              alt={isRealTimePOI ? content : { caption }}
               src={url}
             />
           )
-          const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const youtubePlayer = (
             <YoutubePlayer
               videoId={url}
@@ -109,6 +109,7 @@ class InfoPanel extends Component {
                   />
                 )}
               {displayContent}
+              <Carousel.Caption>{caption}</Carousel.Caption>
             </Carousel.Item>
           )
         })}

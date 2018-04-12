@@ -20,6 +20,23 @@
   }
 }
 
+.carousel-control {
+  position: absolute;
+  top: 0%; /* pushes the icon in the middle of the height */
+  z-index: 5;
+  display: inline-block;
+}
+
+.carousel-control .glyphicon-chevron-right{
+  top: 40%
+
+}
+
+.carousel-control .glyphicon-chevron-left{
+  top: 40%
+
+}
+
 .carousel-item {
   position: relative;
   &__delete-icon {
@@ -36,6 +53,41 @@
       background: #fafafaff;
     }
   }
+}
+
+.carousel-indicators li{
+  position: relative;
+  left: auto;
+  right: auto;
+  // color: black;
+  background-color: white;
+  border-color: black;
+  // border-radius: 10px;
+  // margin-top: 10px;
+  // margin-bottom: -50px;
+}
+
+.carousel-indicators .active{
+  position: relative;
+  left: auto;
+  right: auto;
+  // color: black;
+  background-color: black;
+  border-color: black;
+  // margin-bottom: -30px;
+}
+
+.carousel-caption {
+  position: relative;
+  left: auto;
+  right: auto;
+  color: black;
+  margin-top: 10px;
+  // margin-bottom: -10px;
+}
+
+.carousel-inner {
+  // padding-bottom: 20px;
 }
 
 .description {
