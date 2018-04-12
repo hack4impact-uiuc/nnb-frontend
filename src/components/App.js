@@ -1,19 +1,10 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import {
-  StoryList,
-  POIFormPanel,
-  MapTimeline,
-  NavBar,
-  Login,
-  StuffList,
-  Edit
-} from './'
+import { StoryList, POIFormPanel, MapTimeline, NavBar, Login } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
 
 class App extends Component {
-  // using dummy data until BE api is done
   state = {
     maps: [],
     selectedMap: null,
@@ -35,7 +26,6 @@ class App extends Component {
     this.deleteMap = this.deleteMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
     this.loadMaps = this.loadMaps.bind(this)
-    this.loadPOIs = this.loadPOIs.bind(this)
     this.loadPOIsForYear = this.loadPOIsForYear.bind(this)
     this.loadStories = this.loadStories.bind(this)
     this.setClickedCoords = this.setClickedCoords.bind(this)
@@ -52,12 +42,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // example of how to use api requests
     this.loadStories()
     this.loadMaps()
     if (storage.get('auth')) {
       this.setLogin(true)
     }
+
+    const { loadMaps, loadStories, setSelectedMap } = this.props
+    loadMaps().then(action => {
+      const maps = action.payload
+      maps.sort((a, b) => a.year - b.year)
+      setSelectedMap(maps[0])
+    })
+    loadStories()
   }
 
   toggleEditMode() {
@@ -66,25 +63,22 @@ class App extends Component {
     })
   }
 
-  loadPOIs() {
-    return Api.getPOIs().then(data =>
-      this.setState({ activeEvents: data, selectedEvent: null })
-    )
-  }
-
   loadPOIsForYear(year) {
-    return Api.getPOIsByYear(year).then(data => {
-      this.setState({ activeEvents: data.pois, selectedEvent: null })
-      this.setState({ selectedMap: data.map })
+    return Api.loadPOIs({ mapYear: year }).then(data => {
+      this.setState({
+        activeEvents: data,
+        selectedEvent: null,
+        selectedMap: this.state.maps.find(m => m.year === year)
+      })
     })
   }
 
   loadStories() {
-    return Api.getStories().then(data => this.setState({ stories: data }))
+    return Api.loadStories().then(data => this.setState({ stories: data }))
   }
 
   loadMaps() {
-    return Api.getMaps().then(data => {
+    return Api.loadMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
       if (data[0]) {
@@ -124,7 +118,7 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    Api.getPOIsByStory(storyId).then(storyPOIs => {
+    Api.loadPOIs({ storyId }).then(storyPOIs => {
       storyPOIs.sort(compareYear)
       this.setState(
         {

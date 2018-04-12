@@ -50,6 +50,16 @@ function FieldGroup({
         />
       )
       break
+    case 'password':
+      fieldGroupModule = (
+        <FormControl
+          type="password"
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+      )
+      break
     case 'file':
       // TODO: style like a button
       fieldGroupModule = (

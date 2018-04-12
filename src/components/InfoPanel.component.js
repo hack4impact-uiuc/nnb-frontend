@@ -4,70 +4,44 @@ import YoutubePlayer from 'react-youtube'
 import { Icon } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
-import { Api, utils } from './../utils'
+import { utils } from './../utils'
 
 class InfoPanel extends Component {
-  constructor(props) {
-    super(props)
-    this.onClickPrevious = this.onClickPrevious.bind(this)
-    this.onClickNext = this.onClickNext.bind(this)
-    this.onClickEdit = this.onClickEdit.bind(this)
-    this.onClickDelete = this.onClickDelete.bind(this)
+  onClickEdit = () => {
+    this.props.enableEditMode()
   }
 
-  onClickPrevious() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
-    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
-    setSelectedPOI(activeEvents[curIndex - 1].id)
-  }
-
-  onClickNext() {
-    const { activeEvents, selectedEvent, setSelectedPOI } = this.props
-    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
-    setSelectedPOI(activeEvents[curIndex + 1].id)
-  }
-
-  onClickEdit() {
-    //<--TODO: Add functionality - bring up add poi form
-    this.props.setIsUpdatingPOI(true)
-    this.props.setShowPOIForm(true)
-  }
-
-  onClickDelete() {
+  onClickDelete = () => {
     if (window.confirm('Delete POI?')) {
-      const { selectedEvent, loadPOIsForYear, selectedMap } = this.props
+      const { selectedMap, deletePOI, selectedPOIId, loadPOIs } = this.props
       if (selectedMap) {
-        Api.deletePOI(selectedEvent.id).then(() =>
-          loadPOIsForYear(selectedMap.year)
-        )
+        deletePOI(selectedPOIId).then(() => loadPOIs())
       }
     }
   }
 
-  handleDeleteMedia(contentUrl) {
-    const { selectedEvent, updatePOI } = this.props
-    const updatedPOI = {
-      ...selectedEvent,
-      content: selectedEvent.content.filter(c => c !== contentUrl)
-    }
-    updatePOI(updatedPOI)
-  }
-
   render() {
     const {
-      activeEvents,
-      selectedEvent,
-      isEditing,
+      activePOIs,
       isStorySelected,
-      isRealTimePOI,
-      showPOIForm
+      selectedPOIIndex,
+      isFirstInStory,
+      isLastInStory,
+      selectedPOI,
+      isEditing,
+      shouldShowRealTimePOI,
+      removePOIFormMedia,
+      setNextPOIInStory,
+      setPreviousPOIInStory
     } = this.props
 
-    if (!selectedEvent) {
+    if (!selectedPOI) {
       return (
         <div className="info-panel">
           <h1>
-            {isRealTimePOI ? 'Preview Will Appear Here' : 'No POI Selected'}
+            {shouldShowRealTimePOI
+              ? 'Preview Will Appear Here'
+              : 'No POI Selected'}
           </h1>
         </div>
       )
@@ -75,14 +49,15 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel interval={null}>
-        {selectedEvent.content.map(content => {
+        {selectedPOI.content.map(content => {
           const url = content.contentUrl ? content.contentUrl : content
           const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const caption = <p align="center">{content.caption}</p>
           const image = (
             <Image
-              width={1000}
-              alt={isRealTimePOI ? content : { caption }}
+              width={500}
+              height={500}
+              alt={shouldShowRealTimePOI ? content : content.caption}
               src={url}
             />
           )
@@ -100,12 +75,12 @@ class InfoPanel extends Component {
           return (
             <Carousel.Item key={url} className="carousel-item">
               {isEditing &&
-                showPOIForm && (
+                !shouldShowRealTimePOI && (
                   <Icon
                     type="Trash"
                     size="large"
                     className="carousel-item__delete-icon"
-                    onClick={this.handleDeleteMedia.bind(this, content)}
+                    onClick={() => removePOIFormMedia(content)}
                   />
                 )}
               {displayContent}
@@ -116,25 +91,15 @@ class InfoPanel extends Component {
       </Carousel>
     )
 
-    const curIndex = activeEvents.findIndex(poi => poi.id === selectedEvent.id)
-    const isShownNext = curIndex < activeEvents.length - 1
-    const isShownPrev = curIndex > 0
-
-    let links = selectedEvent.links
-    if (links && isRealTimePOI && Array.isArray(links[0])) {
-      links = selectedEvent.links.map(linkPair => ({
-        url: linkPair[0],
-        urlName: linkPair[1]
-      }))
-    }
+    const links = selectedPOI.links
 
     return (
       <div className="info-panel" ref={r => (this.infoPanelDiv = r)}>
-        {!!selectedEvent.name && (
+        {!!selectedPOI.name && (
           <div className="heading">
-            <h1 className="heading__name">{selectedEvent.name}</h1>
+            <h1 className="heading__name">{selectedPOI.name}</h1>
             {isEditing &&
-              !isRealTimePOI && (
+              !shouldShowRealTimePOI && (
                 <Icon
                   type="Edit"
                   size="large"
@@ -143,7 +108,7 @@ class InfoPanel extends Component {
                 />
               )}
             {isEditing &&
-              !isRealTimePOI && (
+              !shouldShowRealTimePOI && (
                 <Icon
                   type="Trash"
                   size="large"
@@ -154,44 +119,43 @@ class InfoPanel extends Component {
           </div>
         )}
 
-        {!!selectedEvent.content.length && (
+        {!!selectedPOI.content.length && (
           <div>
             <hr />
-            <div>{!!selectedEvent.content.length && carousel}</div>
+            <div>{!!selectedPOI.content.length && carousel}</div>
           </div>
         )}
 
-        {!!selectedEvent.description && (
+        {!!selectedPOI.description && (
           <div>
             <hr />
             <div className="description">
-              <p className="description__text">{selectedEvent.description}</p>
+              <p className="description__text">{selectedPOI.description}</p>
             </div>
           </div>
         )}
 
-        {links &&
-          !!links.length && (
-            <div>
-              <hr />
-              <div className="additional-links">
-                <h4>Additional Links:</h4>
-                <ul className="additional-links__ul">
-                  {links.map((link, i) => {
-                    const displayText = link.urlName ? link.urlName : link.url
-                    const validatedLink = utils.validateLink(link.url)
-                    return (
-                      <li key={link.url + i} className="additional-links__li">
-                        <a href={validatedLink} target="new">
-                          {displayText}
-                        </a>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
+        {!!links.length && (
+          <div>
+            <hr />
+            <div className="additional-links">
+              <h4>Additional Links:</h4>
+              <ul className="additional-links__ul">
+                {links.map((link, i) => {
+                  const displayText = link.urlName ? link.urlName : link.url
+                  const validatedLink = utils.validateLink(link.url)
+                  return (
+                    <li key={link.url + i} className="additional-links__li">
+                      <a href={validatedLink} target="new">
+                        {displayText}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
-          )}
+          </div>
+        )}
 
         {isStorySelected && (
           <div className="walkthrough-container">
@@ -200,17 +164,17 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowLeft"
                 size="large"
-                onClick={this.onClickPrevious}
-                disabled={!isShownPrev}
+                onClick={setNextPOIInStory}
+                disabled={isFirstInStory}
               />
               <h4 className="walkthrough__page-counter">
-                {curIndex + 1} / {activeEvents.length}
+                {selectedPOIIndex + 1} / {activePOIs.length}
               </h4>
               <Icon
                 type="ArrowRight"
                 size="large"
-                onClick={this.onClickNext}
-                disabled={!isShownNext}
+                onClick={setPreviousPOIInStory}
+                disabled={isLastInStory}
               />
             </div>
           </div>

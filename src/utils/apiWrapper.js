@@ -10,6 +10,10 @@ const REQUEST_METHODS = {
   DELETE: 'delete'
 }
 
+const POIS_URL = 'pois'
+const MAPS_URL = 'maps'
+const STORIES_URL = 'stories'
+
 cloudinary.config(cloudinaryConfig)
 
 function createRequest(method, endpoint, options) {
@@ -25,149 +29,122 @@ function createRequest(method, endpoint, options) {
 }
 
 /**
- * Map
+ * POIs
  */
-function getMaps() {
-  return createRequest(REQUEST_METHODS.GET, 'maps')
-    .then(res => res.data)
-    .then(res => res.map(adapters.convertFromApiMap))
+
+function loadPOIs(params) {
+  return createRequest(
+    REQUEST_METHODS.GET,
+    POIS_URL,
+    adapters.convertToApiGetPOI(params)
+  )
+    .then(res => res.result.pois)
+    .then(res => res.map(adapters.convertFromApiPOI))
 }
 
-function postMap(map) {
+function loadPOI(poiId) {
+  return createRequest(REQUEST_METHODS.GET, `${POIS_URL}/${poiId}`)
+    .then(res => res.result.poi)
+    .then(res => adapters.convertFromApiPOI(res))
+}
+
+function createPOI(poi) {
   return createRequest(
     REQUEST_METHODS.POST,
-    'maps',
-    adapters.convertToApiMap(map)
-  ).then(res => res.data)
-}
-
-function deleteMap(mapId) {
-  return createRequest(REQUEST_METHODS.DELETE, `maps/${mapId}`).then(
-    res => res.data
-  )
-}
-
-/**
- * POI
- */
-function getPOIs() {
-  return createRequest(REQUEST_METHODS.GET, 'pois').then(res =>
-    res.data.map(adapters.convertFromApiPOI)
-  )
-}
-
-function getPOI(id) {
-  return createRequest(REQUEST_METHODS.GET, `pois/${id}`)
-    .then(res => res.data)
-    .then(res => res.map(adapters.convertFromApiPOI)[0])
-}
-
-function getPOIsByYear(year) {
-  return createRequest(REQUEST_METHODS.GET, `maps/years/${year}`).then(res => {
-    const pois = res.data.pois.map(adapters.convertFromApiPOI)
-    const map = adapters.convertFromApiMap(res.data.map[0])
-    return { map, pois }
-  })
-}
-
-function getPOIsByStory(storyId) {
-  return createRequest(REQUEST_METHODS.GET, `stories/${storyId}`).then(res =>
-    res.pois.map(adapters.convertFromApiPOI)
-  )
-}
-
-function postPOIToStories(poi, selectedStories) {
-  return createRequest(
-    REQUEST_METHODS.POST,
-    'stories/add/multiple',
-    adapters.convertToApiStoriesMultiple(poi, selectedStories)
-  )
-}
-
-function editPOIStories(poiId, selectedStories) {
-  return createRequest(
-    REQUEST_METHODS.POST,
-    'stories/edit/multiple',
-    adapters.convertToApiEditStoriesMultiple(poiId, selectedStories)
-  )
-}
-
-function postPOI(poi) {
-  return createRequest(
-    REQUEST_METHODS.POST,
-    'pois',
+    POIS_URL,
     adapters.convertToApiPOI(poi)
-  ).then(res => res.data)
+  )
+    .then(res => res.result.poi)
+    .then(res => adapters.convertFromApiPOI(res))
 }
 
-function editPOI(poiId, poi) {
+function updatePOI(poiId, poi) {
   return createRequest(
     REQUEST_METHODS.PUT,
-    `pois/${poiId}`,
+    `${POIS_URL}/${poiId}`,
     adapters.convertToApiPOI(poi)
   )
+    .then(res => res.result.poi)
+    .then(res => adapters.convertFromApiPOI(res))
 }
 
 function deletePOI(poiId) {
-  return createRequest(REQUEST_METHODS.DELETE, `pois/${poiId}`).then(
-    res => res.data
+  return createRequest(REQUEST_METHODS.DELETE, `${POIS_URL}/${poiId}`).then(
+    res => res.success
   )
 }
 
 /**
- * Story
+ * Maps
  */
-function getStories() {
-  return createRequest(REQUEST_METHODS.GET, 'stories')
-    .then(res => res.data)
+
+function loadMaps() {
+  return createRequest(REQUEST_METHODS.GET, MAPS_URL)
+    .then(res => res.result.maps)
+    .then(res => res.map(adapters.convertFromApiMap))
+}
+
+function createMap(map) {
+  return createRequest(
+    REQUEST_METHODS.POST,
+    MAPS_URL,
+    adapters.convertToApiMap(map)
+  )
+    .then(res => res.result.map)
+    .then(res => adapters.convertFromApiMap(res))
+}
+
+function deleteMap(mapId) {
+  return createRequest(REQUEST_METHODS.DELETE, `${MAPS_URL}/${mapId}`).then(
+    res => res.success
+  )
+}
+
+/**
+ * Stories
+ */
+
+function loadStories(params) {
+  return createRequest(
+    REQUEST_METHODS.GET,
+    STORIES_URL,
+    !!params && adapters.convertToApiGetStories(params)
+  )
+    .then(res => res.result.stories)
     .then(res => res.map(adapters.convertFromApiStory))
 }
 
-function getStoriesByPOI(poiId) {
-  return createRequest(REQUEST_METHODS.GET, `getstories/${poiId}`).then(
-    res => res.story_ids
-  )
-}
-
-// TODO: api should take in story id, not name
-function getStory(name) {
-  return createRequest(REQUEST_METHODS.GET, `stories/${name}`).then(
-    res => res.data
-  )
-}
-
-function postStory(storyName) {
+function createStory(story) {
   return createRequest(
     REQUEST_METHODS.POST,
-    'stories',
-    adapters.convertToApiStory(storyName)
-  ).then(res => res.data)
+    STORIES_URL,
+    adapters.convertToApiStory(story)
+  )
+    .then(res => res.result.story)
+    .then(res => adapters.convertFromApiStory(res))
 }
 
-function editStory(storyId, storyName) {
+function updateStory(storyId, story) {
   return createRequest(
     REQUEST_METHODS.PUT,
-    `stories/${storyId}`,
-    adapters.convertToApiStory(storyName)
-  ).then(res => res.data)
+    `${STORIES_URL}/${storyId}`,
+    adapters.convertToApiStory(story)
+  )
+    .then(res => res.result.story)
+    .then(res => adapters.convertFromApiStory(res))
 }
 
 function deleteStory(storyId) {
-  return createRequest(REQUEST_METHODS.DELETE, `stories/${storyId}`).then(
-    res => res.data
-  )
-}
-
-/**
- * Auth
- */
-function postLogin(loginInfo) {
-  return createRequest(REQUEST_METHODS.POST, 'login', loginInfo)
+  return createRequest(
+    REQUEST_METHODS.DELETE,
+    `${STORIES_URL}/${storyId}`
+  ).then(res => res.success)
 }
 
 /**
  * Cloudinary
  */
+
 function uploadImage(imageDataURL) {
   return cloudinary.uploader
     .upload(imageDataURL)
@@ -176,24 +153,17 @@ function uploadImage(imageDataURL) {
 }
 
 export default {
-  getMaps,
-  postMap,
-  deleteMap,
-  getPOIs,
-  getPOI,
-  getPOIsByYear,
-  getPOIsByStory,
-  postPOIToStories,
-  editPOIStories,
-  postPOI,
-  editPOI,
+  loadPOIs,
+  loadPOI,
+  createPOI,
+  updatePOI,
   deletePOI,
-  getStories,
-  getStoriesByPOI,
-  getStory,
-  postStory,
-  postLogin,
-  editStory,
+  loadMaps,
+  createMap,
+  deleteMap,
+  loadStories,
+  createStory,
+  updateStory,
   deleteStory,
   uploadImage
 }
