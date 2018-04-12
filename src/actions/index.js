@@ -26,6 +26,7 @@ import {
   addPOIFormMedia,
   removePOIFormMedia
 } from './poiForm.action'
+import { updateUniSearchInput, uniSearchPOIs } from './search.action'
 
 export {
   fetchStuff,
@@ -52,5 +53,7 @@ export {
   loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  updateUniSearchInput,
+  uniSearchPOIs
 }

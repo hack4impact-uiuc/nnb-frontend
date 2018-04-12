@@ -6,6 +6,7 @@ import maps from './maps.reducer'
 import stories from './stories.reducer'
 import pois from './pois.reducer'
 import poiForm from './poiForm.reducer'
+import searchPoi from './search.reducer'
 
 const rootReducer = combineReducers({
   stories,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   edit,
   timeline: maps,
   poiForm,
-  router: routerReducer
+  router: routerReducer,
+  searchPoi
 })
 
 export default rootReducer

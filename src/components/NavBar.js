@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
-import { Icon } from './'
+import { Icon, GetUniSearchResults } from './'
 
 class NavBar extends PureComponent {
   promptAndExitStory = () => {
@@ -42,20 +42,7 @@ class NavBar extends PureComponent {
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-          <input
-            id="textfield"
-            className="navbar-content__item navbar-search__bar"
-            type="text"
-            value={uniSearchInput}
-            onChange={handleUniSearch}
-            placeholder="Search"
-          />
-
-          <Icon
-            type="Search"
-            size="large"
-            className="navbar-content__item navbar-search__icon"
-          />
+          <GetUniSearchResults />
           {!showLogin &&
             !!selectedMap && (
               <div className="navbar-content__item-context navbar-content__context ">

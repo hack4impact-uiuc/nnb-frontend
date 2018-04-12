@@ -26,6 +26,10 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  searchPoi: {
+    pois: [],
+    query: ''
   }
 }
 

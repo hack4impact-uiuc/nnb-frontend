@@ -4,17 +4,17 @@ import {
   POIS_SEARCHED
 } from './../actions/actionTypes'
 
-export default function search(state = initialState.search, action) {
+export default function searchPoi(state = initialState.searchPoi, action) {
   switch (action.type) {
     case UNI_SEARCH_INPUT_CHANGED:
       return {
         ...state,
-        uniSearchInput: action.payload.value
+        query: action.payload.value
       }
     case POIS_SEARCHED:
       return {
         ...state,
-        uniFilteredList: action.payload
+        pois: action.payload
       }
     default:
       return state

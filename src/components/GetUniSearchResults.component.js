@@ -5,20 +5,9 @@ import moment from 'moment'
 import { Icon } from './'
 
 export default class GetUniSearchResults extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      uniSearchInput: '',
-      uniFilteredList: []
-    }
-
-    this.handleUniSearch = this.handleUniSearch.bind(this)
-  }
-
-  handleUniSearch(event) {
-    this.setState({
-      uniSearchInput: event.target.value
-    })
+  handleUniSearch = event => {
+    this.props.updateUniSearchInput(event.target.value)
+    this.props.uniSearchPOIs()
   }
 
   render() {

@@ -151,8 +151,8 @@ function loadSearchPois(params) {
     SEARCH_POIS_URL,
     adapters.convertToApiSearchPois(params)
   )
-    .then(res => res.result.stories) //TODO??
-    .then(res => res.map(adapters.convertFromApiStory)) //??
+    .then(res => res.result.pois)
+    .then(res => res.map(adapters.convertFromApiPOI))
 }
 
 /**
@@ -179,5 +179,6 @@ export default {
   createStory,
   updateStory,
   deleteStory,
-  uploadImage
+  uploadImage,
+  loadSearchPois
 }

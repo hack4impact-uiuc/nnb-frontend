@@ -105,6 +105,7 @@ export default {
   convertToApiMap,
   convertToApiGetStories,
   convertToApiStory,
+  convertToApiSearchPois,
   convertFromApiPOI,
   convertFromApiMap,
   convertFromApiStory

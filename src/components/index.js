@@ -21,6 +21,7 @@ import GetStories from './GetStories.container'
 import GetPOI from './GetPOI.container'
 import POIFormNew from './POIForm.container'
 import LinkTable from './LinkTable.container'
+import GetUniSearchResults from './GetUniSearchResults.container'
 
 export {
   App,
@@ -45,5 +46,6 @@ export {
   GetStories,
   GetPOI,
   POIFormNew,
-  LinkTable
+  LinkTable,
+  GetUniSearchResults
 }

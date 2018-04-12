@@ -16,10 +16,12 @@ export function updateUniSearchInput(value) {
   return dispatch => dispatch(uniSearchInputChanged(value))
 }
 // api wrapper for our search endpoint is not yet provided so we are using loadPOIs temporarily
-export function searchPOIs(query, name, description) {
-  return dispatch => {
-    return Api.loadSearchPois({ query, name, description }).then(pois =>
-      dispatch(poisSearched(pois))
+export function uniSearchPOIs() {
+  return (dispatch, getState) => {
+    const store = getState()
+    const query = store.searchPoi.query
+    return Api.loadSearchPois({ query, name: true, description: true }).then(
+      pois => dispatch(poisSearched(pois)) //TODO is this right??
     )
   }
 }
