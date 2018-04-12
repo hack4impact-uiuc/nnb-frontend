@@ -18,7 +18,6 @@ import POIMarker from './POIMarker.component'
 import StoryList from './StoryList.component'
 import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
-import LinkTable from './LinkTable.container'
 import GetUniSearchResults from './GetUniSearchResults.container'
 
 export {
@@ -41,9 +40,6 @@ export {
   POIMarker,
   StoryList,
   StuffList,
-  GetMaps,
-  GetStories,
-  GetPOI,
   GetUniSearchResults,
   Timeline
 }
