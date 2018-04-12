@@ -33,5 +33,4 @@ export const POI_FORM_MEDIA_REMOVED = 'POI_FORM_MEDIA_REMOVED'
 
 // copy-paste
 export const POI_COPIED = 'POI_COPIED'
-export const POI_FORM_POI_PASTED = 'POI_PASTED'
-export const POI_FORM_MAX_CLIPBOARD_LENGTH = 5
+export const POI_FORM_POI_PASTED = 'POI_FORM_POI_PASTED'
