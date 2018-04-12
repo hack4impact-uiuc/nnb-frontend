@@ -3,13 +3,27 @@ import { FormControl } from 'react-bootstrap'
 import { Icon } from './'
 
 class StoryForm extends Component {
+  onStoryNameEdit = e => {
+    this.props.updateStoryNameInput(e.target.value)
+  }
+
+  onHide = () => {
+    const {
+      hideStoryForm,
+      setEditingStoryId,
+      updateStoryNameInput
+    } = this.props
+    hideStoryForm()
+    setEditingStoryId(null)
+    updateStoryNameInput('')
+  }
+
   onSubmit = () => {
     const {
       inputStoryName,
       editingStoryId,
       createStory,
-      updateStory,
-      hideStoryForm
+      updateStory
     } = this.props
 
     const story = { name: inputStoryName }
@@ -20,11 +34,11 @@ class StoryForm extends Component {
       createStory(story)
     }
 
-    hideStoryForm()
+    this.onHide()
   }
 
   render() {
-    const { inputStoryName, hideStoryForm, updateStoryNameInput } = this.props
+    const { inputStoryName } = this.props
 
     return (
       <div className="story-form">
@@ -34,7 +48,7 @@ class StoryForm extends Component {
             type="X"
             size="small"
             className="story-form__exit"
-            onClick={hideStoryForm}
+            onClick={this.onHide}
           />
         </div>
 
@@ -43,7 +57,7 @@ class StoryForm extends Component {
             type="text"
             value={inputStoryName}
             placeholder="Enter text"
-            onChange={e => updateStoryNameInput(e.target.value)}
+            onChange={this.onStoryNameEdit}
           />
         </div>
 

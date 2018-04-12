@@ -4,7 +4,8 @@ import {
   createStory,
   updateStory,
   hideStoryForm,
-  updateStoryNameInput
+  updateStoryNameInput,
+  setEditingStoryId
 } from './../actions'
 import StoryForm from './StoryForm.component'
 
@@ -22,7 +23,8 @@ function mapDispatchToProps(dispatch) {
       createStory,
       updateStory,
       hideStoryForm,
-      updateStoryNameInput
+      updateStoryNameInput,
+      setEditingStoryId
     },
     dispatch
   )

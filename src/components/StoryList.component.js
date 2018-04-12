@@ -42,22 +42,20 @@ class StoryList extends Component {
 
   onClickEdit(story) {
     this.setState({ updateStoryId: story.id, storyName: story.name })
+    this.props.setEditingStoryId(story.id)
+    this.props.updateStoryNameInput(story.name)
+    this.props.showStoryForm()
   }
 
-  onClickDelete(id) {
-    const { loadStories, exitStory, selectedStory } = this.props
+  onClickDelete(story) {
     if (
       window.confirm(
-        'Delete the current story? This will permanently remove the story from the story-list.'
+        'Delete the current story? This will permanently remove the story from the story list.'
       )
     ) {
-      Api.deleteStory(id)
-        .then(() => {
-          if (id === selectedStory) {
-            return exitStory()
-          }
-        })
-        .then(() => loadStories())
+      const { setSelectedStory, deleteStory } = this.props
+      setSelectedStory(null)
+      deleteStory(story.id)
     }
   }
 
@@ -163,6 +161,7 @@ function SidebarContent({
   shouldShowStoryForm,
   showStoryForm,
   isEditing,
+  editingStoryId,
   ...props
 }) {
   const sortedStories = [...stories].sort((a, b) =>
@@ -189,7 +188,7 @@ function SidebarContent({
               'story-item--selected': story.id === selectedStoryId
             })}
           >
-            {updateStoryId !== story.id && (
+            {editingStoryId !== story.id && (
               <div
                 className="story-item__name"
                 onClick={() =>
@@ -201,7 +200,7 @@ function SidebarContent({
               </div>
             )}
             {isEditing &&
-              updateStoryId !== story.id && (
+              editingStoryId !== story.id && (
                 <Icon
                   type="Edit"
                   size="small"
@@ -210,33 +209,17 @@ function SidebarContent({
                 />
               )}
             {isEditing &&
-              updateStoryId !== story.id && (
+              editingStoryId !== story.id && (
                 <Icon
                   type="Trash"
                   size="small"
                   className="story-item__icon"
-                  onClick={() => onClickDelete(story.id)}
+                  onClick={() => onClickDelete(story)}
                 />
               )}
             {isEditing &&
-              updateStoryId === story.id && (
-                <div>
-                  <div className="story-form__input">
-                    <FormControl
-                      type="text"
-                      value={storyName}
-                      placeholder="Enter text"
-                      onChange={storyNameChange}
-                    />
-                  </div>
-                  <button
-                    className="button button--light button--full-width"
-                    onClick={updateStoryName}
-                  >
-                    Submit
-                  </button>
-                </div>
-              )}
+              shouldShowStoryForm &&
+              editingStoryId === story.id && <StoryForm />}
           </div>
 
           <div className="divider" />
@@ -253,7 +236,7 @@ function SidebarContent({
           </button>
         )}
 
-      {isEditing && shouldShowStoryForm && <StoryForm />}
+      {isEditing && shouldShowStoryForm && !editingStoryId && <StoryForm />}
 
       {!!selectedStoryId && (
         <button

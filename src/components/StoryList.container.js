@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
+  loadStories,
   createStory,
   updateStory,
   deleteStory,
@@ -15,16 +16,18 @@ import StoryList from './StoryList.component'
 
 function mapStateToProps(state, ownProps) {
   return {
-    isEditing: state.edit.isEditing,
+    ...ownProps,
+    // TODO: integrate with redux store edit
+    // isEditing: state.edit.isEditing,
     ...state.stories,
-    ...state.sidebar,
-    ...ownProps
+    ...state.sidebar
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      loadStories,
       createStory,
       updateStory,
       deleteStory,
