@@ -3,10 +3,7 @@ import {
   POIS_LOADED,
   POI_CREATED,
   POI_UPDATED,
-  POI_DELETED,
-  POI_COPIED,
-  POI_PASTED,
-  MAX_CLIPBOARD_LENGTH
+  POI_DELETED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {

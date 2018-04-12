@@ -24,15 +24,21 @@ export default class POIForm extends Component {
       storyIds,
       media,
       links,
+      clipboard,
       updatePOIFormInput,
       togglePOIFormStoryId,
       addPOIFormLink,
       removePOIFormLink,
       addPOIFormMedia,
-      removePOIFormMedia
+      removePOIFormMedia,
+      pastePOIFormPOI
     } = this.props
     return (
       <div>
+        <button disabled={clipboard.length === 0} type="button">
+          Paste
+        </button>
+        <select>{clipboard.map(poi => <div>{poi.id}</div>)}</select>
         <form>
           <FieldGroup
             controlID="name"
