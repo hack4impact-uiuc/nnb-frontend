@@ -10,7 +10,7 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    startScale: 1.0,
+    initialScale: 1.0,
     mapSetStartPosition: false
   }
 
@@ -105,15 +105,15 @@ class NNBMap extends Component {
       const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
       const scaleY =
         boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
-      const startScale = Math.max(scaleX, scaleY)
-      const startX = (boundingWidth - imageWidth * startScale) / 2
-      const startY = (boundingHeight - imageHeight * startScale) / 2
+      const initialScale = Math.max(scaleX, scaleY)
+      const initialX = (boundingWidth - imageWidth * initialScale) / 2
+      const initialY = (boundingHeight - imageHeight * initialScale) / 2
       this.setState({
         boundingWidth,
         boundingHeight,
-        startScale,
-        startX,
-        startY
+        initialScale,
+        initialX,
+        initialY
       })
     }
   }
@@ -148,9 +148,9 @@ class NNBMap extends Component {
       mapSetStartPosition,
       boundingWidth,
       boundingHeight,
-      startX,
-      startY,
-      startScale,
+      initialX,
+      initialY,
+      initialScale,
       isChoosingNewPOICoords
     } = this.state
 
@@ -195,11 +195,11 @@ class NNBMap extends Component {
               )}
             {!mapImageLoaded && (
               <MapInteraction
-                minScale={startScale}
+                minScale={initialScale}
                 maxScale={2}
-                scale={startScale}
-                initialX={startX}
-                initialY={startY}
+                iniitalScale={initialScale}
+                initialX={initialX}
+                initialY={initialY}
               >
                 {({ translation, scale }) => {
                   const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
@@ -244,11 +244,11 @@ class NNBMap extends Component {
             )}
             {mapImageLoaded && (
               <MapInteraction
-                minScale={startScale}
+                minScale={initialScale}
                 maxScale={2}
-                scale={startScale}
-                initialX={startX}
-                initialY={startY}
+                initialScale={initialScale}
+                initialX={initialX}
+                initialY={initialY}
               >
                 {({ translation, scale }) => {
                   if (this.containerNode) {
@@ -268,8 +268,8 @@ class NNBMap extends Component {
                           : translation.y
                   }
                   if (mapImageLoaded && !mapSetStartPosition) {
-                    translation.x = startX
-                    translation.y = startY
+                    translation.x = initialX
+                    translation.y = initialY
                     this.setState({ mapSetStartPosition: true })
                   }
                   const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
