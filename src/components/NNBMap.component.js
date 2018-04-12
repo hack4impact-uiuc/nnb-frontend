@@ -10,7 +10,6 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    scale: 1.0,
     startScale: 1.0,
     mapSetStartPosition: false
   }
@@ -119,10 +118,6 @@ class NNBMap extends Component {
     }
   }
 
-  updateScale = scale => {
-    this.state.scale !== scale ? this.setState({ scale }) : null
-  }
-
   startAddPOIFlow() {
     this.setState({
       isChoosingNewPOICoords: true
@@ -166,23 +161,6 @@ class NNBMap extends Component {
         {!selectedMap && <h1 style={{ padding: '3rem' }}>No Map Selected</h1>}
         {selectedMap && (
           <div className="map-container">
-            <div
-              style={{
-                position: 'absolute',
-                left: '10px',
-                top: '10px',
-                zIndex: '1',
-                width: '50px',
-                height: '25px',
-                border: '5px solid DodgerBlue',
-                // padding: '10px',
-                margin: '5px'
-              }}
-            >
-              <div class="center-div">
-                {Math.floor(this.state.scale * 100)}%
-              </div>
-            </div>
             {isEditing && (
               <div className="map-icons">
                 {!isChoosingNewPOICoords && (
@@ -224,27 +202,6 @@ class NNBMap extends Component {
                 initialY={startY}
               >
                 {({ translation, scale }) => {
-                  if (this.containerNode) {
-                    translation.x =
-                      translation.x > 0
-                        ? 0
-                        : (boundingWidth + Math.abs(translation.x)) / scale >
-                          mapImageWidth
-                          ? (mapImageWidth * scale - boundingWidth) * -1
-                          : translation.x
-                    translation.y =
-                      translation.y > 0
-                        ? 0
-                        : (boundingHeight + Math.abs(translation.y)) / scale >
-                          mapImageHeight
-                          ? (mapImageHeight * scale - boundingHeight) * -1
-                          : translation.y
-                  }
-                  if (mapImageLoaded && !mapSetStartPosition) {
-                    translation.x = startX
-                    translation.y = startY
-                    this.setState({ mapSetStartPosition: true })
-                  }
                   const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                   return (
                     <div
@@ -279,16 +236,6 @@ class NNBMap extends Component {
                             draggable="false"
                           />
                         }
-                        {mapImageLoaded && (
-                          <POIMarkers
-                            {...this.props}
-                            {...{
-                              mapImageWidth: mapImageWidth,
-                              mapImageHeight: mapImageHeight
-                            }}
-                          />
-                        )}
-                        {/* {this.updateScale(scale)} */}
                       </div>
                     </div>
                   )
@@ -327,48 +274,66 @@ class NNBMap extends Component {
                   }
                   const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                   return (
-                    <div
-                      ref={node => (this.containerNode = node)}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative', // for absolutely positioned children
-                        overflow: 'hidden',
-                        touchAction: 'none', // Not supported in Safari :(
-                        msTouchAction: 'none',
-                        cursor: 'all-scroll',
-                        WebkitUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none'
-                      }}
-                    >
+                    <div>
                       <div
                         style={{
-                          transform: transform,
-                          transformOrigin: '0 0 '
+                          position: 'absolute',
+                          left: '10px',
+                          top: '10px',
+                          zIndex: '1',
+                          width: '50px',
+                          height: '25px',
+                          border: '3px solid DodgerBlue',
+                          background: 'white',
+                          margin: '3px'
                         }}
                       >
-                        {
-                          <Image
-                            src={selectedMap.imageUrl}
-                            className="image-fill map-image"
-                            ref={el => (this.image = el)}
-                            onClick={event => this.onImageClick(event, scale)}
-                            onLoad={() =>
-                              this.updateMapImageDimensions(this.containerNode)}
-                            draggable="false"
-                          />
-                        }
-                        {mapImageLoaded && (
-                          <POIMarkers
-                            {...this.props}
-                            {...{
-                              mapImageWidth: mapImageWidth,
-                              mapImageHeight: mapImageHeight
-                            }}
-                          />
-                        )}
-                        {this.updateScale(scale)}
+                        <div align="center">{Math.floor(scale * 100)}%</div>
+                      </div>
+                      <div
+                        ref={node => (this.containerNode = node)}
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          position: 'relative', // for absolutely positioned children
+                          overflow: 'hidden',
+                          touchAction: 'none', // Not supported in Safari :(
+                          msTouchAction: 'none',
+                          cursor: 'all-scroll',
+                          WebkitUserSelect: 'none',
+                          MozUserSelect: 'none',
+                          msUserSelect: 'none'
+                        }}
+                      >
+                        <div
+                          style={{
+                            transform: transform,
+                            transformOrigin: '0 0 '
+                          }}
+                        >
+                          {
+                            <Image
+                              src={selectedMap.imageUrl}
+                              className="image-fill map-image"
+                              ref={el => (this.image = el)}
+                              onClick={event => this.onImageClick(event, scale)}
+                              onLoad={() =>
+                                this.updateMapImageDimensions(
+                                  this.containerNode
+                                )}
+                              draggable="false"
+                            />
+                          }
+                          {mapImageLoaded && (
+                            <POIMarkers
+                              {...this.props}
+                              {...{
+                                mapImageWidth: mapImageWidth,
+                                mapImageHeight: mapImageHeight
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                   )
