@@ -83,7 +83,9 @@ class NNBMap extends Component {
   }
 
   onWindowResize() {
-    this.updateMapImageDimensions()
+    this.setState({ mapImageLoaded: false }, () =>
+      this.updateMapImageDimensions(this.containerNode)
+    )
   }
 
   updateMapImageDimensions(containerNode) {
