@@ -7,6 +7,18 @@ import './../styles/button.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
+  onSelectStory = storyId => {
+    const { setSelectedStory, loadPOIs } = this.props
+    setSelectedStory(storyId)
+    loadPOIs()
+  }
+
+  onExitStory = () => {
+    const { setSelectedStory, loadPOIs } = this.props
+    setSelectedStory(null)
+    loadPOIs()
+  }
+
   onClickEdit = story => {
     const {
       setEditingStoryId,
@@ -46,6 +58,8 @@ class StoryList extends Component {
     const sidebarContent = (
       <SidebarContent
         {...this.props}
+        onSelectStory={this.onSelectStory}
+        onExitStory={this.onExitStory}
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
         promptAndExitEditMode={this.promptAndExitEditMode}
@@ -78,6 +92,8 @@ class StoryList extends Component {
 }
 
 function SidebarContent({
+  onSelectStory,
+  onExitStory,
   promptAndExitEditMode,
   onClickEdit,
   onClickDelete,
@@ -120,7 +136,7 @@ function SidebarContent({
                 onClick={() =>
                   isEditing
                     ? promptAndExitEditMode(story.id)
-                    : setSelectedStory(story.id)}
+                    : onSelectStory(story.id)}
               >
                 {story.name}
               </div>
@@ -166,7 +182,7 @@ function SidebarContent({
       {!!selectedStoryId && (
         <button
           className="button button--light button--full-width sidebar__exit-story"
-          onClick={() => setSelectedStory(null)}
+          onClick={onExitStory}
         >
           Exit Story
         </button>

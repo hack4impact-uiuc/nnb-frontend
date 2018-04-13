@@ -6,7 +6,8 @@ import {
   toggleSidebar,
   showStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  loadPOIs
 } from './../actions'
 import StoryList from './StoryList.component'
 
@@ -33,7 +34,8 @@ function mapDispatchToProps(dispatch) {
       toggleSidebar,
       showStoryForm,
       setEditingStoryId,
-      updateStoryNameInput
+      updateStoryNameInput,
+      loadPOIs
     },
     dispatch
   )
