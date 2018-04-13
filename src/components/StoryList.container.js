@@ -1,40 +1,37 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  loadStories,
-  createStory,
-  updateStory,
   deleteStory,
   setSelectedStory,
   toggleSidebar,
   showStoryForm,
-  hideStoryForm,
   setEditingStoryId,
   updateStoryNameInput
 } from './../actions'
 import StoryList from './StoryList.component'
 
 function mapStateToProps(state, ownProps) {
+  const {
+    shouldShowSidebar,
+    shouldShowStoryForm,
+    editingStoryId
+  } = state.sidebar
   return {
-    ...ownProps,
+    isEditing: ownProps.isEditing,
     // TODO: integrate with redux store edit
     // isEditing: state.edit.isEditing,
     ...state.stories,
-    ...state.sidebar
+    ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId }
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      loadStories,
-      createStory,
-      updateStory,
       deleteStory,
       setSelectedStory,
       toggleSidebar,
       showStoryForm,
-      hideStoryForm,
       setEditingStoryId,
       updateStoryNameInput
     },

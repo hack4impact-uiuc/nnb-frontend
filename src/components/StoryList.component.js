@@ -1,53 +1,24 @@
 import React, { Component } from 'react'
-import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
 import { Icon, StoryForm } from './'
-import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
 import './../styles/button.css'
 import classnames from 'classnames'
 
 class StoryList extends Component {
-  state = {
-    addStorySelected: false,
-    storyName: '',
-    updateStoryId: null
+  onClickEdit = story => {
+    const {
+      setEditingStoryId,
+      updateStoryNameInput,
+      showStoryForm
+    } = this.props
+    setEditingStoryId(story.id)
+    updateStoryNameInput(story.name)
+    showStoryForm()
   }
 
-  constructor(props) {
-    super(props)
-    this.addStoryClicked = this.addStoryClicked.bind(this)
-    this.addStoryExit = this.addStoryExit.bind(this)
-    this.storyNameChange = this.storyNameChange.bind(this)
-    this.submitStoryName = this.submitStoryName.bind(this)
-    this.onClickEdit = this.onClickEdit.bind(this)
-    this.onClickDelete = this.onClickDelete.bind(this)
-    this.updateStoryName = this.updateStoryName.bind(this)
-    this.promptAndExitEditMode = this.promptAndExitEditMode.bind(this)
-  }
-
-  addStoryClicked() {
-    this.setState({ addStorySelected: true })
-    this.props.showStoryForm()
-  }
-
-  addStoryExit() {
-    this.setState({ addStorySelected: false })
-  }
-
-  storyNameChange(e) {
-    this.setState({ storyName: e.target.value })
-  }
-
-  onClickEdit(story) {
-    this.setState({ updateStoryId: story.id, storyName: story.name })
-    this.props.setEditingStoryId(story.id)
-    this.props.updateStoryNameInput(story.name)
-    this.props.showStoryForm()
-  }
-
-  onClickDelete(story) {
+  onClickDelete = story => {
     if (
       window.confirm(
         'Delete the current story? This will permanently remove the story from the story list.'
@@ -59,59 +30,25 @@ class StoryList extends Component {
     }
   }
 
-  submitStoryName() {
-    Api.createStory({ name: this.state.storyName })
-      .then(() => this.props.loadStories())
-      .then(() => {
-        this.setState({
-          addStorySelected: false,
-          storyName: ''
-        })
-      })
-  }
-
-  updateStoryName() {
-    const { updateStoryId, storyName } = this.state
-    Api.updateStory(updateStoryId, { name: storyName })
-      .then(() => this.props.loadStories())
-      .then(() => {
-        this.setState({
-          storyName: '',
-          updateStoryId: null
-        })
-      })
-  }
-
-  promptAndExitEditMode(storyId) {
+  promptAndExitEditMode = storyId => {
     if (
       window.confirm(
         'Exit edit mode? Cannot be in edit mode while viewing a story.'
       )
     ) {
-      this.props.toggleEditMode()
-      this.props.setSelectedStory(storyId)
+      const { toggleEditMode, setSelectedStory } = this.props
+      toggleEditMode()
+      setSelectedStory(storyId)
     }
   }
 
   render() {
-    const { stories, shouldShowSidebar } = this.props
-
     const sidebarContent = (
       <SidebarContent
         {...this.props}
-        addStoryClicked={this.addStoryClicked}
-        addStoryExit={this.addStoryExit}
-        addStorySelected={this.state.addStorySelected}
-        updateStoryId={this.state.updateStoryId}
-        updateStoryName={this.updateStoryName}
-        exitStory={this.props.exitStory}
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
         promptAndExitEditMode={this.promptAndExitEditMode}
-        storyName={this.state.storyName}
-        storyNameChange={this.storyNameChange}
-        submitStoryName={this.submitStoryName}
-        stories={stories}
       />
     )
 
@@ -119,7 +56,7 @@ class StoryList extends Component {
       <div>
         <Sidebar
           sidebar={sidebarContent}
-          open={shouldShowSidebar}
+          open={this.props.shouldShowSidebar}
           children=""
           sidebarClassName="sidebar"
           touchHandleWidth={0}
@@ -141,28 +78,17 @@ class StoryList extends Component {
 }
 
 function SidebarContent({
-  addStoryClicked,
-  addStoryExit,
-  addStorySelected,
-  updateStoryId,
-  updateStoryName,
-  exitStory,
-  onClickDelete,
-  onClickEdit,
   promptAndExitEditMode,
-  storyName,
-  storyNameChange,
-  submitStoryName,
-
+  onClickEdit,
+  onClickDelete,
   stories,
   selectedStoryId,
   setSelectedStory,
-  toggleSidebar,
   shouldShowStoryForm,
-  showStoryForm,
-  isEditing,
   editingStoryId,
-  ...props
+  toggleSidebar,
+  showStoryForm,
+  isEditing
 }) {
   const sortedStories = [...stories].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -200,23 +126,22 @@ function SidebarContent({
               </div>
             )}
             {isEditing &&
-              editingStoryId !== story.id && (
+              editingStoryId !== story.id && [
                 <Icon
+                  key="editStory"
                   type="Edit"
                   size="small"
                   className="story-item__icon"
                   onClick={() => onClickEdit(story)}
-                />
-              )}
-            {isEditing &&
-              editingStoryId !== story.id && (
+                />,
                 <Icon
+                  key="deleteStory"
                   type="Trash"
                   size="small"
                   className="story-item__icon"
                   onClick={() => onClickDelete(story)}
                 />
-              )}
+              ]}
             {isEditing &&
               shouldShowStoryForm &&
               editingStoryId === story.id && <StoryForm />}
