@@ -8,14 +8,15 @@ import LinkTable from './LinkTable.container'
 import Login from './Login.component'
 import MapManager from './MapManager.component'
 import MapTimeline from './MapTimeline.component'
-import NavBar from './NavBar'
+import NavBar from './NavBar.container'
 import NNBMap from './NNBMap.container'
 import OurTable from './OurTable.component'
 import POIForm from './POIForm.component'
 import POIFormNew from './POIForm.container'
 import POIFormPanel from './POIFormPanel.component'
 import POIMarker from './POIMarker.component'
-import StoryList from './StoryList.component'
+import StoryForm from './StoryForm.container'
+import StoryList from './StoryList.container'
 import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
 
@@ -37,6 +38,7 @@ export {
   POIFormNew,
   POIFormPanel,
   POIMarker,
+  StoryForm,
   StoryList,
   StuffList,
   Timeline

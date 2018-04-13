@@ -27,6 +27,12 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  sidebar: {
+    shouldShowSidebar: false,
+    shouldShowStoryForm: false,
+    editingStoryId: null,
+    inputStoryName: ''
   }
 }
 

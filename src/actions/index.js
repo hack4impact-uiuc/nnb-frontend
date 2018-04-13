@@ -28,6 +28,13 @@ import {
   addPOIFormMedia,
   removePOIFormMedia
 } from './poiForm.action'
+import {
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput
+} from './sidebar.action'
 
 export {
   fetchStuff,
@@ -57,5 +64,10 @@ export {
   deletePOI,
   setSelectedPOI,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput
 }
