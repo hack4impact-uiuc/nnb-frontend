@@ -11,16 +11,14 @@ import {
 } from './../actions'
 import StoryList from './StoryList.component'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const {
     shouldShowSidebar,
     shouldShowStoryForm,
     editingStoryId
   } = state.sidebar
   return {
-    isEditing: ownProps.isEditing,
-    // TODO: integrate with redux store edit
-    // isEditing: state.edit.isEditing,
+    isEditing: state.edit.isEditing,
     ...state.stories,
     ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId }
   }

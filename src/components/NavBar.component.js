@@ -9,27 +9,67 @@ class NavBar extends PureComponent {
         'Exit story? Cannot be in edit mode while viewing a story.'
       )
     ) {
-      this.props.exitStory()
+      const { setSelectedStory, enableEditMode } = this.props
+      setSelectedStory(null)
+      enableEditMode()
+
+      // this.props.exitStory()
       this.props.onEdit()
+    }
+  }
+
+  toggleEditMode = () => {
+    const {
+      isEditing,
+      enableEditMode,
+      disableEditMode,
+      selectedStoryId
+    } = this.props
+
+    if (isEditing) {
+      disableEditMode()
+    } else {
+      if (selectedStoryId) {
+        this.promptAndExitStory()
+      } else {
+        enableEditMode()
+      }
     }
   }
 
   render() {
     const {
-      endYear,
-      isEditing,
+      // endYear,
       isLoggedIn,
       isStorySelected,
-      onEdit,
+      // onEdit,
       selectedMap,
       selectedStoryName,
       setLogin,
       setShowLogin,
       showLogin,
-      startYear,
-      toggleSidebar
+      // startYear,
+
+      maps,
+      selectedMapId,
+      isEditing,
+
+      toggleSidebar,
+      enableEditMode,
+      disableEditMode
     } = this.props
-    const contextYears = `${startYear} - ${endYear}`
+
+    let contextYears = ''
+    if (!!selectedMapId) {
+      const startYearIndex = maps.findIndex(map => map.id === selectedMapId)
+      const startYear = maps[startYearIndex].year
+      const endYear =
+        startYearIndex === maps.length - 1
+          ? 'Present'
+          : maps[startYearIndex + 1].year
+      contextYears = `${startYear} - ${endYear}`
+    }
+
     return (
       <Navbar>
         <div className="navbar-content">
@@ -64,10 +104,7 @@ class NavBar extends PureComponent {
             )}
 
           {isLoggedIn && (
-            <div
-              className="navbar-content__item"
-              onClick={isStorySelected ? this.promptAndExitStory : onEdit}
-            >
+            <div className="navbar-content__item" onClick={this.toggleEditMode}>
               {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}
