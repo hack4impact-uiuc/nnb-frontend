@@ -10,7 +10,12 @@ export default class GetUniSearchResults extends Component {
     this.props.uniSearchPOIs()
   }
 
+  handleSelectPoi = event => {
+    this.props.setSelectedPOI(event.target.value) //TODO: it's not working lol
+  }
+
   render() {
+    const { pois } = this.props
     return (
       <div>
         <input
@@ -20,7 +25,14 @@ export default class GetUniSearchResults extends Component {
           value={this.uniSearchInput}
           onChange={this.handleUniSearch}
           placeholder="Search"
+          list="poi-dropdown"
         />
+
+        <select onChange={this.handleSelectPoi} value={this.selectedPoi}>
+          {pois.map(poi => {
+            return <option value={poi}>{poi.name}</option>
+          })}
+        </select>
 
         <Icon
           type="Search"
