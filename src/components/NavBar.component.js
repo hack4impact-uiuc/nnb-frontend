@@ -9,12 +9,10 @@ class NavBar extends PureComponent {
         'Exit story? Cannot be in edit mode while viewing a story.'
       )
     ) {
-      const { setSelectedStory, enableEditMode } = this.props
+      const { setSelectedStory, enableEditMode, loadPOIs } = this.props
       setSelectedStory(null)
       enableEditMode()
-
-      // this.props.exitStory()
-      this.props.onEdit()
+      loadPOIs()
     }
   }
 

@@ -7,7 +7,8 @@ import {
   showStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
-  loadPOIs
+  loadPOIs,
+  disableEditMode
 } from './../actions'
 import StoryList from './StoryList.component'
 
@@ -33,7 +34,8 @@ function mapDispatchToProps(dispatch) {
       showStoryForm,
       setEditingStoryId,
       updateStoryNameInput,
-      loadPOIs
+      loadPOIs,
+      disableEditMode
     },
     dispatch
   )

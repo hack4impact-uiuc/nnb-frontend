@@ -4,7 +4,8 @@ import {
   toggleSidebar,
   enableEditMode,
   disableEditMode,
-  setSelectedStory
+  setSelectedStory,
+  loadPOIs
 } from './../actions'
 import NavBar from './NavBar.component'
 
@@ -24,7 +25,8 @@ function mapDispatchToProps(dispatch) {
       toggleSidebar,
       enableEditMode,
       disableEditMode,
-      setSelectedStory
+      setSelectedStory,
+      loadPOIs
     },
     dispatch
   )

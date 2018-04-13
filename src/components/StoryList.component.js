@@ -48,9 +48,10 @@ class StoryList extends Component {
         'Exit edit mode? Cannot be in edit mode while viewing a story.'
       )
     ) {
-      const { toggleEditMode, setSelectedStory } = this.props
-      toggleEditMode()
+      const { disableEditMode, setSelectedStory, loadPOIs } = this.props
+      disableEditMode()
       setSelectedStory(storyId)
+      loadPOIs()
     }
   }
 
