@@ -29,6 +29,10 @@ export default class GetUniSearchResults extends Component {
         />
 
         <select onChange={this.handleSelectPoi} value={this.selectedPoi}>
+          <option disabled selected value>
+            {' '}
+            select a POI
+          </option>
           {pois.map(poi => {
             return <option value={poi.id}>{poi.name}</option>
             //should add key={poi.id}, but there are duplicate IDs and it's messing things up
