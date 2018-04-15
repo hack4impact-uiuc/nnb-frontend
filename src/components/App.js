@@ -18,8 +18,7 @@ class App extends Component {
     isEditing: false,
     isLoggedIn: false,
     isUpdatingPOI: false,
-    showLogin: false,
-    uniSearchInput: ''
+    showLogin: false
   }
 
   constructor(props) {
@@ -40,7 +39,6 @@ class App extends Component {
     this.updateMap = this.updateMap.bind(this)
     this.exitStory = this.exitStory.bind(this)
     this.setIsUpdatingPOI = this.setIsUpdatingPOI.bind(this)
-    this.handleUniSearch = this.handleUniSearch.bind(this)
   }
 
   componentDidMount() {
@@ -163,12 +161,6 @@ class App extends Component {
     }
   }
 
-  handleUniSearch(event) {
-    this.setState({
-      uniSearchInput: event.target.value
-    })
-  }
-
   toggleSidebar() {
     this.setState({
       showSidebar: !this.state.showSidebar
@@ -260,8 +252,6 @@ class App extends Component {
           showLogin={showLogin}
           startYear={!!selectedMap && selectedMap.year}
           toggleSidebar={this.toggleSidebar}
-          handleUniSearch={this.handleUniSearch}
-          uniSearchInput={this.uniSearchInput}
         />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />

@@ -28,8 +28,7 @@ class NavBar extends PureComponent {
       showLogin,
       startYear,
       toggleSidebar,
-      handleUniSearch,
-      uniSearchInput
+      handleUniSearch
     } = this.props
     const contextYears = `${startYear} - ${endYear}`
     return (

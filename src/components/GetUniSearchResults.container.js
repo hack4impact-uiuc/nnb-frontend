@@ -9,8 +9,8 @@ import GetUniSearchResults from './GetUniSearchResults.component'
 
 function mapStateToProps(state) {
   return {
-    pois: state.searchPoi.pois,
-    uniSearchInput: state.searchPoi.query,
+    pois: state.searchPoi.uniPois,
+    searchInput: state.searchPoi.uniQuery,
     selectedPoi: state.pois.selectedPOIId
   }
 }

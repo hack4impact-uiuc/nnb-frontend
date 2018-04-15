@@ -27,7 +27,7 @@ export function updateUniSearchInput(value) {
 export function uniSearchPOIs() {
   return (dispatch, getState) => {
     const store = getState()
-    const query = store.searchPoi.query
+    const query = store.searchPoi.uniQuery
     return Api.loadSearchPois({
       query,
       name: true,

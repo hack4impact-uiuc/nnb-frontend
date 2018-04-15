@@ -11,12 +11,12 @@ export default function searchPoi(state = initialState.searchPoi, action) {
     case UNI_SEARCH_INPUT_CHANGED:
       return {
         ...state,
-        query: action.payload.value
+        uniQuery: action.payload.value
       }
     case POIS_UNI_SEARCHED:
       return {
         ...state,
-        pois: action.payload
+        uniPois: action.payload
       }
     case EDIT_STORY_SEARCH_INPUT_CHANGED:
       return {

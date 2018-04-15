@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Icon } from './'
 
 export default class GetUniSearchResults extends Component {
-  handleUniSearch = event => {
+  handleSearch = event => {
     this.props.updateUniSearchInput(event.target.value)
     this.props.uniSearchPOIs()
   }
@@ -22,8 +22,8 @@ export default class GetUniSearchResults extends Component {
           id="textfield"
           className="navbar-content__item navbar-search__bar"
           type="text"
-          value={this.uniSearchInput}
-          onChange={this.handleUniSearch}
+          value={this.searchInput}
+          onChange={this.handleSearch}
           placeholder="Search"
         />
 

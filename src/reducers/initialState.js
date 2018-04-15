@@ -29,8 +29,8 @@ const initialState = {
     }
   },
   searchPoi: {
-    pois: [],
-    query: '',
+    uniPois: [],
+    uniQuery: '',
     editStoryPois: [],
     editStoryQuery: ''
   }
