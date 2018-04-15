@@ -48,12 +48,6 @@ class NNBMap extends Component {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
-  onImageScroll = scale => {
-    this.setState({
-      scale
-    })
-  }
-
   onImageClick(event, scale) {
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
@@ -127,13 +121,6 @@ class NNBMap extends Component {
   }
 
   clampCoordinates(translationDirection, scale, boundingSize, mapSize) {
-    // translation.x =
-    //   translation.x > 0
-    //     ? 0
-    //     : (boundingWidth + Math.abs(translation.x)) / scale >
-    //       mapImageWidth
-    //       ? (mapImageWidth * scale - boundingWidth) * -1
-    //       : translation.x
     if (translationDirection > 0) {
       return 0
     } else if (
