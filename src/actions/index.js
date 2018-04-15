@@ -28,7 +28,12 @@ import {
   addPOIFormMedia,
   removePOIFormMedia
 } from './poiForm.action'
-import { updateUniSearchInput, uniSearchPOIs } from './search.action'
+import {
+  updateUniSearchInput,
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
+} from './search.action'
 
 export {
   fetchStuff,
@@ -60,5 +65,7 @@ export {
   setNextPOIInStory,
   setPreviousPOIInStory,
   updateUniSearchInput,
-  uniSearchPOIs
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
 }

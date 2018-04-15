@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
-import { Icon } from './'
+import { Icon, GetEditStorySearchResults } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
@@ -218,6 +218,7 @@ function SidebarContent({
                       onChange={storyNameChange}
                     />
                   </div>
+                  <GetEditStorySearchResults />
                   <button
                     className="button button--light button--full-width"
                     onClick={updateStoryName}

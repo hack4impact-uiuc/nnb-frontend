@@ -1,7 +1,9 @@
 import initialState from './initialState'
 import {
   UNI_SEARCH_INPUT_CHANGED,
-  POIS_SEARCHED
+  POIS_UNI_SEARCHED,
+  EDIT_STORY_SEARCH_INPUT_CHANGED,
+  POIS_EDIT_STORY_SEARCHED
 } from './../actions/actionTypes'
 
 export default function searchPoi(state = initialState.searchPoi, action) {
@@ -11,30 +13,22 @@ export default function searchPoi(state = initialState.searchPoi, action) {
         ...state,
         query: action.payload.value
       }
-    case POIS_SEARCHED:
+    case POIS_UNI_SEARCHED:
       return {
         ...state,
         pois: action.payload
+      }
+    case EDIT_STORY_SEARCH_INPUT_CHANGED:
+      return {
+        ...state,
+        editStoryQuery: action.payload.value
+      }
+    case POIS_EDIT_STORY_SEARCHED:
+      return {
+        ...state,
+        editStoryPois: action.payload
       }
     default:
       return state
   }
 }
-// export default function stuff(state = initialState.stuff, action) {
-//   let newState
-//   switch (action.type) {
-//     case RECEIVE_STUFF:
-//       newState = action.payload
-//       return newState
-//     default:
-//       return state
-//   }
-// }
-
-// export default function poiForm(state = initialState.poiForm, action) {
-//   switch (action.type) {
-//     case POI_FORM_INPUT_CHANGED:
-//       return {
-//         ...state,
-//         [action.payload.field]: action.payload.value
-//       }

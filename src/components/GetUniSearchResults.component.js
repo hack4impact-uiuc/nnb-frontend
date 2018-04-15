@@ -11,7 +11,7 @@ export default class GetUniSearchResults extends Component {
   }
 
   handleSelectPoi = event => {
-    this.props.setSelectedPOI({ id: parseInt(event.target.value) }) //TODO: it's not working lol
+    this.props.setSelectedPOI({ id: parseInt(event.target.value) })
   }
 
   render() {
@@ -25,7 +25,6 @@ export default class GetUniSearchResults extends Component {
           value={this.uniSearchInput}
           onChange={this.handleUniSearch}
           placeholder="Search"
-          list="poi-dropdown"
         />
 
         <select onChange={this.handleSelectPoi} value={this.selectedPoi}>
@@ -35,7 +34,7 @@ export default class GetUniSearchResults extends Component {
           </option>
           {pois.map(poi => {
             return <option value={poi.id}>{poi.name}</option>
-            //should add key={poi.id}, but there are duplicate IDs and it's messing things up
+            //TODO should add key={poi.id}, but there are duplicate IDs and it's messing things up
           })}
         </select>
 

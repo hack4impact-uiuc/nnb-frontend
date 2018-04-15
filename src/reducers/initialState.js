@@ -30,7 +30,9 @@ const initialState = {
   },
   searchPoi: {
     pois: [],
-    query: ''
+    query: '',
+    editStoryPois: [],
+    editStoryQuery: ''
   }
 }
 
