@@ -88,7 +88,7 @@ class NNBMap extends Component {
     )
   }
 
-  updateMapImageDimensions(containerNode, onLoadScale) {
+  updateMapImageDimensions(containerNode, setTranslationScale) {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     const imageWidth = mapImageElement.width
     const imageHeight = mapImageElement.height
@@ -118,8 +118,8 @@ class NNBMap extends Component {
           initialY
         },
         () => {
-          if (onLoadScale) {
-            onLoadScale({ x: initialX, y: initialY }, initialScale)
+          if (setTranslationScale) {
+            setTranslationScale({ x: initialX, y: initialY }, initialScale)
           }
         }
       )
@@ -227,7 +227,7 @@ class NNBMap extends Component {
               initialX={initialX}
               initialY={initialY}
             >
-              {({ translation, scale }, onLoadScale) => {
+              {({ translation, scale }, setTranslationScale) => {
                 if (this.containerNode) {
                   translation.x = this.clampCoordinates(
                     translation.x,
@@ -290,7 +290,7 @@ class NNBMap extends Component {
                             onLoad={() =>
                               this.updateMapImageDimensions(
                                 this.containerNode,
-                                onLoadScale
+                                setTranslationScale
                               )}
                             draggable="false"
                           />
