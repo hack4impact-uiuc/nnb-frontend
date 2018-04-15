@@ -49,8 +49,8 @@ class POIForm extends Component {
     const { isUpdatingPOI, selectedEvent } = this.props
     if (isUpdatingPOI && selectedEvent) {
       const requests = [
-        Api.getPOI(selectedEvent.id),
-        Api.getStories(selectedEvent.id)
+        Api.loadPOI(selectedEvent.id),
+        Api.loadStories(selectedEvent.id)
       ]
       Promise.all(requests).then(responses => {
         const [poi, stories] = responses
@@ -200,7 +200,7 @@ class POIForm extends Component {
       stories
     }
 
-    Api.editPOI(poi, id)
+    Api.updatePOI(id, poi)
       .then(() =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(id))
       )
@@ -260,7 +260,7 @@ class POIForm extends Component {
       stories
     }
 
-    Api.postPOI(poi)
+    Api.createPOI(poi)
       .then(poi =>
         loadPOIsForYear(selectedMap.year).then(() => setSelectedPOI(poi.id))
       )

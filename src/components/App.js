@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import {
-  StoryList,
-  POIFormPanel,
-  MapTimeline,
-  NavBar,
-  Login,
-  StuffList,
-  Edit
-} from './'
+import { StoryList, POIFormPanel, MapTimeline, NavBar, Login } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
 
@@ -66,7 +58,7 @@ class App extends Component {
   }
 
   loadPOIsForYear(year) {
-    return Api.getPOIs({ mapYear: year }).then(data => {
+    return Api.loadPOIs({ mapYear: year }).then(data => {
       this.setState({
         activeEvents: data,
         selectedEvent: null,
@@ -76,11 +68,11 @@ class App extends Component {
   }
 
   loadStories() {
-    return Api.getStories().then(data => this.setState({ stories: data }))
+    return Api.loadStories().then(data => this.setState({ stories: data }))
   }
 
   loadMaps() {
-    return Api.getMaps().then(data => {
+    return Api.loadMaps().then(data => {
       data.sort((a, b) => a.year - b.year)
       this.setState({ maps: data })
       if (data[0]) {
@@ -120,7 +112,7 @@ class App extends Component {
   }
 
   setSelectedStory(storyId) {
-    Api.getPOIs({ storyId }).then(storyPOIs => {
+    Api.loadPOIs({ storyId }).then(storyPOIs => {
       storyPOIs.sort(compareYear)
       this.setState(
         {

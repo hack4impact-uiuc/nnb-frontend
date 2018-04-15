@@ -16,7 +16,11 @@ import Icon from './Icon.component'
 import Login from './Login.component'
 import StuffList from './StuffList.container'
 import Edit from './Edit.container'
+import GetMaps from './GetMaps.container'
+import GetStories from './GetStories.container'
 import GetPOI from './GetPOI.container'
+import POIFormNew from './POIForm.container'
+import LinkTable from './LinkTable.container'
 
 export {
   App,
@@ -37,5 +41,9 @@ export {
   Login,
   StuffList,
   Edit,
-  GetPOI
+  GetMaps,
+  GetStories,
+  GetPOI,
+  POIFormNew,
+  LinkTable
 }
