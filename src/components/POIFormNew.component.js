@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { FieldGroup, LinkTable } from './'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
@@ -35,10 +36,15 @@ export default class POIForm extends Component {
     } = this.props
     return (
       <div>
-        <button disabled={clipboard.length === 0} type="button">
-          Paste
-        </button>
-        <select>{clipboard.map(poi => <div>{poi.id}</div>)}</select>
+        <DropdownButton
+          bsStyle="button button--dark"
+          title="Paste POI"
+          disabled={clipboard.length === 0}
+        >
+          {clipboard.map(poi => (
+            <MenuItem onClick={pastePOIFormPOI(poi)}>{poi.name}</MenuItem>
+          ))}
+        </DropdownButton>
         <form>
           <FieldGroup
             controlID="name"
