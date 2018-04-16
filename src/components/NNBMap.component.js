@@ -10,8 +10,7 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    initialScale: 1.0,
-    mapSetStartPosition: false
+    initialScale: 1.0
   }
 
   constructor(props) {
@@ -77,9 +76,7 @@ class NNBMap extends Component {
   }
 
   onWindowResize() {
-    this.setState({ mapImageLoaded: false }, () =>
-      this.updateMapImageDimensions(this.containerNode)
-    )
+    this.updateMapImageDimensions(this.containerNode, this.setTranslationScale)
   }
 
   updateMapImageDimensions(containerNode, setTranslationScale) {
@@ -90,8 +87,7 @@ class NNBMap extends Component {
       this.setState({
         mapImageLoaded: true,
         mapImageWidth: imageWidth,
-        mapImageHeight: imageHeight,
-        mapSetStartPosition: false
+        mapImageHeight: imageHeight
       })
     }
     if (containerNode) {
@@ -159,7 +155,6 @@ class NNBMap extends Component {
       mapImageLoaded,
       mapImageWidth,
       mapImageHeight,
-      mapSetStartPosition,
       boundingWidth,
       boundingHeight,
       initialX,
@@ -168,7 +163,13 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
-    const { selectedMap, isEditing } = this.props
+    const {
+      selectedMap,
+      isEditing,
+      selectedPOIId,
+      setSelectedPOI,
+      activePOIs
+    } = this.props
 
     return (
       <div>
@@ -215,6 +216,7 @@ class NNBMap extends Component {
               initialY={initialY}
             >
               {({ translation, scale }, setTranslationScale) => {
+                this.setTranslationScale = setTranslationScale
                 if (this.containerNode) {
                   translation.x = this.clampCoordinates(
                     translation.x,
@@ -305,23 +307,19 @@ class NNBMap extends Component {
 }
 
 function POIMarkers({
-  activeEvents,
-  selectedEvent,
+  activePOIs,
   setSelectedPOI,
-  selectedMap,
   mapImageWidth,
-  mapImageHeight
+  mapImageHeight,
+  selectedPOIId
 }) {
-  const displayEvents = activeEvents.filter(
-    poi => poi.mapByYear === selectedMap.year
-  )
-
-  return displayEvents.map(poi => (
+  return activePOIs.map(poi => (
     <POIMarker
-      {...poi}
-      isSelected={selectedEvent && poi.id === selectedEvent.id}
       key={poi.id}
-      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
+      isSelected={poi.id === selectedPOIId}
+      absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
+      absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
+      setAsActivePOI={() => setSelectedPOI(poi)}
     />
   ))
 }

@@ -1,7 +1,8 @@
 const initialState = {
   stuff: [],
   edit: {
-    isEditing: false
+    isEditing: false,
+    shouldShowRealTimePOI: false
   },
   timeline: {
     maps: [],
@@ -9,7 +10,7 @@ const initialState = {
   },
   stories: {
     stories: [],
-    selectedStoryId: 1
+    selectedStoryId: null
   },
   pois: {
     activePOIs: [],
@@ -26,6 +27,12 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  sidebar: {
+    shouldShowSidebar: false,
+    shouldShowStoryForm: false,
+    editingStoryId: null,
+    inputStoryName: ''
   }
 }
 

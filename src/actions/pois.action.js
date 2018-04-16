@@ -17,21 +17,30 @@ function poiDeleted(poiId) {
   return { type: actionTypes.POI_DELETED, payload: { id: poiId } }
 }
 
+function poiSelected(poi) {
+  return { type: actionTypes.POI_SELECTED, payload: poi }
+}
+
+function nextPOIInStorySet() {
+  return { type: actionTypes.NEXT_POI_IN_STORY_SET }
+}
+
+function previousPOIInStorySet() {
+  return { type: actionTypes.PREVIOUS_POI_IN_STORY_SET }
+}
+
 export function loadPOIs() {
-  return dispatch => {
-    return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
-  }
-}
-
-export function loadPOIsByMapYear(mapYear) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const store = getState()
+    const { selectedStoryId } = store.stories
+    const { selectedMapId, maps } = store.timeline
+    if (!!selectedStoryId) {
+      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois =>
+        dispatch(poisLoaded(pois))
+      )
+    }
+    const mapYear = maps.find(map => map.id === selectedMapId).year
     return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
-  }
-}
-
-export function loadPOIsByStoryId(storyId) {
-  return dispatch => {
-    return Api.loadPOIs({ storyId }).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
@@ -61,4 +70,16 @@ export function deletePOI(poiId) {
   return dispatch => {
     return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
   }
+}
+
+export function setSelectedPOI(poi) {
+  return dispatch => dispatch(poiSelected(poi))
+}
+
+export function setNextPOIInStory() {
+  return dispatch => dispatch(nextPOIInStorySet())
+}
+
+export function setPreviousPOIInStory() {
+  return dispatch => dispatch(previousPOIInStorySet())
 }
