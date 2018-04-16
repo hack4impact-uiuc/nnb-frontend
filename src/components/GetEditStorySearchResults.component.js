@@ -4,9 +4,14 @@ import { Button } from 'react-bootstrap'
 import moment from 'moment'
 
 export default class GetEditStorySearchResults extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   handleSearch = event => {
     this.props.updateEditStorySearchInput(event.target.value)
     this.props.editStorySearchPOIs()
+    console.log(this)
   }
 
   render() {
@@ -15,25 +20,36 @@ export default class GetEditStorySearchResults extends Component {
       <div>
         <input
           id="textfield"
-          className="navbar-content__item navbar-search__bar"
           type="text"
           value={this.searchInput}
           onChange={this.handleSearch}
           placeholder="Search"
-          list="poi-dropdown"
         />
 
-        <datalist id="poi-dropdown">
-          <option disabled selected value>
-            {' '}
-            select a POI
-          </option>
+        <div>
           {pois.map(poi => {
-            return <option key={poi.id} value={poi.name} />
-            //TODO should add key={poi.id}, but there are duplicate IDs and it's messing things up
+            return (
+              <li key={poi.id} value={poi.id} onClick={this.props.handleSelect}>
+                {poi.name}
+              </li>
+            )
           })}
-        </datalist>
+        </div>
       </div>
     )
   }
 }
+/*
+<datalist id="poi-dropdown" onChange={this.handleSelectPoi}>
+  <option disabled selected value>
+    {' '}
+    select a POI
+  </option>
+  {pois.map(poi => {
+    return <option key={poi.id} data-value={poi.id}>{poi.name}</option>
+    //TODO should add key={poi.id}, but there are duplicate IDs and it's messing things up
+  })}
+</datalist>
+
+        <input type="hidden"/>
+*/

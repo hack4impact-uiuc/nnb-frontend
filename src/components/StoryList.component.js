@@ -12,7 +12,8 @@ class StoryList extends Component {
   state = {
     addStorySelected: false,
     storyName: '',
-    updateStoryId: null
+    updateStoryId: null,
+    poiToAdd: null
   }
 
   constructor(props) {
@@ -25,6 +26,7 @@ class StoryList extends Component {
     this.onClickDelete = this.onClickDelete.bind(this)
     this.updateStoryName = this.updateStoryName.bind(this)
     this.promptAndExitEditMode = this.promptAndExitEditMode.bind(this)
+    this.onSelectPoi = this.onSelectPoi.bind(this)
   }
 
   addStoryClicked() {
@@ -60,8 +62,15 @@ class StoryList extends Component {
     }
   }
 
+  onSelectPoi(event) {
+    this.setState({ poiToAdd: event.target.value })
+  }
+
   submitStoryName() {
-    Api.createStory({ name: this.state.storyName })
+    Api.createStory({
+      name: this.state.storyName,
+      poiIds: [this.state.poiToAdd]
+    })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
@@ -72,8 +81,8 @@ class StoryList extends Component {
   }
 
   updateStoryName() {
-    const { updateStoryId, storyName } = this.state
-    Api.updateStory(updateStoryId, { name: storyName })
+    const { updateStoryId, storyName, poiToAdd } = this.state
+    Api.updateStory(updateStoryId, { name: storyName, poiIds: [poiToAdd] })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
@@ -113,6 +122,7 @@ class StoryList extends Component {
         storyName={this.state.storyName}
         storyNameChange={this.storyNameChange}
         submitStoryName={this.submitStoryName}
+        onSelectPoi={this.onSelectPoi}
       />
     )
 
@@ -155,6 +165,7 @@ function SidebarContent({
   storyName,
   storyNameChange,
   submitStoryName,
+  onSelectPoi,
   ...props
 }) {
   return (
@@ -218,7 +229,7 @@ function SidebarContent({
                       onChange={storyNameChange}
                     />
                   </div>
-                  <GetEditStorySearchResults />
+                  <GetEditStorySearchResults handleSelect={onSelectPoi} />
                   <button
                     className="button button--light button--full-width"
                     onClick={updateStoryName}
@@ -264,6 +275,8 @@ function SidebarContent({
                 onChange={storyNameChange}
               />
             </div>
+
+            <GetEditStorySearchResults handleSelect={onSelectPoi} />
 
             <button
               className="button button--light button--full-width"
