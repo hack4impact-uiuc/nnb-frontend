@@ -10,7 +10,7 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    initialScale: 1.0
+    minScale: 1.0
   }
 
   constructor(props) {
@@ -96,20 +96,18 @@ class NNBMap extends Component {
       const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
       const scaleY =
         boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
-      const initialScale = Math.max(scaleX, scaleY)
-      const initialX = (boundingWidth - imageWidth * initialScale) / 2
-      const initialY = (boundingHeight - imageHeight * initialScale) / 2
+      const minScale = Math.max(scaleX, scaleY)
+      const initialX = (boundingWidth - imageWidth * minScale) / 2
+      const initialY = (boundingHeight - imageHeight * minScale) / 2
       this.setState(
         {
           boundingWidth,
           boundingHeight,
-          initialScale,
-          initialX,
-          initialY
+          minScale
         },
         () => {
           if (this.setTranslationScale) {
-            this.setTranslationScale({ x: initialX, y: initialY }, initialScale)
+            this.setTranslationScale({ x: initialX, y: initialY }, minScale)
           }
         }
       )
@@ -157,9 +155,7 @@ class NNBMap extends Component {
       mapImageHeight,
       boundingWidth,
       boundingHeight,
-      initialX,
-      initialY,
-      initialScale,
+      minScale,
       isChoosingNewPOICoords
     } = this.state
 
@@ -208,13 +204,7 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction
-              minScale={initialScale}
-              maxScale={2}
-              initialScale={initialScale}
-              initialX={initialX}
-              initialY={initialY}
-            >
+            <MapInteraction minScale={minScale} maxScale={2}>
               {({ translation, scale }, setTranslationScale) => {
                 this.setTranslationScale = setTranslationScale
                 if (this.containerNode) {
