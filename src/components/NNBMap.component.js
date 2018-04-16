@@ -76,10 +76,10 @@ class NNBMap extends Component {
   }
 
   onWindowResize() {
-    this.updateMapImageDimensions(this.containerNode, this.setTranslationScale)
+    this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions(containerNode, setTranslationScale) {
+  updateMapImageDimensions() {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     const imageWidth = mapImageElement.width
     const imageHeight = mapImageElement.height
@@ -90,9 +90,9 @@ class NNBMap extends Component {
         mapImageHeight: imageHeight
       })
     }
-    if (containerNode) {
-      const boundingWidth = containerNode.clientWidth
-      const boundingHeight = containerNode.clientHeight
+    if (this.containerNode) {
+      const boundingWidth = this.containerNode.clientWidth
+      const boundingHeight = this.containerNode.clientHeight
       const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
       const scaleY =
         boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
@@ -108,8 +108,8 @@ class NNBMap extends Component {
           initialY
         },
         () => {
-          if (setTranslationScale) {
-            setTranslationScale({ x: initialX, y: initialY }, initialScale)
+          if (this.setTranslationScale) {
+            this.setTranslationScale({ x: initialX, y: initialY }, initialScale)
           }
         }
       )
@@ -250,24 +250,13 @@ class NNBMap extends Component {
                       <div align="center">{Math.floor(scale * 100)}%</div>
                     </div>
                     <div
+                      className="map-pan-zoom-container"
                       ref={node => (this.containerNode = node)}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative', // for absolutely positioned children
-                        overflow: 'hidden',
-                        touchAction: 'none', // Not supported in Safari :(
-                        msTouchAction: 'none',
-                        cursor: 'all-scroll',
-                        WebkitUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none'
-                      }}
                     >
                       <div
+                        className="map-transform"
                         style={{
-                          transform: transform,
-                          transformOrigin: '0 0 '
+                          transform
                         }}
                       >
                         {
@@ -276,11 +265,7 @@ class NNBMap extends Component {
                             className="image-fill map-image"
                             ref={el => (this.image = el)}
                             onClick={event => this.onImageClick(event, scale)}
-                            onLoad={() =>
-                              this.updateMapImageDimensions(
-                                this.containerNode,
-                                setTranslationScale
-                              )}
+                            onLoad={() => this.updateMapImageDimensions()}
                             draggable="false"
                           />
                         }
