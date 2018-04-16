@@ -42,7 +42,7 @@ export default class POIForm extends Component {
           disabled={clipboard.length === 0}
         >
           {clipboard.map(poi => (
-            <MenuItem onClick={pastePOIFormPOI(poi)}>{poi.name}</MenuItem>
+            <MenuItem onClick={() => pastePOIFormPOI(poi)}>{poi.name}</MenuItem>
           ))}
         </DropdownButton>
         <form>
