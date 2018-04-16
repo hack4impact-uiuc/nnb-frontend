@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import { MapInteraction } from 'react-map-interaction'
-import { POIMarker, Icon, ZoomBanner } from '../components'
+import { POIMarker, Icon } from '../components'
 import './../styles/map.css'
 
 class NNBMap extends Component {
@@ -10,8 +10,7 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false,
-    startScale: 1.0,
-    mapSetStartPosition: false
+    minScale: 1.0
   }
 
   constructor(props) {
@@ -22,6 +21,7 @@ class NNBMap extends Component {
     this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
     this.onWindowResize = this.onWindowResize.bind(this)
     this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
+    this.clampCoordinates = this.clampCoordinates.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,12 +45,6 @@ class NNBMap extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize, false)
-  }
-
-  onImageScroll = scale => {
-    this.setState({
-      scale
-    })
   }
 
   onImageClick(event, scale) {
@@ -82,12 +76,10 @@ class NNBMap extends Component {
   }
 
   onWindowResize() {
-    this.setState({ mapImageLoaded: false }, () =>
-      this.updateMapImageDimensions(this.containerNode)
-    )
+    this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions(containerNode) {
+  updateMapImageDimensions() {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     const imageWidth = mapImageElement.width
     const imageHeight = mapImageElement.height
@@ -95,27 +87,43 @@ class NNBMap extends Component {
       this.setState({
         mapImageLoaded: true,
         mapImageWidth: imageWidth,
-        mapImageHeight: imageHeight,
-        mapSetStartPosition: false
+        mapImageHeight: imageHeight
       })
     }
-    if (containerNode) {
-      const boundingWidth = containerNode.clientWidth
-      const boundingHeight = containerNode.clientHeight
+    if (this.containerNode) {
+      const boundingWidth = this.containerNode.clientWidth
+      const boundingHeight = this.containerNode.clientHeight
       const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
       const scaleY =
         boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
-      const startScale = Math.max(scaleX, scaleY)
-      const startX = (boundingWidth - imageWidth * startScale) / 2
-      const startY = (boundingHeight - imageHeight * startScale) / 2
-      this.setState({
-        boundingWidth,
-        boundingHeight,
-        startScale,
-        startX,
-        startY
-      })
+      const minScale = Math.max(scaleX, scaleY)
+      const initialX = (boundingWidth - imageWidth * minScale) / 2
+      const initialY = (boundingHeight - imageHeight * minScale) / 2
+      this.setState(
+        {
+          boundingWidth,
+          boundingHeight,
+          minScale
+        },
+        () => {
+          if (this.setTranslationScale) {
+            this.setTranslationScale({ x: initialX, y: initialY }, minScale)
+          }
+        }
+      )
     }
+  }
+
+  clampCoordinates(translationDirection, scale, boundingSize, mapSize) {
+    if (translationDirection > 0) {
+      return 0
+    } else if (
+      (boundingSize + Math.abs(translationDirection)) / scale >
+      mapSize
+    ) {
+      return (mapSize * scale - boundingSize) * -1
+    }
+    return translationDirection
   }
 
   startAddPOIFlow() {
@@ -145,16 +153,19 @@ class NNBMap extends Component {
       mapImageLoaded,
       mapImageWidth,
       mapImageHeight,
-      mapSetStartPosition,
       boundingWidth,
       boundingHeight,
-      startX,
-      startY,
-      startScale,
+      minScale,
       isChoosingNewPOICoords
     } = this.state
 
-    const { selectedMap, isEditing } = this.props
+    const {
+      selectedMap,
+      isEditing,
+      selectedPOIId,
+      setSelectedPOI,
+      activePOIs
+    } = this.props
 
     return (
       <div>
@@ -193,36 +204,50 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            {!mapImageLoaded && (
-              <MapInteraction
-                minScale={startScale}
-                maxScale={2}
-                scale={startScale}
-                initialX={startX}
-                initialY={startY}
-              >
-                {({ translation, scale }) => {
-                  const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
-                  return (
+            <MapInteraction minScale={minScale} maxScale={2}>
+              {({ translation, scale }, setTranslationScale) => {
+                this.setTranslationScale = setTranslationScale
+                if (this.containerNode) {
+                  translation.x = this.clampCoordinates(
+                    translation.x,
+                    scale,
+                    boundingWidth,
+                    mapImageWidth
+                  )
+                  translation.y = this.clampCoordinates(
+                    translation.y,
+                    scale,
+                    boundingHeight,
+                    mapImageHeight
+                  )
+                }
+                const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
+                return (
+                  <div>
+                    <ZoomBanner scale={scale} />
                     <div
-                      ref={node => (this.containerNode = node)}
                       style={{
-                        height: '100%',
-                        width: '100%',
-                        position: 'relative', // for absolutely positioned children
-                        overflow: 'hidden',
-                        touchAction: 'none', // Not supported in Safari :(
-                        msTouchAction: 'none',
-                        cursor: 'all-scroll',
-                        WebkitUserSelect: 'none',
-                        MozUserSelect: 'none',
-                        msUserSelect: 'none'
+                        position: 'absolute',
+                        left: '10px',
+                        top: '10px',
+                        zIndex: '1',
+                        width: '50px',
+                        height: '25px',
+                        border: '3px solid DodgerBlue',
+                        background: 'white',
+                        margin: '3px'
                       }}
                     >
+                      <div align="center">{Math.floor(scale * 100)}%</div>
+                    </div>
+                    <div
+                      className="map-pan-zoom-container"
+                      ref={node => (this.containerNode = node)}
+                    >
                       <div
+                        className="map-transform"
                         style={{
-                          transform: transform,
-                          transformOrigin: '0 0 '
+                          transform
                         }}
                       >
                         {
@@ -231,101 +256,25 @@ class NNBMap extends Component {
                             className="image-fill map-image"
                             ref={el => (this.image = el)}
                             onClick={event => this.onImageClick(event, scale)}
-                            onLoad={() =>
-                              this.updateMapImageDimensions(this.containerNode)}
+                            onLoad={() => this.updateMapImageDimensions()}
                             draggable="false"
                           />
                         }
+                        {mapImageLoaded && (
+                          <POIMarkers
+                            {...this.props}
+                            {...{
+                              mapImageWidth: mapImageWidth,
+                              mapImageHeight: mapImageHeight
+                            }}
+                          />
+                        )}
                       </div>
                     </div>
-                  )
-                }}
-              </MapInteraction>
-            )}
-            {mapImageLoaded && (
-              <MapInteraction
-                minScale={startScale}
-                maxScale={2}
-                scale={startScale}
-                initialX={startX}
-                initialY={startY}
-              >
-                {({ translation, scale }) => {
-                  if (this.containerNode) {
-                    translation.x =
-                      translation.x > 0
-                        ? 0
-                        : (boundingWidth + Math.abs(translation.x)) / scale >
-                          mapImageWidth
-                          ? (mapImageWidth * scale - boundingWidth) * -1
-                          : translation.x
-                    translation.y =
-                      translation.y > 0
-                        ? 0
-                        : (boundingHeight + Math.abs(translation.y)) / scale >
-                          mapImageHeight
-                          ? (mapImageHeight * scale - boundingHeight) * -1
-                          : translation.y
-                  }
-                  if (mapImageLoaded && !mapSetStartPosition) {
-                    translation.x = startX
-                    translation.y = startY
-                    this.setState({ mapSetStartPosition: true })
-                  }
-                  const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
-                  return (
-                    <div>
-                      <ZoomBanner scale={Math.floor(scale * 100)} />
-                      <div
-                        ref={node => (this.containerNode = node)}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          position: 'relative', // for absolutely positioned children
-                          overflow: 'hidden',
-                          touchAction: 'none', // Not supported in Safari :(
-                          msTouchAction: 'none',
-                          cursor: 'all-scroll',
-                          WebkitUserSelect: 'none',
-                          MozUserSelect: 'none',
-                          msUserSelect: 'none'
-                        }}
-                      >
-                        <div
-                          style={{
-                            transform: transform,
-                            transformOrigin: '0 0 '
-                          }}
-                        >
-                          {
-                            <Image
-                              src={selectedMap.imageUrl}
-                              className="image-fill map-image"
-                              ref={el => (this.image = el)}
-                              onClick={event => this.onImageClick(event, scale)}
-                              onLoad={() =>
-                                this.updateMapImageDimensions(
-                                  this.containerNode
-                                )}
-                              draggable="false"
-                            />
-                          }
-                          {mapImageLoaded && (
-                            <POIMarkers
-                              {...this.props}
-                              {...{
-                                mapImageWidth: mapImageWidth,
-                                mapImageHeight: mapImageHeight
-                              }}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }}
-              </MapInteraction>
-            )}
+                  </div>
+                )
+              }}
+            </MapInteraction>
           </div>
         )}
       </div>
@@ -334,23 +283,19 @@ class NNBMap extends Component {
 }
 
 function POIMarkers({
-  activeEvents,
-  selectedEvent,
+  activePOIs,
   setSelectedPOI,
-  selectedMap,
   mapImageWidth,
-  mapImageHeight
+  mapImageHeight,
+  selectedPOIId
 }) {
-  const displayEvents = activeEvents.filter(
-    poi => poi.mapByYear === selectedMap.year
-  )
-
-  return displayEvents.map(poi => (
+  return activePOIs.map(poi => (
     <POIMarker
-      {...poi}
-      isSelected={selectedEvent && poi.id === selectedEvent.id}
       key={poi.id}
-      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
+      isSelected={poi.id === selectedPOIId}
+      absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
+      absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
+      setAsActivePOI={() => setSelectedPOI(poi)}
     />
   ))
 }
