@@ -62,7 +62,8 @@ class InfoPanel extends Component {
       isEditing,
       isStorySelected,
       isRealTimePOI,
-      showPOIForm
+      showPOIForm,
+      copyPOI
     } = this.props
     const activeEvents = pois.activePOIs
 
@@ -135,6 +136,15 @@ class InfoPanel extends Component {
         {!!selectedEvent.name && (
           <div className="heading">
             <h1 className="heading__name">{selectedEvent.name}</h1>
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Copy"
+                  size="large"
+                  className="story-time__icon"
+                  onClick={selectedEvent => copyPOI(selectedEvent)}
+                />
+              )}
             {isEditing &&
               !isRealTimePOI && (
                 <Icon

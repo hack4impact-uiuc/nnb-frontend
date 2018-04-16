@@ -76,7 +76,13 @@ export default function poiForm(state = initialState.poiForm, action) {
       pasteClipboard.unshift(action.payload)
       return {
         ...state,
-        clipboard: pasteClipboard
+        clipboard: pasteClipboard,
+        name: action.payload.name,
+        date: action.payload.date,
+        description: action.payload.description,
+        storyIds: action.payload.stories,
+        media: action.payload.media,
+        links: action.payload.links
       }
     default:
       return state
