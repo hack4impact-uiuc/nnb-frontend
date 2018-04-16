@@ -142,7 +142,7 @@ class InfoPanel extends Component {
                   type="Copy"
                   size="large"
                   className="story-time__icon"
-                  onClick={selectedEvent => copyPOI(selectedEvent)}
+                  onClick={() => copyPOI(selectedEvent)}
                 />
               )}
             {isEditing &&
