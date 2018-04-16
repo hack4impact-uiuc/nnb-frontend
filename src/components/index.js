@@ -17,7 +17,7 @@ import Login from './Login.component'
 import StuffList from './StuffList.container'
 import Edit from './Edit.container'
 import GetPOI from './GetPOI.container'
-
+import ZoomBanner from './ZoomBanner.component'
 export {
   App,
   InfoPanel,
@@ -37,5 +37,6 @@ export {
   Login,
   StuffList,
   Edit,
-  GetPOI
+  GetPOI,
+  ZoomBanner
 }

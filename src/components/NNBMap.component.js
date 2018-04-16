@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import { MapInteraction } from 'react-map-interaction'
-import { POIMarker, Icon } from '../components'
+import { POIMarker, Icon, ZoomBanner } from '../components'
 import './../styles/map.css'
 
 class NNBMap extends Component {
@@ -275,21 +275,7 @@ class NNBMap extends Component {
                   const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                   return (
                     <div>
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '10px',
-                          top: '10px',
-                          zIndex: '1',
-                          width: '50px',
-                          height: '25px',
-                          border: '3px solid DodgerBlue',
-                          background: 'white',
-                          margin: '3px'
-                        }}
-                      >
-                        <div align="center">{Math.floor(scale * 100)}%</div>
-                      </div>
+                      <ZoomBanner scale={Math.floor(scale * 100)} />
                       <div
                         ref={node => (this.containerNode = node)}
                         style={{
