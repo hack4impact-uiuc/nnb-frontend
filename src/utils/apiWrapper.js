@@ -152,7 +152,7 @@ function loadSearchPois(params) {
     adapters.convertToApiSearchPois(params)
   )
     .then(res => res.result.pois)
-    .then(res => res.map(adapters.convertFromApiSearchPois))
+    .then(res => res.map(adapters.convertFromApiPOI))
 }
 
 /**

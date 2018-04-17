@@ -84,18 +84,6 @@ function convertFromApiPOI(poi) {
   }
 }
 
-function convertFromApiSearchPois(poi) {
-  return {
-    id: poi._id,
-    name: poi.name,
-    date: poi.date,
-    description: poi.description,
-    coordinateX: poi.x_coord,
-    coordinateY: poi.y_coord,
-    mapByYear: poi.map_year
-  }
-}
-
 function convertFromApiMap(map) {
   return {
     id: map._id,
@@ -120,6 +108,5 @@ export default {
   convertToApiSearchPois,
   convertFromApiPOI,
   convertFromApiMap,
-  convertFromApiStory,
-  convertFromApiSearchPois
+  convertFromApiStory
 }
