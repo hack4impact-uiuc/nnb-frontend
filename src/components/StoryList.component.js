@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
 import Sidebar from 'react-sidebar'
-import { Icon, GetEditStorySearchResults } from './'
+import { Icon, GetEditStorySearchResults, EditStoryModal } from './'
 import { Api } from './../utils'
 import './../styles/storylist.css'
 import './../styles/App.css'
@@ -13,7 +13,7 @@ class StoryList extends Component {
     addStorySelected: false,
     storyName: '',
     updateStoryId: null,
-    poiToAdd: null
+    poiToAdd: []
   }
 
   constructor(props) {
@@ -63,13 +63,15 @@ class StoryList extends Component {
   }
 
   onSelectPoi(event) {
-    this.setState({ poiToAdd: event.target.value })
+    this.setState({
+      poiToAdd: this.state.poiToAdd.concat([event.target.value])
+    })
   }
 
   submitStoryName() {
     Api.createStory({
       name: this.state.storyName,
-      poiIds: [this.state.poiToAdd]
+      poiIds: this.state.poiToAdd
     })
       .then(() => this.props.loadStories())
       .then(() => {
@@ -82,7 +84,7 @@ class StoryList extends Component {
 
   updateStoryName() {
     const { updateStoryId, storyName, poiToAdd } = this.state
-    Api.updateStory(updateStoryId, { name: storyName, poiIds: [poiToAdd] })
+    Api.updateStory(updateStoryId, { name: storyName, poiIds: poiToAdd })
       .then(() => this.props.loadStories())
       .then(() => {
         this.setState({
@@ -221,21 +223,13 @@ function SidebarContent({
             {props.isEditing &&
               updateStoryId === story.id && (
                 <div>
-                  <div className="story-form__input">
-                    <FormControl
-                      type="text"
-                      value={storyName}
-                      placeholder="Enter text"
-                      onChange={storyNameChange}
-                    />
-                  </div>
-                  <GetEditStorySearchResults handleSelect={onSelectPoi} />
-                  <button
-                    className="button button--light button--full-width"
-                    onClick={updateStoryName}
-                  >
-                    Submit
-                  </button>
+                  <EditStoryModal
+                    toggleSidebar={props.toggleSidebar}
+                    onSelectPoi={onSelectPoi}
+                    updateStoryName={updateStoryName}
+                    storyName={storyName}
+                    storyNameChange={storyNameChange}
+                  />
                 </div>
               )}
           </div>

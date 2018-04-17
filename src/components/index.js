@@ -20,6 +20,7 @@ import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
 import GetUniSearchResults from './GetUniSearchResults.container'
 import GetEditStorySearchResults from './GetEditStorySearchResults.container'
+import EditStoryModal from './EditStoryModal.component'
 
 export {
   App,
@@ -43,5 +44,6 @@ export {
   StuffList,
   GetUniSearchResults,
   GetEditStorySearchResults,
-  Timeline
+  Timeline,
+  EditStoryModal
 }
