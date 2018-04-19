@@ -205,7 +205,11 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction minScale={minScale} maxScale={minScale * 2}>
+            <MapInteraction
+              minScale={minScale}
+              maxScale={minScale * 2}
+              showControls={true}
+            >
               {({ translation, scale }, setTranslationScale) => {
                 this.setTranslationScale = setTranslationScale
                 if (this.containerNode) {
