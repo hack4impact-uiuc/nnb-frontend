@@ -56,7 +56,7 @@ export default class GetUniSearchResults extends Component {
           size="small"
           className="navbar-content__item navbar-search__icon"
         />
-        <h2>Search for POIs</h2>
+        <h2>Search for a POI</h2>
         <Autosuggest
           suggestions={pois}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
