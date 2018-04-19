@@ -81,24 +81,25 @@ class NNBMap extends Component {
 
   updateMapImageDimensions() {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
-    const imageWidth = mapImageElement.width
-    const imageHeight = mapImageElement.height
+    const mapImageWidth = mapImageElement.width
+    const mapImageHeight = mapImageElement.height
     if (this.image) {
       this.setState({
         mapImageLoaded: true,
-        mapImageWidth: imageWidth,
-        mapImageHeight: imageHeight
+        mapImageWidth,
+        mapImageHeight
       })
     }
     if (this.containerNode) {
       const boundingWidth = this.containerNode.clientWidth
       const boundingHeight = this.containerNode.clientHeight
-      const scaleX = boundingWidth > imageWidth ? boundingWidth / imageWidth : 1
+      const scaleX =
+        boundingWidth > mapImageWidth ? boundingWidth / mapImageWidth : 1
       const scaleY =
-        boundingHeight > imageHeight ? boundingHeight / imageHeight : 1
+        boundingHeight > mapImageHeight ? boundingHeight / mapImageHeight : 1
       const minScale = Math.max(scaleX, scaleY)
-      const initialX = (boundingWidth - imageWidth * minScale) / 2
-      const initialY = (boundingHeight - imageHeight * minScale) / 2
+      const initialX = (boundingWidth - mapImageWidth * minScale) / 2
+      const initialY = (boundingHeight - mapImageHeight * minScale) / 2
       this.setState(
         {
           boundingWidth,
@@ -255,7 +256,7 @@ class NNBMap extends Component {
                             className="image-fill map-image"
                             ref={el => (this.image = el)}
                             onClick={event => this.onImageClick(event, scale)}
-                            onLoad={() => this.updateMapImageDimensions()}
+                            onLoad={this.updateMapImageDimensions}
                             draggable="false"
                           />
                         }
@@ -263,8 +264,8 @@ class NNBMap extends Component {
                           <POIMarkers
                             {...this.props}
                             {...{
-                              mapImageWidth: mapImageWidth,
-                              mapImageHeight: mapImageHeight
+                              mapImageWidth,
+                              mapImageHeight
                             }}
                           />
                         )}
