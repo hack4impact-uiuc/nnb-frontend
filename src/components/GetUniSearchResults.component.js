@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FieldGroup } from '../components'
 import { Button } from 'react-bootstrap'
 import moment from 'moment'
+import Autosuggest from 'react-autosuggest'
 import { Icon } from './'
 
 export default class GetUniSearchResults extends Component {
@@ -10,38 +11,60 @@ export default class GetUniSearchResults extends Component {
     this.props.uniSearchPOIs()
   }
 
-  handleSelectPoi = event => {
-    this.props.setSelectedPOI({ id: parseInt(event.target.value) })
+  onChange = (event, { newValue, method }) => {
+    newValue !== 'undefined'
+      ? this.props.updateUniSearchInput(newValue)
+      : this.props.updateUniSearchInput('')
+  }
+
+  onSuggestionSelected = (event, { suggestion }) => {
+    let mapYear = suggestion.mapByYear
+    let res = this.props.maps.filter(m => m.year === mapYear)
+    this.props.setSelectedMap(res[0])
+    this.props.setSelectedPOI(suggestion)
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      pois: []
+    })
+  }
+
+  onSuggestionsFetchRequested = () => {
+    this.props.uniSearchPOIs()
+  }
+
+  getPoiValue = poi => poi.name
+
+  renderPoi = poi => {
+    return <span value={poi.id}>{poi.name}</span>
   }
 
   render() {
-    const { pois } = this.props
+    const { pois, searchInput } = this.props
+
+    const inputProps = {
+      placeholder: 'Search',
+      value: searchInput,
+      onChange: this.onChange
+    }
+
     return (
       <div>
-        <input
-          id="textfield"
-          className="navbar-content__item navbar-search__bar"
-          type="text"
-          value={this.searchInput}
-          onChange={this.handleSearch}
-          placeholder="Search"
-        />
-
-        <select onChange={this.handleSelectPoi} value={this.selectedPoi}>
-          <option disabled selected value>
-            {' '}
-            select a POI
-          </option>
-          {pois.map(poi => {
-            return <option value={poi.id}>{poi.name}</option>
-            //TODO should add key={poi.id}, but there are duplicate IDs and it's messing things up
-          })}
-        </select>
-
         <Icon
           type="Search"
-          size="large"
+          size="small"
           className="navbar-content__item navbar-search__icon"
+        />
+        <h2>Search for POIs</h2>
+        <Autosuggest
+          suggestions={pois}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          getSuggestionValue={this.getPoiValue}
+          renderSuggestion={this.renderPoi}
+          inputProps={inputProps}
         />
       </div>
     )

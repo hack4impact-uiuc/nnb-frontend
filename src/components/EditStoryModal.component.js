@@ -43,7 +43,7 @@ class EditStoryModal extends Component {
     } = this.props
     return (
       <div>
-        <button onClick={this.handleOpenModal}>Trigger Modal</button>
+        <button onClick={this.handleOpenModal}>Edit</button>
         <Modal
           isOpen={this.state.showModal}
           contentLabel="Minimal Modal Example"

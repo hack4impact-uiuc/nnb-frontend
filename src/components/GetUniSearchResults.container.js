@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux'
 import {
   updateUniSearchInput,
   uniSearchPOIs,
-  setSelectedPOI
+  setSelectedPOI,
+  setSelectedMap
 } from './../actions'
 import GetUniSearchResults from './GetUniSearchResults.component'
 
@@ -11,7 +12,8 @@ function mapStateToProps(state) {
   return {
     pois: state.searchPoi.uniPois,
     searchInput: state.searchPoi.uniQuery,
-    selectedPoi: state.pois.selectedPOIId
+    selectedPoi: state.pois.selectedPOIId,
+    maps: state.timeline.maps
   }
 }
 
@@ -20,7 +22,8 @@ function mapDispatchToProps(dispatch) {
     {
       updateUniSearchInput,
       uniSearchPOIs,
-      setSelectedPOI
+      setSelectedPOI,
+      setSelectedMap
     },
     dispatch
   )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Image, Carousel } from 'react-bootstrap'
 import YoutubePlayer from 'react-youtube'
-import { Icon } from './'
+import { Icon, GetUniSearchResults } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
 import { utils } from './../utils'
@@ -35,9 +35,11 @@ class InfoPanel extends Component {
       setPreviousPOIInStory
     } = this.props
 
+    const searchBar = <GetUniSearchResults />
     if (!selectedPOI) {
       return (
         <div className="info-panel">
+          <GetUniSearchResults />
           <h1>
             {shouldShowRealTimePOI
               ? 'Preview Will Appear Here'
@@ -45,6 +47,8 @@ class InfoPanel extends Component {
           </h1>
         </div>
       )
+    } else {
+      ;<GetUniSearchResults />
     }
 
     const carousel = (

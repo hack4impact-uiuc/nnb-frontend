@@ -41,7 +41,6 @@ class NavBar extends PureComponent {
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-          <GetUniSearchResults />
           {!showLogin &&
             !!selectedMap && (
               <div className="navbar-content__item-context navbar-content__context ">
