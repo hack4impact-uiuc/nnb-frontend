@@ -18,7 +18,7 @@ import POIMarker from './POIMarker.component'
 import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import StuffList from './StuffList.container'
-import GetPOI from './GetPOI.container'
+import Timeline from './Timeline.container'
 import ZoomBanner from './ZoomBanner.component'
 export {
   App,
@@ -41,6 +41,6 @@ export {
   StoryForm,
   StoryList,
   StuffList,
-  GetPOI,
+  Timeline,
   ZoomBanner
 }

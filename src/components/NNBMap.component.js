@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import { MapInteraction } from 'react-map-interaction'
-import { POIMarker, Icon } from '../components'
+import { POIMarker, Icon, ZoomBanner } from '../components'
 import './../styles/map.css'
 
 class NNBMap extends Component {
@@ -205,7 +205,7 @@ class NNBMap extends Component {
                   Click on the map to set a location for the new POI.
                 </div>
               )}
-            <MapInteraction minScale={minScale} maxScale={2}>
+            <MapInteraction minScale={minScale} maxScale={minScale * 2}>
               {({ translation, scale }, setTranslationScale) => {
                 this.setTranslationScale = setTranslationScale
                 if (this.containerNode) {
@@ -224,53 +224,36 @@ class NNBMap extends Component {
                 }
                 const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                 return (
-                  <div>
-                    <ZoomBanner scale={scale} />
+                  <div
+                    className="map-pan-zoom-container"
+                    ref={node => (this.containerNode = node)}
+                  >
+                    <ZoomBanner scale={Math.floor(scale / minScale * 100)} />
                     <div
+                      className="map-transform"
                       style={{
-                        position: 'absolute',
-                        left: '10px',
-                        top: '10px',
-                        zIndex: '1',
-                        width: '50px',
-                        height: '25px',
-                        border: '3px solid DodgerBlue',
-                        background: 'white',
-                        margin: '3px'
+                        transform
                       }}
                     >
-                      <div align="center">{Math.floor(scale * 100)}%</div>
-                    </div>
-                    <div
-                      className="map-pan-zoom-container"
-                      ref={node => (this.containerNode = node)}
-                    >
-                      <div
-                        className="map-transform"
-                        style={{
-                          transform
-                        }}
-                      >
-                        {
-                          <Image
-                            src={selectedMap.imageUrl}
-                            className="image-fill map-image"
-                            ref={el => (this.image = el)}
-                            onClick={event => this.onImageClick(event, scale)}
-                            onLoad={this.updateMapImageDimensions}
-                            draggable="false"
-                          />
-                        }
-                        {mapImageLoaded && (
-                          <POIMarkers
-                            {...this.props}
-                            {...{
-                              mapImageWidth,
-                              mapImageHeight
-                            }}
-                          />
-                        )}
-                      </div>
+                      {
+                        <Image
+                          src={selectedMap.imageUrl}
+                          className="image-fill map-image"
+                          ref={el => (this.image = el)}
+                          onClick={event => this.onImageClick(event, scale)}
+                          onLoad={this.updateMapImageDimensions}
+                          draggable="false"
+                        />
+                      }
+                      {mapImageLoaded && (
+                        <POIMarkers
+                          {...this.props}
+                          {...{
+                            mapImageWidth,
+                            mapImageHeight
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 )

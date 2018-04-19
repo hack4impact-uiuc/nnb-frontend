@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .zoomwindow {
-
+  background: white;
   position: fixed;
   left: 5px;
   top: 5px;
@@ -26,10 +26,10 @@
   }
   &--show {
     opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-out;
-    animation-duration: 1s;
+    // animation-name: fadeInOpacity;
+    // animation-iteration-count: 1;
+    // animation-timing-function: ease-out;
+    // animation-duration: 1s;
   }
 
 
