@@ -225,6 +225,7 @@ class NNBMap extends Component {
                 const transform = `translate(${translation.x}px, ${translation.y}px) scale(${scale})`
                 return (
                   <div>
+                    <ZoomBanner scale={scale} />
                     <div
                       style={{
                         position: 'absolute',
