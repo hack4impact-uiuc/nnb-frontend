@@ -80,9 +80,9 @@ export default function poiForm(state = initialState.poiForm, action) {
         name: action.payload.name,
         date: action.payload.date,
         description: action.payload.description,
-        storyIds: action.payload.stories,
-        media: action.payload.media,
-        links: action.payload.links
+        storyIds: action.payload.stories.map(story => story.id)
+        // media: action.payload.media,
+        // links: action.payload.links
       }
     default:
       return state
