@@ -35,6 +35,12 @@ import {
   setEditingStoryId,
   updateStoryNameInput
 } from './sidebar.action'
+import {
+  updateUniSearchInput,
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
+} from './search.action'
 
 export {
   fetchStuff,
@@ -69,5 +75,9 @@ export {
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  updateUniSearchInput,
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
 }

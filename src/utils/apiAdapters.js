@@ -51,6 +51,14 @@ function convertToApiStory(story) {
   }
 }
 
+function convertToApiSearchPois(params) {
+  return {
+    q: params.query,
+    name: params.name,
+    description: params.description
+  }
+}
+
 /**
  * Convert from api
  */
@@ -97,6 +105,7 @@ export default {
   convertToApiMap,
   convertToApiGetStories,
   convertToApiStory,
+  convertToApiSearchPois,
   convertFromApiPOI,
   convertFromApiMap,
   convertFromApiStory

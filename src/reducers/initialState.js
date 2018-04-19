@@ -33,6 +33,12 @@ const initialState = {
     shouldShowStoryForm: false,
     editingStoryId: null,
     inputStoryName: ''
+  },
+  searchPoi: {
+    uniPois: [],
+    uniQuery: '',
+    editStoryPois: [],
+    editStoryQuery: ''
   }
 }
 
