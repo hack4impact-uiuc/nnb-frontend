@@ -56,7 +56,11 @@ export default function poiForm(state = initialState.poiForm, action) {
     case POI_FORM_MEDIA_REMOVED:
       return {
         ...state,
-        media: [...state.media].filter(media => media.id !== action.payload.id)
+        media: [...state.media].filter(
+          media =>
+            media.contentUrl !== action.payload.contentUrl &&
+            media.caption !== action.payload.caption
+        )
       }
     case POI_COPIED:
       const copyClipboard = [...state.clipboard].filter(

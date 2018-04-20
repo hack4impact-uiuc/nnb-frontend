@@ -1,21 +1,23 @@
 import { fetchStuff } from './stuff.action'
 import { enableEditMode, disableEditMode } from './edit.action'
-import { loadMaps, createMap, removeMap } from './maps.action'
+import { loadMaps, createMap, removeMap, setSelectedMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
   createStory,
   updateStory,
-  deleteStory
+  deleteStory,
+  setSelectedStory
 } from './stories.action'
 import {
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
-  deletePOI
+  deletePOI,
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -28,6 +30,13 @@ import {
   copyPOI,
   pastePOIFormPOI
 } from './poiForm.action'
+import {
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput
+} from './sidebar.action'
 
 export {
   fetchStuff,
@@ -36,11 +45,13 @@ export {
   loadMaps,
   createMap,
   removeMap,
+  setSelectedMap,
   loadStories,
   loadStoriesByPOIId,
   createStory,
   updateStory,
   deleteStory,
+  setSelectedStory,
   updatePOIFormInput,
   togglePOIFormStoryId,
   addPOIFormLink,
@@ -50,11 +61,17 @@ export {
   removePOIFormMedia,
   loadPOIs,
   loadPOIById,
-  loadPOIsByMapYear,
-  loadPOIsByStoryId,
   createPOI,
   updatePOI,
   deletePOI,
   copyPOI,
-  pastePOIFormPOI
+  pastePOIFormPOI,
+  setSelectedPOI,
+  setNextPOIInStory,
+  setPreviousPOIInStory,
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput
 }

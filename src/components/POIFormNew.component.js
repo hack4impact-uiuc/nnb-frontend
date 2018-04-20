@@ -9,10 +9,8 @@ import './../styles/button.css'
 export default class POIForm extends Component {
   // temp just to have the data loaded
   componentDidMount() {
-    const { loadMaps, loadPOIsByMapYear, loadStories } = this.props
-    loadMaps().then(action => {
-      loadPOIsByMapYear(action.payload[0].year)
-    })
+    const { loadMaps, loadPOIs, loadStories } = this.props
+    loadMaps().then(() => loadPOIs())
     loadStories()
   }
 

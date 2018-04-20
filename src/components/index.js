@@ -1,49 +1,45 @@
 import App from './App.container'
-import InfoPanel from './InfoPanel.container'
-import NNBMap from './NNBMap.component'
-import POIForm from './POIForm.component'
-import POIMarker from './POIMarker.component'
-import StoryList from './StoryList.component'
-import Timeline from './Timeline.component'
-import MapManager from './MapManager.component'
-import FieldGroup from './FieldGroup'
-import OurTable from './OurTable.component'
-import MapTimeline from './MapTimeline.component'
-import POIFormPanel from './POIFormPanel.component'
-import NavBar from './NavBar'
-import Interval from './Interval.component'
-import Icon from './Icon.component'
-import Login from './Login.component'
-import StuffList from './StuffList.container'
 import Edit from './Edit.container'
-import GetMaps from './GetMaps.container'
-import GetStories from './GetStories.container'
-import GetPOI from './GetPOI.container'
-import POIFormNew from './POIForm.container'
+import FieldGroup from './FieldGroup'
+import Icon from './Icon.component'
+import InfoPanel from './InfoPanel.container'
+import Interval from './Interval.container'
 import LinkTable from './LinkTable.container'
+import Login from './Login.component'
+import MapManager from './MapManager.component'
+import MapTimeline from './MapTimeline.component'
+import NavBar from './NavBar.container'
+import NNBMap from './NNBMap.container'
+import OurTable from './OurTable.component'
+import POIForm from './POIForm.component'
+import POIFormNew from './POIForm.container'
+import POIFormPanel from './POIFormPanel.component'
+import POIMarker from './POIMarker.component'
+import StoryForm from './StoryForm.container'
+import StoryList from './StoryList.container'
+import StuffList from './StuffList.container'
+import Timeline from './Timeline.container'
 
 export {
   App,
-  InfoPanel,
-  NNBMap,
-  POIForm,
-  POIMarker,
-  StoryList,
-  Timeline,
-  MapManager,
-  FieldGroup,
-  OurTable,
-  MapTimeline,
-  POIFormPanel,
-  NavBar,
-  Interval,
-  Icon,
-  Login,
-  StuffList,
   Edit,
-  GetMaps,
-  GetStories,
-  GetPOI,
+  FieldGroup,
+  Icon,
+  InfoPanel,
+  Interval,
+  LinkTable,
+  Login,
+  MapManager,
+  MapTimeline,
+  NavBar,
+  NNBMap,
+  OurTable,
+  POIForm,
   POIFormNew,
-  LinkTable
+  POIFormPanel,
+  POIMarker,
+  StoryForm,
+  StoryList,
+  StuffList,
+  Timeline
 }

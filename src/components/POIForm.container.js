@@ -8,7 +8,7 @@ import {
   addPOIFormMedia,
   removePOIFormMedia,
   loadMaps,
-  loadPOIsByMapYear,
+  loadPOIs,
   loadStories,
   pastePOIFormPOI
 } from './../actions'
@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch) {
       addPOIFormMedia,
       removePOIFormMedia,
       loadMaps,
-      loadPOIsByMapYear,
+      loadPOIs,
       loadStories,
       pastePOIFormPOI
     },
