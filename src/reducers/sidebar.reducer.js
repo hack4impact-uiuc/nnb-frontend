@@ -5,7 +5,8 @@ import {
   STORY_FORM_SET_HIDE,
   EDITING_STORY_ID_SET,
   STORY_NAME_INPUT_UPDATED,
-  POIS_INPUT_UPDATED
+  POIS_INPUT_UPDATED,
+  EDITING_POIS_LOADED
 } from '../actions/actionTypes'
 
 export default function sidebar(state = initialState.sidebar, action) {
@@ -36,6 +37,11 @@ export default function sidebar(state = initialState.sidebar, action) {
         inputStoryName: action.payload
       }
     case POIS_INPUT_UPDATED:
+      return {
+        ...state,
+        inputPois: action.payload
+      }
+    case EDITING_POIS_LOADED:
       return {
         ...state,
         inputPois: action.payload

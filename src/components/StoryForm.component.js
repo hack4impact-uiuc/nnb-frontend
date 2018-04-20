@@ -3,27 +3,38 @@ import { FormControl } from 'react-bootstrap'
 import { Icon, GetEditStorySearchResults } from './'
 
 class StoryForm extends Component {
+  constructor() {
+    super()
+    this.state = {
+      poiNames: []
+    }
+  }
+
   onStoryNameEdit = e => {
     this.props.updateStoryNameInput(e.target.value)
   }
 
-  onSelectPoi = event => {
-    if (this.props.inputPois.indexOf(event.target.value) === -1) {
-      this.props.updatePoisInput(
-        this.props.inputPois.concat([event.target.value])
-      )
+  onSelectPoi = poi => {
+    if (!this.props.inputPois.some(p => p.id === poi.id)) {
+      this.props.updatePoisInput(this.props.inputPois.concat([poi]))
     }
+  }
+
+  removeInputPoi = poi => {
+    this.props.updatePoisInput(this.props.inputPois.filter(p => p.id != poi.id))
   }
 
   onHide = () => {
     const {
       hideStoryForm,
       setEditingStoryId,
-      updateStoryNameInput
+      updateStoryNameInput,
+      updatePoisInput
     } = this.props
     hideStoryForm()
     setEditingStoryId(null)
     updateStoryNameInput('')
+    updatePoisInput([])
   }
 
   onSubmit = () => {
@@ -35,7 +46,7 @@ class StoryForm extends Component {
       inputPois
     } = this.props
 
-    const story = { name: inputStoryName, poiIds: inputPois }
+    const story = { name: inputStoryName, poiIds: inputPois.map(p => p.id) }
 
     if (editingStoryId) {
       updateStory(editingStoryId, story)
@@ -47,7 +58,7 @@ class StoryForm extends Component {
   }
 
   render() {
-    const { inputStoryName } = this.props
+    const { inputStoryName, inputPois } = this.props
 
     return (
       <div className="story-form">
@@ -71,6 +82,17 @@ class StoryForm extends Component {
         </div>
 
         <GetEditStorySearchResults handleSelect={this.onSelectPoi} />
+
+        <div>
+          Added
+          {inputPois.map(poi => {
+            return (
+              <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
+                {poi.name}
+              </li>
+            )
+          })}
+        </div>
 
         <button
           className="button button--light button--full-width"

@@ -10,7 +10,6 @@ export default class GetEditStorySearchResults extends Component {
   handleSearch = event => {
     this.props.updateEditStorySearchInput(event.target.value)
     this.props.editStorySearchPOIs()
-    console.log(this)
   }
 
   render() {
@@ -28,7 +27,7 @@ export default class GetEditStorySearchResults extends Component {
         <div>
           {pois.map(poi => {
             return (
-              <li key={poi.id} value={poi.id} onClick={this.props.handleSelect}>
+              <li key={poi.id} onClick={() => this.props.handleSelect(poi)}>
                 {poi.name}
               </li>
             )

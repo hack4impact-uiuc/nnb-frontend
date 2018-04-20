@@ -177,7 +177,9 @@ function SidebarContent({
           </button>
         )}
 
-      {isEditing && shouldShowStoryForm && !editingStoryId && <StoryForm />}
+      {isEditing &&
+        shouldShowStoryForm &&
+        !editingStoryId && <EditStoryModal />}
 
       {!!selectedStoryId && (
         <button
