@@ -51,6 +51,14 @@ function poiFormMediaRemoved(link) {
   }
 }
 
+function poiCopied(poi) {
+  return { type: actionTypes.POI_COPIED, payload: poi }
+}
+
+function poiFormPOIPasted(poi) {
+  return { type: actionTypes.POI_FORM_POI_PASTED, payload: poi }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -77,4 +85,12 @@ export function addPOIFormMedia(media) {
 
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
+}
+
+export function copyPOI(poi) {
+  return dispatch => dispatch(poiCopied(poi))
+}
+
+export function pastePOIFormPOI(poi) {
+  return dispatch => dispatch(poiFormPOIPasted(poi))
 }

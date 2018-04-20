@@ -26,7 +26,8 @@ const initialState = {
     meta: {
       isUploadingMedia: false,
       shouldShowFormValidation: false
-    }
+    },
+    clipboard: []
   },
   sidebar: {
     shouldShowSidebar: false,

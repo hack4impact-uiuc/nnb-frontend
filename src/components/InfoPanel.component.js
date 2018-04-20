@@ -32,7 +32,8 @@ class InfoPanel extends Component {
       shouldShowRealTimePOI,
       removePOIFormMedia,
       setNextPOIInStory,
-      setPreviousPOIInStory
+      setPreviousPOIInStory,
+      copyPOI
     } = this.props
 
     if (!selectedPOI) {
@@ -98,6 +99,15 @@ class InfoPanel extends Component {
             <h1 className="heading__name">{selectedPOI.name}</h1>
             {isEditing &&
               !shouldShowRealTimePOI && (
+                <Icon
+                  type="Copy"
+                  size="large"
+                  className="story-time__icon"
+                  onClick={() => copyPOI(selectedEvent)}
+                />
+              )}
+            {isEditing &&
+              !isRealTimePOI && (
                 <Icon
                   type="Edit"
                   size="large"

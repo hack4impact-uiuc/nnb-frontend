@@ -9,7 +9,8 @@ import {
   removePOIFormMedia,
   loadMaps,
   loadPOIs,
-  loadStories
+  loadStories,
+  pastePOIFormPOI
 } from './../actions'
 import POIForm from './POIFormNew.component'
 
@@ -31,7 +32,8 @@ function mapDispatchToProps(dispatch) {
       removePOIFormMedia,
       loadMaps,
       loadPOIs,
-      loadStories
+      loadStories,
+      pastePOIFormPOI
     },
     dispatch
   )
