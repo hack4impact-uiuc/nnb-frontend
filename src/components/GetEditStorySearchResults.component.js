@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { FieldGroup } from '../components'
-import moment from 'moment'
 
 export default class GetEditStorySearchResults extends Component {
   handleSearch = event => {

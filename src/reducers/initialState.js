@@ -32,7 +32,8 @@ const initialState = {
     shouldShowSidebar: false,
     shouldShowStoryForm: false,
     editingStoryId: null,
-    inputStoryName: ''
+    inputStoryName: '',
+    inputPois: []
   },
   searchPoi: {
     uniPois: [],

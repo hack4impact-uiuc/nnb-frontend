@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { FieldGroup } from '../components'
-import moment from 'moment'
 import Autosuggest from 'react-autosuggest'
 import { Icon } from './'
 

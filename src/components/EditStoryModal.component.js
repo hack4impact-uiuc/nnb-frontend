@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
-import { GetEditStorySearchResults } from './'
+import { GetEditStorySearchResults, StoryForm } from './'
 import { FormControl } from 'react-bootstrap'
 
 const customStyles = {
@@ -20,17 +20,15 @@ class EditStoryModal extends Component {
     this.state = {
       showModal: false
     }
-
-    this.handleOpenModal = this.handleOpenModal.bind(this)
-    this.handleCloseModal = this.handleCloseModal.bind(this)
   }
 
-  handleOpenModal() {
+  handleOpenModal = () => {
+    console.log(this)
     this.setState({ showModal: true })
     this.props.toggleSidebar()
   }
 
-  handleCloseModal() {
+  handleCloseModal = () => {
     this.setState({ showModal: false })
   }
 
@@ -49,24 +47,7 @@ class EditStoryModal extends Component {
           contentLabel="Minimal Modal Example"
           style={customStyles}
         >
-          <div>
-            Edit Story
-            <div className="story-form__input">
-              <FormControl
-                type="text"
-                value={storyName}
-                placeholder="Enter text"
-                onChange={storyNameChange}
-              />
-            </div>
-            <GetEditStorySearchResults handleSelect={onSelectPoi} />
-            <button
-              className="button button--dark button--full-width"
-              onClick={updateStoryName}
-            >
-              Submit
-            </button>
-          </div>
+          <StoryForm />
         </Modal>
       </div>
     )
