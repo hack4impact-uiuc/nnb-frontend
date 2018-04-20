@@ -5,7 +5,8 @@ import {
   updateStory,
   hideStoryForm,
   updateStoryNameInput,
-  setEditingStoryId
+  setEditingStoryId,
+  updatePoisInput
 } from './../actions'
 import StoryForm from './StoryForm.component'
 
@@ -13,7 +14,8 @@ function mapStateToProps(state) {
   return {
     stories: state.stories.stories,
     editingStoryId: state.sidebar.editingStoryId,
-    inputStoryName: state.sidebar.inputStoryName
+    inputStoryName: state.sidebar.inputStoryName,
+    inputPois: state.sidebar.inputPois
   }
 }
 
@@ -24,7 +26,8 @@ function mapDispatchToProps(dispatch) {
       updateStory,
       hideStoryForm,
       updateStoryNameInput,
-      setEditingStoryId
+      setEditingStoryId,
+      updatePoisInput
     },
     dispatch
   )

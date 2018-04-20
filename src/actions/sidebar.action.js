@@ -20,6 +20,10 @@ function storyNameInputUpdated(storyName) {
   return { type: actionTypes.STORY_NAME_INPUT_UPDATED, payload: storyName }
 }
 
+function poisInputUpdated(pois) {
+  return { type: actionTypes.POIS_INPUT_UPDATED, payload: pois }
+}
+
 export function toggleSidebar() {
   return dispatch => dispatch(sidebarToggled())
 }
@@ -38,4 +42,8 @@ export function setEditingStoryId(storyId) {
 
 export function updateStoryNameInput(storyName) {
   return dispatch => dispatch(storyNameInputUpdated(storyName))
+}
+
+export function updatePoisInput(pois) {
+  return dispatch => dispatch(poisInputUpdated(pois))
 }

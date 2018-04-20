@@ -33,7 +33,8 @@ import {
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  updatePoisInput
 } from './sidebar.action'
 import {
   updateUniSearchInput,
@@ -79,5 +80,6 @@ export {
   updateUniSearchInput,
   uniSearchPOIs,
   updateEditStorySearchInput,
-  editStorySearchPOIs
+  editStorySearchPOIs,
+  updatePoisInput
 }

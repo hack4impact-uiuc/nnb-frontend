@@ -23,7 +23,6 @@ class EditStoryModal extends Component {
   }
 
   handleOpenModal = () => {
-    console.log(this)
     this.setState({ showModal: true })
     this.props.toggleSidebar()
   }

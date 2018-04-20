@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
-import { Icon } from './'
+import { Icon, GetEditStorySearchResults } from './'
 
 class StoryForm extends Component {
   onStoryNameEdit = e => {
     this.props.updateStoryNameInput(e.target.value)
+  }
+
+  onSelectPoi = event => {
+    if (this.props.inputPois.indexOf(event.target.value) === -1) {
+      this.props.updatePoisInput(
+        this.props.inputPois.concat([event.target.value])
+      )
+    }
   }
 
   onHide = () => {
@@ -23,10 +31,11 @@ class StoryForm extends Component {
       inputStoryName,
       editingStoryId,
       createStory,
-      updateStory
+      updateStory,
+      inputPois
     } = this.props
 
-    const story = { name: inputStoryName }
+    const story = { name: inputStoryName, poiIds: inputPois }
 
     if (editingStoryId) {
       updateStory(editingStoryId, story)
@@ -60,6 +69,8 @@ class StoryForm extends Component {
             onChange={this.onStoryNameEdit}
           />
         </div>
+
+        <GetEditStorySearchResults handleSelect={this.onSelectPoi} />
 
         <button
           className="button button--light button--full-width"
