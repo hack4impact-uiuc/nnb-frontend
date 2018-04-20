@@ -33,7 +33,9 @@ class InfoPanel extends Component {
       removePOIFormMedia,
       setNextPOIInStory,
       setPreviousPOIInStory,
-      copyPOI
+      copyPOI,
+      selectedEvent,
+      isRealTimePOI
     } = this.props
 
     if (!selectedPOI) {
