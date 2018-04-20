@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
-import { Icon } from './'
+import { Icon, GetUniSearchResults } from './'
 
 class NavBar extends PureComponent {
   promptAndExitStory = () => {
@@ -27,7 +27,8 @@ class NavBar extends PureComponent {
       setShowLogin,
       showLogin,
       startYear,
-      toggleSidebar
+      toggleSidebar,
+      handleUniSearch
     } = this.props
     const contextYears = `${startYear} - ${endYear}`
     return (
@@ -40,7 +41,6 @@ class NavBar extends PureComponent {
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-
           {!showLogin &&
             !!selectedMap && (
               <div className="navbar-content__item-context navbar-content__context ">

@@ -28,11 +28,11 @@ const initialState = {
       shouldShowFormValidation: false
     }
   },
-  sidebar: {
-    shouldShowSidebar: false,
-    shouldShowStoryForm: false,
-    editingStoryId: null,
-    inputStoryName: ''
+  searchPoi: {
+    uniPois: [],
+    uniQuery: '',
+    editStoryPois: [],
+    editStoryQuery: ''
   }
 }
 

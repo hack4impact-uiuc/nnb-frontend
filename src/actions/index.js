@@ -29,12 +29,11 @@ import {
   removePOIFormMedia
 } from './poiForm.action'
 import {
-  toggleSidebar,
-  showStoryForm,
-  hideStoryForm,
-  setEditingStoryId,
-  updateStoryNameInput
-} from './sidebar.action'
+  updateUniSearchInput,
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
+} from './search.action'
 
 export {
   fetchStuff,
@@ -65,9 +64,8 @@ export {
   setSelectedPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
-  toggleSidebar,
-  showStoryForm,
-  hideStoryForm,
-  setEditingStoryId,
-  updateStoryNameInput
+  updateUniSearchInput,
+  uniSearchPOIs,
+  updateEditStorySearchInput,
+  editStorySearchPOIs
 }
