@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './../styles/zoomwindow.css'
-
+import { debounce } from 'lodash'
+import classnames from 'classnames'
 class ZoomBanner extends Component {
   state = {
-    scale: 1,
-    isShowing: true
+    isShowing: false
   }
 
   componentWillReceiveProps(nextProps) {
@@ -12,30 +12,32 @@ class ZoomBanner extends Component {
       scale: nextProps.scale,
       isShowing: true
     })
-    setTimeout(
-      function() {
-        this.setState({
-          isShowing: false
-        })
-      }.bind(this),
-      1000
-    )
+
+    setTimeout(() => {
+      this.setState({ isShowing: false })
+    }, 1000)
   }
 
   constructor(props) {
     super(props)
+
     this.setState({
       scale: props.scale,
       isShowing: true
     })
-    setTimeout(
-      function() {
-        this.setState({
-          isShowing: false
-        })
-      }.bind(this),
-      1000
+
+    this.componentWillReceiveProps = debounce(
+      this.componentWillReceiveProps,
+      15
     )
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isShowing: false
+      })
+    }, 1000)
   }
 
   render() {
@@ -43,12 +45,14 @@ class ZoomBanner extends Component {
 
     return (
       <div>
-        {isShowing && (
-          <div className="zoomwindow zoomwindow--show">{scale}%</div>
-        )}
-        {!isShowing && (
-          <div className="zoomwindow zoomwindow--hide">{scale}%</div>
-        )}
+        <div
+          className={classnames(
+            'zoomwindow',
+            `zoomwindow${isShowing ? '--show' : '--hide'}`
+          )}
+        >
+          {scale}%
+        </div>
       </div>
     )
   }
