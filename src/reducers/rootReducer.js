@@ -7,6 +7,7 @@ import stories from './stories.reducer'
 import pois from './pois.reducer'
 import poiForm from './poiForm.reducer'
 import sidebar from './sidebar.reducer'
+import auth from './auth.reducer'
 
 const rootReducer = combineReducers({
   stories,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   timeline: maps,
   poiForm,
   sidebar,
+  auth,
   router: routerReducer
 })
 

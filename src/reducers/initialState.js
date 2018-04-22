@@ -33,6 +33,9 @@ const initialState = {
     shouldShowStoryForm: false,
     editingStoryId: null,
     inputStoryName: ''
+  },
+  auth: {
+    isLoggedIn: true
   }
 }
 
