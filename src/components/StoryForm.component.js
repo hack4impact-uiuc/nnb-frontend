@@ -87,6 +87,7 @@ class StoryForm extends Component {
           />
         </div>
 
+        <h4>POIs:</h4>
         <GetStorySearchResults handleSelect={this.onSelectPoi} />
 
         <div>

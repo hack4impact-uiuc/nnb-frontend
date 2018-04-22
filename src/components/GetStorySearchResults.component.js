@@ -1,38 +1,53 @@
 import React, { Component } from 'react'
-import { FieldGroup } from '../components'
-import moment from 'moment'
+import Autosuggest from 'react-autosuggest'
 
 export default class GetStorySearchResults extends Component {
-  constructor(props) {
-    super(props)
+  onChange = (event, { newValue, method }) => {
+    newValue !== 'undefined'
+      ? this.props.updateStorySearchInput(newValue)
+      : this.props.updateStorySearchInput('')
   }
 
-  handleSearch = event => {
-    this.props.updateStorySearchInput(event.target.value)
+  onSuggestionSelected = (event, { suggestion }) => {
+    this.props.handleSelect(suggestion)
+  }
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      pois: []
+    })
+  }
+
+  onSuggestionsFetchRequested = () => {
     this.props.storySearchPOIs()
   }
 
+  getPoiValue = poi => poi.name
+
+  renderPoi = poi => {
+    return <span value={poi.id}>{poi.name}</span>
+  }
+
   render() {
-    const { pois } = this.props
+    const { pois, searchInput } = this.props
+
+    const inputProps = {
+      placeholder: 'Search',
+      value: searchInput,
+      onChange: this.onChange
+    }
+
     return (
       <div>
-        <input
-          id="textfield"
-          type="text"
-          value={this.searchInput}
-          onChange={this.handleSearch}
-          placeholder="Search"
+        <Autosuggest
+          suggestions={pois}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          getSuggestionValue={this.getPoiValue}
+          renderSuggestion={this.renderPoi}
+          inputProps={inputProps}
         />
-
-        <div>
-          {pois.map(poi => {
-            return (
-              <li key={poi.id} onClick={() => this.props.handleSelect(poi)}>
-                {poi.name}
-              </li>
-            )
-          })}
-        </div>
       </div>
     )
   }

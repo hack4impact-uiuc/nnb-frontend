@@ -3,11 +3,6 @@ import Autosuggest from 'react-autosuggest'
 import { Icon } from './'
 
 export default class GetUniversalSearchResults extends Component {
-  handleSearch = event => {
-    this.props.updateUniversalSearchInput(event.target.value)
-    this.props.universalSearchPOIs()
-  }
-
   onChange = (event, { newValue, method }) => {
     newValue !== 'undefined'
       ? this.props.updateUniversalSearchInput(newValue)
