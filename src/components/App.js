@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 import { StoryList, POIFormPanel, MapTimeline, NavBar, Login } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
@@ -256,6 +257,7 @@ class App extends Component {
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}
+        <Link to="/form"> lets go to the form </Link>
         <div>
           {!showPOIForm &&
             !showLogin && (

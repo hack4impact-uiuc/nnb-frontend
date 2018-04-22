@@ -8,6 +8,7 @@ function mapStateToProps(state, ownProps) {
     ...ownProps,
     maps: state.timeline.maps,
     isStorySelected: !!state.stories.selectedStoryId
+    // TODO: use redux isEditing
   }
 }
 

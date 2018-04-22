@@ -11,11 +11,13 @@ import NavBar from './NavBar.component'
 
 function mapStateToProps(state, ownProps) {
   return {
-    ...ownProps,
+    // ...ownProps,
     ...state.sidebar,
     ...state.timeline,
+    ...state.stories,
     isEditing: state.edit.isEditing,
-    selectedStoryId: state.stories.selectedStoryId
+    selectedStoryId: state.stories.selectedStoryId,
+    isLoggedIn: state.auth.isLoggedIn
   }
 }
 

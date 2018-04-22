@@ -37,36 +37,20 @@ class NavBar extends PureComponent {
 
   render() {
     const {
-      // endYear,
-      isLoggedIn,
-      isStorySelected,
-      // onEdit,
-      selectedMap,
-      selectedStoryName,
       setLogin,
       setShowLogin,
       showLogin,
-      // startYear,
-
+      // redux props below
       maps,
+      stories,
       selectedMapId,
       isEditing,
-
+      isLoggedIn,
+      selectedStoryId,
       toggleSidebar,
       enableEditMode,
       disableEditMode
     } = this.props
-
-    let contextYears = ''
-    if (!!selectedMapId) {
-      const startYearIndex = maps.findIndex(map => map.id === selectedMapId)
-      const startYear = maps[startYearIndex].year
-      const endYear =
-        startYearIndex === maps.length - 1
-          ? 'Present'
-          : maps[startYearIndex + 1].year
-      contextYears = `${startYear} - ${endYear}`
-    }
 
     return (
       <Navbar>
@@ -79,30 +63,21 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          {!showLogin &&
-            !!selectedMap && (
-              <div className="navbar-content__item-context navbar-content__context ">
-                Now Viewing:
-              </div>
-            )}
-
-          {isStorySelected &&
-            !!selectedMap &&
-            !showLogin && (
-              <div className="navbar-content__item-context navbar-content__context-story-name ">
-                {selectedStoryName}:
-              </div>
-            )}
-
-          {!showLogin &&
-            !!selectedMap && (
-              <div className="navbar-content__item-context navbar-content__context-years ">
-                {contextYears}
-              </div>
-            )}
+          <HeadingText
+            {...{
+              isLoggedIn,
+              selectedMapId,
+              maps,
+              stories,
+              selectedStoryId
+            }}
+          />
 
           {isLoggedIn && (
-            <div className="navbar-content__item" onClick={this.toggleEditMode}>
+            <div
+              className="navbar-content__item"
+              onClick={isEditing ? disableEditMode : enableEditMode}
+            >
               {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}
@@ -136,6 +111,48 @@ class NavBar extends PureComponent {
       </Navbar>
     )
   }
+}
+
+function HeadingText({ maps, selectedMapId, stories, selectedStoryId }) {
+  let contextYears = ''
+  if (!!selectedMapId) {
+    const startYearIndex = maps.findIndex(map => map.id === selectedMapId)
+    const startYear = maps[startYearIndex].year
+    const endYear =
+      startYearIndex === maps.length - 1
+        ? 'Present'
+        : maps[startYearIndex + 1].year
+    contextYears = `${startYear} - ${endYear}`
+  }
+
+  let selectedStoryName = ''
+  if (!!selectedStoryId) {
+    const selectedStory = stories.find(story => story.id === selectedStoryId)
+    selectedStoryName = selectedStory.name
+  }
+
+  return [
+    <div
+      key={0}
+      className="navbar-content__item-context navbar-content__context"
+    >
+      Now Viewing:
+    </div>,
+    !!selectedStoryId && (
+      <div
+        key={1}
+        className="navbar-content__item-context navbar-content__context-story-name "
+      >
+        {selectedStoryName}:
+      </div>
+    ),
+    <div
+      key={2}
+      className="navbar-content__item-context navbar-content__context-years"
+    >
+      {contextYears}
+    </div>
+  ]
 }
 
 export default NavBar
