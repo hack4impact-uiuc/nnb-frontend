@@ -29,7 +29,6 @@ class InfoPanel extends Component {
 
   handleSelect(selectedIndex, e) {
     const { modifyPoisCarouselIndex } = this.props
-    alert(`selected=${selectedIndex}, direction=${e.direction}`)
     modifyPoisCarouselIndex(selectedIndex)
   }
 
