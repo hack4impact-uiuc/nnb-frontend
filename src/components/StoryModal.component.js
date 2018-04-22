@@ -15,35 +15,11 @@ const customStyles = {
 }
 
 class StoryModal extends Component {
-  constructor() {
-    super()
-    this.state = {
-      showModal: false
-    }
-  }
-
-  handleOpenModal = () => {
-    this.setState({ showModal: true })
-    this.props.loadEditingPois()
-    this.props.toggleSidebar()
-  }
-
-  handleCloseModal = () => {
-    this.setState({ showModal: false })
-  }
-
   render() {
-    const {
-      storyName,
-      storyNameChange,
-      onSelectPoi,
-      updateStoryName
-    } = this.props
     return (
       <div>
-        <button onClick={this.handleOpenModal}>Edit</button>
         <Modal
-          isOpen={this.state.showModal}
+          isOpen={this.props.shouldShowModal}
           contentLabel="Minimal Modal Example"
           style={customStyles}
         >

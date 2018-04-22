@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { toggleSidebar, loadEditingPois } from './../actions'
+import { exitStoryModal } from './../actions'
 import StoryModal from './StoryModal.component'
 
 function mapStateToProps(state) {
   return {
-    // inputPois: state.sidebar.inputPois
+    shouldShowModal: state.sidebar.shouldShowModal
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      toggleSidebar,
-      loadEditingPois
+      exitStoryModal
     },
     dispatch
   )

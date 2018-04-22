@@ -23,11 +23,19 @@ class StoryList extends Component {
     const {
       setEditingStoryId,
       updateStoryNameInput,
-      showStoryForm
+      loadEditingPois
     } = this.props
     setEditingStoryId(story.id)
     updateStoryNameInput(story.name)
+    this.handleOpenModal()
+    loadEditingPois()
+  }
+
+  handleOpenModal = () => {
+    const { showStoryModal, toggleSidebar, showStoryForm } = this.props
     showStoryForm()
+    showStoryModal()
+    toggleSidebar()
   }
 
   onClickDelete = story => {
@@ -63,6 +71,7 @@ class StoryList extends Component {
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
         promptAndExitEditMode={this.promptAndExitEditMode}
+        handleOpenModal={this.handleOpenModal}
       />
     )
 
@@ -104,7 +113,8 @@ function SidebarContent({
   editingStoryId,
   toggleSidebar,
   showStoryForm,
-  isEditing
+  isEditing,
+  handleOpenModal
 }) {
   const sortedStories = [...stories].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -171,7 +181,7 @@ function SidebarContent({
         !shouldShowStoryForm && (
           <button
             className="button button--light button--full-width"
-            onClick={showStoryForm}
+            onClick={handleOpenModal}
           >
             Add Story
           </button>

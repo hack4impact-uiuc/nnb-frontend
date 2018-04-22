@@ -24,6 +24,11 @@ class StoryForm extends Component {
     this.props.updatePoisInput(this.props.inputPois.filter(p => p.id != poi.id))
   }
 
+  closeStoryForm = () => {
+    this.props.exitStoryModal()
+    this.onHide()
+  }
+
   onHide = () => {
     const {
       hideStoryForm,
@@ -54,6 +59,7 @@ class StoryForm extends Component {
       createStory(story)
     }
 
+    this.props.exitStoryModal()
     this.onHide()
   }
 
@@ -68,7 +74,7 @@ class StoryForm extends Component {
             type="X"
             size="small"
             className="story-form__exit"
-            onClick={this.onHide}
+            onClick={this.closeStoryForm}
           />
         </div>
 

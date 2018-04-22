@@ -7,7 +7,9 @@ import {
   showStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
-  loadPOIs
+  loadPOIs,
+  loadEditingPois,
+  showStoryModal
 } from './../actions'
 import StoryList from './StoryList.component'
 
@@ -15,14 +17,20 @@ function mapStateToProps(state, ownProps) {
   const {
     shouldShowSidebar,
     shouldShowStoryForm,
-    editingStoryId
+    editingStoryId,
+    shouldShowModal
   } = state.sidebar
   return {
     isEditing: ownProps.isEditing,
     // TODO: integrate with redux store edit
     // isEditing: state.edit.isEditing,
     ...state.stories,
-    ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId }
+    ...{
+      shouldShowSidebar,
+      shouldShowStoryForm,
+      editingStoryId,
+      shouldShowModal
+    }
   }
 }
 
@@ -35,7 +43,9 @@ function mapDispatchToProps(dispatch) {
       showStoryForm,
       setEditingStoryId,
       updateStoryNameInput,
-      loadPOIs
+      loadPOIs,
+      loadEditingPois,
+      showStoryModal
     },
     dispatch
   )

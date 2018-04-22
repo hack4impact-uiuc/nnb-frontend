@@ -35,7 +35,9 @@ import {
   setEditingStoryId,
   updateStoryNameInput,
   updatePoisInput,
-  loadEditingPois
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal
 } from './sidebar.action'
 import {
   updateUniversalSearchInput,
@@ -83,5 +85,7 @@ export {
   updateStorySearchInput,
   storySearchPOIs,
   updatePoisInput,
-  loadEditingPois
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal
 }

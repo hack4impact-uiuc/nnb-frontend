@@ -29,6 +29,14 @@ function editingPoisLoaded(pois) {
   return { type: actionTypes.EDITING_POIS_LOADED, payload: pois }
 }
 
+function storyModalStart() {
+  return { type: actionTypes.SHOW_STORY_MODAL }
+}
+
+function storyModalExit() {
+  return { type: actionTypes.EXIT_STORY_MODAL }
+}
+
 export function toggleSidebar() {
   return dispatch => dispatch(sidebarToggled())
 }
@@ -61,4 +69,12 @@ export function loadEditingPois() {
       dispatch(editingPoisLoaded(pois))
     )
   }
+}
+
+export function showStoryModal() {
+  return dispatch => dispatch(storyModalStart())
+}
+
+export function exitStoryModal() {
+  return dispatch => dispatch(storyModalExit())
 }
