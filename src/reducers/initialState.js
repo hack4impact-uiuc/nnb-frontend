@@ -36,10 +36,10 @@ const initialState = {
     inputPois: []
   },
   searchPoi: {
-    uniPois: [],
-    uniQuery: '',
-    editStoryPois: [],
-    editStoryQuery: ''
+    universalPois: [],
+    universalQuery: '',
+    storyPois: [],
+    storyQuery: ''
   }
 }
 

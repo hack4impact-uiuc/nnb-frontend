@@ -38,10 +38,10 @@ import {
   loadEditingPois
 } from './sidebar.action'
 import {
-  updateUniSearchInput,
-  uniSearchPOIs,
-  updateEditStorySearchInput,
-  editStorySearchPOIs
+  updateUniversalSearchInput,
+  universalSearchPOIs,
+  updateStorySearchInput,
+  storySearchPOIs
 } from './search.action'
 
 export {
@@ -78,10 +78,10 @@ export {
   hideStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
-  updateUniSearchInput,
-  uniSearchPOIs,
-  updateEditStorySearchInput,
-  editStorySearchPOIs,
+  updateUniversalSearchInput,
+  universalSearchPOIs,
+  updateStorySearchInput,
+  storySearchPOIs,
   updatePoisInput,
   loadEditingPois
 }

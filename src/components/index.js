@@ -19,9 +19,9 @@ import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
-import GetUniSearchResults from './GetUniSearchResults.container'
-import GetEditStorySearchResults from './GetEditStorySearchResults.container'
-import EditStoryModal from './EditStoryModal.container'
+import GetUniversalSearchResults from './GetUniversalSearchResults.container'
+import GetStorySearchResults from './GetStorySearchResults.container'
+import StoryModal from './StoryModal.container'
 
 export {
   App,
@@ -45,7 +45,7 @@ export {
   StoryList,
   StuffList,
   Timeline,
-  GetUniSearchResults,
-  GetEditStorySearchResults,
-  EditStoryModal
+  GetUniversalSearchResults,
+  GetStorySearchResults,
+  StoryModal
 }

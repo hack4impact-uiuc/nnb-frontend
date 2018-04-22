@@ -1,32 +1,32 @@
 import initialState from './initialState'
 import {
-  UNI_SEARCH_INPUT_CHANGED,
-  POIS_UNI_SEARCHED,
-  EDIT_STORY_SEARCH_INPUT_CHANGED,
-  POIS_EDIT_STORY_SEARCHED
+  UNIVERSAL_SEARCH_INPUT_CHANGED,
+  POIS_UNIVERSAL_SEARCHED,
+  STORY_SEARCH_INPUT_CHANGED,
+  POIS_STORY_SEARCHED
 } from './../actions/actionTypes'
 
 export default function searchPoi(state = initialState.searchPoi, action) {
   switch (action.type) {
-    case UNI_SEARCH_INPUT_CHANGED:
+    case UNIVERSAL_SEARCH_INPUT_CHANGED:
       return {
         ...state,
-        uniQuery: action.payload.value
+        universalQuery: action.payload.value
       }
-    case POIS_UNI_SEARCHED:
+    case POIS_UNIVERSAL_SEARCHED:
       return {
         ...state,
-        uniPois: action.payload
+        universalPois: action.payload
       }
-    case EDIT_STORY_SEARCH_INPUT_CHANGED:
+    case STORY_SEARCH_INPUT_CHANGED:
       return {
         ...state,
-        editStoryQuery: action.payload.value
+        storyQuery: action.payload.value
       }
-    case POIS_EDIT_STORY_SEARCHED:
+    case POIS_STORY_SEARCHED:
       return {
         ...state,
-        editStoryPois: action.payload
+        storyPois: action.payload
       }
     default:
       return state

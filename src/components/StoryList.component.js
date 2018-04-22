@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Sidebar from 'react-sidebar'
-import { Icon, StoryForm, EditStoryModal } from './'
+import { Icon, StoryForm, StoryModal } from './'
 import './../styles/storylist.css'
 import './../styles/App.css'
 import './../styles/button.css'
@@ -160,7 +160,7 @@ function SidebarContent({
               ]}
             {isEditing &&
               shouldShowStoryForm &&
-              editingStoryId === story.id && <EditStoryModal />}
+              editingStoryId === story.id && <StoryModal />}
           </div>
 
           <div className="divider" />
@@ -177,9 +177,7 @@ function SidebarContent({
           </button>
         )}
 
-      {isEditing &&
-        shouldShowStoryForm &&
-        !editingStoryId && <EditStoryModal />}
+      {isEditing && shouldShowStoryForm && !editingStoryId && <StoryModal />}
 
       {!!selectedStoryId && (
         <button

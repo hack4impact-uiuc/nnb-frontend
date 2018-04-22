@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
-import { GetEditStorySearchResults, StoryForm } from './'
+import { StoryForm } from './'
 import { FormControl } from 'react-bootstrap'
 
 const customStyles = {
@@ -14,7 +14,7 @@ const customStyles = {
   }
 }
 
-class EditStoryModal extends Component {
+class StoryModal extends Component {
   constructor() {
     super()
     this.state = {
@@ -54,4 +54,4 @@ class EditStoryModal extends Component {
   }
 }
 
-export default EditStoryModal
+export default StoryModal

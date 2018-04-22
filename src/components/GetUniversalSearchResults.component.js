@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { Icon } from './'
 
-export default class GetUniSearchResults extends Component {
+export default class GetUniversalSearchResults extends Component {
   handleSearch = event => {
-    this.props.updateUniSearchInput(event.target.value)
-    this.props.uniSearchPOIs()
+    this.props.updateUniversalSearchInput(event.target.value)
+    this.props.universalSearchPOIs()
   }
 
   onChange = (event, { newValue, method }) => {
     newValue !== 'undefined'
-      ? this.props.updateUniSearchInput(newValue)
-      : this.props.updateUniSearchInput('')
+      ? this.props.updateUniversalSearchInput(newValue)
+      : this.props.updateUniversalSearchInput('')
   }
 
   onSuggestionSelected = (event, { suggestion }) => {
@@ -28,7 +28,7 @@ export default class GetUniSearchResults extends Component {
   }
 
   onSuggestionsFetchRequested = () => {
-    this.props.uniSearchPOIs()
+    this.props.universalSearchPOIs()
   }
 
   getPoiValue = poi => poi.name

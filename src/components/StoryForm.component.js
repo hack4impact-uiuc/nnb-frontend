@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
-import { Icon, GetEditStorySearchResults } from './'
+import { Icon, GetStorySearchResults } from './'
 
 class StoryForm extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class StoryForm extends Component {
 
   onSelectPoi = poi => {
     if (!this.props.inputPois.some(p => p.id === poi.id)) {
-      this.props.updatePoisInput(this.props.inputPois.concat([poi]))
+      this.props.updatePoisInput([...this.props.inputPois, poi])
     }
   }
 
@@ -81,7 +81,7 @@ class StoryForm extends Component {
           />
         </div>
 
-        <GetEditStorySearchResults handleSelect={this.onSelectPoi} />
+        <GetStorySearchResults handleSelect={this.onSelectPoi} />
 
         <div>
           Added

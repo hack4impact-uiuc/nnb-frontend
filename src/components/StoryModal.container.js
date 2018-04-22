@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { toggleSidebar, loadEditingPois } from './../actions'
-import EditStoryModal from './EditStoryModal.component'
+import StoryModal from './StoryModal.component'
 
 function mapStateToProps(state) {
   return {
@@ -19,4 +19,4 @@ function mapDispatchToProps(dispatch) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditStoryModal)
+export default connect(mapStateToProps, mapDispatchToProps)(StoryModal)

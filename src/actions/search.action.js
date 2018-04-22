@@ -1,53 +1,56 @@
 import * as actionTypes from './actionTypes'
 import Api from './../utils/apiWrapper'
 
-function uniSearchInputChanged(value) {
-  return { type: actionTypes.UNI_SEARCH_INPUT_CHANGED, payload: { value } }
-}
-
-function poisUniSearched(search) {
-  return { type: actionTypes.POIS_UNI_SEARCHED, payload: search }
-}
-
-function editStorySearchInputChanged(value) {
+function universalSearchInputChanged(value) {
   return {
-    type: actionTypes.EDIT_STORY_SEARCH_INPUT_CHANGED,
+    type: actionTypes.UNIVERSAL_SEARCH_INPUT_CHANGED,
     payload: { value }
   }
 }
 
-function poisEditStorySearched(search) {
-  return { type: actionTypes.POIS_EDIT_STORY_SEARCHED, payload: search }
+function poisUniversalSearched(search) {
+  return { type: actionTypes.POIS_UNIVERSAL_SEARCHED, payload: search }
 }
 
-export function updateUniSearchInput(value) {
-  return dispatch => dispatch(uniSearchInputChanged(value))
+function storySearchInputChanged(value) {
+  return {
+    type: actionTypes.STORY_SEARCH_INPUT_CHANGED,
+    payload: { value }
+  }
 }
 
-export function uniSearchPOIs() {
+function poisStorySearched(search) {
+  return { type: actionTypes.POIS_STORY_SEARCHED, payload: search }
+}
+
+export function updateUniversalSearchInput(value) {
+  return dispatch => dispatch(universalSearchInputChanged(value))
+}
+
+export function universalSearchPOIs() {
   return (dispatch, getState) => {
     const store = getState()
-    const query = store.searchPoi.uniQuery
+    const query = store.searchPoi.universalQuery
     return Api.loadSearchPois({
       query,
       name: true,
       description: true
-    }).then(pois => dispatch(poisUniSearched(pois)))
+    }).then(pois => dispatch(poisUniversalSearched(pois)))
   }
 }
 
-export function updateEditStorySearchInput(value) {
-  return dispatch => dispatch(editStorySearchInputChanged(value))
+export function updateStorySearchInput(value) {
+  return dispatch => dispatch(storySearchInputChanged(value))
 }
 
-export function editStorySearchPOIs() {
+export function storySearchPOIs() {
   return (dispatch, getState) => {
     const store = getState()
-    const query = store.searchPoi.editStoryQuery
+    const query = store.searchPoi.storyQuery
     return Api.loadSearchPois({
       query,
       name: true,
       description: false
-    }).then(pois => dispatch(poisEditStorySearched(pois)))
+    }).then(pois => dispatch(poisStorySearched(pois)))
   }
 }

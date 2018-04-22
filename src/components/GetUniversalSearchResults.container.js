@@ -1,17 +1,17 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  updateUniSearchInput,
-  uniSearchPOIs,
+  updateUniversalSearchInput,
+  universalSearchPOIs,
   setSelectedPOI,
   setSelectedMap
 } from './../actions'
-import GetUniSearchResults from './GetUniSearchResults.component'
+import GetUniversalSearchResults from './GetUniversalSearchResults.component'
 
 function mapStateToProps(state) {
   return {
-    pois: state.searchPoi.uniPois,
-    searchInput: state.searchPoi.uniQuery,
+    pois: state.searchPoi.universalPois,
+    searchInput: state.searchPoi.universalQuery,
     selectedPoi: state.pois.selectedPOIId,
     maps: state.timeline.maps
   }
@@ -20,8 +20,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      updateUniSearchInput,
-      uniSearchPOIs,
+      updateUniversalSearchInput,
+      universalSearchPOIs,
       setSelectedPOI,
       setSelectedMap
     },
@@ -29,4 +29,6 @@ function mapDispatchToProps(dispatch) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetUniSearchResults)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  GetUniversalSearchResults
+)
