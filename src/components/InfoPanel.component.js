@@ -152,18 +152,18 @@ class InfoPanel extends Component {
             <FieldGroup
               inputType="text"
               value={captions}
+              placeholder="Change Media Caption Here"
               onChange={captions =>
                 modifyPOIFormCaption(
-                  this.state.currentIndex,
+                  this.props.carouselIndex,
                   captions.target.value
                 )}
             />
           )}
 
-        {!!selectedPOI.media.length &&
-          !isEditing && (
-            <div align="center">{selectedPOI.media[carouselIndex].caption}</div>
-          )}
+        {!!selectedPOI.media.length && (
+          <div align="center">{selectedPOI.media[carouselIndex].caption}</div>
+        )}
 
         {!!selectedPOI.description && (
           <div>
