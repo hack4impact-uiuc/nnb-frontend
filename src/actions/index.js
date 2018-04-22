@@ -17,7 +17,8 @@ import {
   deletePOI,
   setSelectedPOI,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  modifyPoisCarouselIndex
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -26,7 +27,9 @@ import {
   removePOIFormLink,
   modifyPOIFormLink,
   addPOIFormMedia,
-  removePOIFormMedia
+  removePOIFormMedia,
+  modifyPOIFormCaption,
+  modifyPOIFormCarouselIndex
 } from './poiForm.action'
 
 export {
@@ -50,6 +53,8 @@ export {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
+  modifyPOIFormCaption,
+  modifyPOIFormCarouselIndex,
   loadPOIs,
   loadPOIById,
   createPOI,
@@ -57,5 +62,6 @@ export {
   deletePOI,
   setSelectedPOI,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  modifyPoisCarouselIndex
 }

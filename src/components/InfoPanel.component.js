@@ -6,7 +6,14 @@ import './../styles/App.css'
 import './../styles/infopanel.css'
 import { utils } from './../utils'
 
+import { FieldGroup, LinkTable } from './'
+
 class InfoPanel extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSelect = this.handleSelect.bind(this)
+  }
+
   onClickEdit = () => {
     this.props.enableEditMode()
   }
@@ -18,6 +25,12 @@ class InfoPanel extends Component {
         deletePOI(selectedPOIId).then(() => loadPOIs())
       }
     }
+  }
+
+  handleSelect(selectedIndex, e) {
+    const { modifyPoisCarouselIndex } = this.props
+    alert(`selected=${selectedIndex}, direction=${e.direction}`)
+    modifyPoisCarouselIndex(selectedIndex)
   }
 
   render() {
@@ -32,7 +45,12 @@ class InfoPanel extends Component {
       shouldShowRealTimePOI,
       removePOIFormMedia,
       setNextPOIInStory,
-      setPreviousPOIInStory
+      setPreviousPOIInStory,
+      modifyPOIFormCaption,
+      modifyPoisCarouselIndex,
+      captions,
+      carouselIndex,
+      selectedIndex
     } = this.props
 
     if (!selectedPOI) {
@@ -48,8 +66,12 @@ class InfoPanel extends Component {
     }
 
     const carousel = (
-      <Carousel interval={null}>
-        {selectedPOI.content.map(content => {
+      <Carousel
+        activeIndex={selectedIndex}
+        onSelect={this.handleSelect}
+        interval={null}
+      >
+        {selectedPOI.media.map((content, index) => {
           const url = content.contentUrl ? content.contentUrl : content
           const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const caption = <p align="center">{content.caption}</p>
@@ -84,7 +106,7 @@ class InfoPanel extends Component {
                   />
                 )}
               {displayContent}
-              <Carousel.Caption>{caption}</Carousel.Caption>
+              <Carousel.Caption />
             </Carousel.Item>
           )
         })}
@@ -119,12 +141,30 @@ class InfoPanel extends Component {
           </div>
         )}
 
-        {!!selectedPOI.content.length && (
+        {!!selectedPOI.media.length && (
           <div>
             <hr />
-            <div>{!!selectedPOI.content.length && carousel}</div>
+            <div>{!!selectedPOI.media.length && carousel}</div>
           </div>
         )}
+
+        {!!selectedPOI.media.length &&
+          isEditing && (
+            <FieldGroup
+              inputType="text"
+              value={captions}
+              onChange={captions =>
+                modifyPOIFormCaption(
+                  this.state.currentIndex,
+                  captions.target.value
+                )}
+            />
+          )}
+
+        {!!selectedPOI.media.length &&
+          !isEditing && (
+            <div align="center">{selectedPOI.media[carouselIndex].caption}</div>
+          )}
 
         {!!selectedPOI.description && (
           <div>

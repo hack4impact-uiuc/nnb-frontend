@@ -23,7 +23,7 @@ function convertToApiPOI(poi) {
       link_url: link.url,
       display_name: link.urlName
     })),
-    media: poi.content.map(content => ({
+    media: poi.media.map(content => ({
       content_url: content.contentUrl,
       caption: content.caption
     })),
@@ -68,7 +68,7 @@ function convertFromApiPOI(poi) {
       url: link.link_url,
       urlName: link.display_name
     })),
-    content: poi.media.map(content => ({
+    media: poi.media.map(content => ({
       contentUrl: content.content_url,
       caption: content.caption
     })),

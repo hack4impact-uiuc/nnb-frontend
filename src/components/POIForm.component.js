@@ -253,10 +253,11 @@ class POIForm extends Component {
         url: utils.validateLink(linkTuple[0]),
         urlName: linkTuple[1]
       })),
-      content: content.map(contentUrl => ({
-        contentUrl: contentUrl,
-        caption: 'caption'
-      })),
+      content,
+      // content: content.map(contentUrl => ({
+      //   contentUrl: contentUrl,
+      //   caption: 'caption'
+      // })),
       stories
     }
 

@@ -6,7 +6,9 @@ import {
   POI_FORM_LINK_REMOVED,
   POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
-  POI_FORM_MEDIA_REMOVED
+  POI_FORM_MEDIA_REMOVED,
+  POI_FORM_CAPTION_MODIFIED,
+  POI_FORM_CAROUSEL_INDEX_MODIFIED
 } from '../actions/actionTypes'
 
 export default function poiForm(state = initialState.poiForm, action) {
@@ -57,6 +59,14 @@ export default function poiForm(state = initialState.poiForm, action) {
             media.contentUrl !== action.payload.contentUrl &&
             media.caption !== action.payload.caption
         )
+      }
+    case POI_FORM_CAPTION_MODIFIED:
+      const { caption_index, caption_value } = action.payload
+      const newMedia = [...state.media]
+      newMedia[caption_index]['caption'] = caption_value
+      return {
+        ...state,
+        media: newMedia
       }
     default:
       return state

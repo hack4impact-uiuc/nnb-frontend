@@ -51,6 +51,13 @@ function poiFormMediaRemoved(link) {
   }
 }
 
+function poiFormCaptionModified(caption_index, caption_value) {
+  return {
+    type: actionTypes.POI_FORM_CAPTION_MODIFIED,
+    payload: { caption_index, caption_value }
+  }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -77,4 +84,9 @@ export function addPOIFormMedia(media) {
 
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
+}
+
+export function modifyPOIFormCaption(caption_index, caption_value) {
+  return dispatch =>
+    dispatch(poiFormCaptionModified(caption_index, caption_value))
 }
