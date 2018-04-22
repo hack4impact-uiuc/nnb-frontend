@@ -16,12 +16,6 @@ export default class GetUniversalSearchResults extends Component {
     this.props.setSelectedPOI(suggestion)
   }
 
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      pois: []
-    })
-  }
-
   onSuggestionsFetchRequested = () => {
     this.props.universalSearchPOIs()
   }
@@ -52,7 +46,6 @@ export default class GetUniversalSearchResults extends Component {
         <Autosuggest
           suggestions={pois}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
           onSuggestionSelected={this.onSuggestionSelected}
           getSuggestionValue={this.getPoiValue}
           renderSuggestion={this.renderPoi}

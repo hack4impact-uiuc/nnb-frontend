@@ -9,13 +9,4 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      exitStoryModal
-    },
-    dispatch
-  )
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(StoryModal)
+export default connect(mapStateToProps, null)(StoryModal)

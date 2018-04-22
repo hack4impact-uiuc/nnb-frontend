@@ -3,13 +3,6 @@ import { FormControl } from 'react-bootstrap'
 import { Icon, GetStorySearchResults } from './'
 
 class StoryForm extends Component {
-  constructor() {
-    super()
-    this.state = {
-      poiNames: []
-    }
-  }
-
   onStoryNameEdit = e => {
     this.props.updateStoryNameInput(e.target.value)
   }
