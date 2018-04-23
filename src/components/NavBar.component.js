@@ -46,8 +46,6 @@ class NavBar extends PureComponent {
       isLoggedIn,
       selectedStoryId,
       toggleSidebar,
-      enableEditMode,
-      disableEditMode,
       logout
     } = this.props
 
@@ -80,7 +78,7 @@ class NavBar extends PureComponent {
             isLoggedIn && (
               <div
                 className="navbar-content__item"
-                onClick={isEditing ? disableEditMode : enableEditMode}
+                onClick={this.toggleEditMode}
               >
                 {isEditing ? 'Disable Editing' : 'Enable Editing'}
               </div>
