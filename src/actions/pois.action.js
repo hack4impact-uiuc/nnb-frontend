@@ -78,10 +78,30 @@ export function setSelectedPOI(poi) {
   return dispatch => dispatch(poiSelected(poi))
 }
 
-export function setNextPOIInStory() {
-  return dispatch => dispatch(nextPOIInStorySet())
+export function setPreviousPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(previousPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the previous poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
+  }
 }
 
-export function setPreviousPOIInStory() {
-  return dispatch => dispatch(previousPOIInStorySet())
+export function setNextPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(nextPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the next poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
+  }
 }

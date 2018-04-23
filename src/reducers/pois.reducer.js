@@ -45,12 +45,12 @@ export default function pois(state = initialState.pois, action) {
     case NEXT_POI_IN_STORY_SET:
       return {
         ...state,
-        selectedPOIId: selectedPOIIndex + 1
+        selectedPOIId: activePOIs[selectedPOIIndex + 1].id
       }
     case PREVIOUS_POI_IN_STORY_SET:
       return {
         ...state,
-        selectedPOIId: selectedPOIIndex - 1
+        selectedPOIId: activePOIs[selectedPOIIndex - 1].id
       }
     default:
       return state

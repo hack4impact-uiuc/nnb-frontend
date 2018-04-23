@@ -29,19 +29,19 @@ class InfoPanel extends Component {
       isLastInStory,
       selectedPOI,
       isEditing,
-      shouldShowRealTimePOI,
       removePOIFormMedia,
       setNextPOIInStory,
-      setPreviousPOIInStory
+      setPreviousPOIInStory,
+      location
     } = this.props
+
+    const isRealTimePOI = location.pathname === '/form'
 
     if (!selectedPOI) {
       return (
         <div className="info-panel">
           <h1>
-            {shouldShowRealTimePOI
-              ? 'Preview Will Appear Here'
-              : 'No POI Selected'}
+            {isRealTimePOI ? 'Preview Will Appear Here' : 'No POI Selected'}
           </h1>
         </div>
       )
@@ -55,7 +55,7 @@ class InfoPanel extends Component {
             <Image
               width={500}
               height={500}
-              alt={shouldShowRealTimePOI ? content : content.caption}
+              alt={isRealTimePOI ? content : content.caption}
               src={url}
             />
           )
@@ -74,7 +74,7 @@ class InfoPanel extends Component {
           return (
             <Carousel.Item key={url} className="carousel-item">
               {isEditing &&
-                !shouldShowRealTimePOI && (
+                !isRealTimePOI && (
                   <Icon
                     type="Trash"
                     size="large"
@@ -97,7 +97,7 @@ class InfoPanel extends Component {
           <div className="heading">
             <h1 className="heading__name">{selectedPOI.name}</h1>
             {isEditing &&
-              !shouldShowRealTimePOI && (
+              !isRealTimePOI && (
                 <Icon
                   type="Edit"
                   size="large"
@@ -106,7 +106,7 @@ class InfoPanel extends Component {
                 />
               )}
             {isEditing &&
-              !shouldShowRealTimePOI && (
+              !isRealTimePOI && (
                 <Icon
                   type="Trash"
                   size="large"
@@ -162,7 +162,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowLeft"
                 size="large"
-                onClick={setNextPOIInStory}
+                onClick={setPreviousPOIInStory}
                 disabled={isFirstInStory}
               />
               <h4 className="walkthrough__page-counter">
@@ -171,7 +171,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowRight"
                 size="large"
-                onClick={setPreviousPOIInStory}
+                onClick={setNextPOIInStory}
                 disabled={isLastInStory}
               />
             </div>

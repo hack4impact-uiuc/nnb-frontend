@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import {
   loadMaps,
   loadStories,
@@ -52,4 +53,6 @@ function mapDispatchToProps(dispatch) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoPanel)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(InfoPanel)
+)
