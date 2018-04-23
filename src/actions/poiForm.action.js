@@ -86,6 +86,10 @@ export function addPOIFormMedia(dataURL) {
     )
 }
 
+export function addPOIFormYoutubeMedia(youtubeVideoId) {
+  return dispatch => dispatch(poiFormMediaAdded({ contentUrl: youtubeVideoId }))
+}
+
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
 }

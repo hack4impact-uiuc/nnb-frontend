@@ -11,7 +11,8 @@ import './../styles/button.css'
 export default class POIForm extends Component {
   // TODO: remove
   state = {
-    isUploadingMedia: false
+    isUploadingMedia: false,
+    youtubeUrl: ''
   }
 
   // temp just to have the data loaded
@@ -47,24 +48,14 @@ export default class POIForm extends Component {
   }
 
   handleYoutubeInput = e => {
-    const url = e.target.value
-    this.setState(
-      {
-        youtubeUrl: url
-      },
-      () => this.props.updatePOI(this.state)
-    )
+    const youtubeUrl = e.target.value
+    this.setState({ youtubeUrl })
   }
 
   addYoutube = () => {
     const youtubeVideoId = utils.parseYoutubeUrl(this.state.youtubeUrl)
-    this.setState(
-      {
-        content: [...this.state.content, youtubeVideoId],
-        youtubeUrl: ''
-      },
-      () => this.props.updatePOI(this.state)
-    )
+    this.props.addPOIFormYoutubeMedia(youtubeVideoId)
+    this.setState({ youtubeUrl: '' })
   }
 
   fileUpload = () => {
