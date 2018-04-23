@@ -5,7 +5,7 @@ import Icon from './Icon.component'
 import InfoPanel from './InfoPanel.container'
 import Interval from './Interval.container'
 import LinkTable from './LinkTable.container'
-import Login from './Login.container'
+import LoginPage from './LoginPage.container'
 import MapManager from './MapManager.component'
 import MapTimeline from './MapTimeline.component'
 import NavBar from './NavBar.container'
@@ -19,6 +19,7 @@ import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import StuffList from './StuffList.container'
 import Timeline from './Timeline.container'
+import FormPage from './FormPage.component'
 
 export {
   App,
@@ -28,7 +29,7 @@ export {
   InfoPanel,
   Interval,
   LinkTable,
-  Login,
+  LoginPage,
   MapManager,
   MapTimeline,
   NavBar,
@@ -41,5 +42,6 @@ export {
   StoryForm,
   StoryList,
   StuffList,
-  Timeline
+  Timeline,
+  FormPage
 }

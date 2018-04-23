@@ -4,7 +4,7 @@ import { Alert, Form } from 'react-bootstrap'
 import { FieldGroup } from './'
 import './../styles/login.css'
 
-export default class Login extends Component {
+export default class LoginPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
