@@ -1,3 +1,4 @@
+import { APP_LOADED } from './actionTypes'
 import { fetchStuff } from './stuff.action'
 import { enableEditMode, disableEditMode } from './edit.action'
 import { loadMaps, createMap, removeMap, setSelectedMap } from './maps.action'
@@ -38,7 +39,12 @@ import {
 } from './sidebar.action'
 import { login, logout } from './auth.action'
 
+function appLoaded() {
+  return { type: APP_LOADED }
+}
+
 export {
+  appLoaded,
   fetchStuff,
   enableEditMode,
   disableEditMode,

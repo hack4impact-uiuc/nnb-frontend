@@ -9,9 +9,11 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
 import { App, FormPage, LoginPage, NavBar } from './components'
+import { appLoaded } from './actions'
 import registerServiceWorker from './registerServiceWorker'
 
 const store = configureStore()
+store.dispatch(appLoaded())
 
 ReactDOM.render(
   <Provider store={store}>
