@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes'
+import { Api } from './../utils'
 
 const EMPTY_LINK = { url: '', urlName: '' }
 
@@ -78,8 +79,11 @@ export function modifyPOIFormLink(index, field, value) {
   return dispatch => dispatch(poiFormLinkModified(index, field, value))
 }
 
-export function addPOIFormMedia(media) {
-  return dispatch => dispatch(poiFormMediaAdded(media))
+export function addPOIFormMedia(dataURL) {
+  return dispatch =>
+    Api.uploadImage(dataURL).then(contentUrl =>
+      dispatch(poiFormMediaAdded({ contentUrl }))
+    )
 }
 
 export function removePOIFormMedia(media) {

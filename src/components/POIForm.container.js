@@ -16,7 +16,8 @@ import POIForm from './POIFormNew.component'
 function mapStateToProps(state) {
   return {
     ...state.poiForm,
-    stories: state.stories.stories
+    stories: state.stories.stories,
+    isUpdatingPOI: !!state.pois.selectedPOIId
   }
 }
 

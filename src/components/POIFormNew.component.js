@@ -1,17 +1,108 @@
 import React, { Component } from 'react'
+import classnames from 'classnames'
 import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import { FieldGroup, LinkTable } from './'
+import { utils } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
 import './../styles/poi-form.css'
 import './../styles/button.css'
 
 export default class POIForm extends Component {
+  // TODO: remove
+  state = {
+    isUploadingMedia: false
+  }
+
   // temp just to have the data loaded
   componentDidMount() {
     const { loadMaps, loadPOIs, loadStories } = this.props
     loadMaps().then(() => loadPOIs())
     loadStories()
+  }
+
+  // Multiple file upload is kinda jank since it sets
+  // this.state.isUploadingMedia to false when the first image is uploaded.
+  // A better approach would wrap each upload into a promise and use Promise.All
+  // ORRRR use a counter in the redux store with how many media things are being uploaded
+  // and set to false if it's 0
+  onImageUpload = e => {
+    const uploadedFiles = e.target.files
+    if (uploadedFiles.length) {
+      // TODO: move this to redux
+      this.setState({ isUploadingMedia: true })
+      const files = [...uploadedFiles]
+      files.forEach(file => {
+        const reader = new FileReader()
+        reader.onload = e => {
+          const dataURL = e.target.result
+          this.props.addPOIFormMedia(dataURL)
+
+          // dis da problem
+          this.setState({ isUploadingMedia: false })
+        }
+        reader.readAsDataURL(file)
+      })
+    }
+  }
+
+  handleYoutubeInput = e => {
+    const url = e.target.value
+    this.setState(
+      {
+        youtubeUrl: url
+      },
+      () => this.props.updatePOI(this.state)
+    )
+  }
+
+  addYoutube = () => {
+    const youtubeVideoId = utils.parseYoutubeUrl(this.state.youtubeUrl)
+    this.setState(
+      {
+        content: [...this.state.content, youtubeVideoId],
+        youtubeUrl: ''
+      },
+      () => this.props.updatePOI(this.state)
+    )
+  }
+
+  fileUpload = () => {
+    const { isUploadingMedia, youtubeUrl } = this.state
+    return (
+      <div>
+        <FieldGroup
+          controlID="chooseFile"
+          label="Upload Files"
+          inputType="file"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          onChange={this.onImageUpload}
+          multipleFileUpload={true}
+        />
+        {isUploadingMedia && <div>Uploading...</div>}
+        <FieldGroup
+          controlID="youtube"
+          label="Youtube"
+          inputType="text"
+          className="poi-form__field-group specifier"
+          labelClassName="poi-form__label"
+          placeholder="Enter Youtube video url here"
+          value={youtubeUrl}
+          onChange={this.handleYoutubeInput}
+        />
+        <button
+          className={classnames('button', 'button--dark', {
+            'button--disabled': !utils.parseYoutubeUrl(youtubeUrl)
+          })}
+          onClick={this.addYoutube}
+          disabled={!utils.parseYoutubeUrl(youtubeUrl)}
+          type="button"
+        >
+          Add Youtube Video
+        </button>
+      </div>
+    )
   }
 
   render() {
@@ -23,6 +114,7 @@ export default class POIForm extends Component {
       storyIds,
       media,
       links,
+      isUpdatingPOI,
       updatePOIFormInput,
       togglePOIFormStoryId,
       addPOIFormLink,
@@ -33,6 +125,8 @@ export default class POIForm extends Component {
     return (
       <div>
         <Form className="poi-form">
+          <PageHeader>{isUpdatingPOI ? 'Edit' : 'Create'} POI</PageHeader>
+
           <FieldGroup
             controlID="name"
             label="Name"
@@ -61,6 +155,7 @@ export default class POIForm extends Component {
             value={description}
             onChange={e => updatePOIFormInput('description', e.target.value)}
           />
+          {this.fileUpload()}
           <LinkTable />
           <FieldGroup
             inputType="checklist"
