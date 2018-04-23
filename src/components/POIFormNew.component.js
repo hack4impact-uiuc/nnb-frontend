@@ -96,6 +96,11 @@ export default class POIForm extends Component {
     )
   }
 
+  onExit = () => {
+    this.props.exitPOIForm()
+    this.props.history.push('/')
+  }
+
   render() {
     const {
       stories,
@@ -157,6 +162,23 @@ export default class POIForm extends Component {
             onClick={togglePOIFormStoryId}
             checkedOptionIds={storyIds}
           />
+
+          <div className="end-buttons">
+            <button
+              className="button button--dark end-button"
+              onClick={this.onExit}
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              className="button button--dark end-button"
+              onClick={this.onSubmit}
+              type="button"
+            >
+              Submit
+            </button>
+          </div>
         </Form>
       </div>
     )

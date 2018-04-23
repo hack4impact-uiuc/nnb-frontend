@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import {
   updatePOIFormInput,
   togglePOIFormStoryId,
@@ -10,7 +11,8 @@ import {
   loadMaps,
   loadPOIs,
   loadStories,
-  addPOIFormYoutubeMedia
+  addPOIFormYoutubeMedia,
+  exitPOIForm
 } from './../actions'
 import POIForm from './POIFormNew.component'
 
@@ -34,10 +36,11 @@ function mapDispatchToProps(dispatch) {
       loadMaps,
       loadPOIs,
       loadStories,
-      addPOIFormYoutubeMedia
+      addPOIFormYoutubeMedia,
+      exitPOIForm
     },
     dispatch
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(POIForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(POIForm))

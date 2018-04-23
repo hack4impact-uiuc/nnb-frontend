@@ -7,7 +7,8 @@ import {
   POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
-  NEW_POI_CREATION_STARTED
+  NEW_POI_CREATION_STARTED,
+  POI_FORM_EXITED
 } from '../actions/actionTypes'
 
 export default function poiForm(state = initialState.poiForm, action) {
@@ -66,6 +67,8 @@ export default function poiForm(state = initialState.poiForm, action) {
         xCoord: action.payload.xCoord,
         yCoord: action.payload.yCoord
       }
+    case POI_FORM_EXITED:
+      return initialState.poiForm
     default:
       return state
   }

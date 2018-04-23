@@ -2,7 +2,8 @@ import initialState from './initialState'
 import {
   EDIT_MODE_ENABLED,
   EDIT_MODE_DISABLED,
-  NEW_POI_CREATION_STARTED
+  NEW_POI_CREATION_STARTED,
+  POI_FORM_EXITED
 } from '../actions/actionTypes'
 
 export default function edit(state = initialState.edit, action) {
@@ -17,6 +18,11 @@ export default function edit(state = initialState.edit, action) {
       return {
         ...state,
         shouldShowRealTimePOI: true
+      }
+    case POI_FORM_EXITED:
+      return {
+        ...state,
+        shouldShowRealTimePOI: false
       }
     default:
       return state

@@ -59,6 +59,12 @@ function newPOICreationStarted(mapYear, xCoord, yCoord) {
   }
 }
 
+function poiFormExited() {
+  return {
+    type: actionTypes.POI_FORM_EXITED
+  }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -96,4 +102,8 @@ export function removePOIFormMedia(media) {
 
 export function createNewPOI(mapYear, xCoord, yCoord) {
   return dispatch => dispatch(newPOICreationStarted(mapYear, xCoord, yCoord))
+}
+
+export function exitPOIForm() {
+  return dispatch => dispatch(poiFormExited())
 }
