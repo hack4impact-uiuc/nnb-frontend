@@ -21,14 +21,16 @@ export default function pois(state = initialState.pois, action) {
     case POI_CREATED:
       return {
         ...state,
-        activePOIs: [...state.activePOIs, action.payload]
+        activePOIs: [...state.activePOIs, action.payload],
+        selectedPOIId: action.payload.id
       }
     case POI_UPDATED:
       return {
         ...state,
         activePOIs: [...state.activePOIs].map(
           poi => (poi.id === action.payload.id ? action.payload : poi)
-        )
+        ),
+        selectedPOIId: action.payload.id
       }
     case POI_DELETED:
       return {

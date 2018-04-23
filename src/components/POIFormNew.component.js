@@ -101,6 +101,40 @@ export default class POIForm extends Component {
     this.props.history.push('/')
   }
 
+  onSubmit = () => {
+    const {
+      selectedPOIId,
+      mapYear,
+      xCoord,
+      yCoord,
+      name,
+      date,
+      description,
+      storyIds,
+      content,
+      links,
+      updatePOI,
+      createPOI
+    } = this.props
+    const poi = {
+      mapByYear: mapYear,
+      coordinateX: xCoord,
+      coordinateY: yCoord,
+      name,
+      date,
+      description,
+      storyIds,
+      content,
+      links
+    }
+    if (selectedPOIId) {
+      updatePOI(selectedPOIId, poi)
+    } else {
+      createPOI(poi)
+    }
+    this.onExit()
+  }
+
   render() {
     const {
       stories,

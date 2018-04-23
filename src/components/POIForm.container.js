@@ -12,7 +12,9 @@ import {
   loadPOIs,
   loadStories,
   addPOIFormYoutubeMedia,
-  exitPOIForm
+  exitPOIForm,
+  updatePOI,
+  createPOI
 } from './../actions'
 import POIForm from './POIFormNew.component'
 
@@ -37,7 +39,9 @@ function mapDispatchToProps(dispatch) {
       loadPOIs,
       loadStories,
       addPOIFormYoutubeMedia,
-      exitPOIForm
+      exitPOIForm,
+      updatePOI,
+      createPOI
     },
     dispatch
   )
