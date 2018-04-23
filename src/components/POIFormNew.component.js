@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { FormControl, Form, PageHeader } from 'react-bootstrap'
 import { FieldGroup, LinkTable } from './'
 import 'react-datepicker/dist/react-datepicker.css'
 import './../styles/App.css'
@@ -31,7 +32,7 @@ export default class POIForm extends Component {
     } = this.props
     return (
       <div>
-        <form>
+        <Form className="poi-form">
           <FieldGroup
             controlID="name"
             label="Name"
@@ -70,7 +71,7 @@ export default class POIForm extends Component {
             onClick={togglePOIFormStoryId}
             checkedOptionIds={storyIds}
           />
-        </form>
+        </Form>
       </div>
     )
   }

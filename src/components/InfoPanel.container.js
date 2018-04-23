@@ -15,20 +15,26 @@ import {
 import InfoPanel from './InfoPanel.component'
 
 function mapStateToProps(state) {
-  const { timeline, pois, stories, edit } = state
+  const { timeline, pois, stories, edit, poiForm } = state
   const { maps, selectedMapId } = timeline
   const { activePOIs, selectedPOIId } = pois
   const { selectedStoryId } = stories
+  const { shouldShowRealTimePOI } = edit
 
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   const isStorySelected = !!selectedStoryId
+
+  const { meta, ...realTimePOI } = poiForm
+  const selectedPOI = shouldShowRealTimePOI
+    ? realTimePOI
+    : activePOIs[selectedPOIIndex]
 
   return {
     ...state.pois,
     ...state.stories,
     ...edit,
     selectedPOIIndex,
-    selectedPOI: activePOIs[selectedPOIIndex],
+    selectedPOI,
     selectedMap: maps.find(map => map.id === selectedMapId),
     isStorySelected,
     isFirstInStory: isStorySelected && selectedPOIIndex === 0,

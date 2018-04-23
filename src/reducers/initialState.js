@@ -24,7 +24,7 @@ const initialState = {
     date: '',
     description: '',
     storyIds: [],
-    media: [],
+    content: [],
     links: [],
     meta: {
       isUploadingMedia: false,

@@ -48,15 +48,15 @@ export default function poiForm(state = initialState.poiForm, action) {
     case POI_FORM_MEDIA_ADDED:
       return {
         ...state,
-        media: [...state.media, action.payload]
+        content: [...state.content, action.payload]
       }
     case POI_FORM_MEDIA_REMOVED:
       return {
         ...state,
-        media: [...state.media].filter(
-          media =>
-            media.contentUrl !== action.payload.contentUrl &&
-            media.caption !== action.payload.caption
+        content: [...state.content].filter(
+          content =>
+            content.contentUrl !== action.payload.contentUrl &&
+            content.caption !== action.payload.caption
         )
       }
     case NEW_POI_CREATION_STARTED:
