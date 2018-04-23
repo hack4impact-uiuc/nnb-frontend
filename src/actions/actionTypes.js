@@ -1,6 +1,10 @@
 // stuff
 export const RECEIVE_STUFF = 'RECEIVE_STUFF'
 
+// auth
+export const USER_LOGGED_IN = 'USER_LOGGED_IN'
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
+
 // edit
 export const EDIT_MODE_ENABLED = 'EDIT_MODE_ENABLED'
 export const EDIT_MODE_DISABLED = 'EDIT_MODE_DISABLED'

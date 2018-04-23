@@ -35,6 +35,7 @@ import {
   setEditingStoryId,
   updateStoryNameInput
 } from './sidebar.action'
+import { login, logout } from './auth.action'
 
 export {
   fetchStuff,
@@ -69,5 +70,7 @@ export {
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  login,
+  logout
 }
