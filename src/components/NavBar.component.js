@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { Icon } from './'
 
 class NavBar extends PureComponent {
@@ -37,10 +38,7 @@ class NavBar extends PureComponent {
 
   render() {
     const {
-      setLogin,
-      setShowLogin,
-      showLogin,
-      // redux props below
+      pathname,
       maps,
       stories,
       selectedMapId,
@@ -49,7 +47,8 @@ class NavBar extends PureComponent {
       selectedStoryId,
       toggleSidebar,
       enableEditMode,
-      disableEditMode
+      disableEditMode,
+      logout
     } = this.props
 
     return (
@@ -81,31 +80,20 @@ class NavBar extends PureComponent {
               {isEditing ? 'Disable Editing' : 'Enable Editing'}
             </div>
           )}
-          {!isLoggedIn &&
-            !showLogin && (
-              <div
-                className="navbar-content__item"
-                onClick={() => setShowLogin(true)}
-              >
-                Login
-              </div>
-            )}
-          {!isLoggedIn &&
-            !!showLogin && (
-              <div
-                className="navbar-content__item"
-                onClick={() => setShowLogin(false)}
-              >
-                Home
-              </div>
-            )}
-          {!!isLoggedIn && (
-            <div
-              className="navbar-content__item"
-              onClick={() => setLogin(false)}
-            >
+          {/* TODO: only display if not on path '/' */}
+          {pathname !== '/' && (
+            <Link to="/" className="navbar-content__item">
+              Home
+            </Link>
+          )}
+          {isLoggedIn ? (
+            <div className="navbar-content__item" onClick={logout}>
               Logout
             </div>
+          ) : (
+            <Link to="/login" className="navbar-content__item">
+              Login
+            </Link>
           )}
         </div>
       </Navbar>

@@ -64,6 +64,12 @@ button[disabled] {
 
     &:hover {
       // TODO
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    &:focus {
+      color: #ccc;
       text-decoration: none;
     }
   }
