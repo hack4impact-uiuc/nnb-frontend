@@ -172,7 +172,8 @@ class NNBMap extends Component {
                   selectedPOIId,
                   setSelectedPOI,
                   mapImageWidth,
-                  mapImageHeight
+                  mapImageHeight,
+                  selectedMap
                 }}
               />
             )}
@@ -188,17 +189,20 @@ function POIMarkers({
   setSelectedPOI,
   mapImageWidth,
   mapImageHeight,
-  selectedPOIId
+  selectedPOIId,
+  selectedMap
 }) {
-  return activePOIs.map(poi => (
-    <POIMarker
-      key={poi.id}
-      isSelected={poi.id === selectedPOIId}
-      absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
-      absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
-      setAsActivePOI={() => setSelectedPOI(poi)}
-    />
-  ))
+  return activePOIs
+    .filter(poi => poi.mapByYear === selectedMap.year)
+    .map(poi => (
+      <POIMarker
+        key={poi.id}
+        isSelected={poi.id === selectedPOIId}
+        absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
+        absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
+        setAsActivePOI={() => setSelectedPOI(poi)}
+      />
+    ))
 }
 
 export default NNBMap
