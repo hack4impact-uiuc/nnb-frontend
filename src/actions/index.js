@@ -26,7 +26,8 @@ import {
   removePOIFormLink,
   modifyPOIFormLink,
   addPOIFormMedia,
-  removePOIFormMedia
+  removePOIFormMedia,
+  createNewPOI
 } from './poiForm.action'
 import {
   toggleSidebar,
@@ -58,6 +59,7 @@ export {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
+  createNewPOI,
   loadPOIs,
   loadPOIById,
   createPOI,

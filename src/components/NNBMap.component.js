@@ -45,6 +45,7 @@ class NNBMap extends Component {
   }
 
   onImageClick(event) {
+    const { createNewPOI, history, selectedMap } = this.props
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
       const domRect = element.getBoundingClientRect()
@@ -58,12 +59,9 @@ class NNBMap extends Component {
       const scaledCoords = mouseClickCoords.map(
         (e, i) => 100 * e / imageDisplayedResolution[i]
       )
-      this.setState({
-        scaledCoords,
-        isChoosingNewPOICoords: false
-      })
-      this.props.setClickedCoords(scaledCoords)
-      this.props.setShowPOIForm(true)
+
+      createNewPOI(selectedMap.year, ...scaledCoords)
+      history.push('/form')
     }
   }
 

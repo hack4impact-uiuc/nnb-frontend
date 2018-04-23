@@ -17,6 +17,9 @@ const initialState = {
     selectedPOIId: null
   },
   poiForm: {
+    mapYear: null,
+    xCoord: null,
+    yCoord: null,
     name: '',
     date: '',
     description: '',

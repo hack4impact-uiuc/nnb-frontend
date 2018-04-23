@@ -6,7 +6,8 @@ import {
   POI_FORM_LINK_REMOVED,
   POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
-  POI_FORM_MEDIA_REMOVED
+  POI_FORM_MEDIA_REMOVED,
+  NEW_POI_CREATION_STARTED
 } from '../actions/actionTypes'
 
 export default function poiForm(state = initialState.poiForm, action) {
@@ -57,6 +58,13 @@ export default function poiForm(state = initialState.poiForm, action) {
             media.contentUrl !== action.payload.contentUrl &&
             media.caption !== action.payload.caption
         )
+      }
+    case NEW_POI_CREATION_STARTED:
+      return {
+        ...state,
+        mapYear: action.payload.mapYear,
+        xCoord: action.payload.xCoord,
+        yCoord: action.payload.yCoord
       }
     default:
       return state

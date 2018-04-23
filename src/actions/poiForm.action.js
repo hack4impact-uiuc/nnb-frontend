@@ -51,6 +51,13 @@ function poiFormMediaRemoved(link) {
   }
 }
 
+function newPOICreationStarted(mapYear, xCoord, yCoord) {
+  return {
+    type: actionTypes.NEW_POI_CREATION_STARTED,
+    payload: { mapYear, xCoord, yCoord }
+  }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -77,4 +84,8 @@ export function addPOIFormMedia(media) {
 
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
+}
+
+export function createNewPOI(mapYear, xCoord, yCoord) {
+  return dispatch => dispatch(newPOICreationStarted(mapYear, xCoord, yCoord))
 }
