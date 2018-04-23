@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { loadMaps, loadStories, setSelectedMap } from './../actions'
+import { loadMaps, loadStories, setSelectedMap, login } from './../actions'
 import App from './App'
 
 function mapDispatchToProps(dispatch) {
@@ -8,7 +8,8 @@ function mapDispatchToProps(dispatch) {
     {
       loadMaps,
       loadStories,
-      setSelectedMap
+      setSelectedMap,
+      login
     },
     dispatch
   )

@@ -35,7 +35,7 @@ const initialState = {
     inputStoryName: ''
   },
   auth: {
-    isLoggedIn: true
+    isLoggedIn: false
   }
 }
 

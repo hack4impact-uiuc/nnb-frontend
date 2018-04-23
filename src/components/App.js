@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { StoryList, POIFormPanel, MapTimeline, Login } from './'
+import { StoryList, POIFormPanel, MapTimeline } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
 
@@ -47,6 +47,7 @@ class App extends Component {
     this.loadMaps()
     if (storage.get('auth')) {
       this.setLogin(true)
+      this.props.login()
     }
 
     const { loadMaps, loadStories, setSelectedMap } = this.props
@@ -205,28 +206,7 @@ class App extends Component {
   }
 
   render() {
-    const {
-      isEditing,
-      isLoggedIn,
-      isStorySelected,
-      maps,
-      selectedMap,
-      selectedStory,
-      showLogin,
-      showPOIForm,
-      stories
-    } = this.state
-    const startYearIndex =
-      !!selectedMap && maps.findIndex(map => map.year === selectedMap.year)
-    const endYearMap =
-      startYearIndex !== undefined &&
-      startYearIndex !== false &&
-      maps[startYearIndex + 1]
-    const endYear = (!!endYearMap && endYearMap.year) || 'Present'
-    const selectedStoryName =
-      !!isStorySelected &&
-      stories.find(story => story.id === selectedStory).name
-
+    const { showLogin, showPOIForm } = this.state
     return (
       <div className="app">
         <StoryList
@@ -237,10 +217,6 @@ class App extends Component {
           toggleEditMode={this.toggleEditMode}
           toggleSidebar={this.toggleSidebar}
         />
-        {/*TODO: change to is logged in*/}
-        {showLogin && (
-          <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
-        )}
         <Link to="/form"> lets go to the form </Link>
         <div>
           {!showPOIForm &&
