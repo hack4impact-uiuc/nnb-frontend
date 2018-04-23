@@ -51,6 +51,8 @@ class NavBar extends PureComponent {
       logout
     } = this.props
 
+    // TODO: configure what to show based on current pathname
+    //       instead of using a bunch of conditional rendering
     return (
       <Navbar>
         <div className="navbar-content">
@@ -62,39 +64,43 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          <HeadingText
-            {...{
-              isLoggedIn,
-              selectedMapId,
-              maps,
-              stories,
-              selectedStoryId
-            }}
-          />
-
-          {isLoggedIn && (
-            <div
-              className="navbar-content__item"
-              onClick={isEditing ? disableEditMode : enableEditMode}
-            >
-              {isEditing ? 'Disable Editing' : 'Enable Editing'}
-            </div>
+          {pathname === '/' && (
+            <HeadingText
+              {...{
+                isLoggedIn,
+                selectedMapId,
+                maps,
+                stories,
+                selectedStoryId
+              }}
+            />
           )}
-          {/* TODO: only display if not on path '/' */}
+
+          {pathname === '/' &&
+            isLoggedIn && (
+              <div
+                className="navbar-content__item"
+                onClick={isEditing ? disableEditMode : enableEditMode}
+              >
+                {isEditing ? 'Disable Editing' : 'Enable Editing'}
+              </div>
+            )}
           {pathname !== '/' && (
             <Link to="/" className="navbar-content__item">
               Home
             </Link>
           )}
-          {isLoggedIn ? (
+          {isLoggedIn && (
             <div className="navbar-content__item" onClick={logout}>
               Logout
             </div>
-          ) : (
-            <Link to="/login" className="navbar-content__item">
-              Login
-            </Link>
           )}
+          {!isLoggedIn &&
+            pathname !== '/login' && (
+              <Link to="/login" className="navbar-content__item">
+                Login
+              </Link>
+            )}
         </div>
       </Navbar>
     )
