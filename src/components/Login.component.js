@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
-import { Api } from './../utils'
+// import { Api } from './../utils'
 import { FieldGroup } from './'
 import './../styles/login.css'
 
@@ -32,14 +32,14 @@ export default class Login extends Component {
   onSubmit() {
     this.setState({ error: '' })
     const { username, password } = this.state
-    const data = {
-      username,
-      password
-    }
+    // const data = {
+    //   username,
+    //   password
+    // }
     // RIPerino
     if (username === 'admin' && password === 'admin') {
-      this.props.setLogin(true)
-      this.props.setShowLogin(false)
+      this.props.login()
+      this.props.history.push('/')
     } else {
       this.setState({ error: 'incorrect credentials' })
     }
