@@ -3,7 +3,8 @@ import {
   MAPS_LOADED,
   MAP_DELETED,
   MAP_CREATED,
-  MAP_SELECTED
+  MAP_SELECTED,
+  POI_SELECTED
 } from '../actions/actionTypes'
 
 export default function maps(state = initialState.timeline, action) {
@@ -27,6 +28,13 @@ export default function maps(state = initialState.timeline, action) {
       return {
         ...state,
         selectedMapId: action.payload
+      }
+    case POI_SELECTED:
+      return {
+        ...state,
+        selectedMapId: state.maps.find(
+          map => map.year === action.payload.mapByYear
+        ).id
       }
     default:
       return state

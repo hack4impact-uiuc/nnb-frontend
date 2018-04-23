@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { pois, stories, maps } from './dummyData'
 import Api from './apiWrapper'
 import storage from './webStorage'
@@ -18,9 +19,14 @@ function parseYoutubeUrl(url) {
   return match && match[7].length === 11 ? match[7] : false
 }
 
+function compareYear(a, b) {
+  return moment(a.date).isAfter(moment(b.date))
+}
+
 const utils = {
   validateLink,
-  parseYoutubeUrl
+  parseYoutubeUrl,
+  compareYear
 }
 
 export { pois, stories, maps, Api, storage, utils }

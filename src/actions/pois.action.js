@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import Api from './../utils/apiWrapper'
+import { utils, Api } from './../utils'
 
 function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
@@ -35,9 +35,11 @@ export function loadPOIs() {
     const { selectedStoryId } = store.stories
     const { selectedMapId, maps } = store.timeline
     if (!!selectedStoryId) {
-      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois =>
+      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois => {
+        pois.sort(utils.compareYear)
         dispatch(poisLoaded(pois))
-      )
+        return dispatch(poiSelected(pois[0]))
+      })
     }
     const mapYear = maps.find(map => map.id === selectedMapId).year
     return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
