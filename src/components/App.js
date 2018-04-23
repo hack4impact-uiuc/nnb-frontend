@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { StoryList, POIFormPanel, MapTimeline, NavBar, Login } from './'
+import { StoryList, POIFormPanel, MapTimeline, Login } from './'
 import { Api, storage } from './../utils'
 import './../styles/App.css'
 
@@ -238,22 +238,6 @@ class App extends Component {
           toggleSidebar={this.toggleSidebar}
         />
         {/*TODO: change to is logged in*/}
-        <NavBar
-          endYear={!!selectedMap && endYear}
-          exitStory={this.exitStory}
-          isEditing={isEditing}
-          isLoggedIn={isLoggedIn}
-          isStorySelected={isStorySelected}
-          onEdit={this.toggleEditMode}
-          selectedMap={selectedMap}
-          selectedStoryName={selectedStoryName}
-          setLogin={this.setLogin}
-          setShowLogin={this.setShowLogin}
-          showEdit={true}
-          showLogin={showLogin}
-          startYear={!!selectedMap && selectedMap.year}
-          toggleSidebar={this.toggleSidebar}
-        />
         {showLogin && (
           <Login setLogin={this.setLogin} setShowLogin={this.setShowLogin} />
         )}
