@@ -40,6 +40,13 @@ class InfoPanel extends Component {
     const isRealTimePOI = location.pathname === ROUTES.FORM
 
     if (!selectedPOI) {
+      if (isStorySelected) {
+        return (
+          <div className="info-panel">
+            <h1>No POIs In Story</h1>
+          </div>
+        )
+      }
       return (
         <div className="info-panel">
           <h1>No POI Selected</h1>
