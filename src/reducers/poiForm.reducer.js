@@ -72,8 +72,7 @@ export default function poiForm(state = initialState.poiForm, action) {
         ...state,
         // ...action.payload,
         name: action.payload.name,
-        // copying date causes app to explode ¯\_(ツ)_/¯
-        // date: action.payload.date,
+        date: action.payload.date,
         description: action.payload.description,
         mapYear: action.payload.mapYear,
         xCoord: action.payload.xCoord,

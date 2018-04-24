@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 /**
  * Convert to api
  */
@@ -13,9 +15,7 @@ function convertToApiPOI(poi) {
   return {
     name: poi.name,
     map_year: poi.mapYear,
-    date: `${poi.date.format('YYYY')}-${poi.date.format(
-      'MM'
-    )}-${poi.date.format('DD')}`,
+    date: poi.date.format('YYYY-MM-DD'),
     description: poi.description,
     x_coord: poi.xCoord,
     y_coord: poi.yCoord,
@@ -68,7 +68,7 @@ function convertFromApiPOI(poi) {
   return {
     id: poi._id,
     name: poi.name,
-    date: poi.date,
+    date: moment(poi.date).utc(),
     description: poi.description,
     xCoord: poi.x_coord,
     yCoord: poi.y_coord,
