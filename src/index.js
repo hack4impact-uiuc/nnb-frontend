@@ -31,8 +31,10 @@ store.dispatch(appLoaded())
 
 loadMaps()(store.dispatch).then(action => {
   const maps = action.payload
-  maps.sort((a, b) => a.year - b.year)
-  setSelectedMap(maps[0])(store.dispatch)
+  if (maps.length) {
+    maps.sort((a, b) => a.year - b.year)
+    setSelectedMap(maps[0])(store.dispatch)
+  }
 })
 loadStories()(store.dispatch)
 
