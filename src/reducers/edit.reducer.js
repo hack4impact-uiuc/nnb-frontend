@@ -1,11 +1,5 @@
 import initialState from './initialState'
-import {
-  EDIT_MODE_ENABLED,
-  EDIT_MODE_DISABLED,
-  NEW_POI_CREATION_STARTED,
-  POI_FORM_EXITED,
-  EDIT_POI_SET
-} from '../actions/actionTypes'
+import { EDIT_MODE_ENABLED, EDIT_MODE_DISABLED } from '../actions/actionTypes'
 
 export default function edit(state = initialState.edit, action) {
   switch (action.type) {
@@ -14,17 +8,6 @@ export default function edit(state = initialState.edit, action) {
       return {
         ...state,
         isEditing: action.payload
-      }
-    case NEW_POI_CREATION_STARTED:
-    case EDIT_POI_SET:
-      return {
-        ...state,
-        shouldShowRealTimePOI: true
-      }
-    case POI_FORM_EXITED:
-      return {
-        ...state,
-        shouldShowRealTimePOI: false
       }
     default:
       return state

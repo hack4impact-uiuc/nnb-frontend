@@ -1,9 +1,7 @@
 const initialState = {
   stuff: [],
   edit: {
-    isEditing: false,
-    // TODO: this should be determined by location.pathname === '/form'
-    shouldShowRealTimePOI: false
+    isEditing: false
   },
   timeline: {
     maps: [],
