@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { POIForm, InfoPanel } from './'
+import { NNBMap, InfoPanel, Timeline } from './'
 import './../styles/App.css'
 
-class FormPage extends Component {
+class Explore extends Component {
   render() {
     return (
       <div className="nnb-app">
-        <div className="poi-form-container">
-          <POIForm />
+        <div className="nnb-map-container">
+          <NNBMap />
+          <Timeline />
         </div>
         <div className="info-panel-container">
           <InfoPanel />
@@ -17,4 +18,4 @@ class FormPage extends Component {
   }
 }
 
-export default FormPage
+export default Explore

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
-import { App, FormPage, LoginPage, NavBar } from './components'
+import { Explore, FormPage, LoginPage, NavBar } from './components'
 import {
   appLoaded,
   exitPOIForm,
@@ -48,8 +48,8 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <NavBar />
-        {/* TODO: switch to use HomePage component */}
-        <Route exact path="/" component={App} />
+        {/* TODO: switch to use Explore component */}
+        <Route exact path="/" component={Explore} />
         <Route exact path="/form" component={FormPage} />
         <Route exact path="/login" component={LoginPage} />
       </div>

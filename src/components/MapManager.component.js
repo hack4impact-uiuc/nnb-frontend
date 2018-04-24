@@ -79,9 +79,8 @@ class MapManager extends Component {
   }
 
   isFormValid() {
-    const mapYears = this.props.maps.map(map => map.year)
     const inputYear = +this.state.inputYear
-    const inputYearExists = mapYears.includes(inputYear)
+    const inputYearExists = this.props.mapYears.includes(inputYear)
     return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 

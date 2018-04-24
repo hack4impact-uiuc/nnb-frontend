@@ -12,7 +12,7 @@ import {
   updatePOI,
   createPOI
 } from './../actions'
-import POIForm from './POIFormNew.component'
+import POIForm from './POIForm.component'
 
 function mapStateToProps(state) {
   return {

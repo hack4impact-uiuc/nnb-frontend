@@ -1,5 +1,4 @@
 const initialState = {
-  stuff: [],
   edit: {
     isEditing: false
   },

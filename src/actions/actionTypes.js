@@ -1,9 +1,6 @@
 // app
 export const APP_LOADED = 'APP_LOADED'
 
-// stuff
-export const RECEIVE_STUFF = 'RECEIVE_STUFF'
-
 // auth
 export const USER_LOGGED_IN = 'USER_LOGGED_IN'
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'

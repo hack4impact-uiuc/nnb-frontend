@@ -101,6 +101,7 @@ button[disabled] {
   box-shadow: -5px 0px 2px 0px #ddd;
   // TODO: show scrollbar for osx, or cue user that there is more of the timeline
   overflow-x: scroll;
+  width: 100%;
 }
 
 .info-panel-container {
