@@ -42,9 +42,20 @@ class InfoPanel extends Component {
     if (!selectedPOI) {
       return (
         <div className="info-panel">
-          <h1>
-            {isRealTimePOI ? 'Preview Will Appear Here' : 'No POI Selected'}
-          </h1>
+          <h1>No POI Selected</h1>
+        </div>
+      )
+    }
+
+    const { name, date, description, storyIds, content, links } = selectedPOI
+    const displayFields = [name, date, description, storyIds, content, links]
+    if (
+      isRealTimePOI &&
+      !displayFields.some(el => (Array.isArray(el) ? !!el.length : !!el))
+    ) {
+      return (
+        <div className="info-panel">
+          <h1>Preview Will Appear Here</h1>
         </div>
       )
     }
@@ -90,8 +101,6 @@ class InfoPanel extends Component {
         })}
       </Carousel>
     )
-
-    const links = selectedPOI.links
 
     return (
       <div className="info-panel" ref={r => (this.infoPanelDiv = r)}>
