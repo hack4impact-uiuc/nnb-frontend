@@ -1,5 +1,4 @@
 import moment from 'moment'
-import { pois, stories, maps } from './dummyData'
 import Api from './apiWrapper'
 import storage from './webStorage'
 
@@ -31,4 +30,4 @@ const utils = {
   compareYear
 }
 
-export { pois, stories, maps, Api, storage, utils }
+export { Api, storage, utils }
