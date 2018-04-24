@@ -63,17 +63,18 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          {pathname === ROUTES.INDEX && (
-            <HeadingText
-              {...{
-                isLoggedIn,
-                selectedMapId,
-                maps,
-                stories,
-                selectedStoryId
-              }}
-            />
-          )}
+          {pathname === ROUTES.INDEX &&
+            !!selectedMapId && (
+              <HeadingText
+                {...{
+                  isLoggedIn,
+                  selectedMapId,
+                  maps,
+                  stories,
+                  selectedStoryId
+                }}
+              />
+            )}
 
           {pathname === ROUTES.INDEX &&
             isLoggedIn && (
