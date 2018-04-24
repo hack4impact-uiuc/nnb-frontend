@@ -56,9 +56,7 @@ export default function poiForm(state = initialState.poiForm, action) {
       return {
         ...state,
         content: [...state.content].filter(
-          content =>
-            content.contentUrl !== action.payload.contentUrl &&
-            content.caption !== action.payload.caption
+          content => content.contentUrl !== action.payload.contentUrl
         )
       }
     case NEW_POI_CREATION_STARTED:
