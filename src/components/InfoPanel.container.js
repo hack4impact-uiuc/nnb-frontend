@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
+import { ROUTES } from './../'
 import {
   loadMaps,
   loadStories,
@@ -21,7 +22,7 @@ function mapStateToProps(state, ownProps) {
   const { activePOIs, selectedPOIId } = pois
   const { selectedStoryId } = stories
 
-  const shouldShowRealTimePOI = ownProps.location.pathname === '/form'
+  const shouldShowRealTimePOI = ownProps.location.pathname === ROUTES.FORM
 
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   const isStorySelected = !!selectedStoryId

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { ROUTES } from './../'
 import { Icon } from './'
 
 class NavBar extends PureComponent {
@@ -62,7 +63,7 @@ class NavBar extends PureComponent {
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
 
-          {pathname === '/' && (
+          {pathname === ROUTES.INDEX && (
             <HeadingText
               {...{
                 isLoggedIn,
@@ -74,7 +75,7 @@ class NavBar extends PureComponent {
             />
           )}
 
-          {pathname === '/' &&
+          {pathname === ROUTES.INDEX &&
             isLoggedIn && (
               <div
                 className="navbar-content__item"
@@ -83,8 +84,8 @@ class NavBar extends PureComponent {
                 {isEditing ? 'Disable Editing' : 'Enable Editing'}
               </div>
             )}
-          {pathname !== '/' && (
-            <Link to="/" className="navbar-content__item">
+          {pathname !== ROUTES.INDEX && (
+            <Link to={ROUTES.INDEX} className="navbar-content__item">
               Home
             </Link>
           )}
@@ -94,8 +95,8 @@ class NavBar extends PureComponent {
             </div>
           )}
           {!isLoggedIn &&
-            pathname !== '/login' && (
-              <Link to="/login" className="navbar-content__item">
+            pathname !== ROUTES.LOGIN && (
+              <Link to={ROUTES.LOGIN} className="navbar-content__item">
                 Login
               </Link>
             )}

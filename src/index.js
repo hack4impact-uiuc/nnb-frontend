@@ -18,6 +18,12 @@ import {
 } from './actions'
 import registerServiceWorker from './registerServiceWorker'
 
+export const ROUTES = {
+  INDEX: '/',
+  FORM: '/form',
+  LOGIN: '/login'
+}
+
 const store = configureStore()
 
 // dispatch the following on app load
@@ -35,13 +41,10 @@ history.listen(location => {
   // dunno if this is jank or not,
   // but it prevents needing to imperitively dispatch this action
   // in every case of a user leaving the form
-  if (location.pathname !== '/form') {
+  if (location.pathname !== ROUTES.FORM) {
     exitPOIForm()(store.dispatch)
   }
 })
-
-// TODO: define routes with constants and
-// use the constants elsewhere in the app
 
 ReactDOM.render(
   <Provider store={store}>
@@ -49,9 +52,9 @@ ReactDOM.render(
       <div>
         <NavBar />
         {/* TODO: switch to use Explore component */}
-        <Route exact path="/" component={Explore} />
-        <Route exact path="/form" component={FormPage} />
-        <Route exact path="/login" component={LoginPage} />
+        <Route exact path={ROUTES.INDEX} component={Explore} />
+        <Route exact path={ROUTES.FORM} component={FormPage} />
+        <Route exact path={ROUTES.LOGIN} component={LoginPage} />
       </div>
     </ConnectedRouter>
   </Provider>,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, Carousel } from 'react-bootstrap'
 import YoutubePlayer from 'react-youtube'
+import { ROUTES } from './../'
 import { Icon } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
@@ -9,7 +10,7 @@ import { utils } from './../utils'
 class InfoPanel extends Component {
   onClickEdit = () => {
     this.props.editPOI()
-    this.props.history.push('/form')
+    this.props.history.push(ROUTES.FORM)
   }
 
   onClickDelete = () => {
@@ -36,7 +37,7 @@ class InfoPanel extends Component {
       location
     } = this.props
 
-    const isRealTimePOI = location.pathname === '/form'
+    const isRealTimePOI = location.pathname === ROUTES.FORM
 
     if (!selectedPOI) {
       return (

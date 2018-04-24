@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
 import { Form, PageHeader } from 'react-bootstrap'
+import { ROUTES } from './../'
 import { FieldGroup, LinkTable } from './'
 import { utils } from './../utils'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -90,7 +91,7 @@ export default class POIForm extends Component {
   }
 
   onExit = () => {
-    this.props.history.push('/')
+    this.props.history.push(ROUTES.INDEX)
   }
 
   onSubmit = () => {

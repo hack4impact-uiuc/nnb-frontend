@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
+import { ROUTES } from './../'
 import { FieldGroup } from './'
 import './../styles/login.css'
 
@@ -30,7 +31,7 @@ export default class LoginPage extends Component {
     // TODO: we know what we gotta do
     if (username === 'admin' && password === 'admin') {
       this.props.login()
-      this.props.history.push('/')
+      this.props.history.push(ROUTES.INDEX)
     } else {
       this.setState({ error: 'incorrect credentials' })
     }

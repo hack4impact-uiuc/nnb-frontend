@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
+import { ROUTES } from './../'
 import './../styles/map.css'
 import { POIMarker, Icon } from '../components'
 
@@ -51,7 +52,7 @@ class NNBMap extends Component {
       )
 
       createNewPOI(selectedMap.year, ...scaledCoords)
-      history.push('/form')
+      history.push(ROUTES.FORM)
     }
   }
 
