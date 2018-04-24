@@ -74,7 +74,7 @@ class InfoPanel extends Component {
           return (
             <Carousel.Item key={url} className="carousel-item">
               {isEditing &&
-                !isRealTimePOI && (
+                isRealTimePOI && (
                   <Icon
                     type="Trash"
                     size="large"

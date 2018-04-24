@@ -15,6 +15,9 @@ import registerServiceWorker from './registerServiceWorker'
 const store = configureStore()
 store.dispatch(appLoaded())
 
+// TODO: define routes with constants and
+// use the constants elsewhere in the app
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

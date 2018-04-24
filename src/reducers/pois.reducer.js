@@ -6,7 +6,8 @@ import {
   POI_DELETED,
   POI_SELECTED,
   NEXT_POI_IN_STORY_SET,
-  PREVIOUS_POI_IN_STORY_SET
+  PREVIOUS_POI_IN_STORY_SET,
+  NEW_POI_CREATION_STARTED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -53,6 +54,11 @@ export default function pois(state = initialState.pois, action) {
       return {
         ...state,
         selectedPOIId: activePOIs[selectedPOIIndex - 1].id
+      }
+    case NEW_POI_CREATION_STARTED:
+      return {
+        ...state,
+        selectedPOIId: null
       }
     default:
       return state
