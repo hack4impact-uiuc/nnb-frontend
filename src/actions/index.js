@@ -1,7 +1,7 @@
 import { APP_LOADED } from './actionTypes'
 import { fetchStuff } from './stuff.action'
 import { enableEditMode, disableEditMode } from './edit.action'
-import { loadMaps, createMap, removeMap, setSelectedMap } from './maps.action'
+import { loadMaps, createMap, deleteMap, setSelectedMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
@@ -53,7 +53,7 @@ export {
   disableEditMode,
   loadMaps,
   createMap,
-  removeMap,
+  deleteMap,
   setSelectedMap,
   loadStories,
   loadStoriesByPOIId,

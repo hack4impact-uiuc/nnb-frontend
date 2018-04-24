@@ -12,17 +12,20 @@ export default function maps(state = initialState.timeline, action) {
     case MAPS_LOADED:
       return {
         ...state,
-        maps: action.payload.sort((a, b) => a.year - b.year)
+        maps: [...action.payload].sort((a, b) => a.year - b.year)
       }
     case MAP_CREATED:
       return {
         ...state,
-        maps: [...state.maps, action.payload]
+        maps: [...state.maps, action.payload].sort((a, b) => a.year - b.year),
+        selectedMapId: action.payload.id
       }
     case MAP_DELETED:
       return {
         ...state,
-        maps: [...state.maps].filter(map => map.id !== action.payload.id)
+        maps: [...state.maps]
+          .filter(map => map.id !== action.payload.id)
+          .sort((a, b) => a.year - b.year)
       }
     case MAP_SELECTED:
       return {
