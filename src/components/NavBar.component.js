@@ -107,6 +107,7 @@ class NavBar extends PureComponent {
 }
 
 function HeadingText({ maps, selectedMapId, stories, selectedStoryId }) {
+  // TODO: move some of this logic to container
   let contextYears = ''
   if (!!selectedMapId) {
     const startYearIndex = maps.findIndex(map => map.id === selectedMapId)
