@@ -8,9 +8,6 @@ import {
   removePOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
-  loadMaps,
-  loadPOIs,
-  loadStories,
   addPOIFormYoutubeMedia,
   updatePOI,
   createPOI
@@ -36,9 +33,6 @@ function mapDispatchToProps(dispatch) {
       removePOIFormLink,
       addPOIFormMedia,
       removePOIFormMedia,
-      loadMaps,
-      loadPOIs,
-      loadStories,
       addPOIFormYoutubeMedia,
       updatePOI,
       createPOI

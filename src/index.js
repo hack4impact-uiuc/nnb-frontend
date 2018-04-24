@@ -9,12 +9,28 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
 import { App, FormPage, LoginPage, NavBar } from './components'
-import { appLoaded, exitPOIForm } from './actions'
+import {
+  appLoaded,
+  exitPOIForm,
+  loadMaps,
+  loadStories,
+  setSelectedMap
+} from './actions'
 import registerServiceWorker from './registerServiceWorker'
 
 const store = configureStore()
+
+// dispatch the following on app load
 store.dispatch(appLoaded())
 
+loadMaps()(store.dispatch).then(action => {
+  const maps = action.payload
+  maps.sort((a, b) => a.year - b.year)
+  setSelectedMap(maps[0])(store.dispatch)
+})
+loadStories()(store.dispatch)
+
+// dispatch actions based on route changes
 history.listen(location => {
   // dunno if this is jank or not,
   // but it prevents needing to imperitively dispatch this action

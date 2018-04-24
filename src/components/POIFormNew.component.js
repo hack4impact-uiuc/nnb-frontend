@@ -15,13 +15,6 @@ export default class POIForm extends Component {
     youtubeUrl: ''
   }
 
-  // temp just to have the data loaded
-  componentDidMount() {
-    const { loadMaps, loadPOIs, loadStories } = this.props
-    loadMaps().then(() => loadPOIs())
-    loadStories()
-  }
-
   // Multiple file upload is kinda jank since it sets
   // this.state.isUploadingMedia to false when the first image is uploaded.
   // A better approach would wrap each upload into a promise and use Promise.All
