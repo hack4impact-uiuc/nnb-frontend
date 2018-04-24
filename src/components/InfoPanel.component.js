@@ -62,15 +62,10 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel>
-        {selectedPOI.content.map(content => {
+        {content.map(content => {
           const url = content.contentUrl ? content.contentUrl : content
           const image = (
-            <Image
-              width={500}
-              height={500}
-              alt={isRealTimePOI ? content : content.caption}
-              src={url}
-            />
+            <Image width={500} height={500} alt={content.caption} src={url} />
           )
           const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const youtubePlayer = (
@@ -104,9 +99,9 @@ class InfoPanel extends Component {
 
     return (
       <div className="info-panel" ref={r => (this.infoPanelDiv = r)}>
-        {!!selectedPOI.name && (
+        {!!name && (
           <div className="heading">
-            <h1 className="heading__name">{selectedPOI.name}</h1>
+            <h1 className="heading__name">{name}</h1>
             {isEditing &&
               !isRealTimePOI && (
                 <Icon
@@ -128,18 +123,18 @@ class InfoPanel extends Component {
           </div>
         )}
 
-        {!!selectedPOI.content.length && (
+        {!!content.length && (
           <div>
             <hr />
-            <div>{!!selectedPOI.content.length && carousel}</div>
+            <div>{!!content.length && carousel}</div>
           </div>
         )}
 
-        {!!selectedPOI.description && (
+        {!!description && (
           <div>
             <hr />
             <div className="description">
-              <p className="description__text">{selectedPOI.description}</p>
+              <p className="description__text">{description}</p>
             </div>
           </div>
         )}
