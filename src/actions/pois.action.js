@@ -38,7 +38,9 @@ export function loadPOIs() {
       return Api.loadPOIs({ storyId: selectedStoryId }).then(pois => {
         pois.sort(utils.compareYear)
         dispatch(poisLoaded(pois))
-        return dispatch(poiSelected(pois[0]))
+        if (pois.length) {
+          return dispatch(poiSelected(pois[0]))
+        }
       })
     }
     const mapYear = maps.find(map => map.id === selectedMapId).year
