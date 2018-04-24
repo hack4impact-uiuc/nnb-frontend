@@ -67,19 +67,11 @@ export default function poiForm(state = initialState.poiForm, action) {
         yCoord: action.payload.yCoord
       }
     case EDIT_POI_SET:
-      // TODO: make consistent naming between pois and poiForm
+      const { id, stories, ...poiFields } = action.payload
       return {
         ...state,
-        // ...action.payload,
-        name: action.payload.name,
-        date: action.payload.date,
-        description: action.payload.description,
-        mapYear: action.payload.mapYear,
-        xCoord: action.payload.xCoord,
-        yCoord: action.payload.yCoord,
-        storyIds: action.payload.stories.map(s => s.id),
-        media: action.payload.media,
-        links: action.payload.links
+        ...poiFields,
+        storyIds: action.payload.stories.map(s => s.id)
       }
     case POI_FORM_EXITED:
       return initialState.poiForm
