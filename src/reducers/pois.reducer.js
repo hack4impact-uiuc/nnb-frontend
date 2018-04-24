@@ -7,14 +7,12 @@ import {
   POI_SELECTED,
   NEXT_POI_IN_STORY_SET,
   PREVIOUS_POI_IN_STORY_SET,
-  NEW_POI_CREATION_STARTED,
-  MAP_DELETED
+  NEW_POI_CREATION_STARTED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
   const { activePOIs, selectedPOIId } = state
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
-  const selectedPOI = activePOIs[selectedPOIIndex]
   switch (action.type) {
     case POIS_LOADED:
       return {

@@ -10,13 +10,13 @@ import './../styles/poi-form.css'
 import './../styles/button.css'
 
 export default class POIForm extends Component {
-  // TODO: remove
+  // TODO: move to redux
   state = {
     isUploadingMedia: false,
     youtubeUrl: ''
   }
 
-  // Multiple file upload is kinda jank since it sets
+  // TODO: Multiple file upload is kinda jank since it sets
   // this.state.isUploadingMedia to false when the first image is uploaded.
   // A better approach would wrap each upload into a promise and use Promise.All
   // ORRRR use a counter in the redux store with how many media things are being uploaded
@@ -111,8 +111,8 @@ export default class POIForm extends Component {
     } = this.props
     const poi = {
       mapYear,
-      xCoord: xCoord,
-      yCoord: yCoord,
+      xCoord,
+      yCoord,
       name,
       date,
       description,
