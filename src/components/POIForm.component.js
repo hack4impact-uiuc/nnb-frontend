@@ -134,15 +134,9 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
-      media,
-      links,
       isUpdatingPOI,
       updatePOIFormInput,
-      togglePOIFormStoryId,
-      addPOIFormLink,
-      removePOIFormLink,
-      addPOIFormMedia,
-      removePOIFormMedia
+      togglePOIFormStoryId
     } = this.props
     return (
       <div>

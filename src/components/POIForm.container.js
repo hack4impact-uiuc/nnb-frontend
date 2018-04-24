@@ -4,10 +4,7 @@ import { withRouter } from 'react-router-dom'
 import {
   updatePOIFormInput,
   togglePOIFormStoryId,
-  addPOIFormLink,
-  removePOIFormLink,
   addPOIFormMedia,
-  removePOIFormMedia,
   addPOIFormYoutubeMedia,
   updatePOI,
   createPOI
@@ -29,10 +26,7 @@ function mapDispatchToProps(dispatch) {
     {
       updatePOIFormInput,
       togglePOIFormStoryId,
-      addPOIFormLink,
-      removePOIFormLink,
       addPOIFormMedia,
-      removePOIFormMedia,
       addPOIFormYoutubeMedia,
       updatePOI,
       createPOI
