@@ -109,12 +109,16 @@ function HeadingText({ maps, selectedMapId, stories, selectedStoryId }) {
   let contextYears = ''
   if (!!selectedMapId) {
     const startYearIndex = maps.findIndex(map => map.id === selectedMapId)
-    const startYear = maps[startYearIndex].year
-    const endYear =
-      startYearIndex === maps.length - 1
-        ? 'Present'
-        : maps[startYearIndex + 1].year
-    contextYears = `${startYear} - ${endYear}`
+    if (startYearIndex < 0) {
+      contextYears = 'Loading...'
+    } else {
+      const startYear = maps[startYearIndex].year
+      const endYear =
+        startYearIndex === maps.length - 1
+          ? 'Present'
+          : maps[startYearIndex + 1].year
+      contextYears = `${startYear} - ${endYear}`
+    }
   }
 
   let selectedStoryName = ''

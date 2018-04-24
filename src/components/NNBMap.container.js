@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { setSelectedPOI, createNewPOI } from './../actions'
+import { setSelectedPOI, createNewPOI, deleteMap, loadMaps } from './../actions'
 import NNBMap from './NNBMap.component'
 
 function mapStateToProps(state) {
@@ -17,7 +17,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       setSelectedPOI,
-      createNewPOI
+      createNewPOI,
+      deleteMap,
+      loadMaps
     },
     dispatch
   )

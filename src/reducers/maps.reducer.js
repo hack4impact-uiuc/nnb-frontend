@@ -10,9 +10,11 @@ import {
 export default function maps(state = initialState.timeline, action) {
   switch (action.type) {
     case MAPS_LOADED:
+      const maps = [...action.payload].sort((a, b) => a.year - b.year)
       return {
         ...state,
-        maps: [...action.payload].sort((a, b) => a.year - b.year)
+        maps,
+        selectedMapId: maps.length ? maps[0].id : null
       }
     case MAP_CREATED:
       return {

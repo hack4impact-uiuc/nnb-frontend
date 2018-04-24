@@ -98,7 +98,9 @@ class NNBMap extends Component {
         'Delete the current map? This will also delete all POIs associated with this map.'
       )
     ) {
-      this.props.deleteMap(this.props.selectedMap.id)
+      const { deleteMap, selectedMap, loadMaps } = this.props
+      // explicity call loadMaps to update navbar heading text
+      deleteMap(selectedMap.id).then(() => loadMaps())
     }
   }
 

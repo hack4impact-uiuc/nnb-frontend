@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { NNBMap, InfoPanel, Timeline } from './'
+import { StoryList, NNBMap, InfoPanel, Timeline } from './'
 import './../styles/App.css'
 
 class Explore extends Component {
   render() {
     return (
       <div className="nnb-app">
+        <StoryList />
         <div className="nnb-map-container">
           <NNBMap />
           <Timeline />
