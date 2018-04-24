@@ -50,13 +50,13 @@ export default function poiForm(state = initialState.poiForm, action) {
     case POI_FORM_MEDIA_ADDED:
       return {
         ...state,
-        content: [...state.content, action.payload]
+        media: [...state.media, action.payload]
       }
     case POI_FORM_MEDIA_REMOVED:
       return {
         ...state,
-        content: [...state.content].filter(
-          content => content.contentUrl !== action.payload.contentUrl
+        media: [...state.media].filter(
+          media => media.contentUrl !== action.payload.contentUrl
         )
       }
     case NEW_POI_CREATION_STARTED:
@@ -75,11 +75,11 @@ export default function poiForm(state = initialState.poiForm, action) {
         // copying date causes app to explode ¯\_(ツ)_/¯
         // date: action.payload.date,
         description: action.payload.description,
-        mapYear: action.payload.mapByYear,
-        xCoord: action.payload.coordinateX,
-        yCoord: action.payload.coordinateY,
+        mapYear: action.payload.mapYear,
+        xCoord: action.payload.xCoord,
+        yCoord: action.payload.yCoord,
         storyIds: action.payload.stories.map(s => s.id),
-        content: action.payload.content,
+        media: action.payload.media,
         links: action.payload.links
       }
     case POI_FORM_EXITED:

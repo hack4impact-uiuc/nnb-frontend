@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes'
 import { Api } from './../utils'
 
-const EMPTY_LINK = { url: '', urlName: '' }
+const EMPTY_LINK = { url: '', displayName: '' }
 
 function poiFormInputChanged(field, value) {
   return {

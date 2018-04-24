@@ -185,13 +185,13 @@ function POIMarkers({
   selectedMap
 }) {
   return activePOIs
-    .filter(poi => poi.mapByYear === selectedMap.year)
+    .filter(poi => poi.mapYear === selectedMap.year)
     .map(poi => (
       <POIMarker
         key={poi.id}
         isSelected={poi.id === selectedPOIId}
-        absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
-        absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
+        absoluteXCoordinate={poi.xCoord / 100 * mapImageWidth}
+        absoluteYCoordinate={poi.yCoord / 100 * mapImageHeight}
         setAsActivePOI={() => setSelectedPOI(poi)}
       />
     ))

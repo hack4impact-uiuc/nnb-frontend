@@ -47,8 +47,8 @@ class InfoPanel extends Component {
       )
     }
 
-    const { name, date, description, storyIds, content, links } = selectedPOI
-    const displayFields = [name, date, description, storyIds, content, links]
+    const { name, date, description, storyIds, media, links } = selectedPOI
+    const displayFields = [name, date, description, storyIds, media, links]
     if (
       isRealTimePOI &&
       !displayFields.some(el => (Array.isArray(el) ? !!el.length : !!el))
@@ -62,10 +62,10 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel>
-        {content.map(content => {
-          const url = content.contentUrl ? content.contentUrl : content
+        {media.map(media => {
+          const url = media.contentUrl
           const image = (
-            <Image width={500} height={500} alt={content.caption} src={url} />
+            <Image width={500} height={500} alt={media.caption} src={url} />
           )
           const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const youtubePlayer = (
@@ -87,7 +87,7 @@ class InfoPanel extends Component {
                     type="Trash"
                     size="large"
                     className="carousel-item__delete-icon"
-                    onClick={() => removePOIFormMedia(content)}
+                    onClick={() => removePOIFormMedia(media)}
                   />
                 )}
               {displayContent}
@@ -123,10 +123,10 @@ class InfoPanel extends Component {
           </div>
         )}
 
-        {!!content.length && (
+        {!!media.length && (
           <div>
             <hr />
-            <div>{!!content.length && carousel}</div>
+            <div>{!!media.length && carousel}</div>
           </div>
         )}
 
@@ -146,7 +146,9 @@ class InfoPanel extends Component {
               <h4>Additional Links:</h4>
               <ul className="additional-links__ul">
                 {links.map((link, i) => {
-                  const displayText = link.urlName ? link.urlName : link.url
+                  const displayText = link.displayName
+                    ? link.displayName
+                    : link.url
                   const validatedLink = utils.validateLink(link.url)
                   return (
                     <li key={link.url + i} className="additional-links__li">

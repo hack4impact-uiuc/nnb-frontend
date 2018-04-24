@@ -104,20 +104,20 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
-      content,
+      media,
       links,
       updatePOI,
       createPOI
     } = this.props
     const poi = {
-      mapByYear: mapYear,
-      coordinateX: xCoord,
-      coordinateY: yCoord,
+      mapYear,
+      xCoord: xCoord,
+      yCoord: yCoord,
       name,
       date,
       description,
       storyIds,
-      content,
+      media,
       links
     }
     if (selectedPOIId) {

@@ -22,7 +22,7 @@ const initialState = {
     date: '',
     description: '',
     storyIds: [],
-    content: [],
+    media: [],
     links: [],
     meta: {
       isUploadingMedia: false,

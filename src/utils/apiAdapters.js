@@ -12,20 +12,20 @@ function convertToApiGetPOI(params) {
 function convertToApiPOI(poi) {
   return {
     name: poi.name,
-    map_year: poi.mapByYear,
+    map_year: poi.mapYear,
     date: `${poi.date.format('YYYY')}-${poi.date.format(
       'MM'
     )}-${poi.date.format('DD')}`,
     description: poi.description,
-    x_coord: poi.coordinateX,
-    y_coord: poi.coordinateY,
+    x_coord: poi.xCoord,
+    y_coord: poi.yCoord,
     links: poi.links.filter(link => !!link.url).map(link => ({
       link_url: link.url,
-      display_name: link.urlName
+      display_name: link.displayName
     })),
-    media: poi.content.map(content => ({
-      content_url: content.contentUrl,
-      caption: content.caption
+    media: poi.media.map(media => ({
+      content_url: media.contentUrl,
+      caption: media.caption
     })),
     story_ids: poi.storyIds // not sure on how to do this one
   }
@@ -61,16 +61,16 @@ function convertFromApiPOI(poi) {
     name: poi.name,
     date: poi.date,
     description: poi.description,
-    coordinateX: poi.x_coord,
-    coordinateY: poi.y_coord,
-    mapByYear: poi.map_year,
+    xCoord: poi.x_coord,
+    yCoord: poi.y_coord,
+    mapYear: poi.map_year,
     links: poi.links.map(link => ({
       url: link.link_url,
-      urlName: link.display_name
+      displayName: link.display_name
     })),
-    content: poi.media.map(content => ({
-      contentUrl: content.content_url,
-      caption: content.caption
+    media: poi.media.map(media => ({
+      contentUrl: media.content_url,
+      caption: media.caption
     })),
     stories: poi.stories.map(convertFromApiStory)
   }

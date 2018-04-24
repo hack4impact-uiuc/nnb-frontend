@@ -38,7 +38,7 @@ export default function maps(state = initialState.timeline, action) {
       return {
         ...state,
         selectedMapId: state.maps.find(
-          map => map.year === action.payload.mapByYear
+          map => map.year === action.payload.mapYear
         ).id
       }
     default:
