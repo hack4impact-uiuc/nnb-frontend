@@ -35,11 +35,12 @@ export default function maps(state = initialState.timeline, action) {
         selectedMapId: action.payload
       }
     case POI_SELECTED:
+      const selectedMap = state.maps.find(
+        map => map.year === action.payload.mapYear
+      )
       return {
         ...state,
-        selectedMapId: state.maps.find(
-          map => map.year === action.payload.mapYear
-        ).id
+        selectedMapId: selectedMap ? selectedMap.id : state.selectedMapId
       }
     default:
       return state

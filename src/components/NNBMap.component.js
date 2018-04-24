@@ -89,10 +89,28 @@ class NNBMap extends Component {
         'Delete the current map? This will also delete all POIs associated with this map.'
       )
     ) {
-      const { deleteMap, selectedMap, loadMaps } = this.props
+      const {
+        deleteMap,
+        selectedMap,
+        loadMaps,
+        activePOIs,
+        selectedPOIId,
+        setSelectedPOI,
+        loadPOIs
+      } = this.props
+      const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
 
-      // explicity call loadMaps to update navbar heading text
-      deleteMap(selectedMap.id).then(() => loadMaps())
+      // explicity call this since the payload for MAP_DELETED only includes the map id
+      // but the pois only contain the map year.
+      // therefore we can't tell if the poi is on that map
+      // ideally all this should be reactive but it would require changing the api and db schema...
+      if (selectedPOI && selectedMap.year === selectedPOI.mapYear) {
+        setSelectedPOI({ id: null })
+      }
+
+      deleteMap(selectedMap.id)
+        .then(() => loadMaps())
+        .then(() => loadPOIs())
     }
   }
 
