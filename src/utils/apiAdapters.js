@@ -19,15 +19,10 @@ function convertToApiPOI(poi) {
     description: poi.description,
     x_coord: poi.xCoord,
     y_coord: poi.yCoord,
-    links: poi.links.filter(link => !!link.url).map(link => ({
-      link_url: link.url,
-      display_name: link.displayName
-    })),
-    media: poi.media.map(media => ({
-      content_url: media.contentUrl,
-      caption: media.caption
-    })),
-    story_ids: poi.storyIds // not sure on how to do this one
+    // TODO: this filter should happen before it gets to the api
+    links: poi.links.filter(link => !!link.url).map(convertToApiLink),
+    media: poi.media.map(convertToApiMedia),
+    story_ids: poi.storyIds
   }
 }
 
@@ -41,6 +36,20 @@ function convertToApiMap(map) {
 function convertToApiGetStories(params) {
   return {
     poi_id: params.poiId
+  }
+}
+
+function convertToApiLink(link) {
+  return {
+    link_url: link.url,
+    display_name: link.displayName
+  }
+}
+
+function convertToApiMedia(media) {
+  return {
+    content_url: media.contentUrl,
+    caption: media.caption
   }
 }
 
@@ -64,14 +73,8 @@ function convertFromApiPOI(poi) {
     xCoord: poi.x_coord,
     yCoord: poi.y_coord,
     mapYear: poi.map_year,
-    links: poi.links.map(link => ({
-      url: link.link_url,
-      displayName: link.display_name
-    })),
-    media: poi.media.map(media => ({
-      contentUrl: media.content_url,
-      caption: media.caption
-    })),
+    links: poi.links.map(convertFromApiLink),
+    media: poi.media.map(convertFromApiMedia),
     stories: poi.stories.map(convertFromApiStory)
   }
 }
@@ -81,6 +84,20 @@ function convertFromApiMap(map) {
     id: map._id,
     imageUrl: map.image_url,
     year: map.map_year
+  }
+}
+
+function convertFromApiLink(link) {
+  return {
+    url: link.link_url,
+    displayName: link.display_name
+  }
+}
+
+function convertFromApiMedia(media) {
+  return {
+    contentUrl: media.content_url,
+    caption: media.caption
   }
 }
 
