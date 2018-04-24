@@ -10,7 +10,8 @@ import {
   enableEditMode,
   removePOIFormMedia,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  editPOI
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
 
@@ -53,7 +54,8 @@ function mapDispatchToProps(dispatch) {
       enableEditMode,
       removePOIFormMedia,
       setNextPOIInStory,
-      setPreviousPOIInStory
+      setPreviousPOIInStory,
+      editPOI
     },
     dispatch
   )

@@ -30,7 +30,8 @@ import {
   removePOIFormMedia,
   createNewPOI,
   addPOIFormYoutubeMedia,
-  exitPOIForm
+  exitPOIForm,
+  editPOI
 } from './poiForm.action'
 import {
   toggleSidebar,
@@ -70,6 +71,7 @@ export {
   createNewPOI,
   addPOIFormYoutubeMedia,
   exitPOIForm,
+  editPOI,
   loadPOIs,
   loadPOIById,
   createPOI,

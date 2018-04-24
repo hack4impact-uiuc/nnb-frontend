@@ -22,7 +22,8 @@ function mapStateToProps(state) {
   return {
     ...state.poiForm,
     stories: state.stories.stories,
-    isUpdatingPOI: !!state.pois.selectedPOIId
+    isUpdatingPOI: !!state.pois.selectedPOIId,
+    selectedPOIId: state.pois.selectedPOIId
   }
 }
 

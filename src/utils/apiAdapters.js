@@ -27,7 +27,7 @@ function convertToApiPOI(poi) {
       content_url: content.contentUrl,
       caption: content.caption
     })),
-    story_ids: poi.stories // not sure on how to do this one
+    story_ids: poi.storyIds // not sure on how to do this one
   }
 }
 

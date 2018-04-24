@@ -8,7 +8,8 @@ import {
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
   NEW_POI_CREATION_STARTED,
-  POI_FORM_EXITED
+  POI_FORM_EXITED,
+  EDIT_POI_SET
 } from '../actions/actionTypes'
 
 export default function poiForm(state = initialState.poiForm, action) {
@@ -66,6 +67,22 @@ export default function poiForm(state = initialState.poiForm, action) {
         mapYear: action.payload.mapYear,
         xCoord: action.payload.xCoord,
         yCoord: action.payload.yCoord
+      }
+    case EDIT_POI_SET:
+      // TODO: make consistent naming between pois and poiForm
+      return {
+        ...state,
+        // ...action.payload,
+        name: action.payload.name,
+        // copying date causes app to explode ¯\_(ツ)_/¯
+        // date: action.payload.date,
+        description: action.payload.description,
+        mapYear: action.payload.mapByYear,
+        xCoord: action.payload.coordinateX,
+        yCoord: action.payload.coordinateY,
+        storyIds: action.payload.stories.map(s => s.id),
+        content: action.payload.content,
+        links: action.payload.links
       }
     case POI_FORM_EXITED:
       return initialState.poiForm

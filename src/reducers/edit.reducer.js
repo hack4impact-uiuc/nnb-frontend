@@ -3,7 +3,8 @@ import {
   EDIT_MODE_ENABLED,
   EDIT_MODE_DISABLED,
   NEW_POI_CREATION_STARTED,
-  POI_FORM_EXITED
+  POI_FORM_EXITED,
+  EDIT_POI_SET
 } from '../actions/actionTypes'
 
 export default function edit(state = initialState.edit, action) {
@@ -15,6 +16,7 @@ export default function edit(state = initialState.edit, action) {
         isEditing: action.payload
       }
     case NEW_POI_CREATION_STARTED:
+    case EDIT_POI_SET:
       return {
         ...state,
         shouldShowRealTimePOI: true

@@ -8,7 +8,8 @@ import { utils } from './../utils'
 
 class InfoPanel extends Component {
   onClickEdit = () => {
-    this.props.enableEditMode()
+    this.props.editPOI()
+    this.props.history.push('/form')
   }
 
   onClickDelete = () => {

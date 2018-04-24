@@ -65,6 +65,13 @@ function poiFormExited() {
   }
 }
 
+function editPOISet(poi) {
+  return {
+    type: actionTypes.EDIT_POI_SET,
+    payload: poi
+  }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -106,4 +113,13 @@ export function createNewPOI(mapYear, xCoord, yCoord) {
 
 export function exitPOIForm() {
   return dispatch => dispatch(poiFormExited())
+}
+
+export function editPOI() {
+  return (dispatch, getState) => {
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(editPOISet(selectedPOI))
+  }
 }
