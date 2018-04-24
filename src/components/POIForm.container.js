@@ -12,7 +12,6 @@ import {
   loadPOIs,
   loadStories,
   addPOIFormYoutubeMedia,
-  exitPOIForm,
   updatePOI,
   createPOI
 } from './../actions'
@@ -20,6 +19,7 @@ import POIForm from './POIFormNew.component'
 
 function mapStateToProps(state) {
   return {
+    // TODO: probs should scope all the poi fields into a poi object
     ...state.poiForm,
     stories: state.stories.stories,
     isUpdatingPOI: !!state.pois.selectedPOIId,
@@ -40,7 +40,6 @@ function mapDispatchToProps(dispatch) {
       loadPOIs,
       loadStories,
       addPOIFormYoutubeMedia,
-      exitPOIForm,
       updatePOI,
       createPOI
     },

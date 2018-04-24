@@ -15,12 +15,13 @@ import {
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const { timeline, pois, stories, edit, poiForm } = state
   const { maps, selectedMapId } = timeline
   const { activePOIs, selectedPOIId } = pois
   const { selectedStoryId } = stories
-  const { shouldShowRealTimePOI } = edit
+
+  const shouldShowRealTimePOI = ownProps.location.pathname === '/form'
 
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   const isStorySelected = !!selectedStoryId

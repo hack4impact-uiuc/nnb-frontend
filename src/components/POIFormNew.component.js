@@ -97,7 +97,6 @@ export default class POIForm extends Component {
   }
 
   onExit = () => {
-    this.props.exitPOIForm()
     this.props.history.push('/')
   }
 

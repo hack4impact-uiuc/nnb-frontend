@@ -9,11 +9,20 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
 import { App, FormPage, LoginPage, NavBar } from './components'
-import { appLoaded } from './actions'
+import { appLoaded, exitPOIForm } from './actions'
 import registerServiceWorker from './registerServiceWorker'
 
 const store = configureStore()
 store.dispatch(appLoaded())
+
+history.listen(location => {
+  // dunno if this is jank or not,
+  // but it prevents needing to imperitively dispatch this action
+  // in every case of a user leaving the form
+  if (location.pathname !== '/form') {
+    exitPOIForm()(store.dispatch)
+  }
+})
 
 // TODO: define routes with constants and
 // use the constants elsewhere in the app
