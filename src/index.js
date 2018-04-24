@@ -51,7 +51,6 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <NavBar />
-        {/* TODO: switch to use Explore component */}
         <Route exact path={ROUTES.INDEX} component={Explore} />
         <Route exact path={ROUTES.FORM} component={FormPage} />
         <Route exact path={ROUTES.LOGIN} component={LoginPage} />
