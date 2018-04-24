@@ -7,12 +7,6 @@ const MIN_INTERVAL_WIDTH = 50
 const TIMELINE_PADDING = 40
 
 class Timeline extends Component {
-  constructor(props) {
-    super(props)
-    this.calcIntervalWidth = this.calcIntervalWidth.bind(this)
-    this.stubClick = this.stubClick.bind(this)
-  }
-
   componentDidMount() {
     // sets the timelineContainer ref
     // needed for initial calcIntervalWidth
@@ -21,7 +15,7 @@ class Timeline extends Component {
 
   // calculates the pixel width for each interval
   // TODO: when changing routes (from /form) the width isn't calculated
-  calcIntervalWidth(mapYears) {
+  calcIntervalWidth = mapYears => {
     const ratios = mapYears.slice(1).map((n, i) => n - mapYears[i])
     const minRatio = Math.min(...ratios)
     const intervalWidthMultiplier = MIN_INTERVAL_WIDTH / minRatio
@@ -44,7 +38,7 @@ class Timeline extends Component {
     return adjustedIntervalWidths
   }
 
-  stubClick(e) {
+  stubClick = e => {
     e.stopPropagation()
   }
 

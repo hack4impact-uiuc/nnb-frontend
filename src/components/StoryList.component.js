@@ -113,7 +113,7 @@ function SidebarContent({
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <h2 className="sidebar__title">Story List</h2>
+        <h2 className="sidebar__title">Stories</h2>
         <Icon
           type="X"
           size="large"

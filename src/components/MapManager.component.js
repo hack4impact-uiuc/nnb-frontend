@@ -10,23 +10,13 @@ class MapManager extends Component {
     inputYear: ''
   }
 
-  constructor(props) {
-    super(props)
-    this.toggleShowInputFields = this.toggleShowInputFields.bind(this)
-    this.onChangeYear = this.onChangeYear.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onImageUpload = this.onImageUpload.bind(this)
-    this.isFormValid = this.isFormValid.bind(this)
-    this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.isEditing === false) {
       this.setState({ showInputFields: false })
     }
   }
 
-  toggleShowInputFields() {
+  toggleShowInputFields = () => {
     this.setState({
       showInputFields: !this.state.showInputFields,
       inputYear: '',
@@ -34,7 +24,7 @@ class MapManager extends Component {
     })
   }
 
-  onChangeYear(e) {
+  onChangeYear = e => {
     const inputYear = e.target.value
     const inputYearExists = this.props.mapYears.includes(+inputYear)
     this.setState({
@@ -44,7 +34,7 @@ class MapManager extends Component {
     })
   }
 
-  onSubmit() {
+  onSubmit = () => {
     const { inputYear, imageUrl } = this.state
 
     if (inputYear === '' || imageUrl === '') {
@@ -60,7 +50,7 @@ class MapManager extends Component {
     this.toggleShowInputFields()
   }
 
-  onImageUpload(e) {
+  onImageUpload = e => {
     const image = e.target.files[0]
     if (image) {
       this.setState({ isUploadingMedia: true })
@@ -78,13 +68,13 @@ class MapManager extends Component {
     }
   }
 
-  isFormValid() {
+  isFormValid = () => {
     const inputYear = +this.state.inputYear
     const inputYearExists = this.props.mapYears.includes(inputYear)
     return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 
-  shouldDisableSubmit() {
+  shouldDisableSubmit = () => {
     const { inputYear, imageUrl } = this.state
     return !inputYear || !imageUrl || !this.isFormValid()
   }

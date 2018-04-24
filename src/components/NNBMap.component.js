@@ -11,16 +11,6 @@ class NNBMap extends Component {
     isChoosingNewPOICoords: false
   }
 
-  constructor(props) {
-    super(props)
-    this.onImageClick = this.onImageClick.bind(this)
-    this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
-    this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
-    this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
-    this.onWindowResize = this.onWindowResize.bind(this)
-    this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
-  }
-
   componentWillReceiveProps(nextProps) {
     const { selectedMap } = this.props
     if (nextProps.isEditing === false) {
@@ -44,7 +34,7 @@ class NNBMap extends Component {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
-  onImageClick(event) {
+  onImageClick = event => {
     const { createNewPOI, history, selectedMap } = this.props
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
@@ -65,11 +55,11 @@ class NNBMap extends Component {
     }
   }
 
-  onWindowResize() {
+  onWindowResize = () => {
     this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions() {
+  updateMapImageDimensions = () => {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     if (this.image) {
       this.setState({
@@ -80,25 +70,26 @@ class NNBMap extends Component {
     }
   }
 
-  startAddPOIFlow() {
+  startAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: true
     })
   }
 
-  cancelAddPOIFlow() {
+  cancelAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: false
     })
   }
 
-  showConfirmDeleteMap() {
+  showConfirmDeleteMap = () => {
     if (
       window.confirm(
         'Delete the current map? This will also delete all POIs associated with this map.'
       )
     ) {
       const { deleteMap, selectedMap, loadMaps } = this.props
+
       // explicity call loadMaps to update navbar heading text
       deleteMap(selectedMap.id).then(() => loadMaps())
     }
