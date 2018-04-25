@@ -1,3 +1,4 @@
+import moment from 'moment'
 import initialState from './initialState'
 import {
   POI_FORM_INPUT_CHANGED,
@@ -64,7 +65,8 @@ export default function poiForm(state = initialState.poiForm, action) {
         ...state,
         mapYear: action.payload.mapYear,
         xCoord: action.payload.xCoord,
-        yCoord: action.payload.yCoord
+        yCoord: action.payload.yCoord,
+        date: moment(`1/1/${action.payload.mapYear}`).utc()
       }
     case EDIT_POI_SET:
       const { id, stories, ...poiFields } = action.payload
