@@ -1,4 +1,4 @@
-import { pois, stories, maps } from './dummyData'
+import moment from 'moment'
 import Api from './apiWrapper'
 import storage from './webStorage'
 
@@ -18,9 +18,16 @@ function parseYoutubeUrl(url) {
   return match && match[7].length === 11 ? match[7] : false
 }
 
-const utils = {
-  validateLink,
-  parseYoutubeUrl
+// this doesn't work for _all_ years, but probably does for the range we're interested in
+// see https://github.com/hack4impact-uiuc/nnb-frontend/issues/121
+function compareYear(poi1, poi2) {
+  return moment.utc(moment(poi1.date)).diff(moment.utc(moment(poi2.date)))
 }
 
-export { pois, stories, maps, Api, storage, utils }
+const utils = {
+  validateLink,
+  parseYoutubeUrl,
+  compareYear
+}
+
+export { Api, storage, utils }

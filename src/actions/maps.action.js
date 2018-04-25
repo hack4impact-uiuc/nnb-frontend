@@ -10,8 +10,8 @@ function mapCreated(map) {
   return { type: actionTypes.MAP_CREATED, payload: map }
 }
 
-function mapDeleted(map) {
-  return { type: actionTypes.MAP_DELETED, payload: map }
+function mapDeleted(mapId) {
+  return { type: actionTypes.MAP_DELETED, payload: { id: mapId } }
 }
 
 function mapSelected(mapId) {
@@ -27,7 +27,8 @@ export function createMap(map) {
 }
 
 export function deleteMap(mapId) {
-  return dispatch => Api.deleteMap(mapId).then(map => dispatch(mapDeleted(map)))
+  return dispatch =>
+    Api.deleteMap(mapId).then(() => dispatch(mapDeleted(mapId)))
 }
 
 export function setSelectedMap(map) {
