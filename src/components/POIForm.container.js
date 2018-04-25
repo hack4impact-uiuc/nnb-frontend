@@ -15,7 +15,9 @@ function mapStateToProps(state) {
   return {
     // TODO: probs should scope all the poi fields into a poi object
     ...state.poiForm,
-    stories: state.stories.stories,
+    stories: [...state.stories.stories].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    ),
     isUpdatingPOI: !!state.pois.selectedPOIId,
     selectedPOIId: state.pois.selectedPOIId
   }
