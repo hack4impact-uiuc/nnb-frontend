@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { createMap } from './../actions'
+import { createMap, loadMaps, loadPOIs } from './../actions'
 import MapManager from './MapManager.component'
 
 function mapStateToProps(state) {
@@ -14,7 +14,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createMap
+      createMap,
+      loadMaps,
+      loadPOIs
     },
     dispatch
   )

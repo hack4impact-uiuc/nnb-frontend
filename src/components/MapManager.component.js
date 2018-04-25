@@ -35,6 +35,7 @@ class MapManager extends Component {
   }
 
   onSubmit = () => {
+    const { createMap, loadMaps, loadPOIs } = this.props
     const { inputYear, imageUrl } = this.state
 
     if (inputYear === '' || imageUrl === '') {
@@ -46,7 +47,13 @@ class MapManager extends Component {
       year: inputYear
     }
 
-    this.props.createMap(map)
+    // explicitly calling loadMaps and loadPOIs to deal with the issue of
+    // a previously selected POI on a different map
+    // remaining selected on the newly created map
+    // see `showConfirmDeleteMap` in the NNBMap component
+    createMap(map)
+      .then(() => loadMaps())
+      .then(() => loadPOIs())
     this.toggleShowInputFields()
   }
 
