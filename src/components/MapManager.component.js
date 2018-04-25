@@ -10,24 +10,13 @@ class MapManager extends Component {
     inputYear: ''
   }
 
-  constructor(props) {
-    super(props)
-    this.toggleShowInputFields = this.toggleShowInputFields.bind(this)
-    this.onChangeYear = this.onChangeYear.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
-    this.onImageUpload = this.onImageUpload.bind(this)
-    this.isFormValid = this.isFormValid.bind(this)
-    this.shouldDisableSubmit = this.shouldDisableSubmit.bind(this)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.isEditing === false) {
       this.setState({ showInputFields: false })
     }
   }
 
-  toggleShowInputFields() {
+  toggleShowInputFields = () => {
     this.setState({
       showInputFields: !this.state.showInputFields,
       inputYear: '',
@@ -35,10 +24,9 @@ class MapManager extends Component {
     })
   }
 
-  onChangeYear(e) {
-    const mapYears = this.props.maps.map(map => map.year)
+  onChangeYear = e => {
     const inputYear = e.target.value
-    const inputYearExists = mapYears.includes(+inputYear)
+    const inputYearExists = this.props.mapYears.includes(+inputYear)
     this.setState({
       inputYear,
       [inputYearExists && 'error']: `Map already exists for ${inputYear}`,
@@ -46,8 +34,8 @@ class MapManager extends Component {
     })
   }
 
-  onSubmit() {
-    const { loadMaps } = this.props
+  onSubmit = () => {
+    const { createMap, loadMaps, loadPOIs } = this.props
     const { inputYear, imageUrl } = this.state
 
     if (inputYear === '' || imageUrl === '') {
@@ -59,22 +47,17 @@ class MapManager extends Component {
       year: inputYear
     }
 
-    Api.createMap(map)
+    // explicitly calling loadMaps and loadPOIs to deal with the issue of
+    // a previously selected POI on a different map
+    // remaining selected on the newly created map
+    // see `showConfirmDeleteMap` in the NNBMap component
+    createMap(map)
       .then(() => loadMaps())
-      .then(() => this.toggleShowInputFields())
+      .then(() => loadPOIs())
+    this.toggleShowInputFields()
   }
 
-  showConfirmDeleteMap() {
-    if (
-      window.confirm(
-        'Delete the current map? This will also delete all POIs associated with this map.'
-      )
-    ) {
-      this.props.deleteMap(this.props.selectedMap.id)
-    }
-  }
-
-  onImageUpload(e) {
+  onImageUpload = e => {
     const image = e.target.files[0]
     if (image) {
       this.setState({ isUploadingMedia: true })
@@ -92,14 +75,13 @@ class MapManager extends Component {
     }
   }
 
-  isFormValid() {
-    const mapYears = this.props.maps.map(map => map.year)
+  isFormValid = () => {
     const inputYear = +this.state.inputYear
-    const inputYearExists = mapYears.includes(inputYear)
+    const inputYearExists = this.props.mapYears.includes(inputYear)
     return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 
-  shouldDisableSubmit() {
+  shouldDisableSubmit = () => {
     const { inputYear, imageUrl } = this.state
     return !inputYear || !imageUrl || !this.isFormValid()
   }

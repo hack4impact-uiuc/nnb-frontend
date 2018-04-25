@@ -1,63 +1,40 @@
 import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
-import { Api } from './../utils'
+import { ROUTES } from './../'
 import { FieldGroup } from './'
 import './../styles/login.css'
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      error: null,
-      username: '',
-      password: ''
-    }
-    this.onChangeUsername = this.onChangeUsername.bind(this)
-    this.onChangePassword = this.onChangePassword.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+export default class LoginPage extends Component {
+  state = {
+    error: null,
+    username: '',
+    password: ''
   }
 
-  onChangeUsername(inputUsername) {
+  onChangeUsername = inputUsername => {
     this.setState({
       username: inputUsername.target.value
     })
   }
 
-  onChangePassword(inputPassword) {
+  onChangePassword = inputPassword => {
     this.setState({
       password: inputPassword.target.value
     })
   }
 
-  onSubmit() {
+  onSubmit = () => {
     this.setState({ error: '' })
     const { username, password } = this.state
-    const data = {
-      username,
-      password
-    }
+
     // RIPerino
+    // TODO: we know what we gotta do
     if (username === 'admin' && password === 'admin') {
-      this.props.setLogin(true)
-      this.props.setShowLogin(false)
+      this.props.login()
+      this.props.history.push(ROUTES.INDEX)
     } else {
       this.setState({ error: 'incorrect credentials' })
     }
-    // intentionally leaving this commented here until we fix auth
-    // Api.postLogin(data)
-    //   .then(({ message: error, status }) => {
-    //     if (status === 'failed') {
-    //       this.setState({ error })
-    //     } else {
-    //       this.props.setLogin(true)
-    //       this.props.setShowLogin(false)
-    //     }
-    //   })
-    //   .catch(err => {
-    //     //TODO: Handle any error from request
-    //     console.error(err)
-    //     this.setState({ error: 'An unknown error occured' })
-    //   })
   }
 
   render() {
