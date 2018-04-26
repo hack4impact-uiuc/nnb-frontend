@@ -80,11 +80,13 @@ class StoryForm extends Component {
           />
         </div>
 
-        <h4>POIs:</h4>
+        <h4>Search POIs to add:</h4>
+        <br />
         <GetStorySearchResults handleSelect={this.onSelectPoi} />
 
         <div>
-          Added
+          <br />
+          <h4>POIs in story:</h4>
           {inputPois.map(poi => {
             return (
               <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
@@ -95,7 +97,7 @@ class StoryForm extends Component {
         </div>
 
         <button
-          className="button button--light button--full-width"
+          className="button button--dark button--full-width"
           onClick={this.onSubmit}
         >
           Submit

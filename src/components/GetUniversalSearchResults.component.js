@@ -37,12 +37,8 @@ export default class GetUniversalSearchResults extends Component {
 
     return (
       <div>
-        <Icon
-          type="Search"
-          size="small"
-          className="navbar-content__item navbar-search__icon"
-        />
-        <h2>Search for POIs</h2>
+        <Icon type="Search" size="small" />
+        <h3>Search for POIs</h3>
         <Autosuggest
           suggestions={pois}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
