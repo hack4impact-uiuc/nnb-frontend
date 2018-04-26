@@ -9,7 +9,7 @@ import {
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
   POI_COPIED,
-  POI_FORM_POI_PASTED,
+  POI_PASTED,
   NEW_POI_CREATION_STARTED,
   POI_FORM_EXITED,
   EDIT_POI_SET
@@ -68,14 +68,15 @@ export default function poiForm(state = initialState.poiForm, action) {
       const copyClipboard = [...state.clipboard].filter(
         poi => poi.id !== action.payload.id
       )
-      if (copyClipboard.length === POI_FORM_MAX_CLIPBOARD_LENGTH)
+      if (copyClipboard.length === POI_FORM_MAX_CLIPBOARD_LENGTH) {
         copyClipboard.pop()
+      }
       copyClipboard.unshift(action.payload)
       return {
         ...state,
         clipboard: copyClipboard
       }
-    case POI_FORM_POI_PASTED:
+    case POI_PASTED:
       const pasteClipboard = [...state.clipboard].filter(
         poi => poi.id !== action.payload.id
       )

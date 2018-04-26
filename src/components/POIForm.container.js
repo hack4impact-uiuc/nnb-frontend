@@ -9,7 +9,7 @@ import {
   loadMaps,
   loadPOIs,
   loadStories,
-  pastePOIFormPOI,
+  pastePOI,
   addPOIFormYoutubeMedia,
   updatePOI,
   createPOI
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
       loadMaps,
       loadPOIs,
       loadStories,
-      pastePOIFormPOI,
+      pastePOI,
       addPOIFormYoutubeMedia,
       updatePOI,
       createPOI

@@ -45,7 +45,7 @@ export const EDIT_POI_SET = 'EDIT_POI_SET'
 
 // copy-paste
 export const POI_COPIED = 'POI_COPIED'
-export const POI_FORM_POI_PASTED = 'POI_FORM_POI_PASTED'
+export const POI_PASTED = 'POI_PASTED'
 
 // sidebar
 export const SIDEBAR_TOGGLED = 'SIDEBAR_TOGGLED'

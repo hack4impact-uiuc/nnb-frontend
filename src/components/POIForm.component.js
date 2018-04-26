@@ -137,7 +137,7 @@ export default class POIForm extends Component {
       storyIds,
       clipboard,
       isUpdatingPOI,
-      pastePOIFormPOI,
+      pastePOI,
       updatePOIFormInput,
       togglePOIFormStoryId
     } = this.props
@@ -152,7 +152,7 @@ export default class POIForm extends Component {
             id="paste-poi-dropdown"
           >
             {clipboard.map(elem => (
-              <MenuItem key={elem.id} onClick={() => pastePOIFormPOI(elem)}>
+              <MenuItem key={elem.id} onClick={() => pastePOI(elem)}>
                 {elem.name}
               </MenuItem>
             ))}

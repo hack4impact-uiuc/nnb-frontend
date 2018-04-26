@@ -56,8 +56,8 @@ function poiCopied(poi) {
   return { type: actionTypes.POI_COPIED, payload: poi }
 }
 
-function poiFormPOIPasted(poi) {
-  return { type: actionTypes.POI_FORM_POI_PASTED, payload: poi }
+function poiPasted(poi) {
+  return { type: actionTypes.POI_PASTED, payload: poi }
 }
 
 function newPOICreationStarted(mapYear, xCoord, yCoord) {
@@ -119,8 +119,8 @@ export function copyPOI(poi) {
   return dispatch => dispatch(poiCopied(poi))
 }
 
-export function pastePOIFormPOI(poi) {
-  return dispatch => dispatch(poiFormPOIPasted(poi))
+export function pastePOI(poi) {
+  return dispatch => dispatch(poiPasted(poi))
 }
 
 export function createNewPOI(mapYear, xCoord, yCoord) {
