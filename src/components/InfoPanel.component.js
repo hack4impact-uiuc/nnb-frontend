@@ -35,8 +35,8 @@ class InfoPanel extends Component {
       setNextPOIInStory,
       setPreviousPOIInStory,
       copyPOI,
-      selectedEvent,
-      isRealTimePOI,
+      // selectedEvent,
+      // isRealTimePOI,
       location
     } = this.props
 
@@ -118,7 +118,7 @@ class InfoPanel extends Component {
                   type="Copy"
                   size="large"
                   className="story-time__icon"
-                  onClick={() => copyPOI(selectedEvent)}
+                  onClick={() => copyPOI(selectedPOI)}
                 />
               )}
             {isEditing &&

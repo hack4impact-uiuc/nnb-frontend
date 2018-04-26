@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Form, PageHeader } from 'react-bootstrap'
+import { DropdownButton, Form, MenuItem, PageHeader } from 'react-bootstrap'
 import { ROUTES } from './../'
 import { FieldGroup, LinkTable } from './'
 import { utils } from './../utils'
@@ -135,7 +135,9 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
+      clipboard,
       isUpdatingPOI,
+      pastePOIFormPOI,
       updatePOIFormInput,
       togglePOIFormStoryId
     } = this.props
@@ -143,7 +145,17 @@ export default class POIForm extends Component {
       <div>
         <Form className="poi-form">
           <PageHeader>{isUpdatingPOI ? 'Edit' : 'Create'} POI</PageHeader>
-
+          <DropdownButton
+            bsStyle="button button--dark"
+            title="Paste POI"
+            disabled={clipboard.length === 0}
+          >
+            {clipboard.map(elem => (
+              <MenuItem onClick={() => pastePOIFormPOI(elem)}>
+                {elem.name}
+              </MenuItem>
+            ))}
+          </DropdownButton>
           <FieldGroup
             controlID="name"
             label="Name"

@@ -84,10 +84,10 @@ export default function poiForm(state = initialState.poiForm, action) {
         ...state,
         clipboard: pasteClipboard,
         name: action.payload.name,
-        // date: action.payload.date,
+        date: action.payload.date,
         description: action.payload.description,
         storyIds: action.payload.stories.map(story => story.id),
-        media: action.payload.content, // eventually replace .content with .media
+        media: action.payload.media,
         links: action.payload.links
       }
     case NEW_POI_CREATION_STARTED:
@@ -106,7 +106,10 @@ export default function poiForm(state = initialState.poiForm, action) {
         storyIds: action.payload.stories.map(s => s.id)
       }
     case POI_FORM_EXITED:
-      return initialState.poiForm
+      return {
+        ...initialState.poiForm,
+        clipboard: state.clipboard
+      }
     default:
       return state
   }
