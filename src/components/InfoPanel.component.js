@@ -38,8 +38,6 @@ class InfoPanel extends Component {
       setPreviousPOIInStory,
       location
     } = this.props
-    console.log(previewedPOI)
-    console.log(selectedPOI)
     const isRealTimePOI = location.pathname === ROUTES.FORM
 
     let activePOI = null

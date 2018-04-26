@@ -175,6 +175,7 @@ class NNBMap extends Component {
       selectedMap,
       isEditing,
       selectedPOIId,
+      previewedPOIId,
       setSelectedPOI,
       setPreviewedPOI,
       activePOIs
@@ -289,6 +290,7 @@ function POIMarkers({
   mapImageWidth,
   mapImageHeight,
   selectedPOIId,
+  previewedPOIId,
   selectedMap
 }) {
   return activePOIs
@@ -297,6 +299,7 @@ function POIMarkers({
       <POIMarker
         key={poi.id}
         isSelected={poi.id === selectedPOIId}
+        isPreviewed={poi.id === previewedPOIId}
         absoluteXCoordinate={poi.xCoord / 100 * mapImageWidth}
         absoluteYCoordinate={poi.yCoord / 100 * mapImageHeight}
         setAsActivePOI={() => setSelectedPOI(poi)}

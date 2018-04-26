@@ -7,6 +7,7 @@ class POIMarker extends Component {
       absoluteXCoordinate,
       absoluteYCoordinate,
       isSelected,
+      isPreviewed,
       setAsActivePOI,
       setAsPreviewPOI,
       clearPreviewPOI
@@ -15,7 +16,8 @@ class POIMarker extends Component {
       <div>
         <div
           className={classnames('marker', {
-            'marker--selected': isSelected
+            'marker--selected': isSelected,
+            'marker--previewed': !isSelected && isPreviewed
           })}
           onClick={setAsActivePOI}
           onMouseOver={setAsPreviewPOI}
