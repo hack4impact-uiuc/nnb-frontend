@@ -15,7 +15,7 @@ import POIMarker from './POIMarker.component'
 import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import Timeline from './Timeline.container'
-
+import ZoomBanner from './ZoomBanner.component'
 export {
   Edit,
   Explore,
@@ -33,5 +33,6 @@ export {
   POIMarker,
   StoryForm,
   StoryList,
-  Timeline
+  Timeline,
+  ZoomBanner
 }
