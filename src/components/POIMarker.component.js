@@ -7,7 +7,9 @@ class POIMarker extends Component {
       absoluteXCoordinate,
       absoluteYCoordinate,
       isSelected,
-      setAsActivePOI
+      setAsActivePOI,
+      setAsPreviewPOI,
+      clearPreviewPOI
     } = this.props
     return (
       <div>
@@ -16,6 +18,8 @@ class POIMarker extends Component {
             'marker--selected': isSelected
           })}
           onClick={setAsActivePOI}
+          onMouseOver={setAsPreviewPOI}
+          onMouseOut={clearPreviewPOI}
           style={{
             left: `${absoluteXCoordinate}px`,
             top: `${absoluteYCoordinate}px`

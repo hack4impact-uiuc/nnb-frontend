@@ -6,6 +6,7 @@ import {
   loadMaps,
   loadStories,
   setSelectedPOI,
+  setPreviewedPOI,
   loadPOIs,
   deletePOI,
   enableEditMode,
@@ -19,7 +20,7 @@ import InfoPanel from './InfoPanel.component'
 function mapStateToProps(state, ownProps) {
   const { timeline, pois, stories, edit, poiForm } = state
   const { maps, selectedMapId } = timeline
-  const { activePOIs, selectedPOIId } = pois
+  const { activePOIs, selectedPOIId, previewedPOIId } = pois
   const { selectedStoryId } = stories
 
   const shouldShowRealTimePOI = ownProps.location.pathname === ROUTES.FORM
@@ -27,17 +28,25 @@ function mapStateToProps(state, ownProps) {
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   const isStorySelected = !!selectedStoryId
 
+  const previewedPOIIndex = activePOIs.findIndex(
+    poi => poi.id === previewedPOIId
+  )
   const { meta, ...realTimePOI } = poiForm
   const selectedPOI = shouldShowRealTimePOI
     ? realTimePOI
     : activePOIs[selectedPOIIndex]
 
+  const previewedPOI = shouldShowRealTimePOI
+    ? realTimePOI
+    : activePOIs[previewedPOIIndex]
   return {
     ...state.pois,
     ...state.stories,
     ...edit,
     selectedPOIIndex,
     selectedPOI,
+    previewedPOIIndex,
+    previewedPOI,
     selectedMap: maps.find(map => map.id === selectedMapId),
     isStorySelected,
     isFirstInStory: isStorySelected && selectedPOIIndex === 0,
@@ -51,6 +60,7 @@ function mapDispatchToProps(dispatch) {
       loadMaps,
       loadStories,
       setSelectedPOI,
+      setPreviewedPOI,
       loadPOIs,
       deletePOI,
       enableEditMode,

@@ -16,6 +16,7 @@ import {
   updatePOI,
   deletePOI,
   setSelectedPOI,
+  setPreviewedPOI,
   setNextPOIInStory,
   setPreviousPOIInStory
 } from './pois.action'
@@ -76,6 +77,7 @@ export {
   updatePOI,
   deletePOI,
   setSelectedPOI,
+  setPreviewedPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
   toggleSidebar,

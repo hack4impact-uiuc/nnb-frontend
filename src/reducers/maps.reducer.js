@@ -4,7 +4,8 @@ import {
   MAP_DELETED,
   MAP_CREATED,
   MAP_SELECTED,
-  POI_SELECTED
+  POI_SELECTED,
+  POI_SELECTED_FOR_PREVIEW
 } from '../actions/actionTypes'
 
 export default function maps(state = initialState.timeline, action) {
@@ -41,6 +42,14 @@ export default function maps(state = initialState.timeline, action) {
       return {
         ...state,
         selectedMapId: selectedMap ? selectedMap.id : state.selectedMapId
+      }
+    case POI_SELECTED_FOR_PREVIEW:
+      const previewedMap = state.maps.find(
+        map => map.year === action.payload.mapYear
+      )
+      return {
+        ...state,
+        selectedMapId: previewedMap ? previewedMap.id : state.selectedMapId
       }
     default:
       return state
