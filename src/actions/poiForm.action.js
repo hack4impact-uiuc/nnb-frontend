@@ -52,10 +52,10 @@ function poiFormMediaRemoved(link) {
   }
 }
 
-function poiFormCaptionModified(caption_index, caption_value) {
+function poiFormCaptionModified(captionIndex, captionValue) {
   return {
     type: actionTypes.POI_FORM_CAPTION_MODIFIED,
-    payload: { caption_index, caption_value }
+    payload: { captionIndex, captionValue }
   }
 }
 
@@ -114,9 +114,9 @@ export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
 }
 
-export function modifyPOIFormCaption(caption_index, caption_value) {
+export function modifyPOIFormCaption(captionIndex, captionValue) {
   return dispatch =>
-    dispatch(poiFormCaptionModified(caption_index, caption_value))
+    dispatch(poiFormCaptionModified(captionIndex, captionValue))
 }
 
 export function createNewPOI(mapYear, xCoord, yCoord) {

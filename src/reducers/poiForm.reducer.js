@@ -63,9 +63,9 @@ export default function poiForm(state = initialState.poiForm, action) {
         )
       }
     case POI_FORM_CAPTION_MODIFIED:
-      const { caption_index, caption_value } = action.payload
+      const { captionIndex, captionValue } = action.payload
       const newMedia = [...state.media]
-      newMedia[caption_index]['caption'] = caption_value
+      newMedia[captionIndex]['caption'] = captionValue
       return {
         ...state,
         media: newMedia

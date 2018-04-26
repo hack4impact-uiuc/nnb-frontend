@@ -10,16 +10,6 @@ import { utils } from './../utils'
 import { FieldGroup, LinkTable } from './'
 
 class InfoPanel extends Component {
-  constructor(props) {
-    super(props)
-    this.handleSelect = this.handleSelect.bind(this)
-  }
-
-  componentWillReceiveProps() {
-    console.log('wheee')
-    this.forceUpdate()
-  }
-
   onClickEdit = () => {
     this.props.editPOI()
     this.props.history.push(ROUTES.FORM)
@@ -40,9 +30,8 @@ class InfoPanel extends Component {
   // For example, if I am on Carousel item "1" of POI A and I switch to POI B,
   // it will display POI B's Carousel item "1" (as opposed to item 0, which
   // the indicators and carouselIndex prop correctly indicate).
-  handleSelect(carouselIndex, e) {
-    const { modifyPoisCarouselIndex } = this.props
-    modifyPoisCarouselIndex(carouselIndex)
+  handleSelect = (carouselIndex, e) => {
+    this.props.modifyPoisCarouselIndex(carouselIndex)
   }
 
   render() {
@@ -178,16 +167,15 @@ class InfoPanel extends Component {
               inputType="text"
               value={captions}
               placeholder="Change Media Caption Here"
-              onChange={captions =>
-                modifyPOIFormCaption(
-                  this.props.carouselIndex,
-                  captions.target.value
-                )}
+              onChange={e =>
+                modifyPOIFormCaption(carouselIndex, e.target.value)}
             />
           )}
 
         {!!media.length && (
-          <div align="center">{media[carouselIndex].caption}</div>
+          <div classname="caption">
+            <p className="caption__text">{media[carouselIndex].caption}</p>
+          </div>
         )}
 
         {!!description && (

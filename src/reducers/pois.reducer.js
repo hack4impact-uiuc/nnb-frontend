@@ -46,7 +46,7 @@ export default function pois(state = initialState.pois, action) {
     case POI_FORM_MEDIA_REMOVED:
       return {
         ...state,
-        carouselIndex: (state.carouselIndex = 0) ? state.carouselIndex - 1 : 0
+        carouselIndex: state.carouselIndex === 0 ? state.carouselIndex - 1 : 0
       }
     case POI_SELECTED:
       return {
