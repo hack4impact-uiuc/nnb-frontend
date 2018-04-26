@@ -4,35 +4,27 @@ import { debounce } from 'lodash'
 import classnames from 'classnames'
 class ZoomBanner extends Component {
   state = {
-    isShowing: false
+    isShowing: true
   }
 
-  componentWillReceiveProps(nextProps) {
+  updateScale = scale => {
     this.setState({
-      scale: nextProps.scale,
+      scale,
       isShowing: true
     })
-
     setTimeout(() => {
-      this.setState({ isShowing: false })
+      this.setState({
+        isShowing: false
+      })
     }, 1000)
   }
 
-  constructor(props) {
-    super(props)
-
-    this.setState({
-      scale: props.scale,
-      isShowing: true
-    })
-
-    this.componentWillReceiveProps = debounce(
-      this.componentWillReceiveProps,
-      15
-    )
+  componentWillReceiveProps(nextProps) {
+    this.updateScale(nextProps.scale)
   }
 
   componentDidMount() {
+    this.updateScale = debounce(this.updateScale, 15)
     setTimeout(() => {
       this.setState({
         isShowing: false
