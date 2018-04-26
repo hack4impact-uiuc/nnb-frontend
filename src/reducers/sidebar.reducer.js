@@ -4,7 +4,11 @@ import {
   STORY_FORM_SET_SHOW,
   STORY_FORM_SET_HIDE,
   EDITING_STORY_ID_SET,
-  STORY_NAME_INPUT_UPDATED
+  STORY_NAME_INPUT_UPDATED,
+  POIS_INPUT_UPDATED,
+  EDITING_POIS_LOADED,
+  SHOW_STORY_MODAL,
+  EXIT_STORY_MODAL
 } from '../actions/actionTypes'
 
 export default function sidebar(state = initialState.sidebar, action) {
@@ -33,6 +37,26 @@ export default function sidebar(state = initialState.sidebar, action) {
       return {
         ...state,
         inputStoryName: action.payload
+      }
+    case POIS_INPUT_UPDATED:
+      return {
+        ...state,
+        inputPois: action.payload
+      }
+    case EDITING_POIS_LOADED:
+      return {
+        ...state,
+        inputPois: action.payload
+      }
+    case SHOW_STORY_MODAL:
+      return {
+        ...state,
+        shouldShowModal: true
+      }
+    case EXIT_STORY_MODAL:
+      return {
+        ...state,
+        shouldShowModal: false
       }
     default:
       return state

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Sidebar from 'react-sidebar'
-import { Icon, StoryForm } from './'
+import { Icon, StoryForm, StoryModal } from './'
 import './../styles/storylist.css'
 import './../styles/App.css'
 import './../styles/button.css'
@@ -23,11 +23,19 @@ class StoryList extends Component {
     const {
       setEditingStoryId,
       updateStoryNameInput,
-      showStoryForm
+      loadEditingPois
     } = this.props
     setEditingStoryId(story.id)
     updateStoryNameInput(story.name)
+    this.handleOpenModal()
+    loadEditingPois()
+  }
+
+  handleOpenModal = () => {
+    const { showStoryModal, toggleSidebar, showStoryForm } = this.props
     showStoryForm()
+    showStoryModal()
+    toggleSidebar()
   }
 
   onClickDelete = story => {
@@ -64,6 +72,7 @@ class StoryList extends Component {
         onClickDelete={this.onClickDelete}
         onClickEdit={this.onClickEdit}
         promptAndExitEditMode={this.promptAndExitEditMode}
+        handleOpenModal={this.handleOpenModal}
       />
     )
 
@@ -105,7 +114,8 @@ function SidebarContent({
   editingStoryId,
   toggleSidebar,
   showStoryForm,
-  isEditing
+  isEditing,
+  handleOpenModal
 }) {
   const sortedStories = [...stories].sort((a, b) =>
     a.name.localeCompare(b.name)
@@ -161,7 +171,7 @@ function SidebarContent({
               ]}
             {isEditing &&
               shouldShowStoryForm &&
-              editingStoryId === story.id && <StoryForm />}
+              editingStoryId === story.id && <StoryModal />}
           </div>
 
           <div className="divider" />
@@ -172,13 +182,13 @@ function SidebarContent({
         !shouldShowStoryForm && (
           <button
             className="button button--light button--full-width"
-            onClick={showStoryForm}
+            onClick={handleOpenModal}
           >
             Add Story
           </button>
         )}
 
-      {isEditing && shouldShowStoryForm && !editingStoryId && <StoryForm />}
+      {isEditing && shouldShowStoryForm && !editingStoryId && <StoryModal />}
 
       {!!selectedStoryId && (
         <button

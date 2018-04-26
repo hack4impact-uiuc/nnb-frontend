@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes'
+import Api from './../utils/apiWrapper'
 
 function sidebarToggled() {
   return { type: actionTypes.SIDEBAR_TOGGLED }
@@ -20,6 +21,22 @@ function storyNameInputUpdated(storyName) {
   return { type: actionTypes.STORY_NAME_INPUT_UPDATED, payload: storyName }
 }
 
+function poisInputUpdated(pois) {
+  return { type: actionTypes.POIS_INPUT_UPDATED, payload: pois }
+}
+
+function editingPoisLoaded(pois) {
+  return { type: actionTypes.EDITING_POIS_LOADED, payload: pois }
+}
+
+function storyModalStart() {
+  return { type: actionTypes.SHOW_STORY_MODAL }
+}
+
+function storyModalExit() {
+  return { type: actionTypes.EXIT_STORY_MODAL }
+}
+
 export function toggleSidebar() {
   return dispatch => dispatch(sidebarToggled())
 }
@@ -38,4 +55,26 @@ export function setEditingStoryId(storyId) {
 
 export function updateStoryNameInput(storyName) {
   return dispatch => dispatch(storyNameInputUpdated(storyName))
+}
+
+export function updatePoisInput(pois) {
+  return dispatch => dispatch(poisInputUpdated(pois))
+}
+
+export function loadEditingPois() {
+  return (dispatch, getState) => {
+    const store = getState()
+    const { editingStoryId } = store.sidebar
+    return Api.loadPOIs({ storyId: editingStoryId }).then(pois =>
+      dispatch(editingPoisLoaded(pois))
+    )
+  }
+}
+
+export function showStoryModal() {
+  return dispatch => dispatch(storyModalStart())
+}
+
+export function exitStoryModal() {
+  return dispatch => dispatch(storyModalExit())
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Image, Carousel } from 'react-bootstrap'
 import YoutubePlayer from 'react-youtube'
 import { ROUTES } from './../'
-import { Icon } from './'
+import { Icon, GetUniversalSearchResults } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
 import { utils } from './../utils'
@@ -49,6 +49,7 @@ class InfoPanel extends Component {
       }
       return (
         <div className="info-panel">
+          <GetUniversalSearchResults />
           <h1>No POI Selected</h1>
         </div>
       )
@@ -65,6 +66,8 @@ class InfoPanel extends Component {
           <h1>Preview Will Appear Here</h1>
         </div>
       )
+    } else {
+      ;<GetUniversalSearchResults />
     }
 
     const carousel = (

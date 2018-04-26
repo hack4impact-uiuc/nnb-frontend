@@ -1,21 +1,38 @@
 import React, { Component } from 'react'
 import { FormControl } from 'react-bootstrap'
-import { Icon } from './'
+import { Icon, GetStorySearchResults } from './'
 
 class StoryForm extends Component {
   onStoryNameEdit = e => {
     this.props.updateStoryNameInput(e.target.value)
   }
 
+  onSelectPoi = poi => {
+    if (!this.props.inputPois.some(p => p.id === poi.id)) {
+      this.props.updatePoisInput([...this.props.inputPois, poi])
+    }
+  }
+
+  removeInputPoi = poi => {
+    this.props.updatePoisInput(this.props.inputPois.filter(p => p.id != poi.id))
+  }
+
+  closeStoryForm = () => {
+    this.props.exitStoryModal()
+    this.onHide()
+  }
+
   onHide = () => {
     const {
       hideStoryForm,
       setEditingStoryId,
-      updateStoryNameInput
+      updateStoryNameInput,
+      updatePoisInput
     } = this.props
     hideStoryForm()
     setEditingStoryId(null)
     updateStoryNameInput('')
+    updatePoisInput([])
   }
 
   onSubmit = () => {
@@ -23,10 +40,11 @@ class StoryForm extends Component {
       inputStoryName,
       editingStoryId,
       createStory,
-      updateStory
+      updateStory,
+      inputPois
     } = this.props
 
-    const story = { name: inputStoryName }
+    const story = { name: inputStoryName, poiIds: inputPois.map(p => p.id) }
 
     if (editingStoryId) {
       updateStory(editingStoryId, story)
@@ -34,11 +52,12 @@ class StoryForm extends Component {
       createStory(story)
     }
 
+    this.props.exitStoryModal()
     this.onHide()
   }
 
   render() {
-    const { inputStoryName } = this.props
+    const { inputStoryName, inputPois } = this.props
 
     return (
       <div className="story-form">
@@ -48,7 +67,7 @@ class StoryForm extends Component {
             type="X"
             size="small"
             className="story-form__exit"
-            onClick={this.onHide}
+            onClick={this.closeStoryForm}
           />
         </div>
 
@@ -59,6 +78,20 @@ class StoryForm extends Component {
             placeholder="Enter text"
             onChange={this.onStoryNameEdit}
           />
+        </div>
+
+        <h4>POIs:</h4>
+        <GetStorySearchResults handleSelect={this.onSelectPoi} />
+
+        <div>
+          Added
+          {inputPois.map(poi => {
+            return (
+              <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
+                {poi.name}
+              </li>
+            )
+          })}
         </div>
 
         <button
