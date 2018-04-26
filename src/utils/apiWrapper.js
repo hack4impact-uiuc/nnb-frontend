@@ -13,11 +13,15 @@ const REQUEST_METHODS = {
 const POIS_URL = 'pois'
 const MAPS_URL = 'maps'
 const STORIES_URL = 'stories'
+const AUTH_URL = 'auth'
 
 cloudinary.config(cloudinaryConfig)
 
-function createRequest(method, endpoint, options) {
+function createRequest(method, endpoint, headers, options) {
   let req = request[method](`${apiConfig.apiUrl}/${endpoint}`)
+  if (headers) {
+    req = req.set(headers)
+  }
   if (options) {
     if (method === REQUEST_METHODS.GET) {
       req = req.query(options)
@@ -25,7 +29,43 @@ function createRequest(method, endpoint, options) {
       req = req.send(options)
     }
   }
-  return req.then(response => response.body).catch(err => console.error(err))
+  return req.then(response => response.body).catch(err => {
+    console.error(err)
+    return err.response.body
+  })
+}
+
+function createRequestWithAuth(method, endpoint, authorizationToken, options) {
+  return createRequest(
+    method,
+    endpoint,
+    { 'auth-token': authorizationToken },
+    options
+  )
+}
+
+/**
+ * Auth
+ */
+
+function signupUser(params) {
+  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/signup`, params).then(
+    res => (!!res.result.token ? res.result.token : '')
+  )
+}
+
+function loginUser(params) {
+  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/login`, params).then(
+    res => (!!res.result.token ? res.result.token : '')
+  )
+}
+
+function logoutUser(authorizationToken) {
+  return createRequestWithAuth(
+    REQUEST_METHODS.POST,
+    `${AUTH_URL}/logout`,
+    authorizationToken
+  ).then(res => res)
 }
 
 /**
@@ -48,30 +88,34 @@ function loadPOI(poiId) {
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function createPOI(poi) {
-  return createRequest(
+function createPOI(poi, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     POIS_URL,
+    authorizationToken,
     adapters.convertToApiPOI(poi)
   )
     .then(res => res.result.poi)
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function updatePOI(poiId, poi) {
-  return createRequest(
+function updatePOI(poiId, poi, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.PUT,
     `${POIS_URL}/${poiId}`,
+    authorizationToken,
     adapters.convertToApiPOI(poi)
   )
     .then(res => res.result.poi)
     .then(res => adapters.convertFromApiPOI(res))
 }
 
-function deletePOI(poiId) {
-  return createRequest(REQUEST_METHODS.DELETE, `${POIS_URL}/${poiId}`).then(
-    res => res.success
-  )
+function deletePOI(poiId, authorizationToken) {
+  return createRequestWithAuth(
+    REQUEST_METHODS.DELETE,
+    `${POIS_URL}/${poiId}`,
+    authorizationToken
+  ).then(res => res.success)
 }
 
 /**
@@ -84,20 +128,23 @@ function loadMaps() {
     .then(res => res.map(adapters.convertFromApiMap))
 }
 
-function createMap(map) {
-  return createRequest(
+function createMap(map, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     MAPS_URL,
+    authorizationToken,
     adapters.convertToApiMap(map)
   )
     .then(res => res.result.map)
     .then(res => adapters.convertFromApiMap(res))
 }
 
-function deleteMap(mapId) {
-  return createRequest(REQUEST_METHODS.DELETE, `${MAPS_URL}/${mapId}`).then(
-    res => res.success
-  )
+function deleteMap(mapId, authorizationToken) {
+  return createRequestWithAuth(
+    REQUEST_METHODS.DELETE,
+    `${MAPS_URL}/${mapId}`,
+    authorizationToken
+  ).then(res => res.success)
 }
 
 /**
@@ -114,30 +161,33 @@ function loadStories(params) {
     .then(res => res.map(adapters.convertFromApiStory))
 }
 
-function createStory(story) {
-  return createRequest(
+function createStory(story, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     STORIES_URL,
+    authorizationToken,
     adapters.convertToApiStory(story)
   )
     .then(res => res.result.story)
     .then(res => adapters.convertFromApiStory(res))
 }
 
-function updateStory(storyId, story) {
-  return createRequest(
+function updateStory(storyId, story, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.PUT,
     `${STORIES_URL}/${storyId}`,
+    authorizationToken,
     adapters.convertToApiStory(story)
   )
     .then(res => res.result.story)
     .then(res => adapters.convertFromApiStory(res))
 }
 
-function deleteStory(storyId) {
-  return createRequest(
+function deleteStory(storyId, authorizationToken) {
+  return createRequestWithAuth(
     REQUEST_METHODS.DELETE,
-    `${STORIES_URL}/${storyId}`
+    `${STORIES_URL}/${storyId}`,
+    authorizationToken
   ).then(res => res.success)
 }
 
@@ -153,6 +203,9 @@ function uploadImage(imageDataURL) {
 }
 
 export default {
+  signupUser,
+  loginUser,
+  logoutUser,
   loadPOIs,
   loadPOI,
   createPOI,
