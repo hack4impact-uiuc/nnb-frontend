@@ -47,7 +47,8 @@ class NavBar extends PureComponent {
       isLoggedIn,
       selectedStoryId,
       toggleSidebar,
-      logout
+      logout,
+      authorizationToken
     } = this.props
 
     // TODO: configure what to show based on current pathname
@@ -91,7 +92,10 @@ class NavBar extends PureComponent {
             </Link>
           )}
           {isLoggedIn && (
-            <div className="navbar-content__item" onClick={logout}>
+            <div
+              className="navbar-content__item"
+              onClick={() => logout(authorizationToken)}
+            >
               Logout
             </div>
           )}

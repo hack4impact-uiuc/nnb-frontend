@@ -12,6 +12,8 @@ import {
 import NavBar from './NavBar.component'
 
 function mapStateToProps(state, ownProps) {
+  const authorizationToken = state.auth.authorizationToken
+
   return {
     ...state.sidebar,
     ...state.timeline,
@@ -19,7 +21,8 @@ function mapStateToProps(state, ownProps) {
     isEditing: state.edit.isEditing,
     selectedStoryId: state.stories.selectedStoryId,
     isLoggedIn: state.auth.isLoggedIn,
-    pathname: ownProps.location.pathname
+    pathname: ownProps.location.pathname,
+    authorizationToken
   }
 }
 
