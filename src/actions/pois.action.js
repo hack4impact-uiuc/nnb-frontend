@@ -58,21 +58,27 @@ export function loadPOIById(poiId) {
   }
 }
 
-export function createPOI(poi) {
+export function createPOI(poi, authorizationToken) {
   return dispatch => {
-    return Api.createPOI(poi).then(poi => dispatch(poiCreated(poi)))
+    return Api.createPOI(poi, authorizationToken).then(poi =>
+      dispatch(poiCreated(poi))
+    )
   }
 }
 
-export function updatePOI(poiId, poi) {
+export function updatePOI(poiId, poi, authorizationToken) {
   return dispatch => {
-    return Api.updatePOI(poiId, poi).then(poi => dispatch(poiUpdated(poi)))
+    return Api.updatePOI(poiId, poi, authorizationToken).then(poi =>
+      dispatch(poiUpdated(poi))
+    )
   }
 }
 
-export function deletePOI(poiId) {
+export function deletePOI(poiId, authorizationToken) {
   return dispatch => {
-    return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
+    return Api.deletePOI(poiId, authorizationToken).then(() =>
+      dispatch(poiDeleted(poiId))
+    )
   }
 }
 

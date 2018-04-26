@@ -15,9 +15,15 @@ class InfoPanel extends Component {
 
   onClickDelete = () => {
     if (window.confirm('Delete POI?')) {
-      const { selectedMap, deletePOI, selectedPOIId, loadPOIs } = this.props
+      const {
+        selectedMap,
+        deletePOI,
+        selectedPOIId,
+        loadPOIs,
+        authorizationToken
+      } = this.props
       if (selectedMap) {
-        deletePOI(selectedPOIId).then(() => loadPOIs())
+        deletePOI(selectedPOIId, authorizationToken).then(() => loadPOIs())
       }
     }
   }
