@@ -21,8 +21,8 @@ function poiSelected(poi) {
   return { type: actionTypes.POI_SELECTED, payload: poi }
 }
 
-function poiSelectedForPreview(poi) {
-  return { type: actionTypes.POI_SELECTED_FOR_PREVIEW, payload: poi }
+function poiPreviewing(poi) {
+  return { type: actionTypes.POI_PREVIEWED, payload: poi }
 }
 
 function nextPOIInStorySet() {
@@ -84,8 +84,8 @@ export function setSelectedPOI(poi) {
   return dispatch => dispatch(poiSelected(poi))
 }
 
-export function setPreviewedPOI(poi) {
-  return dispatch => dispatch(poiSelectedForPreview(poi))
+export function setPreviewingPOI(poi) {
+  return dispatch => dispatch(poiPreviewing(poi))
 }
 
 export function setPreviousPOIInStory() {

@@ -13,7 +13,7 @@ const initialState = {
   pois: {
     activePOIs: [],
     selectedPOIId: null,
-    previewedPOIId: null
+    previewingPOIId: null
   },
   poiForm: {
     mapYear: null,

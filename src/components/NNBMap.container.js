@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import {
   setSelectedPOI,
-  setPreviewedPOI,
+  setPreviewingPOI,
   createNewPOI,
   deleteMap,
   loadMaps,
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       setSelectedPOI,
-      setPreviewedPOI,
+      setPreviewingPOI,
       createNewPOI,
       deleteMap,
       loadMaps,

@@ -140,7 +140,7 @@ class NNBMap extends Component {
         loadMaps,
         activePOIs,
         selectedPOIId,
-        setPreviewedPOI,
+        setPreviewingPOI,
         setSelectedPOI,
         loadPOIs
       } = this.props
@@ -175,9 +175,9 @@ class NNBMap extends Component {
       selectedMap,
       isEditing,
       selectedPOIId,
-      previewedPOIId,
+      previewingPOIId,
       setSelectedPOI,
-      setPreviewedPOI,
+      setPreviewingPOI,
       activePOIs
     } = this.props
 
@@ -286,11 +286,11 @@ class NNBMap extends Component {
 function POIMarkers({
   activePOIs,
   setSelectedPOI,
-  setPreviewedPOI,
+  setPreviewingPOI,
   mapImageWidth,
   mapImageHeight,
   selectedPOIId,
-  previewedPOIId,
+  previewingPOIId,
   selectedMap
 }) {
   return activePOIs
@@ -299,12 +299,12 @@ function POIMarkers({
       <POIMarker
         key={poi.id}
         isSelected={poi.id === selectedPOIId}
-        isPreviewed={poi.id === previewedPOIId}
+        isPreviewed={poi.id === previewingPOIId}
         absoluteXCoordinate={poi.xCoord / 100 * mapImageWidth}
         absoluteYCoordinate={poi.yCoord / 100 * mapImageHeight}
         setAsActivePOI={() => setSelectedPOI(poi)}
-        setAsPreviewPOI={() => setPreviewedPOI(poi)}
-        clearPreviewPOI={() => setPreviewedPOI({ id: null })}
+        setAsPreviewPOI={() => setPreviewingPOI(poi)}
+        clearPreviewPOI={() => setPreviewingPOI({ id: null })}
       />
     ))
 }
