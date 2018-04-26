@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
+import { ROUTES } from './../'
 import './../styles/map.css'
 import { POIMarker, Icon } from '../components'
 
@@ -9,16 +10,6 @@ class NNBMap extends Component {
     scaledCoords: [0, 0],
     mapImageLoaded: false,
     isChoosingNewPOICoords: false
-  }
-
-  constructor(props) {
-    super(props)
-    this.onImageClick = this.onImageClick.bind(this)
-    this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
-    this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
-    this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
-    this.onWindowResize = this.onWindowResize.bind(this)
-    this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,7 +35,8 @@ class NNBMap extends Component {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
-  onImageClick(event) {
+  onImageClick = event => {
+    const { createNewPOI, history, selectedMap } = this.props
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
       const domRect = element.getBoundingClientRect()
@@ -58,20 +50,17 @@ class NNBMap extends Component {
       const scaledCoords = mouseClickCoords.map(
         (e, i) => 100 * e / imageDisplayedResolution[i]
       )
-      this.setState({
-        scaledCoords,
-        isChoosingNewPOICoords: false
-      })
-      this.props.setClickedCoords(scaledCoords)
-      this.props.setShowPOIForm(true)
+
+      createNewPOI(selectedMap.year, ...scaledCoords)
+      history.push(ROUTES.FORM)
     }
   }
 
-  onWindowResize() {
+  onWindowResize = () => {
     this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions() {
+  updateMapImageDimensions = () => {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     if (this.image) {
       this.setState({
@@ -82,25 +71,46 @@ class NNBMap extends Component {
     }
   }
 
-  startAddPOIFlow() {
+  startAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: true
     })
   }
 
-  cancelAddPOIFlow() {
+  cancelAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: false
     })
   }
 
-  showConfirmDeleteMap() {
+  showConfirmDeleteMap = () => {
     if (
       window.confirm(
         'Delete the current map? This will also delete all POIs associated with this map.'
       )
     ) {
-      this.props.deleteMap(this.props.selectedMap.id)
+      const {
+        deleteMap,
+        selectedMap,
+        loadMaps,
+        activePOIs,
+        selectedPOIId,
+        setSelectedPOI,
+        loadPOIs
+      } = this.props
+      const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+
+      // explicity call this since the payload for MAP_DELETED only includes the map id
+      // but the pois only contain the map year.
+      // therefore we can't tell if the poi is on that map
+      // ideally all this should be reactive but it would require changing the api and db schema...
+      if (selectedPOI && selectedMap.year === selectedPOI.mapYear) {
+        setSelectedPOI({ id: null })
+      }
+
+      deleteMap(selectedMap.id)
+        .then(() => loadMaps())
+        .then(() => loadPOIs())
     }
   }
 
@@ -112,7 +122,13 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
-    const { selectedMap, isEditing } = this.props
+    const {
+      selectedMap,
+      isEditing,
+      selectedPOIId,
+      setSelectedPOI,
+      activePOIs
+    } = this.props
 
     return (
       <div>
@@ -161,8 +177,14 @@ class NNBMap extends Component {
             />
             {mapImageLoaded && (
               <POIMarkers
-                {...this.props}
-                {...{ mapImageWidth, mapImageHeight }}
+                {...{
+                  activePOIs,
+                  selectedPOIId,
+                  setSelectedPOI,
+                  mapImageWidth,
+                  mapImageHeight,
+                  selectedMap
+                }}
               />
             )}
           </div>
@@ -173,25 +195,24 @@ class NNBMap extends Component {
 }
 
 function POIMarkers({
-  activeEvents,
-  selectedEvent,
+  activePOIs,
   setSelectedPOI,
-  selectedMap,
   mapImageWidth,
-  mapImageHeight
+  mapImageHeight,
+  selectedPOIId,
+  selectedMap
 }) {
-  const displayEvents = activeEvents.filter(
-    poi => poi.mapByYear === selectedMap.year
-  )
-
-  return displayEvents.map(poi => (
-    <POIMarker
-      {...poi}
-      isSelected={selectedEvent && poi.id === selectedEvent.id}
-      key={poi.id}
-      {...{ setSelectedPOI, mapImageWidth, mapImageHeight }}
-    />
-  ))
+  return activePOIs
+    .filter(poi => poi.mapYear === selectedMap.year)
+    .map(poi => (
+      <POIMarker
+        key={poi.id}
+        isSelected={poi.id === selectedPOIId}
+        absoluteXCoordinate={poi.xCoord / 100 * mapImageWidth}
+        absoluteYCoordinate={poi.yCoord / 100 * mapImageHeight}
+        setAsActivePOI={() => setSelectedPOI(poi)}
+      />
+    ))
 }
 
 export default NNBMap

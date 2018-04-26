@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import Api from './../utils/apiWrapper'
+import { utils, Api } from './../utils'
 
 function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
@@ -17,21 +17,34 @@ function poiDeleted(poiId) {
   return { type: actionTypes.POI_DELETED, payload: { id: poiId } }
 }
 
+function poiSelected(poi) {
+  return { type: actionTypes.POI_SELECTED, payload: poi }
+}
+
+function nextPOIInStorySet() {
+  return { type: actionTypes.NEXT_POI_IN_STORY_SET }
+}
+
+function previousPOIInStorySet() {
+  return { type: actionTypes.PREVIOUS_POI_IN_STORY_SET }
+}
+
 export function loadPOIs() {
-  return dispatch => {
-    return Api.loadPOIs().then(pois => dispatch(poisLoaded(pois)))
-  }
-}
-
-export function loadPOIsByMapYear(mapYear) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const store = getState()
+    const { selectedStoryId } = store.stories
+    const { selectedMapId, maps } = store.timeline
+    if (!!selectedStoryId) {
+      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois => {
+        pois.sort(utils.compareYear)
+        dispatch(poisLoaded(pois))
+        if (pois.length) {
+          return dispatch(poiSelected(pois[0]))
+        }
+      })
+    }
+    const mapYear = maps.find(map => map.id === selectedMapId).year
     return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
-  }
-}
-
-export function loadPOIsByStoryId(storyId) {
-  return dispatch => {
-    return Api.loadPOIs({ storyId }).then(pois => dispatch(poisLoaded(pois)))
   }
 }
 
@@ -60,5 +73,37 @@ export function updatePOI(poiId, poi) {
 export function deletePOI(poiId) {
   return dispatch => {
     return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
+  }
+}
+
+export function setSelectedPOI(poi) {
+  return dispatch => dispatch(poiSelected(poi))
+}
+
+export function setPreviousPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(previousPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the previous poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
+  }
+}
+
+export function setNextPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(nextPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the next poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
   }
 }

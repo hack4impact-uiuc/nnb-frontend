@@ -1,5 +1,4 @@
 const initialState = {
-  stuff: [],
   edit: {
     isEditing: false
   },
@@ -9,13 +8,16 @@ const initialState = {
   },
   stories: {
     stories: [],
-    selectedStoryId: 1
+    selectedStoryId: null
   },
   pois: {
     activePOIs: [],
     selectedPOIId: null
   },
   poiForm: {
+    mapYear: null,
+    xCoord: null,
+    yCoord: null,
     name: '',
     date: '',
     description: '',
@@ -26,6 +28,15 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  sidebar: {
+    shouldShowSidebar: false,
+    shouldShowStoryForm: false,
+    editingStoryId: null,
+    inputStoryName: ''
+  },
+  auth: {
+    isLoggedIn: false
   }
 }
 
