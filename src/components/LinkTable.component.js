@@ -27,7 +27,7 @@ export default class LinkTable extends Component {
             {links.map((link, index) => (
               <tr key={`${link.url}${index}`}>
                 {Object.keys(link).map(key => (
-                  <th key={`${link.url}${key}${index}`}>
+                  <td key={`${link.url}${key}${index}`}>
                     {/* TODO: the bug with the first input being unfocused is back =( */}
                     <FieldGroup
                       inputType="text"
@@ -35,15 +35,15 @@ export default class LinkTable extends Component {
                       onChange={e =>
                         modifyPOIFormLink(index, key, e.target.value)}
                     />
-                  </th>
+                  </td>
                 ))}
-                <th>
+                <td>
                   <Icon
                     type="X"
                     size="small"
                     onClick={() => removePOIFormLink(index)}
                   />
-                </th>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import Api from './../utils/apiWrapper'
+import { utils, Api } from './../utils'
 
 function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
@@ -42,9 +42,13 @@ export function loadPOIs() {
     const { selectedStoryId } = store.stories
     const { selectedMapId, maps } = store.timeline
     if (!!selectedStoryId) {
-      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois =>
+      return Api.loadPOIs({ storyId: selectedStoryId }).then(pois => {
+        pois.sort(utils.compareYear)
         dispatch(poisLoaded(pois))
-      )
+        if (pois.length) {
+          return dispatch(poiSelected(pois[0]))
+        }
+      })
     }
     const mapYear = maps.find(map => map.id === selectedMapId).year
     return Api.loadPOIs({ mapYear }).then(pois => dispatch(poisLoaded(pois)))
@@ -83,12 +87,32 @@ export function setSelectedPOI(poi) {
   return dispatch => dispatch(poiSelected(poi))
 }
 
-export function setNextPOIInStory() {
-  return dispatch => dispatch(nextPOIInStorySet())
+export function setPreviousPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(previousPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the previous poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
+  }
 }
 
-export function setPreviousPOIInStory() {
-  return dispatch => dispatch(previousPOIInStorySet())
+export function setNextPOIInStory() {
+  return (dispatch, getState) => {
+    dispatch(nextPOIInStorySet())
+
+    // this may seem redundant in the context of the pois reducer,
+    // but it's called here to be picked up my the maps/timeline reducer
+    // so that it sets the correct map year based on the next poi in the story
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(poiSelected(selectedPOI))
+  }
 }
 
 export function modifyPoisCarouselIndex(carouselIndex) {

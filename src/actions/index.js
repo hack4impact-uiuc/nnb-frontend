@@ -1,6 +1,6 @@
-import { fetchStuff } from './stuff.action'
+import { APP_LOADED } from './actionTypes'
 import { enableEditMode, disableEditMode } from './edit.action'
-import { loadMaps, createMap, removeMap, setSelectedMap } from './maps.action'
+import { loadMaps, createMap, deleteMap, setSelectedMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
@@ -29,16 +29,32 @@ import {
   addPOIFormMedia,
   removePOIFormMedia,
   modifyPOIFormCaption,
-  modifyPOIFormCarouselIndex
+  modifyPOIFormCarouselIndex,
+  createNewPOI,
+  addPOIFormYoutubeMedia,
+  exitPOIForm,
+  editPOI
 } from './poiForm.action'
+import {
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput
+} from './sidebar.action'
+import { login, logout } from './auth.action'
+
+function appLoaded() {
+  return { type: APP_LOADED }
+}
 
 export {
-  fetchStuff,
+  appLoaded,
   enableEditMode,
   disableEditMode,
   loadMaps,
   createMap,
-  removeMap,
+  deleteMap,
   setSelectedMap,
   loadStories,
   loadStoriesByPOIId,
@@ -55,6 +71,10 @@ export {
   removePOIFormMedia,
   modifyPOIFormCaption,
   modifyPOIFormCarouselIndex,
+  createNewPOI,
+  addPOIFormYoutubeMedia,
+  exitPOIForm,
+  editPOI,
   loadPOIs,
   loadPOIById,
   createPOI,
@@ -63,5 +83,12 @@ export {
   setSelectedPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
-  modifyPoisCarouselIndex
+  modifyPoisCarouselIndex,
+  toggleSidebar,
+  showStoryForm,
+  hideStoryForm,
+  setEditingStoryId,
+  updateStoryNameInput,
+  login,
+  logout
 }

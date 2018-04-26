@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
+import { ROUTES } from './../'
 import {
   loadMaps,
   loadStories,
@@ -11,25 +13,33 @@ import {
   setNextPOIInStory,
   setPreviousPOIInStory,
   modifyPOIFormCaption,
-  modifyPoisCarouselIndex
+  modifyPoisCarouselIndex,
+  editPOI
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
 
-function mapStateToProps(state) {
-  const { timeline, pois, stories, edit } = state
+function mapStateToProps(state, ownProps) {
+  const { timeline, pois, stories, edit, poiForm } = state
   const { maps, selectedMapId } = timeline
   const { activePOIs, selectedPOIId } = pois
   const { selectedStoryId } = stories
 
+  const shouldShowRealTimePOI = ownProps.location.pathname === ROUTES.FORM
+
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
   const isStorySelected = !!selectedStoryId
+
+  const { meta, ...realTimePOI } = poiForm
+  const selectedPOI = shouldShowRealTimePOI
+    ? realTimePOI
+    : activePOIs[selectedPOIIndex]
 
   return {
     ...state.pois,
     ...state.stories,
     ...edit,
     selectedPOIIndex,
-    selectedPOI: activePOIs[selectedPOIIndex],
+    selectedPOI,
     selectedMap: maps.find(map => map.id === selectedMapId),
     isStorySelected,
     isFirstInStory: isStorySelected && selectedPOIIndex === 0,
@@ -50,10 +60,13 @@ function mapDispatchToProps(dispatch) {
       setNextPOIInStory,
       setPreviousPOIInStory,
       modifyPOIFormCaption,
-      modifyPoisCarouselIndex
+      modifyPoisCarouselIndex,
+      editPOI
     },
     dispatch
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoPanel)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(InfoPanel)
+)

@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 /**
  * Convert to api
  */
@@ -12,22 +14,15 @@ function convertToApiGetPOI(params) {
 function convertToApiPOI(poi) {
   return {
     name: poi.name,
-    map_year: poi.mapByYear,
-    date: `${poi.date.format('YYYY')}-${poi.date.format(
-      'MM'
-    )}-${poi.date.format('DD')}`,
+    map_year: poi.mapYear,
+    date: poi.date.format('YYYY-MM-DD'),
     description: poi.description,
-    x_coord: poi.coordinateX,
-    y_coord: poi.coordinateY,
-    links: poi.links.filter(link => !!link.url).map(link => ({
-      link_url: link.url,
-      display_name: link.urlName
-    })),
-    media: poi.media.map(content => ({
-      content_url: content.contentUrl,
-      caption: content.caption
-    })),
-    story_ids: poi.stories // not sure on how to do this one
+    x_coord: poi.xCoord,
+    y_coord: poi.yCoord,
+    // TODO: this filter should happen before it gets to the api
+    links: poi.links.filter(link => !!link.url).map(convertToApiLink),
+    media: poi.media.map(convertToApiMedia),
+    story_ids: poi.storyIds
   }
 }
 
@@ -41,6 +36,20 @@ function convertToApiMap(map) {
 function convertToApiGetStories(params) {
   return {
     poi_id: params.poiId
+  }
+}
+
+function convertToApiLink(link) {
+  return {
+    link_url: link.url,
+    display_name: link.displayName
+  }
+}
+
+function convertToApiMedia(media) {
+  return {
+    content_url: media.contentUrl,
+    caption: media.caption
   }
 }
 
@@ -59,19 +68,13 @@ function convertFromApiPOI(poi) {
   return {
     id: poi._id,
     name: poi.name,
-    date: poi.date,
+    date: moment(poi.date).utc(),
     description: poi.description,
-    coordinateX: poi.x_coord,
-    coordinateY: poi.y_coord,
-    mapByYear: poi.map_year,
-    links: poi.links.map(link => ({
-      url: link.link_url,
-      urlName: link.display_name
-    })),
-    media: poi.media.map(content => ({
-      contentUrl: content.content_url,
-      caption: content.caption
-    })),
+    xCoord: poi.x_coord,
+    yCoord: poi.y_coord,
+    mapYear: poi.map_year,
+    links: poi.links.map(convertFromApiLink),
+    media: poi.media.map(convertFromApiMedia),
     stories: poi.stories.map(convertFromApiStory)
   }
 }
@@ -81,6 +84,20 @@ function convertFromApiMap(map) {
     id: map._id,
     imageUrl: map.image_url,
     year: map.map_year
+  }
+}
+
+function convertFromApiLink(link) {
+  return {
+    url: link.link_url,
+    displayName: link.display_name
+  }
+}
+
+function convertFromApiMedia(media) {
+  return {
+    contentUrl: media.content_url,
+    caption: media.caption
   }
 }
 

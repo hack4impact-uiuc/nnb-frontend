@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes'
+import { Api } from './../utils'
 
-const EMPTY_LINK = { url: '', urlName: '' }
+const EMPTY_LINK = { url: '', displayName: '' }
 
 function poiFormInputChanged(field, value) {
   return {
@@ -58,6 +59,26 @@ function poiFormCaptionModified(caption_index, caption_value) {
   }
 }
 
+function newPOICreationStarted(mapYear, xCoord, yCoord) {
+  return {
+    type: actionTypes.NEW_POI_CREATION_STARTED,
+    payload: { mapYear, xCoord, yCoord }
+  }
+}
+
+function poiFormExited() {
+  return {
+    type: actionTypes.POI_FORM_EXITED
+  }
+}
+
+function editPOISet(poi) {
+  return {
+    type: actionTypes.EDIT_POI_SET,
+    payload: poi
+  }
+}
+
 export function updatePOIFormInput(field, value) {
   return dispatch => dispatch(poiFormInputChanged(field, value))
 }
@@ -78,8 +99,15 @@ export function modifyPOIFormLink(index, field, value) {
   return dispatch => dispatch(poiFormLinkModified(index, field, value))
 }
 
-export function addPOIFormMedia(media) {
-  return dispatch => dispatch(poiFormMediaAdded(media))
+export function addPOIFormMedia(dataURL) {
+  return dispatch =>
+    Api.uploadImage(dataURL).then(contentUrl =>
+      dispatch(poiFormMediaAdded({ contentUrl }))
+    )
+}
+
+export function addPOIFormYoutubeMedia(youtubeVideoId) {
+  return dispatch => dispatch(poiFormMediaAdded({ contentUrl: youtubeVideoId }))
 }
 
 export function removePOIFormMedia(media) {
@@ -89,4 +117,21 @@ export function removePOIFormMedia(media) {
 export function modifyPOIFormCaption(caption_index, caption_value) {
   return dispatch =>
     dispatch(poiFormCaptionModified(caption_index, caption_value))
+}
+
+export function createNewPOI(mapYear, xCoord, yCoord) {
+  return dispatch => dispatch(newPOICreationStarted(mapYear, xCoord, yCoord))
+}
+
+export function exitPOIForm() {
+  return dispatch => dispatch(poiFormExited())
+}
+
+export function editPOI() {
+  return (dispatch, getState) => {
+    const store = getState()
+    const { activePOIs, selectedPOIId } = store.pois
+    const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+    dispatch(editPOISet(selectedPOI))
+  }
 }

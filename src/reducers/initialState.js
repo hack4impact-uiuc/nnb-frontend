@@ -1,8 +1,6 @@
 const initialState = {
-  stuff: [],
   edit: {
-    isEditing: false,
-    shouldShowRealTimePOI: false
+    isEditing: false
   },
   timeline: {
     maps: [],
@@ -18,6 +16,9 @@ const initialState = {
     carouselIndex: 0
   },
   poiForm: {
+    mapYear: null,
+    xCoord: null,
+    yCoord: null,
     name: '',
     date: '',
     description: '',
@@ -28,6 +29,15 @@ const initialState = {
       isUploadingMedia: false,
       shouldShowFormValidation: false
     }
+  },
+  sidebar: {
+    shouldShowSidebar: false,
+    shouldShowStoryForm: false,
+    editingStoryId: null,
+    inputStoryName: ''
+  },
+  auth: {
+    isLoggedIn: false
   }
 }
 
