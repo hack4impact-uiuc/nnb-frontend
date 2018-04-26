@@ -49,15 +49,21 @@ function createRequestWithAuth(method, endpoint, authorizationToken, options) {
  */
 
 function signupUser(params) {
-  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/signup`, params).then(
-    res => (!!res.result.token ? res.result.token : '')
-  )
+  return createRequest(
+    REQUEST_METHODS.POST,
+    `${AUTH_URL}/signup`,
+    {},
+    params
+  ).then(res => (!!res.result.token ? res.result.token : ''))
 }
 
 function loginUser(params) {
-  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/login`, params).then(
-    res => (!!res.result.token ? res.result.token : '')
-  )
+  return createRequest(
+    REQUEST_METHODS.POST,
+    `${AUTH_URL}/login`,
+    {},
+    params
+  ).then(res => (!!res.result.token ? res.result.token : ''))
 }
 
 function logoutUser(authorizationToken) {
@@ -76,6 +82,7 @@ function loadPOIs(params) {
   return createRequest(
     REQUEST_METHODS.GET,
     POIS_URL,
+    {},
     adapters.convertToApiGetPOI(params)
   )
     .then(res => res.result.pois)
@@ -155,6 +162,7 @@ function loadStories(params) {
   return createRequest(
     REQUEST_METHODS.GET,
     STORIES_URL,
+    {},
     !!params && adapters.convertToApiGetStories(params)
   )
     .then(res => res.result.stories)
