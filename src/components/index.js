@@ -33,7 +33,6 @@ export {
   POIMarker,
   StoryForm,
   StoryList,
-  StuffList,
   Timeline,
   ZoomBanner
 }
