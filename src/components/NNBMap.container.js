@@ -12,10 +12,13 @@ import NNBMap from './NNBMap.component'
 
 function mapStateToProps(state) {
   const { maps, selectedMapId } = state.timeline
+  const authorizationToken = state.auth.authorizationToken
+
   return {
     ...state.pois,
     selectedMap: maps.find(map => map.id === selectedMapId),
-    isEditing: state.edit.isEditing
+    isEditing: state.edit.isEditing,
+    authorizationToken
   }
 }
 

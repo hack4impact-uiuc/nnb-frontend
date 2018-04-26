@@ -22,13 +22,18 @@ export function loadMaps() {
   return dispatch => Api.loadMaps().then(maps => dispatch(mapsLoaded(maps)))
 }
 
-export function createMap(map) {
-  return dispatch => Api.createMap(map).then(map => dispatch(mapCreated(map)))
+export function createMap(map, authorizationToken) {
+  return dispatch =>
+    Api.createMap(map, authorizationToken).then(map =>
+      dispatch(mapCreated(map))
+    )
 }
 
-export function deleteMap(mapId) {
+export function deleteMap(mapId, authorizationToken) {
   return dispatch =>
-    Api.deleteMap(mapId).then(() => dispatch(mapDeleted(mapId)))
+    Api.deleteMap(mapId, authorizationToken).then(() =>
+      dispatch(mapDeleted(mapId))
+    )
 }
 
 export function setSelectedMap(map) {
