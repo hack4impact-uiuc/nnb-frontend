@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Image } from 'react-bootstrap'
 import { MapInteraction } from 'react-map-interaction'
 import { POIMarker, Icon, ZoomBanner } from '../components'
+import { ROUTES } from './../'
 import './../styles/map.css'
 
 class NNBMap extends Component {
@@ -48,6 +49,8 @@ class NNBMap extends Component {
   }
 
   onImageClick(event, scale) {
+    const { createNewPOI, history, selectedMap } = this.props
+
     if (this.state.isChoosingNewPOICoords) {
       const element = ReactDOM.findDOMNode(this.image)
       const domRect = element.getBoundingClientRect()
@@ -66,20 +69,17 @@ class NNBMap extends Component {
       const scaledCoords = mouseClickCoords.map(
         (e, i) => 100 * e / imageDisplayedResolution[i]
       )
-      this.setState({
-        scaledCoords,
-        isChoosingNewPOICoords: false
-      })
-      this.props.setClickedCoords(scaledCoords)
-      this.props.setShowPOIForm(true)
+
+      createNewPOI(selectedMap.year, ...scaledCoords)
+      history.push(ROUTES.FORM)
     }
   }
 
-  onWindowResize() {
+  onWindowResize = () => {
     this.updateMapImageDimensions()
   }
 
-  updateMapImageDimensions() {
+  updateMapImageDimensions = () => {
     const mapImageElement = ReactDOM.findDOMNode(this.image)
     const mapImageWidth = mapImageElement.width
     const mapImageHeight = mapImageElement.height
@@ -127,25 +127,46 @@ class NNBMap extends Component {
     return translationDirection
   }
 
-  startAddPOIFlow() {
+  startAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: true
     })
   }
 
-  cancelAddPOIFlow() {
+  cancelAddPOIFlow = () => {
     this.setState({
       isChoosingNewPOICoords: false
     })
   }
 
-  showConfirmDeleteMap() {
+  showConfirmDeleteMap = () => {
     if (
       window.confirm(
         'Delete the current map? This will also delete all POIs associated with this map.'
       )
     ) {
-      this.props.deleteMap(this.props.selectedMap.id)
+      const {
+        deleteMap,
+        selectedMap,
+        loadMaps,
+        activePOIs,
+        selectedPOIId,
+        setSelectedPOI,
+        loadPOIs
+      } = this.props
+      const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+
+      // explicity call this since the payload for MAP_DELETED only includes the map id
+      // but the pois only contain the map year.
+      // therefore we can't tell if the poi is on that map
+      // ideally all this should be reactive but it would require changing the api and db schema...
+      if (selectedPOI && selectedMap.year === selectedPOI.mapYear) {
+        setSelectedPOI({ id: null })
+      }
+
+      deleteMap(selectedMap.id)
+        .then(() => loadMaps())
+        .then(() => loadPOIs())
     }
   }
 
@@ -275,17 +296,20 @@ function POIMarkers({
   setSelectedPOI,
   mapImageWidth,
   mapImageHeight,
-  selectedPOIId
+  selectedPOIId,
+  selectedMap
 }) {
-  return activePOIs.map(poi => (
-    <POIMarker
-      key={poi.id}
-      isSelected={poi.id === selectedPOIId}
-      absoluteXCoordinate={poi.coordinateX / 100 * mapImageWidth}
-      absoluteYCoordinate={poi.coordinateY / 100 * mapImageHeight}
-      setAsActivePOI={() => setSelectedPOI(poi)}
-    />
-  ))
+  return activePOIs
+    .filter(poi => poi.mapYear === selectedMap.year)
+    .map(poi => (
+      <POIMarker
+        key={poi.id}
+        isSelected={poi.id === selectedPOIId}
+        absoluteXCoordinate={poi.xCoord / 100 * mapImageWidth}
+        absoluteYCoordinate={poi.yCoord / 100 * mapImageHeight}
+        setAsActivePOI={() => setSelectedPOI(poi)}
+      />
+    ))
 }
 
 export default NNBMap

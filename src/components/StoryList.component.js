@@ -48,9 +48,10 @@ class StoryList extends Component {
         'Exit edit mode? Cannot be in edit mode while viewing a story.'
       )
     ) {
-      const { toggleEditMode, setSelectedStory } = this.props
-      toggleEditMode()
+      const { disableEditMode, setSelectedStory, loadPOIs } = this.props
+      disableEditMode()
       setSelectedStory(storyId)
+      loadPOIs()
     }
   }
 
@@ -112,7 +113,7 @@ function SidebarContent({
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <h2 className="sidebar__title">Story List</h2>
+        <h2 className="sidebar__title">Stories</h2>
         <Icon
           type="X"
           size="large"
