@@ -58,11 +58,8 @@ function mapDispatchToProps(dispatch) {
       removePOIFormMedia,
       setNextPOIInStory,
       setPreviousPOIInStory,
-<<<<<<< HEAD
-      copyPOI
-=======
+      copyPOI,
       editPOI
->>>>>>> dev
     },
     dispatch
   )
