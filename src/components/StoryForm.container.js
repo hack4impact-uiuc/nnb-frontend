@@ -10,10 +10,13 @@ import {
 import StoryForm from './StoryForm.component'
 
 function mapStateToProps(state) {
+  const authorizationToken = state.auth.authorizationToken
+
   return {
     stories: state.stories.stories,
     editingStoryId: state.sidebar.editingStoryId,
-    inputStoryName: state.sidebar.inputStoryName
+    inputStoryName: state.sidebar.inputStoryName,
+    authorizationToken
   }
 }
 

@@ -18,10 +18,13 @@ function mapStateToProps(state) {
     shouldShowStoryForm,
     editingStoryId
   } = state.sidebar
+  const authorizationToken = state.auth.authorizationToken
+
   return {
     isEditing: state.edit.isEditing,
     ...state.stories,
-    ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId }
+    ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId },
+    authorizationToken
   }
 }
 

@@ -41,23 +41,27 @@ export function loadStoriesByPOIId(poiId) {
   }
 }
 
-export function createStory(story) {
+export function createStory(story, authorizationToken) {
   return dispatch => {
-    return Api.createStory(story).then(story => dispatch(storyCreated(story)))
+    return Api.createStory(story, authorizationToken).then(story =>
+      dispatch(storyCreated(story))
+    )
   }
 }
 
-export function updateStory(storyId, story) {
+export function updateStory(storyId, story, authorizationToken) {
   return dispatch => {
-    return Api.updateStory(storyId, story).then(story =>
+    return Api.updateStory(storyId, story, authorizationToken).then(story =>
       dispatch(storyUpdated(story))
     )
   }
 }
 
-export function deleteStory(storyId) {
+export function deleteStory(storyId, authorizationToken) {
   return dispatch => {
-    return Api.deleteStory(storyId).then(() => dispatch(storyDeleted(storyId)))
+    return Api.deleteStory(storyId, authorizationToken).then(() =>
+      dispatch(storyDeleted(storyId))
+    )
   }
 }
 

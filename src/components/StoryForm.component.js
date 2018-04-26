@@ -23,15 +23,16 @@ class StoryForm extends Component {
       inputStoryName,
       editingStoryId,
       createStory,
-      updateStory
+      updateStory,
+      authorizationToken
     } = this.props
 
     const story = { name: inputStoryName }
 
     if (editingStoryId) {
-      updateStory(editingStoryId, story)
+      updateStory(editingStoryId, story, authorizationToken)
     } else {
-      createStory(story)
+      createStory(story, authorizationToken)
     }
 
     this.onHide()

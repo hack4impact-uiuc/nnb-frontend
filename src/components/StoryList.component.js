@@ -38,7 +38,7 @@ class StoryList extends Component {
     ) {
       const { setSelectedStory, deleteStory } = this.props
       setSelectedStory(null)
-      deleteStory(story.id)
+      deleteStory(story.id, authorizationToken)
     }
   }
 
