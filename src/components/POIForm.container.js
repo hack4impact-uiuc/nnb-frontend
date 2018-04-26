@@ -5,6 +5,11 @@ import {
   updatePOIFormInput,
   togglePOIFormStoryId,
   addPOIFormMedia,
+  removePOIFormMedia,
+  loadMaps,
+  loadPOIs,
+  loadStories,
+  pastePOI,
   addPOIFormYoutubeMedia,
   updatePOI,
   createPOI
@@ -29,6 +34,11 @@ function mapDispatchToProps(dispatch) {
       updatePOIFormInput,
       togglePOIFormStoryId,
       addPOIFormMedia,
+      removePOIFormMedia,
+      loadMaps,
+      loadPOIs,
+      loadStories,
+      pastePOI,
       addPOIFormYoutubeMedia,
       updatePOI,
       createPOI
