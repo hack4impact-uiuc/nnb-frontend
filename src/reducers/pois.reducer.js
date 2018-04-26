@@ -9,7 +9,8 @@ import {
   NEXT_POI_IN_STORY_SET,
   PREVIOUS_POI_IN_STORY_SET,
   POIS_CAROUSEL_INDEX_MODIFIED,
-  NEW_POI_CREATION_STARTED
+  NEW_POI_CREATION_STARTED,
+  POI_FORM_EXITED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -72,6 +73,11 @@ export default function pois(state = initialState.pois, action) {
       return {
         ...state,
         carouselIndex: action.payload
+      }
+    case POI_FORM_EXITED:
+      return {
+        ...state,
+        carouselIndex: 0
       }
     default:
       return state

@@ -15,6 +15,11 @@ class InfoPanel extends Component {
     this.handleSelect = this.handleSelect.bind(this)
   }
 
+  componentWillReceiveProps() {
+    console.log('wheee')
+    this.forceUpdate()
+  }
+
   onClickEdit = () => {
     this.props.editPOI()
     this.props.history.push(ROUTES.FORM)
@@ -29,9 +34,15 @@ class InfoPanel extends Component {
     }
   }
 
-  handleSelect(selectedIndex, e) {
+  // TODO: There is something wrong with the Carousel (assumed Bootstrap Issue)
+  // where when you switch POIs, it does not display the 0th item despite the fact
+  // that carouselIndex correctly resets to 0.
+  // For example, if I am on Carousel item "1" of POI A and I switch to POI B,
+  // it will display POI B's Carousel item "1" (as opposed to item 0, which
+  // the indicators and carouselIndex prop correctly indicate).
+  handleSelect(carouselIndex, e) {
     const { modifyPoisCarouselIndex } = this.props
-    modifyPoisCarouselIndex(selectedIndex)
+    modifyPoisCarouselIndex(carouselIndex)
   }
 
   render() {
@@ -73,6 +84,7 @@ class InfoPanel extends Component {
 
     const { name, date, description, storyIds, media, links } = selectedPOI
     const displayFields = [name, date, description, storyIds, media, links]
+
     if (
       isRealTimePOI &&
       !displayFields.some(el => (Array.isArray(el) ? !!el.length : !!el))
@@ -85,12 +97,17 @@ class InfoPanel extends Component {
     }
 
     const carousel = (
-      <Carousel>
+      <Carousel
+        activeIndex={carouselIndex}
+        onSelect={this.handleSelect}
+        interval={null}
+      >
         {media.map(media => {
           const url = media.contentUrl
           const image = (
             <Image width={500} height={500} alt={media.caption} src={url} />
           )
+          const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const youtubePlayer = (
             <YoutubePlayer
               videoId={url}
@@ -155,7 +172,8 @@ class InfoPanel extends Component {
         )}
 
         {!!media.length &&
-          isEditing && (
+          isEditing &&
+          isRealTimePOI && (
             <FieldGroup
               inputType="text"
               value={captions}
