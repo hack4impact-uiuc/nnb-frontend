@@ -79,25 +79,24 @@ class StoryForm extends Component {
             onChange={this.onStoryNameEdit}
           />
         </div>
-
-        <h4>Search POIs to add:</h4>
-        <br />
-        <GetStorySearchResults handleSelect={this.onSelectPoi} />
-
-        <div>
-          <br />
-          <h4>POIs in story:</h4>
-          {inputPois.map(poi => {
-            return (
-              <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
-                {poi.name}
-              </li>
-            )
-          })}
+        <div className='story-form__poi-list-container'>
+          <div className='story-form__search-bar'>
+            <h4 className='story-form__search-title'>Search POIs to add:</h4>
+            < GetStorySearchResults handleSelect={this.onSelectPoi} />
+          </div>
+            <div className='story-form__poi-list'>
+              <h4>POIs in story:</h4>
+              {inputPois.map(poi => {
+                return (
+                  <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
+                    {poi.name}
+                  </li>
+                )
+              })}
+            </div>
         </div>
-
         <button
-          className="button button--dark button--full-width"
+          className="button button--dark button--full-width story-form__submit-button"
           onClick={this.onSubmit}
         >
           Submit

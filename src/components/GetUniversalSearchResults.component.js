@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { Icon } from './'
+import './../styles/search.css'
 
 export default class GetUniversalSearchResults extends Component {
   onChange = (event, { newValue, method }) => {
@@ -37,8 +38,6 @@ export default class GetUniversalSearchResults extends Component {
 
     return (
       <div>
-        <Icon type="Search" size="small" />
-        <h3>Search for POIs</h3>
         <Autosuggest
           suggestions={pois}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -46,6 +45,12 @@ export default class GetUniversalSearchResults extends Component {
           getSuggestionValue={this.getPoiValue}
           renderSuggestion={this.renderPoi}
           inputProps={inputProps}
+          theme={{container: 'search-container',
+                  suggestionsContainerOpen: 'search-suggContainer',
+                  suggestionHighlighted: 'search-suggHighlight',
+                  suggestion: 'search-suggestion',
+                  suggestionsList: 'search-suggList'
+                  } }
         />
       </div>
     )

@@ -8,7 +8,8 @@ import {
   POIS_INPUT_UPDATED,
   EDITING_POIS_LOADED,
   SHOW_STORY_MODAL,
-  EXIT_STORY_MODAL
+  EXIT_STORY_MODAL,
+  EDIT_MODE_DISABLED
 } from '../actions/actionTypes'
 
 export default function sidebar(state = initialState.sidebar, action) {
@@ -57,6 +58,13 @@ export default function sidebar(state = initialState.sidebar, action) {
       return {
         ...state,
         shouldShowModal: false
+      }
+    case EDIT_MODE_DISABLED:
+      return {
+        ...state,
+        editingStoryId: null,
+        shouldShowModal: false,
+        shouldShowStoryForm: false
       }
     default:
       return state

@@ -52,6 +52,9 @@
 }
 
 .story-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 2rem 1rem;
 
   &__heading {
@@ -67,6 +70,27 @@
   &__exit {
     margin-left: auto;
   }
+
+  &__poi-list-container{
+    display: flex;
+  }
+
+  &__poi-list{
+    padding: 1rem;
+  }
+
+  &__search-title{
+    margin-bottom: 1rem;
+  }
+
+  &__search-bar{
+    padding: 1rem;
+  }
+
+  &__submit-button{
+    margin-top: auto;
+  }
+
 }
 
 .divider {

@@ -1,0 +1,26 @@
+.search-container {
+  width: 174px;
+}
+
+.search-input{
+  border: 1px solid #ccc;
+}
+
+.search-suggestion{
+  list-style-type: none;
+  padding: 5px;
+}
+.search-suggHighlight{
+  background: #ccc; 
+}
+.search-suggList{
+  padding: 10px;
+  margin-bottom: 0px;
+}
+.search-suggContainer {
+  border: 1px solid #ccc;
+  width: 174px;
+  background: #fafafa;
+  position: absolute;
+  margin-top: 10px;
+}

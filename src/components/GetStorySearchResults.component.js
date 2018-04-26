@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
+import './../styles/search.css'
 
 export default class GetStorySearchResults extends Component {
   onChange = (event, { newValue, method }) => {
@@ -47,6 +48,13 @@ export default class GetStorySearchResults extends Component {
           getSuggestionValue={this.getPoiValue}
           renderSuggestion={this.renderPoi}
           inputProps={inputProps}
+          theme={{container: 'search-container',
+                  suggestionsContainerOpen: 'search-suggContainer',
+                  suggestionHighlighted: 'search-suggHighlight',
+                  suggestion: 'search-suggestion',
+                  suggestionsList: 'search-suggList',
+                  input: 'search-input'
+                  } }
         />
       </div>
     )

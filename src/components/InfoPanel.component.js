@@ -49,7 +49,6 @@ class InfoPanel extends Component {
       }
       return (
         <div className="info-panel">
-          <GetUniversalSearchResults />
           <h1>No POI Selected</h1>
         </div>
       )
@@ -66,8 +65,6 @@ class InfoPanel extends Component {
           <h1>Preview Will Appear Here</h1>
         </div>
       )
-    } else {
-      ;<GetUniversalSearchResults />
     }
 
     const carousel = (
