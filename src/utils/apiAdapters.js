@@ -62,7 +62,7 @@ function convertToApiStory(story) {
 
 function convertToApiSearchPois(params) {
   return {
-    q: params.query.toLowerCase(),
+    q: params.query,
     name: params.name,
     description: params.description
   }
