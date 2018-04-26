@@ -146,12 +146,13 @@ export default class POIForm extends Component {
         <Form className="poi-form">
           <PageHeader>{isUpdatingPOI ? 'Edit' : 'Create'} POI</PageHeader>
           <DropdownButton
-            bsStyle="button button--dark"
+            className="button button--dark"
             title="Paste POI"
             disabled={clipboard.length === 0}
+            id="paste-poi-dropdown"
           >
             {clipboard.map(elem => (
-              <MenuItem onClick={() => pastePOIFormPOI(elem)}>
+              <MenuItem key={elem.id} onClick={() => pastePOIFormPOI(elem)}>
                 {elem.name}
               </MenuItem>
             ))}
