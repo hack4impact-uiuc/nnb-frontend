@@ -1,8 +1,6 @@
 const initialState = {
-  stuff: [],
   edit: {
-    isEditing: false,
-    shouldShowRealTimePOI: false
+    isEditing: false
   },
   timeline: {
     maps: [],
@@ -17,6 +15,9 @@ const initialState = {
     selectedPOIId: null
   },
   poiForm: {
+    mapYear: null,
+    xCoord: null,
+    yCoord: null,
     name: '',
     date: '',
     description: '',
@@ -34,6 +35,9 @@ const initialState = {
     shouldShowStoryForm: false,
     editingStoryId: null,
     inputStoryName: ''
+  },
+  auth: {
+    isLoggedIn: false
   }
 }
 

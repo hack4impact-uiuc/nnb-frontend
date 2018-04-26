@@ -1,23 +1,30 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import {
   updatePOIFormInput,
   togglePOIFormStoryId,
-  addPOIFormLink,
-  removePOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
   loadMaps,
   loadPOIs,
   loadStories,
-  pastePOIFormPOI
+  pastePOIFormPOI,
+  addPOIFormYoutubeMedia,
+  updatePOI,
+  createPOI
 } from './../actions'
-import POIForm from './POIFormNew.component'
+import POIForm from './POIForm.component'
 
 function mapStateToProps(state) {
   return {
+    // TODO: probs should scope all the poi fields into a poi object
     ...state.poiForm,
-    stories: state.stories.stories
+    stories: [...state.stories.stories].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    ),
+    isUpdatingPOI: !!state.pois.selectedPOIId,
+    selectedPOIId: state.pois.selectedPOIId
   }
 }
 
@@ -26,17 +33,18 @@ function mapDispatchToProps(dispatch) {
     {
       updatePOIFormInput,
       togglePOIFormStoryId,
-      addPOIFormLink,
-      removePOIFormLink,
       addPOIFormMedia,
       removePOIFormMedia,
       loadMaps,
       loadPOIs,
       loadStories,
-      pastePOIFormPOI
+      pastePOIFormPOI,
+      addPOIFormYoutubeMedia,
+      updatePOI,
+      createPOI
     },
     dispatch
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(POIForm)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(POIForm))

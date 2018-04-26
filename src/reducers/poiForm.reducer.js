@@ -1,3 +1,4 @@
+import moment from 'moment'
 import initialState from './initialState'
 import {
   POI_FORM_INPUT_CHANGED,
@@ -8,7 +9,10 @@ import {
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
   POI_COPIED,
-  POI_FORM_POI_PASTED
+  POI_FORM_POI_PASTED,
+  NEW_POI_CREATION_STARTED,
+  POI_FORM_EXITED,
+  EDIT_POI_SET
 } from '../actions/actionTypes'
 
 const POI_FORM_MAX_CLIPBOARD_LENGTH = 5
@@ -57,9 +61,7 @@ export default function poiForm(state = initialState.poiForm, action) {
       return {
         ...state,
         media: [...state.media].filter(
-          media =>
-            media.contentUrl !== action.payload.contentUrl &&
-            media.caption !== action.payload.caption
+          media => media.contentUrl !== action.payload.contentUrl
         )
       }
     case POI_COPIED:
@@ -88,6 +90,23 @@ export default function poiForm(state = initialState.poiForm, action) {
         media: action.payload.content, // eventually replace .content with .media
         links: action.payload.links
       }
+    case NEW_POI_CREATION_STARTED:
+      return {
+        ...state,
+        mapYear: action.payload.mapYear,
+        xCoord: action.payload.xCoord,
+        yCoord: action.payload.yCoord,
+        date: moment(`1/1/${action.payload.mapYear}`).utc()
+      }
+    case EDIT_POI_SET:
+      const { id, stories, ...poiFields } = action.payload
+      return {
+        ...state,
+        ...poiFields,
+        storyIds: action.payload.stories.map(s => s.id)
+      }
+    case POI_FORM_EXITED:
+      return initialState.poiForm
     default:
       return state
   }

@@ -1,5 +1,9 @@
-// stuff
-export const RECEIVE_STUFF = 'RECEIVE_STUFF'
+// app
+export const APP_LOADED = 'APP_LOADED'
+
+// auth
+export const USER_LOGGED_IN = 'USER_LOGGED_IN'
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
 
 // edit
 export const EDIT_MODE_ENABLED = 'EDIT_MODE_ENABLED'
@@ -35,6 +39,9 @@ export const POI_FORM_LINK_REMOVED = 'POI_FORM_LINK_REMOVED'
 export const POI_FORM_LINK_MODIFIED = 'POI_FORM_LINK_MODIFIED'
 export const POI_FORM_MEDIA_ADDED = 'POI_FORM_MEDIA_ADDED'
 export const POI_FORM_MEDIA_REMOVED = 'POI_FORM_MEDIA_REMOVED'
+export const NEW_POI_CREATION_STARTED = 'NEW_POI_CREATION_STARTED'
+export const POI_FORM_EXITED = 'POI_FORM_EXITED'
+export const EDIT_POI_SET = 'EDIT_POI_SET'
 
 // copy-paste
 export const POI_COPIED = 'POI_COPIED'
