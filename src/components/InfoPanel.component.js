@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, Carousel } from 'react-bootstrap'
 import YoutubePlayer from 'react-youtube'
+import { ROUTES } from './../'
 import { Icon, GetUniversalSearchResults } from './'
 import './../styles/App.css'
 import './../styles/infopanel.css'
@@ -8,7 +9,8 @@ import { utils } from './../utils'
 
 class InfoPanel extends Component {
   onClickEdit = () => {
-    this.props.enableEditMode()
+    this.props.editPOI()
+    this.props.history.push(ROUTES.FORM)
   }
 
   onClickDelete = () => {
@@ -29,21 +31,39 @@ class InfoPanel extends Component {
       isLastInStory,
       selectedPOI,
       isEditing,
-      shouldShowRealTimePOI,
       removePOIFormMedia,
       setNextPOIInStory,
-      setPreviousPOIInStory
+      setPreviousPOIInStory,
+      location
     } = this.props
 
+    const isRealTimePOI = location.pathname === ROUTES.FORM
+
     if (!selectedPOI) {
+      if (isStorySelected) {
+        return (
+          <div className="info-panel">
+            <h1>No POIs In Story</h1>
+          </div>
+        )
+      }
       return (
         <div className="info-panel">
           <GetUniversalSearchResults />
-          <h1>
-            {shouldShowRealTimePOI
-              ? 'Preview Will Appear Here'
-              : 'No POI Selected'}
-          </h1>
+          <h1>No POI Selected</h1>
+        </div>
+      )
+    }
+
+    const { name, date, description, storyIds, media, links } = selectedPOI
+    const displayFields = [name, date, description, storyIds, media, links]
+    if (
+      isRealTimePOI &&
+      !displayFields.some(el => (Array.isArray(el) ? !!el.length : !!el))
+    ) {
+      return (
+        <div className="info-panel">
+          <h1>Preview Will Appear Here</h1>
         </div>
       )
     } else {
@@ -52,15 +72,10 @@ class InfoPanel extends Component {
 
     const carousel = (
       <Carousel>
-        {selectedPOI.content.map(content => {
-          const url = content.contentUrl ? content.contentUrl : content
+        {media.map(media => {
+          const url = media.contentUrl
           const image = (
-            <Image
-              width={500}
-              height={500}
-              alt={shouldShowRealTimePOI ? content : content.caption}
-              src={url}
-            />
+            <Image width={500} height={500} alt={media.caption} src={url} />
           )
           const width = !!this.infoPanelDiv && this.infoPanelDiv.offsetWidth
           const youtubePlayer = (
@@ -77,12 +92,12 @@ class InfoPanel extends Component {
           return (
             <Carousel.Item key={url} className="carousel-item">
               {isEditing &&
-                !shouldShowRealTimePOI && (
+                isRealTimePOI && (
                   <Icon
                     type="Trash"
                     size="large"
                     className="carousel-item__delete-icon"
-                    onClick={() => removePOIFormMedia(content)}
+                    onClick={() => removePOIFormMedia(media)}
                   />
                 )}
               {displayContent}
@@ -92,15 +107,13 @@ class InfoPanel extends Component {
       </Carousel>
     )
 
-    const links = selectedPOI.links
-
     return (
       <div className="info-panel" ref={r => (this.infoPanelDiv = r)}>
-        {!!selectedPOI.name && (
+        {!!name && (
           <div className="heading">
-            <h1 className="heading__name">{selectedPOI.name}</h1>
+            <h1 className="heading__name">{name}</h1>
             {isEditing &&
-              !shouldShowRealTimePOI && (
+              !isRealTimePOI && (
                 <Icon
                   type="Edit"
                   size="large"
@@ -109,7 +122,7 @@ class InfoPanel extends Component {
                 />
               )}
             {isEditing &&
-              !shouldShowRealTimePOI && (
+              !isRealTimePOI && (
                 <Icon
                   type="Trash"
                   size="large"
@@ -120,18 +133,18 @@ class InfoPanel extends Component {
           </div>
         )}
 
-        {!!selectedPOI.content.length && (
+        {!!media.length && (
           <div>
             <hr />
-            <div>{!!selectedPOI.content.length && carousel}</div>
+            <div>{!!media.length && carousel}</div>
           </div>
         )}
 
-        {!!selectedPOI.description && (
+        {!!description && (
           <div>
             <hr />
             <div className="description">
-              <p className="description__text">{selectedPOI.description}</p>
+              <p className="description__text">{description}</p>
             </div>
           </div>
         )}
@@ -143,7 +156,9 @@ class InfoPanel extends Component {
               <h4>Additional Links:</h4>
               <ul className="additional-links__ul">
                 {links.map((link, i) => {
-                  const displayText = link.urlName ? link.urlName : link.url
+                  const displayText = link.displayName
+                    ? link.displayName
+                    : link.url
                   const validatedLink = utils.validateLink(link.url)
                   return (
                     <li key={link.url + i} className="additional-links__li">
@@ -165,7 +180,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowLeft"
                 size="large"
-                onClick={setNextPOIInStory}
+                onClick={setPreviousPOIInStory}
                 disabled={isFirstInStory}
               />
               <h4 className="walkthrough__page-counter">
@@ -174,7 +189,7 @@ class InfoPanel extends Component {
               <Icon
                 type="ArrowRight"
                 size="large"
-                onClick={setPreviousPOIInStory}
+                onClick={setNextPOIInStory}
                 disabled={isLastInStory}
               />
             </div>

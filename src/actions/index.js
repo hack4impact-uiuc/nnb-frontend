@@ -1,6 +1,6 @@
-import { fetchStuff } from './stuff.action'
+import { APP_LOADED } from './actionTypes'
 import { enableEditMode, disableEditMode } from './edit.action'
-import { loadMaps, createMap, removeMap, setSelectedMap } from './maps.action'
+import { loadMaps, createMap, deleteMap, setSelectedMap } from './maps.action'
 import {
   loadStories,
   loadStoriesByPOIId,
@@ -26,7 +26,11 @@ import {
   removePOIFormLink,
   modifyPOIFormLink,
   addPOIFormMedia,
-  removePOIFormMedia
+  removePOIFormMedia,
+  createNewPOI,
+  addPOIFormYoutubeMedia,
+  exitPOIForm,
+  editPOI
 } from './poiForm.action'
 import {
   toggleSidebar,
@@ -45,14 +49,19 @@ import {
   updateStorySearchInput,
   storySearchPOIs
 } from './search.action'
+import { login, logout } from './auth.action'
+
+function appLoaded() {
+  return { type: APP_LOADED }
+}
 
 export {
-  fetchStuff,
+  appLoaded,
   enableEditMode,
   disableEditMode,
   loadMaps,
   createMap,
-  removeMap,
+  deleteMap,
   setSelectedMap,
   loadStories,
   loadStoriesByPOIId,
@@ -67,6 +76,10 @@ export {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
+  createNewPOI,
+  addPOIFormYoutubeMedia,
+  exitPOIForm,
+  editPOI,
   loadPOIs,
   loadPOIById,
   createPOI,
@@ -87,5 +100,7 @@ export {
   updatePoisInput,
   loadEditingPois,
   showStoryModal,
-  exitStoryModal
+  exitStoryModal,
+  login,
+  logout
 }

@@ -10,7 +10,7 @@ export default class GetUniversalSearchResults extends Component {
   }
 
   onSuggestionSelected = (event, { suggestion }) => {
-    let mapYear = suggestion.mapByYear
+    let mapYear = suggestion.mapYear
     let res = this.props.maps.filter(m => m.year === mapYear)
     this.props.setSelectedMap(res[0])
     this.props.setSelectedPOI(suggestion)

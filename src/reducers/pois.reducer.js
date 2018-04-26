@@ -6,7 +6,8 @@ import {
   POI_DELETED,
   POI_SELECTED,
   NEXT_POI_IN_STORY_SET,
-  PREVIOUS_POI_IN_STORY_SET
+  PREVIOUS_POI_IN_STORY_SET,
+  NEW_POI_CREATION_STARTED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -21,14 +22,16 @@ export default function pois(state = initialState.pois, action) {
     case POI_CREATED:
       return {
         ...state,
-        activePOIs: [...state.activePOIs, action.payload]
+        activePOIs: [...state.activePOIs, action.payload],
+        selectedPOIId: action.payload.id
       }
     case POI_UPDATED:
       return {
         ...state,
         activePOIs: [...state.activePOIs].map(
           poi => (poi.id === action.payload.id ? action.payload : poi)
-        )
+        ),
+        selectedPOIId: action.payload.id
       }
     case POI_DELETED:
       return {
@@ -45,12 +48,17 @@ export default function pois(state = initialState.pois, action) {
     case NEXT_POI_IN_STORY_SET:
       return {
         ...state,
-        selectedPOIId: selectedPOIIndex + 1
+        selectedPOIId: activePOIs[selectedPOIIndex + 1].id
       }
     case PREVIOUS_POI_IN_STORY_SET:
       return {
         ...state,
-        selectedPOIId: selectedPOIIndex - 1
+        selectedPOIId: activePOIs[selectedPOIIndex - 1].id
+      }
+    case NEW_POI_CREATION_STARTED:
+      return {
+        ...state,
+        selectedPOIId: null
       }
     default:
       return state
