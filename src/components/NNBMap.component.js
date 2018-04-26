@@ -14,18 +14,7 @@ class NNBMap extends Component {
     minScale: 1.0
   }
 
-  constructor(props) {
-    super(props)
-    this.onImageClick = this.onImageClick.bind(this)
-    this.updateMapImageDimensions = this.updateMapImageDimensions.bind(this)
-    this.startAddPOIFlow = this.startAddPOIFlow.bind(this)
-    this.cancelAddPOIFlow = this.cancelAddPOIFlow.bind(this)
-    this.onWindowResize = this.onWindowResize.bind(this)
-    this.showConfirmDeleteMap = this.showConfirmDeleteMap.bind(this)
-    this.clampCoordinates = this.clampCoordinates.bind(this)
-  }
-
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     const { selectedMap } = this.props
     if (nextProps.isEditing === false) {
       this.setState({ isChoosingNewPOICoords: false })
@@ -40,15 +29,15 @@ class NNBMap extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     window.addEventListener('resize', this.onWindowResize, false)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener('resize', this.onWindowResize, false)
   }
 
-  onImageClick(event, scale) {
+  onImageClick = (event, scale) => {
     const { createNewPOI, history, selectedMap } = this.props
 
     if (this.state.isChoosingNewPOICoords) {
@@ -115,7 +104,7 @@ class NNBMap extends Component {
     }
   }
 
-  clampCoordinates(translationDirection, scale, boundingSize, mapSize) {
+  clampCoordinates = (translationDirection, scale, boundingSize, mapSize) => {
     if (translationDirection > 0) {
       return 0
     } else if (
