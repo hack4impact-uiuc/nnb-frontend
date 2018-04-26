@@ -35,8 +35,6 @@ class InfoPanel extends Component {
       setNextPOIInStory,
       setPreviousPOIInStory,
       copyPOI,
-      // selectedEvent,
-      // isRealTimePOI,
       location
     } = this.props
 
