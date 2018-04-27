@@ -29,6 +29,8 @@ import {
   removePOIFormMedia,
   createNewPOI,
   addPOIFormYoutubeMedia,
+  copyPOI,
+  pastePOI,
   exitPOIForm,
   editPOI
 } from './poiForm.action'
@@ -75,6 +77,8 @@ export {
   createPOI,
   updatePOI,
   deletePOI,
+  copyPOI,
+  pastePOI,
   setSelectedPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,

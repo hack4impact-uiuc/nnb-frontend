@@ -135,7 +135,7 @@ Lets you see new, modified, and deleted lines compared to the previous commit ne
 Lets you see code errors while editing in Sublime
 
 1) Install `SublimeLinter` via package control
-2) Install `Sublime-contrib-eslint` via package control
+2) Install `SublimeLinter-eslint` via package control
 3) Restart Sublime
 4) Make sure `eslint` is enabled by going into package control -> `SublimeLinter: Toggle Linter` -> `eslint` -> `enabled`
 
