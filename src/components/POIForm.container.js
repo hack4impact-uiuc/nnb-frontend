@@ -17,6 +17,8 @@ import {
 import POIForm from './POIForm.component'
 
 function mapStateToProps(state) {
+  const authorizationToken = state.auth.authorizationToken
+
   return {
     // TODO: probs should scope all the poi fields into a poi object
     ...state.poiForm,
@@ -24,7 +26,8 @@ function mapStateToProps(state) {
       a.name.localeCompare(b.name)
     ),
     isUpdatingPOI: !!state.pois.selectedPOIId,
-    selectedPOIId: state.pois.selectedPOIId
+    selectedPOIId: state.pois.selectedPOIId,
+    authorizationToken
   }
 }
 

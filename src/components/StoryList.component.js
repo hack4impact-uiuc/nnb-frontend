@@ -32,6 +32,7 @@ class StoryList extends Component {
   }
 
   onClickDelete = story => {
+    const { authorizationToken } = this.props
     if (
       window.confirm(
         'Delete the current story? This will permanently remove the story from the story list.'
@@ -39,7 +40,7 @@ class StoryList extends Component {
     ) {
       const { setSelectedStory, deleteStory } = this.props
       setSelectedStory(null)
-      deleteStory(story.id)
+      deleteStory(story.id, authorizationToken)
     }
   }
 

@@ -141,7 +141,8 @@ class NNBMap extends Component {
         activePOIs,
         selectedPOIId,
         setSelectedPOI,
-        loadPOIs
+        loadPOIs,
+        authorizationToken
       } = this.props
       const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
 
@@ -153,7 +154,7 @@ class NNBMap extends Component {
         setSelectedPOI({ id: null })
       }
 
-      deleteMap(selectedMap.id)
+      deleteMap(selectedMap.id, authorizationToken)
         .then(() => loadMaps())
         .then(() => loadPOIs())
     }

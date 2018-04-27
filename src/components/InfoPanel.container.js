@@ -18,7 +18,7 @@ import {
 import InfoPanel from './InfoPanel.component'
 
 function mapStateToProps(state, ownProps) {
-  const { timeline, pois, stories, edit, poiForm } = state
+  const { timeline, pois, stories, edit, poiForm, auth } = state
   const { maps, selectedMapId } = timeline
   const { activePOIs, selectedPOIId } = pois
   const { selectedStoryId } = stories
@@ -33,6 +33,8 @@ function mapStateToProps(state, ownProps) {
     ? realTimePOI
     : activePOIs[selectedPOIIndex]
 
+  const authorizationToken = auth.authorizationToken
+
   return {
     ...state.pois,
     ...state.stories,
@@ -42,7 +44,9 @@ function mapStateToProps(state, ownProps) {
     selectedMap: maps.find(map => map.id === selectedMapId),
     isStorySelected,
     isFirstInStory: isStorySelected && selectedPOIIndex === 0,
-    isLastInStory: isStorySelected && selectedPOIIndex === activePOIs.length - 1
+    isLastInStory:
+      isStorySelected && selectedPOIIndex === activePOIs.length - 1,
+    authorizationToken
   }
 }
 

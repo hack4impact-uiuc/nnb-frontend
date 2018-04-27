@@ -107,7 +107,8 @@ export default class POIForm extends Component {
       media,
       links,
       updatePOI,
-      createPOI
+      createPOI,
+      authorizationToken
     } = this.props
     const poi = {
       mapYear,
@@ -121,9 +122,9 @@ export default class POIForm extends Component {
       links
     }
     if (selectedPOIId) {
-      updatePOI(selectedPOIId, poi)
+      updatePOI(selectedPOIId, poi, authorizationToken)
     } else {
-      createPOI(poi)
+      createPOI(poi, authorizationToken)
     }
     this.onExit()
   }

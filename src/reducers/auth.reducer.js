@@ -11,17 +11,20 @@ export default function auth(state = initialState.auth, action) {
     case APP_LOADED:
       return {
         ...state,
-        isLoggedIn: storage.get('auth')
+        isLoggedIn: storage.get('auth'),
+        authToken: storage.get('authorizationToken')
       }
     case USER_LOGGED_IN:
       return {
         ...state,
-        isLoggedIn: true
+        isLoggedIn: !!action.payload,
+        authorizationToken: action.payload
       }
     case USER_LOGGED_OUT:
       return {
         ...state,
-        isLoggedIn: false
+        isLoggedIn: false,
+        authorizationToken: ''
       }
     default:
       return state

@@ -6,8 +6,11 @@ import MapManager from './MapManager.component'
 
 function mapStateToProps(state) {
   const { maps } = state.timeline
+  const authorizationToken = state.auth.authorizationToken
+
   return {
-    mapYears: maps.map(map => map.year)
+    mapYears: maps.map(map => map.year),
+    authorizationToken
   }
 }
 
