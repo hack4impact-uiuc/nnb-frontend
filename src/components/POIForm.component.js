@@ -187,15 +187,17 @@ export default class POIForm extends Component {
           />
           {this.fileUpload()}
           <LinkTable />
-          <FieldGroup
-            inputType="checklist"
-            className="poi-form__field-group specifier"
-            labelClassName="poi-form__label"
-            options={stories}
-            label="Add To Stories"
-            onClick={togglePOIFormStoryId}
-            checkedOptionIds={storyIds}
-          />
+          {stories.length !== 0 && (
+            <FieldGroup
+              inputType="checklist"
+              className="poi-form__field-group specifier"
+              labelClassName="poi-form__label"
+              options={stories}
+              label="Add To Stories"
+              onClick={togglePOIFormStoryId}
+              checkedOptionIds={storyIds}
+            />
+          )}
 
           <div className="end-buttons">
             <button
