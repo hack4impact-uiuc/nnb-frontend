@@ -28,7 +28,6 @@ export default class LinkTable extends Component {
               <tr key={`${index}`}>
                 {Object.keys(link).map(key => (
                   <td key={`${key}${index}`}>
-                    {/* TODO: the bug with the first input being unfocused is back =( */}
                     <FieldGroup
                       inputType="text"
                       value={link[key]}
