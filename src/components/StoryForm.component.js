@@ -8,13 +8,15 @@ class StoryForm extends Component {
   }
 
   onSelectPoi = poi => {
-    if (!this.props.inputPois.some(p => p.id === poi.id)) {
-      this.props.updatePoisInput([...this.props.inputPois, poi])
+    const { selectedPois, updateSelectedPois } = this.props
+    if (!selectedPois.some(p => p.id === poi.id)) {
+      updateSelectedPois([...selectedPois, poi])
     }
   }
 
   removeInputPoi = poi => {
-    this.props.updatePoisInput(this.props.inputPois.filter(p => p.id != poi.id))
+    const { selectedPois, updateSelectedPois } = this.props
+    updateSelectedPois(selectedPois.filter(p => p.id != poi.id))
   }
 
   closeStoryForm = () => {
@@ -27,12 +29,12 @@ class StoryForm extends Component {
       hideStoryForm,
       setEditingStoryId,
       updateStoryNameInput,
-      updatePoisInput
+      updateSelectedPois
     } = this.props
     hideStoryForm()
     setEditingStoryId(null)
     updateStoryNameInput('')
-    updatePoisInput([])
+    updateSelectedPois([])
   }
 
   onSubmit = () => {
@@ -41,10 +43,10 @@ class StoryForm extends Component {
       editingStoryId,
       createStory,
       updateStory,
-      inputPois
+      selectedPois
     } = this.props
 
-    const story = { name: inputStoryName, poiIds: inputPois.map(p => p.id) }
+    const story = { name: inputStoryName, poiIds: selectedPois.map(p => p.id) }
 
     if (editingStoryId) {
       updateStory(editingStoryId, story)
@@ -57,7 +59,7 @@ class StoryForm extends Component {
   }
 
   render() {
-    const { inputStoryName, inputPois } = this.props
+    const { inputStoryName, selectedPois } = this.props
 
     return (
       <div className="story-form">
@@ -79,21 +81,21 @@ class StoryForm extends Component {
             onChange={this.onStoryNameEdit}
           />
         </div>
-        <div className='story-form__poi-list-container'>
-          <div className='story-form__search-bar'>
-            <h4 className='story-form__search-title'>Search POIs to add:</h4>
-            < GetStorySearchResults handleSelect={this.onSelectPoi} />
+        <div className="story-form__poi-list-container">
+          <div className="story-form__search-bar">
+            <h4 className="story-form__search-title">Search POIs to add:</h4>
+            <GetStorySearchResults handleSelect={this.onSelectPoi} />
           </div>
-            <div className='story-form__poi-list'>
-              <h4>POIs in story:</h4>
-              {inputPois.map(poi => {
-                return (
-                  <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
-                    {poi.name}
-                  </li>
-                )
-              })}
-            </div>
+          <div className="story-form__poi-list">
+            <h4>POIs in story:</h4>
+            {selectedPois.map(poi => {
+              return (
+                <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
+                  {poi.name}
+                </li>
+              )
+            })}
+          </div>
         </div>
         <button
           className="button button--dark button--full-width story-form__submit-button"

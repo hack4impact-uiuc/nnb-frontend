@@ -8,8 +8,8 @@ function universalSearchInputChanged(value) {
   }
 }
 
-function poisUniversalSearched(search) {
-  return { type: actionTypes.POIS_UNIVERSAL_SEARCHED, payload: search }
+function universalPoisSearched(search) {
+  return { type: actionTypes.UNIVERSAL_POIS_SEARCHED, payload: search }
 }
 
 function storySearchInputChanged(value) {
@@ -19,15 +19,15 @@ function storySearchInputChanged(value) {
   }
 }
 
-function poisStorySearched(search) {
-  return { type: actionTypes.POIS_STORY_SEARCHED, payload: search }
+function storyPoisSearched(search) {
+  return { type: actionTypes.STORY_POIS_SEARCHED, payload: search }
 }
 
 export function updateUniversalSearchInput(value) {
   return dispatch => dispatch(universalSearchInputChanged(value))
 }
 
-export function universalSearchPOIs() {
+export function searchUniversalPOIs() {
   return (dispatch, getState) => {
     const store = getState()
     const query = store.searchPoi.universalQuery
@@ -35,7 +35,7 @@ export function universalSearchPOIs() {
       query,
       name: true,
       description: true
-    }).then(pois => dispatch(poisUniversalSearched(pois)))
+    }).then(pois => dispatch(universalPoisSearched(pois)))
   }
 }
 
@@ -43,7 +43,7 @@ export function updateStorySearchInput(value) {
   return dispatch => dispatch(storySearchInputChanged(value))
 }
 
-export function storySearchPOIs() {
+export function searchStoryPOIs() {
   return (dispatch, getState) => {
     const store = getState()
     const query = store.searchPoi.storyQuery
@@ -51,6 +51,6 @@ export function storySearchPOIs() {
       query,
       name: true,
       description: false
-    }).then(pois => dispatch(poisStorySearched(pois)))
+    }).then(pois => dispatch(storyPoisSearched(pois)))
   }
 }

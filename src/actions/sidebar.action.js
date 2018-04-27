@@ -21,20 +21,20 @@ function storyNameInputUpdated(storyName) {
   return { type: actionTypes.STORY_NAME_INPUT_UPDATED, payload: storyName }
 }
 
-function poisInputUpdated(pois) {
-  return { type: actionTypes.POIS_INPUT_UPDATED, payload: pois }
+function selectedPoisUpdated(pois) {
+  return { type: actionTypes.SELECTED_POIS_UPDATED, payload: pois }
 }
 
 function editingPoisLoaded(pois) {
   return { type: actionTypes.EDITING_POIS_LOADED, payload: pois }
 }
 
-function storyModalStart() {
-  return { type: actionTypes.SHOW_STORY_MODAL }
+function storyModalOpened() {
+  return { type: actionTypes.STORY_MODAL_OPENED }
 }
 
-function storyModalExit() {
-  return { type: actionTypes.EXIT_STORY_MODAL }
+function storyModalExited() {
+  return { type: actionTypes.STORY_MODAL_EXITED }
 }
 
 export function toggleSidebar() {
@@ -57,8 +57,8 @@ export function updateStoryNameInput(storyName) {
   return dispatch => dispatch(storyNameInputUpdated(storyName))
 }
 
-export function updatePoisInput(pois) {
-  return dispatch => dispatch(poisInputUpdated(pois))
+export function updateSelectedPois(pois) {
+  return dispatch => dispatch(selectedPoisUpdated(pois))
 }
 
 export function loadEditingPois() {
@@ -72,9 +72,9 @@ export function loadEditingPois() {
 }
 
 export function showStoryModal() {
-  return dispatch => dispatch(storyModalStart())
+  return dispatch => dispatch(storyModalOpened())
 }
 
 export function exitStoryModal() {
-  return dispatch => dispatch(storyModalExit())
+  return dispatch => dispatch(storyModalExited())
 }

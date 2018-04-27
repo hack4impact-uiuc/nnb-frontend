@@ -11,19 +11,17 @@ export default class GetUniversalSearchResults extends Component {
   }
 
   onSuggestionSelected = (event, { suggestion }) => {
-    let mapYear = suggestion.mapYear
-    let res = this.props.maps.filter(m => m.year === mapYear)
-    this.props.setSelectedMap(res[0])
+    const mapYear = suggestion.mapYear
+    const destinationMap = this.props.maps.filter(m => m.year === mapYear)
+    this.props.setSelectedMap(destinationMap[0])
     this.props.setSelectedPOI(suggestion)
   }
 
   onSuggestionsFetchRequested = () => {
-    this.props.universalSearchPOIs()
+    this.props.searchUniversalPOIs()
   }
 
-  getPoiValue = poi => poi.name
-
-  renderPoi = poi => {
+  renderSuggestion = poi => {
     return <span value={poi.id}>{poi.name}</span>
   }
 
@@ -42,15 +40,16 @@ export default class GetUniversalSearchResults extends Component {
           suggestions={pois}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={this.getPoiValue}
-          renderSuggestion={this.renderPoi}
+          getSuggestionValue={poi => poi.name}
+          renderSuggestion={this.renderSuggestion}
           inputProps={inputProps}
-          theme={{container: 'search-container',
-                  suggestionsContainerOpen: 'search-suggContainer',
-                  suggestionHighlighted: 'search-suggHighlight',
-                  suggestion: 'search-suggestion',
-                  suggestionsList: 'search-suggList'
-                  } }
+          theme={{
+            container: 'search-container',
+            suggestionsContainerOpen: 'search-suggContainer',
+            suggestionHighlighted: 'search-suggHighlight',
+            suggestion: 'search-suggestion',
+            suggestionsList: 'search-suggList'
+          }}
         />
       </div>
     )

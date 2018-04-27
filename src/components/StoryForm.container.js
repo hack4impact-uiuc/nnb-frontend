@@ -6,7 +6,7 @@ import {
   hideStoryForm,
   updateStoryNameInput,
   setEditingStoryId,
-  updatePoisInput,
+  updateSelectedPois,
   exitStoryModal
 } from './../actions'
 import StoryForm from './StoryForm.component'
@@ -16,7 +16,7 @@ function mapStateToProps(state) {
     stories: state.stories.stories,
     editingStoryId: state.sidebar.editingStoryId,
     inputStoryName: state.sidebar.inputStoryName,
-    inputPois: state.sidebar.inputPois
+    selectedPois: state.sidebar.selectedPois
   }
 }
 
@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatch) {
       hideStoryForm,
       updateStoryNameInput,
       setEditingStoryId,
-      updatePoisInput,
+      updateSelectedPois,
       exitStoryModal
     },
     dispatch

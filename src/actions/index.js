@@ -38,16 +38,16 @@ import {
   hideStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
-  updatePoisInput,
+  updateSelectedPois,
   loadEditingPois,
   showStoryModal,
   exitStoryModal
 } from './sidebar.action'
 import {
   updateUniversalSearchInput,
-  universalSearchPOIs,
+  searchUniversalPOIs,
   updateStorySearchInput,
-  storySearchPOIs
+  searchStoryPOIs
 } from './search.action'
 import { login, logout } from './auth.action'
 
@@ -94,10 +94,10 @@ export {
   setEditingStoryId,
   updateStoryNameInput,
   updateUniversalSearchInput,
-  universalSearchPOIs,
+  searchUniversalPOIs,
   updateStorySearchInput,
-  storySearchPOIs,
-  updatePoisInput,
+  searchStoryPOIs,
+  updateSelectedPois,
   loadEditingPois,
   showStoryModal,
   exitStoryModal,

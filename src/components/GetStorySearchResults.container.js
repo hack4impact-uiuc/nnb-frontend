@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateStorySearchInput, storySearchPOIs } from './../actions'
+import { updateStorySearchInput, searchStoryPOIs } from './../actions'
 import GetStorySearchResults from './GetStorySearchResults.component'
 
 function mapStateToProps(state) {
@@ -14,7 +14,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       updateStorySearchInput,
-      storySearchPOIs
+      searchStoryPOIs
     },
     dispatch
   )

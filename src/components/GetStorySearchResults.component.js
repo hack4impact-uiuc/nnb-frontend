@@ -20,7 +20,7 @@ export default class GetStorySearchResults extends Component {
   }
 
   onSuggestionsFetchRequested = () => {
-    this.props.storySearchPOIs()
+    this.props.searchStoryPOIs()
   }
 
   getPoiValue = poi => poi.name
@@ -48,13 +48,14 @@ export default class GetStorySearchResults extends Component {
           getSuggestionValue={this.getPoiValue}
           renderSuggestion={this.renderPoi}
           inputProps={inputProps}
-          theme={{container: 'search-container',
-                  suggestionsContainerOpen: 'search-suggContainer',
-                  suggestionHighlighted: 'search-suggHighlight',
-                  suggestion: 'search-suggestion',
-                  suggestionsList: 'search-suggList',
-                  input: 'search-input'
-                  } }
+          theme={{
+            container: 'search-container',
+            suggestionsContainerOpen: 'search-suggContainer',
+            suggestionHighlighted: 'search-suggHighlight',
+            suggestion: 'search-suggestion',
+            suggestionsList: 'search-suggList',
+            input: 'search-input'
+          }}
         />
       </div>
     )

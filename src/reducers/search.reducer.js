@@ -1,9 +1,9 @@
 import initialState from './initialState'
 import {
   UNIVERSAL_SEARCH_INPUT_CHANGED,
-  POIS_UNIVERSAL_SEARCHED,
+  UNIVERSAL_POIS_SEARCHED,
   STORY_SEARCH_INPUT_CHANGED,
-  POIS_STORY_SEARCHED
+  STORY_POIS_SEARCHED
 } from './../actions/actionTypes'
 
 export default function searchPoi(state = initialState.searchPoi, action) {
@@ -13,7 +13,7 @@ export default function searchPoi(state = initialState.searchPoi, action) {
         ...state,
         universalQuery: action.payload.value
       }
-    case POIS_UNIVERSAL_SEARCHED:
+    case UNIVERSAL_POIS_SEARCHED:
       return {
         ...state,
         universalPois: action.payload
@@ -23,7 +23,7 @@ export default function searchPoi(state = initialState.searchPoi, action) {
         ...state,
         storyQuery: action.payload.value
       }
-    case POIS_STORY_SEARCHED:
+    case STORY_POIS_SEARCHED:
       return {
         ...state,
         storyPois: action.payload

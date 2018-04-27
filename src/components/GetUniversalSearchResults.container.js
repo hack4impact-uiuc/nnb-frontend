@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   updateUniversalSearchInput,
-  universalSearchPOIs,
+  searchUniversalPOIs,
   setSelectedPOI,
   setSelectedMap
 } from './../actions'
@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       updateUniversalSearchInput,
-      universalSearchPOIs,
+      searchUniversalPOIs,
       setSelectedPOI,
       setSelectedMap
     },

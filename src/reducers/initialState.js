@@ -34,7 +34,7 @@ const initialState = {
     shouldShowStoryForm: false,
     editingStoryId: null,
     inputStoryName: '',
-    inputPois: [],
+    selectedPois: [],
     shouldShowModal: false
   },
   searchPoi: {
