@@ -7,7 +7,6 @@ import {
 import { storage } from './../utils'
 
 export default function auth(state = initialState.auth, action) {
-  // storage.set('authorizationToken', false)
   switch (action.type) {
     case APP_LOADED:
     case USER_LOGGED_IN:

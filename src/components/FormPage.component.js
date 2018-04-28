@@ -6,7 +6,6 @@ import './../styles/App.css'
 class FormPage extends Component {
   render() {
     const { isLoggedIn } = this.props
-    console.log(isLoggedIn)
     return !isLoggedIn ? (
       <Redirect to="/login" />
     ) : (

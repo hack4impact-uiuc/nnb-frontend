@@ -9,7 +9,6 @@ function userLoggedOut() {
   return { type: actionTypes.USER_LOGGED_OUT }
 }
 
-// TODO: integrate with api
 export function login(params) {
   return dispatch => {
     return Api.loginUser(params)
