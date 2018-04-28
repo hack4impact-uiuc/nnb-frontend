@@ -68,7 +68,7 @@ class StoryList extends Component {
     )
 
     return (
-      <div>
+      <div className="sidebar-container">
         <Sidebar
           sidebar={sidebarContent}
           open={this.props.shouldShowSidebar}
