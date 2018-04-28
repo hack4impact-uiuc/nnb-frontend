@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { createMap, loadMaps, loadPOIs } from './../actions'
+import { createMap, loadMaps, loadPOIs, deleteMap } from './../actions'
 import MapManager from './MapManager.component'
 
 function mapStateToProps(state) {
-  const { maps } = state.timeline
+  const { maps, selectedMapId } = state.timeline
   return {
-    mapYears: maps.map(map => map.year)
+    ...state.pois,
+    mapYears: maps.map(map => map.year),
+    selectedMap: maps.find(map => map.id === selectedMapId)
   }
 }
 
@@ -16,7 +18,8 @@ function mapDispatchToProps(dispatch) {
     {
       createMap,
       loadMaps,
-      loadPOIs
+      loadPOIs,
+      deleteMap
     },
     dispatch
   )

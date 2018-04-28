@@ -128,38 +128,6 @@ class NNBMap extends Component {
     })
   }
 
-  showConfirmDeleteMap = () => {
-    if (
-      window.confirm(
-        'Delete the current map? This will also delete all POIs associated with this map.'
-      )
-    ) {
-      const {
-        deleteMap,
-        selectedMap,
-        loadMaps,
-        activePOIs,
-        selectedPOIId,
-        setPreviewingPOI,
-        setSelectedPOI,
-        loadPOIs
-      } = this.props
-      const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
-
-      // explicity call this since the payload for MAP_DELETED only includes the map id
-      // but the pois only contain the map year.
-      // therefore we can't tell if the poi is on that map
-      // ideally all this should be reactive but it would require changing the api and db schema...
-      if (selectedPOI && selectedMap.year === selectedPOI.mapYear) {
-        setSelectedPOI({ id: null })
-      }
-
-      deleteMap(selectedMap.id)
-        .then(() => loadMaps())
-        .then(() => loadPOIs())
-    }
-  }
-
   render() {
     const {
       mapImageLoaded,
@@ -204,12 +172,6 @@ class NNBMap extends Component {
                     onClick={this.cancelAddPOIFlow}
                   />
                 )}
-                <Icon
-                  type="Trash2"
-                  size="large"
-                  className="map-icon map-icon__box"
-                  onClick={this.showConfirmDeleteMap}
-                />
               </div>
             )}
             {isEditing &&

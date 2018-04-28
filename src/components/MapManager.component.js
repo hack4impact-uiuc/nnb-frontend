@@ -81,6 +81,38 @@ class MapManager extends Component {
     return Number.isInteger(inputYear) && inputYear >= 0 && !inputYearExists
   }
 
+  showConfirmDeleteMap = () => {
+    if (
+      window.confirm(
+        'Delete the current map? This will also delete all POIs associated with this map.'
+      )
+    ) {
+      const {
+        deleteMap,
+        selectedMap,
+        loadMaps,
+        activePOIs,
+        selectedPOIId,
+        setPreviewingPOI,
+        setSelectedPOI,
+        loadPOIs
+      } = this.props
+      const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
+
+      // explicity call this since the payload for MAP_DELETED only includes the map id
+      // but the pois only contain the map year.
+      // therefore we can't tell if the poi is on that map
+      // ideally all this should be reactive but it would require changing the api and db schema...
+      if (selectedPOI && selectedMap.year === selectedPOI.mapYear) {
+        setSelectedPOI({ id: null })
+      }
+
+      deleteMap(selectedMap.id)
+        .then(() => loadMaps())
+        .then(() => loadPOIs())
+    }
+  }
+
   shouldDisableSubmit = () => {
     const { inputYear, imageUrl } = this.state
     return !inputYear || !imageUrl || !this.isFormValid()
@@ -92,7 +124,8 @@ class MapManager extends Component {
       inputYear,
       isUploadingMedia,
       imageUrl,
-      error
+      error,
+      showConfirmDeleteMap
     } = this.state
 
     return (
@@ -103,7 +136,12 @@ class MapManager extends Component {
           onClick={this.toggleShowInputFields}
           className="map-manager-icon__icon"
         />
-
+        <Icon
+          type="Trash2"
+          size="large"
+          className="map-icon map-icon__box"
+          onClick={this.showConfirmDeleteMap}
+        />
         <Modal show={showInputFields} onHide={this.toggleShowInputFields}>
           <Modal.Header closeButton>
             <Modal.Title>Add a map</Modal.Title>
