@@ -36,6 +36,12 @@ function createRequest(method, endpoint, options, headers) {
       ? err.response.body.message
       : err.message
     toastNotify(errorMessage, { type: 'error' })
+
+    // return to allow removal of the auth token from storage if it's already expired/invalid
+    if (endpoint === `${AUTH_URL}/logout`) {
+      return
+    }
+
     throw errorMessage
   })
 }
