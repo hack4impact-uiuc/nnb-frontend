@@ -3,6 +3,7 @@ import cloudinary from 'cloudinary'
 import { apiConfig, cloudinaryConfig } from './apiConfig'
 import adapters from './apiAdapters'
 import { storage } from './../utils'
+import { toastNotify } from './..'
 
 const REQUEST_METHODS = {
   GET: 'get',
@@ -31,8 +32,11 @@ function createRequest(method, endpoint, options, headers) {
     }
   }
   return req.then(response => response.body).catch(err => {
-    console.error(err)
-    throw 'something went wrong :('
+    const errorMessage = !!err.response
+      ? err.response.body.message
+      : err.message
+    toastNotify(errorMessage, { type: 'error' })
+    throw errorMessage
   })
 }
 

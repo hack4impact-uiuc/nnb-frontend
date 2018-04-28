@@ -9,6 +9,7 @@ import { Route } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
 import { Explore, FormPage, LoginPage, NavBar } from './components'
+import { ToastContainer, toast } from 'react-toastify'
 import {
   appLoaded,
   exitPOIForm,
@@ -17,6 +18,7 @@ import {
   setSelectedMap
 } from './actions'
 import registerServiceWorker from './registerServiceWorker'
+import './styles/toast.css'
 
 export const ROUTES = {
   INDEX: '/',
@@ -53,6 +55,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <div>
         <NavBar />
+        <ToastContainer style={{ color: 'red' }} />
         <Route exact path={ROUTES.INDEX} component={Explore} />
         <Route exact path={ROUTES.FORM} component={FormPage} />
         <Route exact path={ROUTES.LOGIN} component={LoginPage} />
@@ -61,5 +64,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+
+export const toastNotify = (message, options) => toast(message, options)
 
 registerServiceWorker()
