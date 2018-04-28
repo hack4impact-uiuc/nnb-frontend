@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Alert, Form } from 'react-bootstrap'
-import { Redirect } from 'react-router'
 import { ROUTES } from './../'
 import { FieldGroup } from './'
 import './../styles/login.css'
@@ -38,11 +37,8 @@ export default class LoginPage extends Component {
 
   render() {
     const { username, password, error } = this.state
-    const { isLoggedIn } = this.props
 
-    return isLoggedIn ? (
-      <Redirect to="/" />
-    ) : (
+    return (
       <div className="container login-container">
         <Form className="login">
           <div className="header">
