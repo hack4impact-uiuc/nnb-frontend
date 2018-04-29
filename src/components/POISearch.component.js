@@ -22,6 +22,7 @@ export default class POISearch extends Component {
       onChange: onChangeInput
     }
 
+    // TODO: address failed propType `onSuggestionsClearRequested`
     return (
       <div>
         <Autosuggest

@@ -52,6 +52,14 @@ function poiFormMediaRemoved(link) {
   }
 }
 
+function poiCopied(poi) {
+  return { type: actionTypes.POI_COPIED, payload: poi }
+}
+
+function poiPasted(poi) {
+  return { type: actionTypes.POI_PASTED, payload: poi }
+}
+
 function newPOICreationStarted(mapYear, xCoord, yCoord) {
   return {
     type: actionTypes.NEW_POI_CREATION_STARTED,
@@ -105,6 +113,14 @@ export function addPOIFormYoutubeMedia(youtubeVideoId) {
 
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
+}
+
+export function copyPOI(poi) {
+  return dispatch => dispatch(poiCopied(poi))
+}
+
+export function pastePOI(poi) {
+  return dispatch => dispatch(poiPasted(poi))
 }
 
 export function createNewPOI(mapYear, xCoord, yCoord) {

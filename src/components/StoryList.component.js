@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Sidebar from 'react-sidebar'
-import { Icon, StoryForm, StoryModal } from './'
+import { Icon, StoryModal } from './'
 import './../styles/storylist.css'
 import './../styles/App.css'
 import './../styles/button.css'
@@ -8,9 +8,10 @@ import classnames from 'classnames'
 
 class StoryList extends Component {
   onSelectStory = storyId => {
-    const { setSelectedStory, loadPOIs } = this.props
+    const { setSelectedStory, loadPOIs, toggleSidebar } = this.props
     setSelectedStory(storyId)
     loadPOIs()
+    toggleSidebar()
   }
 
   onExitStory = () => {

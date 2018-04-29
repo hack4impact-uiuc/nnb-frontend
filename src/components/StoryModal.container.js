@@ -1,6 +1,4 @@
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { exitStoryModal } from './../actions'
 import StoryModal from './StoryModal.component'
 
 function mapStateToProps(state) {
