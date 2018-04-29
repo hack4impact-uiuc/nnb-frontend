@@ -8,6 +8,7 @@ import {
   POI_FORM_LINK_MODIFIED,
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
+  POI_FORM_CAPTION_MODIFIED,
   POI_COPIED,
   POI_PASTED,
   NEW_POI_CREATION_STARTED,
@@ -46,7 +47,14 @@ export default function poiForm(state = initialState.poiForm, action) {
       }
     case POI_FORM_LINK_MODIFIED:
       const { index, field, value } = action.payload
-      const newLinks = [...state.links]
+
+      // deep copy each link object.
+      // otherwise editing a poi's link updates the link
+      // on the activePOIs in addition to the one on poiForm.
+      // that causes a bug when you edit a poi, change a link, and cancel -
+      // the link changes to what was just typed
+      // even though it shouldn't have been changed at all
+      const newLinks = [...state.links.map(l => ({ ...l }))]
       newLinks[index][field] = value
       return {
         ...state,
@@ -63,6 +71,21 @@ export default function poiForm(state = initialState.poiForm, action) {
         media: [...state.media].filter(
           media => media.contentUrl !== action.payload.contentUrl
         )
+      }
+    case POI_FORM_CAPTION_MODIFIED:
+      const { captionIndex, captionValue } = action.payload
+
+      // deep copy each media object.
+      // otherwise editing a poi's captions updates the caption
+      // on the activePOIs in addition to the one on poiForm.
+      // that causes a bug when you edit a poi, change a caption, and cancel -
+      // the caption changes to what was just typed
+      // even though it shouldn't have been changed at all
+      const newMedia = [...state.media.map(c => ({ ...c }))]
+      newMedia[captionIndex].caption = captionValue
+      return {
+        ...state,
+        media: newMedia
       }
     case POI_COPIED:
       const copyClipboard = [...state.clipboard].filter(

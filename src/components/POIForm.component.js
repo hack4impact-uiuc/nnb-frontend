@@ -109,6 +109,9 @@ export default class POIForm extends Component {
       updatePOI,
       createPOI
     } = this.props
+    const captionedMedia = media.map(
+      content => (!!content.caption ? content : { ...content, caption: '' })
+    )
     const poi = {
       mapYear,
       xCoord,
@@ -117,7 +120,7 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
-      media,
+      media: captionedMedia,
       links
     }
     if (selectedPOIId) {
@@ -187,15 +190,17 @@ export default class POIForm extends Component {
           />
           {this.fileUpload()}
           <LinkTable />
-          <FieldGroup
-            inputType="checklist"
-            className="poi-form__field-group specifier"
-            labelClassName="poi-form__label"
-            options={stories}
-            label="Add To Stories"
-            onClick={togglePOIFormStoryId}
-            checkedOptionIds={storyIds}
-          />
+          {stories.length !== 0 && (
+            <FieldGroup
+              inputType="checklist"
+              className="poi-form__field-group specifier"
+              labelClassName="poi-form__label"
+              options={stories}
+              label="Add To Stories"
+              onClick={togglePOIFormStoryId}
+              checkedOptionIds={storyIds}
+            />
+          )}
 
           <div className="end-buttons">
             <button

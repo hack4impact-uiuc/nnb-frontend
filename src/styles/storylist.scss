@@ -52,6 +52,9 @@
 }
 
 .story-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 2rem 1rem;
 
   &__heading {
@@ -66,6 +69,52 @@
 
   &__exit {
     margin-left: auto;
+  }
+
+  &__poi-list-container{
+    display: flex;
+    overflow-x: scroll;
+  }
+
+  &__poi-list{
+    padding: 1rem 0;
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  &__poi-list-title{
+    padding: 1rem 0;
+    flex-grow: 1;
+  }
+
+  &__search-title{
+    margin-bottom: 1rem;
+  }
+
+  &__search-bar{
+    padding: 1rem;
+  }
+
+  &__submit-button{
+    margin-top: auto;
+  }
+
+  &__added-pois{
+    padding: 1px;
+    display: flex;
+
+
+    &__delete-icon{
+      // margin-left: 4rem;
+      // position: absolute;
+      // left: 100%;
+      // top: 0;
+      margin-left: auto;
+
+      &:hover {
+        background: #f0f0f0ff;
+      }
+    }
   }
 }
 

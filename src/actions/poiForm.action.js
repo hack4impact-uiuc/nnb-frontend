@@ -52,6 +52,13 @@ function poiFormMediaRemoved(link) {
   }
 }
 
+function poiFormCaptionModified(captionIndex, captionValue) {
+  return {
+    type: actionTypes.POI_FORM_CAPTION_MODIFIED,
+    payload: { captionIndex, captionValue }
+  }
+}
+
 function poiCopied(poi) {
   return { type: actionTypes.POI_COPIED, payload: poi }
 }
@@ -113,6 +120,11 @@ export function addPOIFormYoutubeMedia(youtubeVideoId) {
 
 export function removePOIFormMedia(media) {
   return dispatch => dispatch(poiFormMediaRemoved(media))
+}
+
+export function modifyPOIFormCaption(captionIndex, captionValue) {
+  return dispatch =>
+    dispatch(poiFormCaptionModified(captionIndex, captionValue))
 }
 
 export function copyPOI(poi) {

@@ -4,10 +4,13 @@ import {
   POI_CREATED,
   POI_UPDATED,
   POI_DELETED,
+  POI_FORM_MEDIA_REMOVED,
   POI_SELECTED,
   NEXT_POI_IN_STORY_SET,
   PREVIOUS_POI_IN_STORY_SET,
-  NEW_POI_CREATION_STARTED
+  POIS_CAROUSEL_INDEX_MODIFIED,
+  NEW_POI_CREATION_STARTED,
+  POI_FORM_EXITED
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
@@ -40,10 +43,16 @@ export default function pois(state = initialState.pois, action) {
           poi => poi.id !== action.payload.id
         )
       }
+    case POI_FORM_MEDIA_REMOVED:
+      return {
+        ...state,
+        carouselIndex: state.carouselIndex === 0 ? state.carouselIndex - 1 : 0
+      }
     case POI_SELECTED:
       return {
         ...state,
-        selectedPOIId: action.payload.id
+        selectedPOIId: action.payload.id,
+        carouselIndex: 0
       }
     case NEXT_POI_IN_STORY_SET:
       return {
@@ -59,6 +68,16 @@ export default function pois(state = initialState.pois, action) {
       return {
         ...state,
         selectedPOIId: null
+      }
+    case POIS_CAROUSEL_INDEX_MODIFIED:
+      return {
+        ...state,
+        carouselIndex: action.payload
+      }
+    case POI_FORM_EXITED:
+      return {
+        ...state,
+        carouselIndex: 0
       }
     default:
       return state

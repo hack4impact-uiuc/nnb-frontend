@@ -16,6 +16,7 @@ const POIS_URL = 'pois'
 const MAPS_URL = 'maps'
 const STORIES_URL = 'stories'
 const AUTH_URL = 'auth'
+const SEARCH_POIS_URL = 'search/pois'
 
 cloudinary.config(cloudinaryConfig)
 
@@ -184,6 +185,19 @@ function deleteStory(storyId) {
 }
 
 /**
+ * Search
+ */
+function loadSearchPois(params) {
+  return createRequest(
+    REQUEST_METHODS.GET,
+    SEARCH_POIS_URL,
+    adapters.convertToApiSearchPois(params)
+  )
+    .then(res => res.result.pois)
+    .then(res => res.map(adapters.convertFromApiPOI))
+}
+
+/**
  * Cloudinary
  */
 
@@ -210,5 +224,6 @@ export default {
   createStory,
   updateStory,
   deleteStory,
-  uploadImage
+  uploadImage,
+  loadSearchPois
 }

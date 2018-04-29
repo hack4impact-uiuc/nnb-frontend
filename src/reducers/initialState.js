@@ -12,7 +12,8 @@ const initialState = {
   },
   pois: {
     activePOIs: [],
-    selectedPOIId: null
+    selectedPOIId: null,
+    carouselIndex: 0
   },
   poiForm: {
     mapYear: null,
@@ -34,7 +35,15 @@ const initialState = {
     shouldShowSidebar: false,
     shouldShowStoryForm: false,
     editingStoryId: null,
-    inputStoryName: ''
+    inputStoryName: '',
+    selectedPois: [],
+    shouldShowModal: false
+  },
+  searchPoi: {
+    universalPois: [],
+    universalQuery: '',
+    storyPois: [],
+    storyQuery: ''
   },
   auth: {
     isLoggedIn: false
