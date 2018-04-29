@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Autosuggest from 'react-autosuggest'
-import { Icon } from './'
-import './../styles/search.css'
+import { POISearch } from './'
 
 export default class GetUniversalSearchResults extends Component {
   onChange = (event, { newValue, method }) => {
@@ -17,41 +15,17 @@ export default class GetUniversalSearchResults extends Component {
     this.props.setSelectedPOI(suggestion)
   }
 
-  onSuggestionsFetchRequested = () => {
-    this.props.searchUniversalPOIs()
-  }
-
-  renderSuggestion = poi => {
-    return <span value={poi.id}>{poi.name}</span>
-  }
-
   render() {
     const { pois, searchInput } = this.props
 
-    const inputProps = {
-      placeholder: 'Search',
-      value: searchInput,
-      onChange: this.onChange
-    }
-
     return (
-      <div>
-        <Autosuggest
-          suggestions={pois}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={poi => poi.name}
-          renderSuggestion={this.renderSuggestion}
-          inputProps={inputProps}
-          theme={{
-            container: 'search-container',
-            suggestionsContainerOpen: 'search-suggContainer',
-            suggestionHighlighted: 'search-suggHighlight',
-            suggestion: 'search-suggestion',
-            suggestionsList: 'search-suggList'
-          }}
-        />
-      </div>
+      <POISearch
+        pois={pois}
+        searchInput={searchInput}
+        onSuggestionSelected={this.onSuggestionSelected}
+        onSuggestionsFetchRequested={() => this.props.searchUniversalPOIs()}
+        onChangeInput={this.onChange}
+      />
     )
   }
 }

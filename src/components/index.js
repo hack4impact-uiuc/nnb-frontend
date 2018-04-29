@@ -18,6 +18,7 @@ import Timeline from './Timeline.container'
 import GetUniversalSearchResults from './GetUniversalSearchResults.container'
 import GetStorySearchResults from './GetStorySearchResults.container'
 import StoryModal from './StoryModal.container'
+import POISearch from './POISearch.component'
 
 export {
   Edit,
@@ -39,5 +40,6 @@ export {
   Timeline,
   GetUniversalSearchResults,
   GetStorySearchResults,
-  StoryModal
+  StoryModal,
+  POISearch
 }
