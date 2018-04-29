@@ -155,7 +155,6 @@ class InfoPanel extends Component {
 
         {!!date && (
           <div className="date">
-            <hr />
             <p>{date.format('MMMM Do, YYYY')}</p>
           </div>
         )}
