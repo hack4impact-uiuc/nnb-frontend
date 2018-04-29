@@ -39,8 +39,18 @@ import {
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  updateSelectedPois,
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal
 } from './sidebar.action'
+import {
+  updateUniversalSearchInput,
+  searchUniversalPOIs,
+  updateStorySearchInput,
+  searchStoryPOIs
+} from './search.action'
 import { login, logout } from './auth.action'
 
 function appLoaded() {
@@ -87,6 +97,14 @@ export {
   hideStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
+  updateUniversalSearchInput,
+  searchUniversalPOIs,
+  updateStorySearchInput,
+  searchStoryPOIs,
+  updateSelectedPois,
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal,
   login,
   logout
 }

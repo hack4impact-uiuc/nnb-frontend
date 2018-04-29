@@ -34,7 +34,15 @@ const initialState = {
     shouldShowSidebar: false,
     shouldShowStoryForm: false,
     editingStoryId: null,
-    inputStoryName: ''
+    inputStoryName: '',
+    selectedPois: [],
+    shouldShowModal: false
+  },
+  searchPoi: {
+    universalPois: [],
+    universalQuery: '',
+    storyPois: [],
+    storyQuery: ''
   },
   auth: {
     isLoggedIn: false
