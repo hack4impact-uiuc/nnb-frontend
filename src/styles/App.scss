@@ -27,12 +27,13 @@ button[disabled] {
 
 // TODO: GET RID OF THIS JANK
 .modal-dialog {
-  height: 100vh;
+  height: 95vh;
 }
 
 .modal-content {
   // ESPECIALLY THIS SHIT
   width: 500px !important;
+  overflow: scroll;
 }
 
 // override default bootstrap style
