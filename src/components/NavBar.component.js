@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { ROUTES } from './../'
-import { Icon } from './'
+import { Icon, GetUniversalSearchResults } from './'
 
 class NavBar extends PureComponent {
   promptAndExitStory = () => {
@@ -62,7 +62,7 @@ class NavBar extends PureComponent {
             className="navbar-content__item"
           />
           <div className="navbar-content__item navbar-content__title ">NNB</div>
-
+          {pathname === ROUTES.INDEX && <GetUniversalSearchResults />}
           {pathname === ROUTES.INDEX &&
             !!selectedMapId && (
               <HeadingText

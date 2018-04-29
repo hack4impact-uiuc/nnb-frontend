@@ -12,6 +12,12 @@ class ZoomBanner extends Component {
       scale,
       isShowing: true
     })
+
+    // TODO: address this warning.
+    // need to hold on to timeout clearing funcs and call those when component is unmounting
+    // Warning: Can only update a mounted or mounting component.
+    // This usually means you called setState, replaceState, or forceUpdate on an unmounted component.
+    // This is a no-op.
     setTimeout(() => {
       this.setState({
         isShowing: false

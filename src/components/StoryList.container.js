@@ -8,7 +8,9 @@ import {
   setEditingStoryId,
   updateStoryNameInput,
   loadPOIs,
-  disableEditMode
+  disableEditMode,
+  loadEditingPois,
+  showStoryModal
 } from './../actions'
 import StoryList from './StoryList.component'
 
@@ -16,12 +18,18 @@ function mapStateToProps(state) {
   const {
     shouldShowSidebar,
     shouldShowStoryForm,
-    editingStoryId
+    editingStoryId,
+    shouldShowModal
   } = state.sidebar
   return {
     isEditing: state.edit.isEditing,
     ...state.stories,
-    ...{ shouldShowSidebar, shouldShowStoryForm, editingStoryId }
+    ...{
+      shouldShowSidebar,
+      shouldShowStoryForm,
+      editingStoryId,
+      shouldShowModal
+    }
   }
 }
 
@@ -35,7 +43,9 @@ function mapDispatchToProps(dispatch) {
       setEditingStoryId,
       updateStoryNameInput,
       loadPOIs,
-      disableEditMode
+      disableEditMode,
+      loadEditingPois,
+      showStoryModal
     },
     dispatch
   )

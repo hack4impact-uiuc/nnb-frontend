@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Form, PageHeader } from 'react-bootstrap'
+import { DropdownButton, Form, MenuItem, PageHeader } from 'react-bootstrap'
 import { ROUTES } from './../'
 import { FieldGroup, LinkTable } from './'
 import { utils } from './../utils'
@@ -109,6 +109,9 @@ export default class POIForm extends Component {
       updatePOI,
       createPOI
     } = this.props
+    const captionedMedia = media.map(
+      content => (!!content.caption ? content : { ...content, caption: '' })
+    )
     const poi = {
       mapYear,
       xCoord,
@@ -117,7 +120,7 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
-      media,
+      media: captionedMedia,
       links
     }
     if (selectedPOIId) {
@@ -135,7 +138,9 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
+      clipboard,
       isUpdatingPOI,
+      pastePOI,
       updatePOIFormInput,
       togglePOIFormStoryId
     } = this.props
@@ -143,7 +148,18 @@ export default class POIForm extends Component {
       <div>
         <Form className="poi-form">
           <PageHeader>{isUpdatingPOI ? 'Edit' : 'Create'} POI</PageHeader>
-
+          <DropdownButton
+            className="button button--dark"
+            title="Paste POI"
+            disabled={clipboard.length === 0}
+            id="paste-poi-dropdown"
+          >
+            {clipboard.map(elem => (
+              <MenuItem key={elem.id} onClick={() => pastePOI(elem)}>
+                {elem.name}
+              </MenuItem>
+            ))}
+          </DropdownButton>
           <FieldGroup
             controlID="name"
             label="Name"
@@ -174,15 +190,17 @@ export default class POIForm extends Component {
           />
           {this.fileUpload()}
           <LinkTable />
-          <FieldGroup
-            inputType="checklist"
-            className="poi-form__field-group specifier"
-            labelClassName="poi-form__label"
-            options={stories}
-            label="Add To Stories"
-            onClick={togglePOIFormStoryId}
-            checkedOptionIds={storyIds}
-          />
+          {stories.length !== 0 && (
+            <FieldGroup
+              inputType="checklist"
+              className="poi-form__field-group specifier"
+              labelClassName="poi-form__label"
+              options={stories}
+              label="Add To Stories"
+              onClick={togglePOIFormStoryId}
+              checkedOptionIds={storyIds}
+            />
+          )}
 
           <div className="end-buttons">
             <button

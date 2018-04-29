@@ -5,10 +5,11 @@ import './styles/index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router'
+import { Route, Redirect } from 'react-router'
 import { ConnectedRouter } from 'react-router-redux'
 import configureStore, { history } from './store/configureStore'
 import { Explore, FormPage, LoginPage, NavBar } from './components'
+import { ToastContainer, toast } from 'react-toastify'
 import {
   appLoaded,
   exitPOIForm,
@@ -17,6 +18,8 @@ import {
   setSelectedMap
 } from './actions'
 import registerServiceWorker from './registerServiceWorker'
+import { storage } from './utils'
+import './styles/toast.css'
 
 export const ROUTES = {
   INDEX: '/',
@@ -48,18 +51,33 @@ history.listen(location => {
   }
 })
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      !!storage.get('authorizationToken') ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )}
+  />
+)
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
         <NavBar />
+        <ToastContainer style={{ color: 'red' }} />
         <Route exact path={ROUTES.INDEX} component={Explore} />
-        <Route exact path={ROUTES.FORM} component={FormPage} />
+        <PrivateRoute exact path={ROUTES.FORM} component={FormPage} />
         <Route exact path={ROUTES.LOGIN} component={LoginPage} />
       </div>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
 )
+
+export const toastNotify = (message, options) => toast(message, options)
 
 registerServiceWorker()

@@ -139,15 +139,7 @@ class NNBMap extends Component {
       isChoosingNewPOICoords
     } = this.state
 
-    const {
-      selectedMap,
-      isEditing,
-      selectedPOIId,
-      previewingPOIId,
-      setSelectedPOI,
-      setPreviewingPOI,
-      activePOIs
-    } = this.props
+    const { selectedMap, isEditing } = this.props
 
     return (
       <div>

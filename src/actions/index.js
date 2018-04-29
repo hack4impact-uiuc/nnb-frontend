@@ -18,7 +18,8 @@ import {
   setSelectedPOI,
   setPreviewingPOI,
   setNextPOIInStory,
-  setPreviousPOIInStory
+  setPreviousPOIInStory,
+  modifyPoisCarouselIndex
 } from './pois.action'
 import {
   updatePOIFormInput,
@@ -28,8 +29,12 @@ import {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
+  modifyPOIFormCaption,
+  modifyPOIFormCarouselIndex,
   createNewPOI,
   addPOIFormYoutubeMedia,
+  copyPOI,
+  pastePOI,
   exitPOIForm,
   editPOI
 } from './poiForm.action'
@@ -38,8 +43,18 @@ import {
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
-  updateStoryNameInput
+  updateStoryNameInput,
+  updateSelectedPois,
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal
 } from './sidebar.action'
+import {
+  updateUniversalSearchInput,
+  searchUniversalPOIs,
+  updateStorySearchInput,
+  searchStoryPOIs
+} from './search.action'
 import { login, logout } from './auth.action'
 
 function appLoaded() {
@@ -67,6 +82,8 @@ export {
   modifyPOIFormLink,
   addPOIFormMedia,
   removePOIFormMedia,
+  modifyPOIFormCaption,
+  modifyPOIFormCarouselIndex,
   createNewPOI,
   addPOIFormYoutubeMedia,
   exitPOIForm,
@@ -76,15 +93,26 @@ export {
   createPOI,
   updatePOI,
   deletePOI,
+  copyPOI,
+  pastePOI,
   setSelectedPOI,
   setPreviewingPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
+  modifyPoisCarouselIndex,
   toggleSidebar,
   showStoryForm,
   hideStoryForm,
   setEditingStoryId,
   updateStoryNameInput,
+  updateUniversalSearchInput,
+  searchUniversalPOIs,
+  updateStorySearchInput,
+  searchStoryPOIs,
+  updateSelectedPois,
+  loadEditingPois,
+  showStoryModal,
+  exitStoryModal,
   login,
   logout
 }

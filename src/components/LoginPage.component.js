@@ -27,14 +27,12 @@ export default class LoginPage extends Component {
     this.setState({ error: '' })
     const { username, password } = this.state
 
-    // RIPerino
-    // TODO: we know what we gotta do
-    if (username === 'admin' && password === 'admin') {
-      this.props.login()
-      this.props.history.push(ROUTES.INDEX)
-    } else {
-      this.setState({ error: 'incorrect credentials' })
-    }
+    this.props
+      .login({
+        username,
+        password
+      })
+      .then(() => this.props.history.push(ROUTES.INDEX))
   }
 
   render() {
