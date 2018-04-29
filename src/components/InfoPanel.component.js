@@ -48,9 +48,7 @@ class InfoPanel extends Component {
       setPreviousPOIInStory,
       modifyPOIFormCaption,
       modifyPoisCarouselIndex,
-      captions,
       carouselIndex,
-      selectedIndex,
       location
     } = this.props
 
@@ -171,7 +169,7 @@ class InfoPanel extends Component {
           isRealTimePOI && (
             <FieldGroup
               inputType="text"
-              value={captions}
+              value={media[carouselIndex].caption}
               placeholder="Change Media Caption Here"
               onChange={e =>
                 modifyPOIFormCaption(carouselIndex, e.target.value)}
