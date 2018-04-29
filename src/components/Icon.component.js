@@ -9,7 +9,10 @@ const FEATHER_ICON_SIZE_LARGE = 24
 
 const stub = () => {}
 
-export default class Icon extends Component {
+class Icon extends Component {
+  state = {
+    hover: false
+  }
   static propTypes = {
     type: PropTypes.string.isRequired,
     size: PropTypes.oneOf(['small', 'large']).isRequired,
@@ -17,10 +20,17 @@ export default class Icon extends Component {
     onClick: PropTypes.func,
     disabled: PropTypes.bool
   }
+  hoverTrue = () => {
+    this.setState({ hover: true })
+  }
+  hoverFalse = () => {
+    this.setState({ hover: false })
+  }
 
   render() {
     const { type, size, className, onClick, disabled } = this.props
     const FeatherIcon = Feather[type]
+    const hover = this.state.hover
 
     return (
       <div
@@ -28,6 +38,8 @@ export default class Icon extends Component {
           [className]: !!className,
           'feather-icon--disabled': disabled
         })}
+        onMouseOver={() => this.hoverTrue}
+        onMouseOut={() => this.hoverFalse}
         onClick={disabled ? stub : onClick}
       >
         <FeatherIcon
@@ -39,3 +51,4 @@ export default class Icon extends Component {
     )
   }
 }
+export default Icon
