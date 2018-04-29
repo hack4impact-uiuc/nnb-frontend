@@ -15,6 +15,11 @@ import POIMarker from './POIMarker.component'
 import StoryForm from './StoryForm.container'
 import StoryList from './StoryList.container'
 import Timeline from './Timeline.container'
+import GetUniversalSearchResults from './GetUniversalSearchResults.container'
+import GetStorySearchResults from './GetStorySearchResults.container'
+import StoryModal from './StoryModal.container'
+import POISearch from './POISearch.component'
+import ZoomBanner from './ZoomBanner.component'
 
 export {
   Edit,
@@ -33,5 +38,10 @@ export {
   POIMarker,
   StoryForm,
   StoryList,
-  Timeline
+  Timeline,
+  GetUniversalSearchResults,
+  GetStorySearchResults,
+  StoryModal,
+  POISearch,
+  ZoomBanner
 }

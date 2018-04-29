@@ -7,7 +7,7 @@ import './../styles/App.css'
 import './../styles/infopanel.css'
 import { utils } from './../utils'
 
-import { FieldGroup, LinkTable } from './'
+import { FieldGroup } from './'
 
 class InfoPanel extends Component {
   onClickEdit = () => {
@@ -47,8 +47,8 @@ class InfoPanel extends Component {
       setNextPOIInStory,
       setPreviousPOIInStory,
       modifyPOIFormCaption,
-      modifyPoisCarouselIndex,
       carouselIndex,
+      copyPOI,
       location
     } = this.props
 
@@ -131,6 +131,15 @@ class InfoPanel extends Component {
         {!!name && (
           <div className="heading">
             <h1 className="heading__name">{name}</h1>
+            {isEditing &&
+              !isRealTimePOI && (
+                <Icon
+                  type="Copy"
+                  size="large"
+                  className="story-time__icon"
+                  onClick={() => copyPOI(selectedPOI)}
+                />
+              )}
             {isEditing &&
               !isRealTimePOI && (
                 <Icon

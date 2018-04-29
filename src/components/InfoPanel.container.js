@@ -14,6 +14,7 @@ import {
   setPreviousPOIInStory,
   modifyPOIFormCaption,
   modifyPoisCarouselIndex,
+  copyPOI,
   editPOI
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
@@ -61,6 +62,7 @@ function mapDispatchToProps(dispatch) {
       setPreviousPOIInStory,
       modifyPOIFormCaption,
       modifyPoisCarouselIndex,
+      copyPOI,
       editPOI
     },
     dispatch

@@ -9,11 +9,14 @@ import {
   POI_FORM_MEDIA_ADDED,
   POI_FORM_MEDIA_REMOVED,
   POI_FORM_CAPTION_MODIFIED,
-  POI_FORM_CAROUSEL_INDEX_MODIFIED,
+  POI_COPIED,
+  POI_PASTED,
   NEW_POI_CREATION_STARTED,
   POI_FORM_EXITED,
   EDIT_POI_SET
 } from '../actions/actionTypes'
+
+const POI_FORM_MAX_CLIPBOARD_LENGTH = 5
 
 export default function poiForm(state = initialState.poiForm, action) {
   switch (action.type) {
@@ -84,6 +87,33 @@ export default function poiForm(state = initialState.poiForm, action) {
         ...state,
         media: newMedia
       }
+    case POI_COPIED:
+      const copyClipboard = [...state.clipboard].filter(
+        poi => poi.id !== action.payload.id
+      )
+      if (copyClipboard.length === POI_FORM_MAX_CLIPBOARD_LENGTH) {
+        copyClipboard.pop()
+      }
+      copyClipboard.unshift(action.payload)
+      return {
+        ...state,
+        clipboard: copyClipboard
+      }
+    case POI_PASTED:
+      const pasteClipboard = [...state.clipboard].filter(
+        poi => poi.id !== action.payload.id
+      )
+      pasteClipboard.unshift(action.payload)
+      return {
+        ...state,
+        clipboard: pasteClipboard,
+        name: action.payload.name,
+        date: action.payload.date,
+        description: action.payload.description,
+        storyIds: action.payload.stories.map(story => story.id),
+        media: action.payload.media,
+        links: action.payload.links
+      }
     case NEW_POI_CREATION_STARTED:
       return {
         ...state,
@@ -100,7 +130,10 @@ export default function poiForm(state = initialState.poiForm, action) {
         storyIds: action.payload.stories.map(s => s.id)
       }
     case POI_FORM_EXITED:
-      return initialState.poiForm
+      return {
+        ...initialState.poiForm,
+        clipboard: state.clipboard
+      }
     default:
       return state
   }
