@@ -9,19 +9,11 @@ import { storage } from './../utils'
 export default function auth(state = initialState.auth, action) {
   switch (action.type) {
     case APP_LOADED:
-      return {
-        ...state,
-        isLoggedIn: storage.get('auth')
-      }
     case USER_LOGGED_IN:
-      return {
-        ...state,
-        isLoggedIn: true
-      }
     case USER_LOGGED_OUT:
       return {
         ...state,
-        isLoggedIn: false
+        isLoggedIn: !!storage.get('authorizationToken')
       }
     default:
       return state

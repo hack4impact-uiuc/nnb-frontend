@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import { storage } from './../utils'
+import { storage, Api } from './../utils'
 
 function userLoggedIn() {
   return { type: actionTypes.USER_LOGGED_IN }
@@ -9,13 +9,18 @@ function userLoggedOut() {
   return { type: actionTypes.USER_LOGGED_OUT }
 }
 
-// TODO: integrate with api
-export function login() {
-  storage.set('auth', true)
-  return dispatch => dispatch(userLoggedIn())
+export function login(params) {
+  return dispatch => {
+    return Api.loginUser(params)
+      .then(res => storage.set('authorizationToken', res.result.token))
+      .then(() => dispatch(userLoggedIn()))
+  }
 }
 
 export function logout() {
-  storage.set('auth', false)
-  return dispatch => dispatch(userLoggedOut())
+  return dispatch => {
+    return Api.logoutUser()
+      .then(() => storage.set('authorizationToken', ''))
+      .then(() => dispatch(userLoggedOut()))
+  }
 }

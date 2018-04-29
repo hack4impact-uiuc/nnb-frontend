@@ -2,6 +2,8 @@ import request from 'superagent'
 import cloudinary from 'cloudinary'
 import { apiConfig, cloudinaryConfig } from './apiConfig'
 import adapters from './apiAdapters'
+import { storage } from './../utils'
+import { toastNotify } from './..'
 
 const REQUEST_METHODS = {
   GET: 'get',
@@ -13,12 +15,16 @@ const REQUEST_METHODS = {
 const POIS_URL = 'pois'
 const MAPS_URL = 'maps'
 const STORIES_URL = 'stories'
+const AUTH_URL = 'auth'
 const SEARCH_POIS_URL = 'search/pois'
 
 cloudinary.config(cloudinaryConfig)
 
-function createRequest(method, endpoint, options) {
+function createRequest(method, endpoint, options, headers) {
   let req = request[method](`${apiConfig.apiUrl}/${endpoint}`)
+  if (headers) {
+    req = req.set(headers)
+  }
   if (options) {
     if (method === REQUEST_METHODS.GET) {
       req = req.query(options)
@@ -26,7 +32,41 @@ function createRequest(method, endpoint, options) {
       req = req.send(options)
     }
   }
-  return req.then(response => response.body).catch(err => console.error(err))
+  return req.then(response => response.body).catch(err => {
+    const errorMessage = !!err.response
+      ? err.response.body.message
+      : err.message
+    toastNotify(errorMessage, { type: 'error' })
+
+    // return to allow removal of the auth token from storage if it's already expired/invalid
+    if (endpoint === `${AUTH_URL}/logout`) {
+      return
+    }
+
+    throw errorMessage
+  })
+}
+
+function createRequestWithAuth(method, endpoint, options) {
+  return createRequest(method, endpoint, options, {
+    'auth-token': storage.get('authorizationToken')
+  })
+}
+
+/**
+ * Auth
+ */
+
+function signupUser(params) {
+  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/signup`, params)
+}
+
+function loginUser(params) {
+  return createRequest(REQUEST_METHODS.POST, `${AUTH_URL}/login`, params)
+}
+
+function logoutUser() {
+  return createRequestWithAuth(REQUEST_METHODS.POST, `${AUTH_URL}/logout`)
 }
 
 /**
@@ -50,7 +90,7 @@ function loadPOI(poiId) {
 }
 
 function createPOI(poi) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     POIS_URL,
     adapters.convertToApiPOI(poi)
@@ -60,7 +100,7 @@ function createPOI(poi) {
 }
 
 function updatePOI(poiId, poi) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.PUT,
     `${POIS_URL}/${poiId}`,
     adapters.convertToApiPOI(poi)
@@ -70,9 +110,10 @@ function updatePOI(poiId, poi) {
 }
 
 function deletePOI(poiId) {
-  return createRequest(REQUEST_METHODS.DELETE, `${POIS_URL}/${poiId}`).then(
-    res => res.success
-  )
+  return createRequestWithAuth(
+    REQUEST_METHODS.DELETE,
+    `${POIS_URL}/${poiId}`
+  ).then(res => res.success)
 }
 
 /**
@@ -86,7 +127,7 @@ function loadMaps() {
 }
 
 function createMap(map) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     MAPS_URL,
     adapters.convertToApiMap(map)
@@ -96,9 +137,10 @@ function createMap(map) {
 }
 
 function deleteMap(mapId) {
-  return createRequest(REQUEST_METHODS.DELETE, `${MAPS_URL}/${mapId}`).then(
-    res => res.success
-  )
+  return createRequestWithAuth(
+    REQUEST_METHODS.DELETE,
+    `${MAPS_URL}/${mapId}`
+  ).then(res => res.success)
 }
 
 /**
@@ -116,7 +158,7 @@ function loadStories(params) {
 }
 
 function createStory(story) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.POST,
     STORIES_URL,
     adapters.convertToApiStory(story)
@@ -126,7 +168,7 @@ function createStory(story) {
 }
 
 function updateStory(storyId, story) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.PUT,
     `${STORIES_URL}/${storyId}`,
     adapters.convertToApiStory(story)
@@ -136,7 +178,7 @@ function updateStory(storyId, story) {
 }
 
 function deleteStory(storyId) {
-  return createRequest(
+  return createRequestWithAuth(
     REQUEST_METHODS.DELETE,
     `${STORIES_URL}/${storyId}`
   ).then(res => res.success)
@@ -167,6 +209,9 @@ function uploadImage(imageDataURL) {
 }
 
 export default {
+  signupUser,
+  loginUser,
+  logoutUser,
   loadPOIs,
   loadPOI,
   createPOI,
