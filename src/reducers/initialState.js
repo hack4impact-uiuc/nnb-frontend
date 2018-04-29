@@ -12,7 +12,8 @@ const initialState = {
   },
   pois: {
     activePOIs: [],
-    selectedPOIId: null
+    selectedPOIId: null,
+    carouselIndex: 0
   },
   poiForm: {
     mapYear: null,

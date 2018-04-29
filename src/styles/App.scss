@@ -108,6 +108,7 @@ button[disabled] {
   width: 30%;
   height: calc(100vh - #{$navbar-height});
   display: flex;
+  overflow-y: scroll;
   box-shadow: 0 0px 5px 0px #ddd;
   z-index: 4;
 }

@@ -7,6 +7,8 @@ import './../styles/App.css'
 import './../styles/infopanel.css'
 import { utils } from './../utils'
 
+import { FieldGroup } from './'
+
 class InfoPanel extends Component {
   onClickEdit = () => {
     this.props.editPOI()
@@ -22,6 +24,16 @@ class InfoPanel extends Component {
     }
   }
 
+  // TODO: There is something wrong with the Carousel (assumed Bootstrap Issue)
+  // where when you switch POIs, it does not display the 0th item despite the fact
+  // that carouselIndex correctly resets to 0.
+  // For example, if I am on Carousel item "1" of POI A and I switch to POI B,
+  // it will display POI B's Carousel item "1" (as opposed to item 0, which
+  // the indicators and carouselIndex prop correctly indicate).
+  handleSelect = (carouselIndex, e) => {
+    this.props.modifyPoisCarouselIndex(carouselIndex)
+  }
+
   render() {
     const {
       activePOIs,
@@ -34,6 +46,8 @@ class InfoPanel extends Component {
       removePOIFormMedia,
       setNextPOIInStory,
       setPreviousPOIInStory,
+      modifyPOIFormCaption,
+      carouselIndex,
       copyPOI,
       location
     } = this.props
@@ -57,6 +71,7 @@ class InfoPanel extends Component {
 
     const { name, date, description, storyIds, media, links } = selectedPOI
     const displayFields = [name, date, description, storyIds, media, links]
+
     if (
       isRealTimePOI &&
       !displayFields.some(el => (Array.isArray(el) ? !!el.length : !!el))
@@ -69,7 +84,12 @@ class InfoPanel extends Component {
     }
 
     const carousel = (
-      <Carousel>
+      <Carousel
+        activeIndex={carouselIndex}
+        onSelect={this.handleSelect}
+        interval={null}
+        indicators={false}
+      >
         {media.map(media => {
           const url = media.contentUrl
           const image = (
@@ -99,6 +119,7 @@ class InfoPanel extends Component {
                   />
                 )}
               {displayContent}
+              <Carousel.Caption />
             </Carousel.Item>
           )
         })}
@@ -140,12 +161,39 @@ class InfoPanel extends Component {
           </div>
         )}
 
+        {!!date && (
+          <div className="date">
+            <p>{date.format('MMMM Do, YYYY')}</p>
+          </div>
+        )}
+
         {!!media.length && (
           <div>
             <hr />
             <div>{!!media.length && carousel}</div>
           </div>
         )}
+
+        {!!media.length &&
+          isEditing &&
+          isRealTimePOI && (
+            <FieldGroup
+              inputType="text"
+              value={media[carouselIndex].caption}
+              placeholder="Change Media Caption Here"
+              onChange={e =>
+                modifyPOIFormCaption(carouselIndex, e.target.value)}
+            />
+          )}
+
+        {!!media.length &&
+          !isRealTimePOI && (
+            <div className="caption">
+              <div className="caption__text">
+                {media[carouselIndex].caption}
+              </div>
+            </div>
+          )}
 
         {!!description && (
           <div>

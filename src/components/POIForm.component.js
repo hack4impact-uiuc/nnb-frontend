@@ -109,6 +109,9 @@ export default class POIForm extends Component {
       updatePOI,
       createPOI
     } = this.props
+    const captionedMedia = media.map(
+      content => (!!content.caption ? content : { ...content, caption: '' })
+    )
     const poi = {
       mapYear,
       xCoord,
@@ -117,7 +120,7 @@ export default class POIForm extends Component {
       date,
       description,
       storyIds,
-      media,
+      media: captionedMedia,
       links
     }
     if (selectedPOIId) {

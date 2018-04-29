@@ -29,6 +29,13 @@ function previousPOIInStorySet() {
   return { type: actionTypes.PREVIOUS_POI_IN_STORY_SET }
 }
 
+function poisCarouselIndexModified(carouselIndex) {
+  return {
+    type: actionTypes.POIS_CAROUSEL_INDEX_MODIFIED,
+    payload: carouselIndex
+  }
+}
+
 export function loadPOIs() {
   return (dispatch, getState) => {
     const store = getState()
@@ -106,4 +113,8 @@ export function setNextPOIInStory() {
     const selectedPOI = activePOIs.find(poi => poi.id === selectedPOIId)
     dispatch(poiSelected(selectedPOI))
   }
+}
+
+export function modifyPoisCarouselIndex(carouselIndex) {
+  return dispatch => dispatch(poisCarouselIndexModified(carouselIndex))
 }

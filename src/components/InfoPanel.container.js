@@ -12,6 +12,8 @@ import {
   removePOIFormMedia,
   setNextPOIInStory,
   setPreviousPOIInStory,
+  modifyPOIFormCaption,
+  modifyPoisCarouselIndex,
   copyPOI,
   editPOI
 } from './../actions'
@@ -58,6 +60,8 @@ function mapDispatchToProps(dispatch) {
       removePOIFormMedia,
       setNextPOIInStory,
       setPreviousPOIInStory,
+      modifyPOIFormCaption,
+      modifyPoisCarouselIndex,
       copyPOI,
       editPOI
     },
