@@ -86,15 +86,23 @@ class StoryForm extends Component {
             <h4 className="story-form__search-title">Search POIs to add:</h4>
             <GetStorySearchResults handleSelect={this.onSelectPoi} />
           </div>
-          <div className="story-form__poi-list">
+          <div className="story-form__poi-list-title">
             <h4>POIs in story:</h4>
-            {selectedPois.map(poi => {
-              return (
-                <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
-                  {poi.name}
-                </li>
-              )
-            })}
+            <div className="story-form__poi-list">
+              {selectedPois.map(poi => {
+                return (
+                  <div key={poi.id} className="story-form__added-pois">
+                    {poi.name}
+                    <Icon
+                      type="Trash"
+                      size="small"
+                      className="story-form__added-pois__delete-icon"
+                      onClick={() => this.removeInputPoi(poi)}
+                    />
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
         <button
