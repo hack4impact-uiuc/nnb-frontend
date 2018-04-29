@@ -135,13 +135,8 @@ class MapManager extends Component {
                 <div className="modal-form__field-group specifier modal-form__status">
                   {!isUploadingMedia &&
                     !imageUrl && <div>Please upload map image</div>}
-                  {!!imageUrl && (
-                    <div>
-                      Image uploaded
-                      <Image src={imageUrl} responsive />
-                    </div>
-                  )}
                   {isUploadingMedia && <div>Uploading...</div>}
+                  {!!imageUrl && <Image src={imageUrl} responsive />}
                 </div>
 
                 {error && <Alert bsStyle="danger">{error}</Alert>}
