@@ -109,7 +109,6 @@ class MapManager extends Component {
       deleteMap(selectedMap.id)
         .then(() => loadMaps())
         .then(() => loadPOIs())
-        .then(() => window.alert('Map ' + selectedMap.id + ' deleted.'))
     }
   }
 
