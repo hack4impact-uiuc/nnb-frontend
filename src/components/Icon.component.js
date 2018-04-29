@@ -9,7 +9,7 @@ const FEATHER_ICON_SIZE_LARGE = 24
 
 const stub = () => {}
 
-export default class Icon extends Component {
+class Icon extends Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
     size: PropTypes.oneOf(['small', 'large']).isRequired,
@@ -39,3 +39,4 @@ export default class Icon extends Component {
     )
   }
 }
+export default Icon

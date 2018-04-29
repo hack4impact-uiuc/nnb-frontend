@@ -16,6 +16,7 @@ import {
   updatePOI,
   deletePOI,
   setSelectedPOI,
+  setPreviewingPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
   modifyPoisCarouselIndex
@@ -95,6 +96,7 @@ export {
   copyPOI,
   pastePOI,
   setSelectedPOI,
+  setPreviewingPOI,
   setNextPOIInStory,
   setPreviousPOIInStory,
   modifyPoisCarouselIndex,

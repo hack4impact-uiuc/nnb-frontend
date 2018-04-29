@@ -13,6 +13,7 @@ const initialState = {
   pois: {
     activePOIs: [],
     selectedPOIId: null,
+    previewingPOIId: null,
     carouselIndex: 0
   },
   poiForm: {

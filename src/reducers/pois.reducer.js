@@ -6,6 +6,7 @@ import {
   POI_DELETED,
   POI_FORM_MEDIA_REMOVED,
   POI_SELECTED,
+  POI_PREVIEWED,
   NEXT_POI_IN_STORY_SET,
   PREVIOUS_POI_IN_STORY_SET,
   POIS_CAROUSEL_INDEX_MODIFIED,
@@ -53,6 +54,11 @@ export default function pois(state = initialState.pois, action) {
         ...state,
         selectedPOIId: action.payload.id,
         carouselIndex: 0
+      }
+    case POI_PREVIEWED:
+      return {
+        ...state,
+        previewingPOIId: action.payload.id
       }
     case NEXT_POI_IN_STORY_SET:
       return {

@@ -11,10 +11,16 @@ $icon-size-large: 24px;
 
   &--large {
     height: $icon-size-large;
+    &:hover {
+      opacity: .85;
+    }
   }
 
   &--small {
     height: $icon-size-small;
+    &:hover {
+      opacity: .85;
+    }
   }
 
   &--disabled {

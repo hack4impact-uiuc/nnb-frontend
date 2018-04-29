@@ -42,6 +42,7 @@ class InfoPanel extends Component {
       isFirstInStory,
       isLastInStory,
       selectedPOI,
+      previewingPOI,
       isEditing,
       removePOIFormMedia,
       setNextPOIInStory,
@@ -51,10 +52,11 @@ class InfoPanel extends Component {
       copyPOI,
       location
     } = this.props
-
     const isRealTimePOI = location.pathname === ROUTES.FORM
 
-    if (!selectedPOI) {
+    const activePOI = previewingPOI || selectedPOI
+
+    if (!selectedPOI && !previewingPOI) {
       if (isStorySelected) {
         return (
           <div className="info-panel">
@@ -68,8 +70,8 @@ class InfoPanel extends Component {
         </div>
       )
     }
+    const { name, date, description, storyIds, media, links } = activePOI
 
-    const { name, date, description, storyIds, media, links } = selectedPOI
     const displayFields = [name, date, description, storyIds, media, links]
 
     if (
