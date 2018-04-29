@@ -6,7 +6,7 @@
   padding: 3rem;
   margin-bottom: auto;
   width: 100%;
-  height: 100%
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -22,21 +22,6 @@
 
 .date {
   margin-top: 1rem;
-}
-
-.carousel-control {
-  position: absolute;
-  top: 0%; /* pushes the icon in the middle of the height */
-  z-index: 5;
-  display: inline-block;
-}
-
-.carousel-control .glyphicon-chevron-right{
-  top: 40%
-}
-
-.carousel-control .glyphicon-chevron-left{
-  top: 40%
 }
 
 .carousel-item {
@@ -57,39 +42,12 @@
   }
 }
 
-.carousel-indicators li{
-  position: relative;
-  left: auto;
-  right: auto;
-  background-color: white;
-  border-color: black;
-}
-
-.carousel-indicators .active{
-  position: relative;
-  left: auto;
-  right: auto;
-  background-color: black;
-  border-color: black;
-}
-
-.carousel-caption {
-  position: relative;
-  left: auto;
-  right: auto;
-  color: black;
-  margin-top: 10px;
-}
-
-.carousel-inner {
-  // padding-bottom: 20px;
-}
-
 .caption {
   &__text {
     text-align: center;
-    color: black;
     font-style: italic;
+    padding-top: 20px;
+    color: #555;
   }
 }
 

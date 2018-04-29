@@ -88,6 +88,7 @@ class InfoPanel extends Component {
         activeIndex={carouselIndex}
         onSelect={this.handleSelect}
         interval={null}
+        indicators={false}
       >
         {media.map(media => {
           const url = media.contentUrl
@@ -179,7 +180,9 @@ class InfoPanel extends Component {
         {!!media.length &&
           !isRealTimePOI && (
             <div className="caption">
-              <p className="caption__text">{media[carouselIndex].caption}</p>
+              <div className="caption__text">
+                {media[carouselIndex].caption}
+              </div>
             </div>
           )}
 
