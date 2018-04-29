@@ -44,7 +44,14 @@ export default function poiForm(state = initialState.poiForm, action) {
       }
     case POI_FORM_LINK_MODIFIED:
       const { index, field, value } = action.payload
-      const newLinks = [...state.links]
+
+      // deep copy each link object.
+      // otherwise editing a poi's link updates the link
+      // on the activePOIs in addition to the one on poiForm.
+      // that causes a bug when you edit a poi, change a link, and cancel -
+      // the link changes to what was just typed
+      // even though it shouldn't have been changed at all
+      const newLinks = [...state.links.map(l => ({ ...l }))]
       newLinks[index][field] = value
       return {
         ...state,
