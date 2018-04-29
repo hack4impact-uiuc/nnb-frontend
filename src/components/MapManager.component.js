@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, Form, Modal } from 'react-bootstrap'
+import { Alert, Form, Image, Modal } from 'react-bootstrap'
 import { FieldGroup, Icon } from '../components'
 import { Api } from './../utils'
 import './../styles/map.css'
@@ -135,7 +135,12 @@ class MapManager extends Component {
                 <div className="modal-form__field-group specifier modal-form__status">
                   {!isUploadingMedia &&
                     !imageUrl && <div>Please upload map image</div>}
-                  {!!imageUrl && <div>Image uploaded</div>}
+                  {!!imageUrl && (
+                    <div>
+                      Image uploaded
+                      <Image src={imageUrl} responsive />
+                    </div>
+                  )}
                   {isUploadingMedia && <div>Uploading...</div>}
                 </div>
 
