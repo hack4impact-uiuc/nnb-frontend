@@ -16,7 +16,7 @@ class StoryForm extends Component {
 
   removeInputPoi = poi => {
     const { selectedPois, updateSelectedPois } = this.props
-    updateSelectedPois(selectedPois.filter(p => p.id != poi.id))
+    updateSelectedPois(selectedPois.filter(p => p.id !== poi.id))
   }
 
   closeStoryForm = () => {

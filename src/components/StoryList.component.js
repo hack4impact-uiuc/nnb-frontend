@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Sidebar from 'react-sidebar'
-import { Icon, StoryForm, StoryModal } from './'
+import { Icon, StoryModal } from './'
 import './../styles/storylist.css'
 import './../styles/App.css'
 import './../styles/button.css'
