@@ -153,6 +153,13 @@ class InfoPanel extends Component {
           </div>
         )}
 
+        {!!date && (
+          <div className="date">
+            <hr />
+            <p>{date.format('MMMM Do, YYYY')}</p>
+          </div>
+        )}
+
         {!!media.length && (
           <div>
             <hr />
@@ -174,7 +181,7 @@ class InfoPanel extends Component {
 
         {!!media.length &&
           !isRealTimePOI && (
-            <div classname="caption">
+            <div className="caption">
               <p className="caption__text">{media[carouselIndex].caption}</p>
             </div>
           )}
@@ -185,13 +192,6 @@ class InfoPanel extends Component {
             <div className="description">
               <p className="description__text">{description}</p>
             </div>
-          </div>
-        )}
-
-        {!!date && (
-          <div>
-            <hr />
-            <p>{date.format('L')}</p>
           </div>
         )}
 

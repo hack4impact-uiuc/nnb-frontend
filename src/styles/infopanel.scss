@@ -4,6 +4,7 @@
 .info-panel {
   border-left: 1px solid #ddd;
   padding: 3rem;
+  margin-bottom: auto;
   overflow-y: scroll;
   width: 100%;
   display: flex;
@@ -13,11 +14,13 @@
 .heading {
   display: flex;
   align-items: center;
-  margin: 1rem 0;
 
   &__name {
     margin-right: auto;
   }
+}
+
+.date {
 }
 
 .carousel-control {
@@ -29,12 +32,10 @@
 
 .carousel-control .glyphicon-chevron-right{
   top: 40%
-
 }
 
 .carousel-control .glyphicon-chevron-left{
   top: 40%
-
 }
 
 .carousel-item {
