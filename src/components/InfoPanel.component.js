@@ -39,7 +39,6 @@ class InfoPanel extends Component {
       activePOIs,
       isStorySelected,
       selectedPOIIndex,
-      previewingPOIIndex,
       isFirstInStory,
       isLastInStory,
       selectedPOI,

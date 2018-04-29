@@ -15,11 +15,8 @@ import {
 } from './../actions/actionTypes'
 
 export default function pois(state = initialState.pois, action) {
-  const { activePOIs, selectedPOIId, previewingPOIId } = state
+  const { activePOIs, selectedPOIId } = state
   const selectedPOIIndex = activePOIs.findIndex(poi => poi.id === selectedPOIId)
-  const previewingPOIIndex = activePOIs.findIndex(
-    poi => poi.id === previewingPOIId
-  )
   switch (action.type) {
     case POIS_LOADED:
       return {

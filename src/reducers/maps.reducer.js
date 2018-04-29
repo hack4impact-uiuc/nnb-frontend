@@ -4,8 +4,7 @@ import {
   MAP_DELETED,
   MAP_CREATED,
   MAP_SELECTED,
-  POI_SELECTED,
-  POI_PREVIEWED
+  POI_SELECTED
 } from '../actions/actionTypes'
 
 export default function maps(state = initialState.timeline, action) {
