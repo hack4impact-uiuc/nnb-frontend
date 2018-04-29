@@ -25,6 +25,16 @@ button[disabled] {
   z-index: 5;
 }
 
+// TODO: GET RID OF THIS JANK
+.modal-dialog {
+  height: 100vh;
+}
+
+.modal-content {
+  // ESPECIALLY THIS SHIT
+  width: 500px !important;
+}
+
 // override default bootstrap style
 .carousel-control {
   width: 0;
