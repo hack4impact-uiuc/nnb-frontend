@@ -64,7 +64,14 @@ export default function poiForm(state = initialState.poiForm, action) {
       }
     case POI_FORM_CAPTION_MODIFIED:
       const { captionIndex, captionValue } = action.payload
-      const newMedia = [...state.media]
+
+      // deep copy each media object.
+      // otherwise editing a poi's captions updates the caption
+      // on the activePOIs in addition to the one on poiForm.
+      // that causes a bug when you edit a poi, change a caption, and cancel -
+      // the caption changes to what was just typed
+      // even though it shouldn't have been changed at all
+      const newMedia = [...state.media.map(c => ({ ...c }))]
       newMedia[captionIndex].caption = captionValue
       return {
         ...state,
