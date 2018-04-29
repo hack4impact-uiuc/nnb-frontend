@@ -43,6 +43,10 @@ export const NEW_POI_CREATION_STARTED = 'NEW_POI_CREATION_STARTED'
 export const POI_FORM_EXITED = 'POI_FORM_EXITED'
 export const EDIT_POI_SET = 'EDIT_POI_SET'
 
+// copy-paste
+export const POI_COPIED = 'POI_COPIED'
+export const POI_PASTED = 'POI_PASTED'
+
 // sidebar
 export const SIDEBAR_TOGGLED = 'SIDEBAR_TOGGLED'
 export const STORY_FORM_SET_SHOW = 'STORY_FORM_SET_SHOW'

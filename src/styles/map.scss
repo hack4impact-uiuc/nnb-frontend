@@ -13,6 +13,23 @@ $marker-diameter: 25px;
   position: relative;
 }
 
+.map-pan-zoom-container {
+  height: 100%;
+  width: 100%;
+  position: relative; // for absolutely positioned children
+  overflow: hidden;
+  touch-action: none; // Not supported in Safari :(
+  ms-touch-action: none;
+  cursor: all-scroll;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.map-transform {
+  transform-origin: 0px 0px;
+}
+
 .map-icons {
   position: absolute;
   right: 0;

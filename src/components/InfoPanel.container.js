@@ -12,6 +12,7 @@ import {
   removePOIFormMedia,
   setNextPOIInStory,
   setPreviousPOIInStory,
+  copyPOI,
   editPOI
 } from './../actions'
 import InfoPanel from './InfoPanel.component'
@@ -57,6 +58,7 @@ function mapDispatchToProps(dispatch) {
       removePOIFormMedia,
       setNextPOIInStory,
       setPreviousPOIInStory,
+      copyPOI,
       editPOI
     },
     dispatch

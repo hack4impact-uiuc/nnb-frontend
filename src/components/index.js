@@ -19,6 +19,7 @@ import GetUniversalSearchResults from './GetUniversalSearchResults.container'
 import GetStorySearchResults from './GetStorySearchResults.container'
 import StoryModal from './StoryModal.container'
 import POISearch from './POISearch.component'
+import ZoomBanner from './ZoomBanner.component'
 
 export {
   Edit,
@@ -41,5 +42,6 @@ export {
   GetUniversalSearchResults,
   GetStorySearchResults,
   StoryModal,
-  POISearch
+  POISearch,
+  ZoomBanner
 }

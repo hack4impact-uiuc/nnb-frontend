@@ -8,9 +8,10 @@ import classnames from 'classnames'
 
 class StoryList extends Component {
   onSelectStory = storyId => {
-    const { setSelectedStory, loadPOIs } = this.props
+    const { setSelectedStory, loadPOIs, toggleSidebar } = this.props
     setSelectedStory(storyId)
     loadPOIs()
+    toggleSidebar()
   }
 
   onExitStory = () => {
