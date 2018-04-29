@@ -93,7 +93,6 @@ class MapManager extends Component {
         loadMaps,
         activePOIs,
         selectedPOIId,
-        setPreviewingPOI,
         setSelectedPOI,
         loadPOIs
       } = this.props
@@ -125,8 +124,7 @@ class MapManager extends Component {
       inputYear,
       isUploadingMedia,
       imageUrl,
-      error,
-      showConfirmDeleteMap
+      error
     } = this.state
 
     return (

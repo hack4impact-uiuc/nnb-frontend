@@ -40,7 +40,8 @@ class InfoPanel extends Component {
     } = this.props
     const isRealTimePOI = location.pathname === ROUTES.FORM
 
-    const activePOI = selectedPOI || previewingPOI
+    const activePOI = previewingPOI || selectedPOI
+
     if (!selectedPOI && !previewingPOI) {
       if (isStorySelected) {
         return (
