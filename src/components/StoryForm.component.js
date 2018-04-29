@@ -90,9 +90,15 @@ class StoryForm extends Component {
             <h4>POIs in story:</h4>
             {selectedPois.map(poi => {
               return (
-                <li key={poi.id} onClick={() => this.removeInputPoi(poi)}>
+                <div key={poi.id} className="story-form__added-pois">
                   {poi.name}
-                </li>
+                  <Icon
+                    type="Trash"
+                    size="small"
+                    className="story-form__added-pois__delete-icon"
+                    onClick={() => this.removeInputPoi(poi)}
+                  />
+                </div>
               )
             })}
           </div>
