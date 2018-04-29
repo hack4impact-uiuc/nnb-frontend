@@ -73,13 +73,18 @@
 
   &__poi-list-container{
     display: flex;
+    overflow-x: scroll;
   }
 
   &__poi-list{
-    padding: 1rem;
-    width: 40%;
-    max-height: 500px;
-    // overflow: auto;
+    padding: 1rem 0;
+    overflow-y: scroll;
+    height: 100%;
+  }
+
+  &__poi-list-title{
+    padding: 1rem 0;
+    flex-grow: 1;
   }
 
   &__search-title{
@@ -96,14 +101,15 @@
 
   &__added-pois{
     padding: 1px;
-    position: relative;
+    display: flex;
 
 
     &__delete-icon{
-      margin-left: 4rem;
-      position: absolute;
-      left: 100%;
-      top: 0;
+      // margin-left: 4rem;
+      // position: absolute;
+      // left: 100%;
+      // top: 0;
+      margin-left: auto;
 
       &:hover {
         background: #f0f0f0ff;
