@@ -40,7 +40,13 @@ export default class LoginPage extends Component {
 
     return (
       <div className="container login-container">
-        <Form className="login">
+        <Form
+          className="login"
+          onSubmit={e => {
+            e.preventDefault()
+            this.onSubmit()
+          }}
+        >
           <div className="header">
             <h1>Login</h1>
           </div>
@@ -70,7 +76,7 @@ export default class LoginPage extends Component {
             <FieldGroup
               inputType="button"
               buttonText="Submit"
-              onClick={this.onSubmit}
+              buttonType="submit"
             />
           </div>
         </Form>
