@@ -97,6 +97,10 @@ function createPOI(poi) {
   )
     .then(res => res.result.poi)
     .then(res => adapters.convertFromApiPOI(res))
+    .then(res => {
+      toastNotify('POI created', { type: 'success' })
+      return res
+    })
 }
 
 function updatePOI(poiId, poi) {
@@ -107,13 +111,19 @@ function updatePOI(poiId, poi) {
   )
     .then(res => res.result.poi)
     .then(res => adapters.convertFromApiPOI(res))
+    .then(res => {
+      toastNotify('POI updated', { type: 'success' })
+      return res
+    })
 }
 
 function deletePOI(poiId) {
-  return createRequestWithAuth(
-    REQUEST_METHODS.DELETE,
-    `${POIS_URL}/${poiId}`
-  ).then(res => res.success)
+  return createRequestWithAuth(REQUEST_METHODS.DELETE, `${POIS_URL}/${poiId}`)
+    .then(res => res.success)
+    .then(res => {
+      toastNotify('POI deleted', { type: 'success' })
+      return res
+    })
 }
 
 /**
@@ -134,13 +144,19 @@ function createMap(map) {
   )
     .then(res => res.result.map)
     .then(res => adapters.convertFromApiMap(res))
+    .then(res => {
+      toastNotify('Map created', { type: 'success' })
+      return res
+    })
 }
 
 function deleteMap(mapId) {
-  return createRequestWithAuth(
-    REQUEST_METHODS.DELETE,
-    `${MAPS_URL}/${mapId}`
-  ).then(res => res.success)
+  return createRequestWithAuth(REQUEST_METHODS.DELETE, `${MAPS_URL}/${mapId}`)
+    .then(res => res.success)
+    .then(res => {
+      toastNotify('Map deleted', { type: 'success' })
+      return res
+    })
 }
 
 /**
@@ -165,6 +181,10 @@ function createStory(story) {
   )
     .then(res => res.result.story)
     .then(res => adapters.convertFromApiStory(res))
+    .then(res => {
+      toastNotify('Story created', { type: 'success' })
+      return res
+    })
 }
 
 function updateStory(storyId, story) {
@@ -175,13 +195,22 @@ function updateStory(storyId, story) {
   )
     .then(res => res.result.story)
     .then(res => adapters.convertFromApiStory(res))
+    .then(res => {
+      toastNotify('Story updated', { type: 'success' })
+      return res
+    })
 }
 
 function deleteStory(storyId) {
   return createRequestWithAuth(
     REQUEST_METHODS.DELETE,
     `${STORIES_URL}/${storyId}`
-  ).then(res => res.success)
+  )
+    .then(res => res.success)
+    .then(res => {
+      toastNotify('Story deleted', { type: 'success' })
+      return res
+    })
 }
 
 /**
