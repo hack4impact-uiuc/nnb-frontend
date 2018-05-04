@@ -15,6 +15,7 @@ function FieldGroup({
   selected,
   onChange,
   onClick,
+  buttonType,
   // expects an array containing objects of { id, name }. will be fed into checklists
   options,
   buttonText,
@@ -93,7 +94,7 @@ function FieldGroup({
         <button
           className="button button--dark"
           onClick={onClick}
-          type="button"
+          type={buttonType ? buttonType : 'button'}
           disabled={disabled}
         >
           {buttonText}
