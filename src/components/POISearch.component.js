@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Autosuggest from 'react-autosuggest'
 import './../styles/search.css'
-
+import { debounce } from 'lodash'
 export default class POISearch extends Component {
   renderSuggestion = poi => {
     return <span value={poi.id}>{poi.name}</span>

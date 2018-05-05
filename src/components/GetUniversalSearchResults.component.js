@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { POISearch } from './'
+import { debounce } from 'lodash'
 
 export default class GetUniversalSearchResults extends Component {
   onChange = (event, { newValue, method }) => {
@@ -15,6 +16,14 @@ export default class GetUniversalSearchResults extends Component {
     this.props.setSelectedPOI(suggestion)
   }
 
+  componentDidMount = () => {
+    this.fetchRequestWrapper = debounce(this.fetchRequestWrapper, 250)
+  }
+
+  fetchRequestWrapper = () => {
+    this.props.searchUniversalPOIs()
+  }
+
   render() {
     const { pois, searchInput } = this.props
 
@@ -23,7 +32,7 @@ export default class GetUniversalSearchResults extends Component {
         pois={pois}
         searchInput={searchInput}
         onSuggestionSelected={this.onSuggestionSelected}
-        onSuggestionsFetchRequested={() => this.props.searchUniversalPOIs()}
+        onSuggestionsFetchRequested={this.fetchRequestWrapper}
         onChangeInput={this.onChange}
       />
     )
