@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { Interval, MapManager } from '../components'
 import './../styles/timeline.css'
 
-const MIN_INTERVAL_WIDTH = 50
+const MIN_INTERVAL_WIDTH = 30
 const TIMELINE_PADDING = 40
 
 class Timeline extends Component {
@@ -13,12 +13,21 @@ class Timeline extends Component {
     this.forceUpdate()
   }
 
+  // function to convert ratio into an interval width. the mapping is not linear but logarithmic,
+  // or else we would have cases where intervals would have very different lengths and scrolling
+  // would be a chore.
+  ratioToWidth(intervalWidthConst, ratio) {
+    return intervalWidthConst + 100 * Math.log(ratio) // intervalWidthConst - 100 / ratio //
+  }
+
   // calculates the pixel width for each interval
   calcIntervalWidth = mapYears => {
     const ratios = mapYears.slice(1).map((n, i) => n - mapYears[i])
     const minRatio = Math.min(...ratios)
-    const intervalWidthMultiplier = MIN_INTERVAL_WIDTH / minRatio
-    const intervalWidths = ratios.map(ratio => ratio * intervalWidthMultiplier)
+    const intervalWidthConst = MIN_INTERVAL_WIDTH - 100 * Math.log(minRatio) // MIN_INTERVAL_WIDTH + 100 / minRatio //
+    const intervalWidths = ratios.map(ratio =>
+      this.ratioToWidth(intervalWidthConst, ratio)
+    )
 
     // used for buffer for last interval - gets assigned MIN_INTERVAL_WIDTH
     let adjustedIntervalWidths = [...intervalWidths, MIN_INTERVAL_WIDTH]
