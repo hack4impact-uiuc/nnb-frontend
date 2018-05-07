@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes'
 import { loadPOIs } from './'
 import { Api } from './../utils'
+import { toastNotify } from './..'
 
 function mapsLoaded(maps) {
   return { type: actionTypes.MAPS_LOADED, payload: maps }
@@ -23,12 +24,19 @@ export function loadMaps() {
 }
 
 export function createMap(map) {
-  return dispatch => Api.createMap(map).then(map => dispatch(mapCreated(map)))
+  return dispatch =>
+    Api.createMap(map).then(map => {
+      toastNotify('Map created', { type: 'success' })
+      return dispatch(mapCreated(map))
+    })
 }
 
 export function deleteMap(mapId) {
   return dispatch =>
-    Api.deleteMap(mapId).then(() => dispatch(mapDeleted(mapId)))
+    Api.deleteMap(mapId).then(() => {
+      toastNotify('Map deleted', { type: 'success' })
+      return dispatch(mapDeleted(mapId))
+    })
 }
 
 export function setSelectedMap(map) {

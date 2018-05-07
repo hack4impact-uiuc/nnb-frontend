@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes'
 import { utils, Api } from './../utils'
+import { toastNotify } from './..'
 
 function poisLoaded(pois) {
   return { type: actionTypes.POIS_LOADED, payload: pois }
@@ -71,19 +72,28 @@ export function loadPOIById(poiId) {
 
 export function createPOI(poi) {
   return dispatch => {
-    return Api.createPOI(poi).then(poi => dispatch(poiCreated(poi)))
+    return Api.createPOI(poi).then(poi => {
+      toastNotify('POI created', { type: 'success' })
+      return dispatch(poiCreated(poi))
+    })
   }
 }
 
 export function updatePOI(poiId, poi) {
   return dispatch => {
-    return Api.updatePOI(poiId, poi).then(poi => dispatch(poiUpdated(poi)))
+    return Api.updatePOI(poiId, poi).then(poi => {
+      toastNotify('POI updated', { type: 'success' })
+      return dispatch(poiUpdated(poi))
+    })
   }
 }
 
 export function deletePOI(poiId) {
   return dispatch => {
-    return Api.deletePOI(poiId).then(() => dispatch(poiDeleted(poiId)))
+    return Api.deletePOI(poiId).then(() => {
+      toastNotify('POI deleted', { type: 'success' })
+      return dispatch(poiDeleted(poiId))
+    })
   }
 }
 
